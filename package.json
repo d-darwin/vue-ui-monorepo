@@ -1,8 +1,7 @@
 {
-  "name": "vue-ui-monorepo",
+  "name": "@darwin-studio/vue-ui-monorepo",
   "version": "0.0.1",
   "description": "Monorepo for the Darwin's Vue UI development",
-  "main": "index.js",
   "repository": "https://github.com/d-darwin/vue-ui-monorepo",
   "author": "DMITRII BYKOV <d@darwin.st>",
   "license": "MIT",
@@ -15,7 +14,9 @@
     "stylelint": "lerna run --concurrency 1 --stream stylelint",
     "test:unit": "lerna run --concurrency 1 --stream test:unit",
     "version:update": "lerna version --no-push",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build": "yarn workspace @darwin-studio/vue-ui build",
+    "build-storybook": "yarn workspace @darwin-studio/vue-ui-storybook build-storybook"
   },
   "devDependencies": {
     "husky": "^7.0.4",

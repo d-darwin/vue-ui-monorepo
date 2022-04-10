@@ -1,0 +1,23 @@
+{
+  "name": "@darwin-studio/vue-ui-storybook",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@darwin-studio/vue-ui": "^0.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@storybook/addon-actions": "^6.4.21",
+    "@storybook/addon-essentials": "^6.4.21",
+    "@storybook/addon-links": "^6.4.21",
+    "@storybook/vue3": "^6.4.21",
+    "babel-loader": "^8.2.4",
+    "vue-loader": "^16.8.3"
+  }
+}
