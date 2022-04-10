@@ -1,5 +1,4 @@
-# vue-ui-monorepo
-
+# @darwin-studio/vue-ui
 ## Project setup
 ```
 yarn install

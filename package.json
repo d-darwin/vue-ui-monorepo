@@ -6,9 +6,22 @@
   "repository": "https://github.com/d-darwin/vue-ui-monorepo",
   "author": "DMITRII BYKOV <d@darwin.st>",
   "license": "MIT",
-  "private": false,
-  "dependencies": {
+  "private": true,
+  "scripts": {
+    "pre:commit": "lerna run --concurrency 1 --stream precommit",
+    "lint:nofix": "lerna run --concurrency 1 --stream lint:nofix",
+    "lint": "lerna run --concurrency 1 --stream lint",
+    "stylelint:nofix": "lerna run --concurrency 1 --stream stylelint:nofix",
+    "stylelint": "lerna run --concurrency 1 --stream stylelint",
+    "test:unit": "lerna run --concurrency 1 --stream test:unit",
+    "version:update": "lerna version --no-push",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
     "husky": "^7.0.4",
     "lerna": "^4.0.0"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
