@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "../..",
     "types": [
       "webpack-env",
       "jest"
@@ -29,13 +29,13 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "vue-ui/src/**/*.ts",
+    "vue-ui/src/**/*.tsx",
+    "vue-ui/src/**/*.vue",
+    "vue-ui/tests/**/*.ts",
+    "vue-ui/tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "../../node_modules"
   ]
 }
