@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-storybook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "license": "MIT",
   "private": false,
@@ -9,7 +9,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui": "^0.1.0"
+    "@darwin-studio/vue-ui": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
