@@ -1,4 +1,6 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
 .dTypography {
   /*TODO*/
-  color: red;
+  color: var(--color-primary);
 }
