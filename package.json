@@ -15,9 +15,10 @@
     "test:unit": "lerna run --concurrency 1 --stream test:unit",
     "version:update": "lerna version --no-push",
     "prepare": "husky install",
+    "storybook": "yarn workspace @darwin-studio/vue-ui-storybook storybook",
     "build": "yarn workspace @darwin-studio/vue-ui build",
-    "build:styles":"yarn workspace @darwin-studio/vue-ui-style-dictionary build:styles",
-    "build:storybook": "yarn workspace @darwin-studio/vue-ui-storybook build:storybook storybook"
+    "build:styles": "yarn workspace @darwin-studio/vue-ui-style-dictionary build:styles",
+    "build:storybook": "yarn workspace @darwin-studio/vue-ui-storybook build:storybook"
   },
   "devDependencies": {
     "husky": "^7.0.4",
