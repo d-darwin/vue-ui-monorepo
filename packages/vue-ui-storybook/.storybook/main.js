@@ -1,6 +1,9 @@
-// const path = require("path");
-
-const LOCAL_INDENT_NAME = '[local]'; // use '[name]_[local]_[hash:base64:5]'; for prod build
+let LOCAL_INDENT_NAME = '[local]';
+/* TODO
+if (process.env.NODE_ENV === 'production') {
+  LOCAL_INDENT_NAME = '[name]_[local]_[hash:base64:5]';
+}
+*/
 
 module.exports = {
   "stories": [
@@ -13,19 +16,11 @@ module.exports = {
   ],
   "framework": "@storybook/vue3",
   webpackFinal: async (config) => {
-    /* config.resolve.alias = {
-      ...(config.resolve ? config.resolve.alias : {}),
-      "@": path.resolve(__dirname, "../src/")
-    }; */
-
     const cssRule = config.module.rules.find(
       rule => rule.test.toString() === '/\\.css$/'
     );
     cssRule.use = [
-      {
-        loader: 'style-loader',
-        options: {}
-      },
+      'style-loader',
       {
         loader: 'css-loader',
         options: {

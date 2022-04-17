@@ -5,13 +5,15 @@ export default {
   title: "DTypography",
   component: DTypography,
   args: {
-    content: "Some text"
-  }
-}
+    content: "Some text",
+  },
+};
 
-const Template: Story<{content: string}> = (args: {content: string}) => ({
+const Template: Story<{ content: string }> = (args: { content: string }) => ({
   components: { DTypography },
-  setup() { return { args }; },
+  setup() {
+    return { args };
+  },
   template: `<DTypography v-bind="args" />`,
 });
 
