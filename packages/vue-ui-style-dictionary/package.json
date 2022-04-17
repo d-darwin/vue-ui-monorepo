@@ -1,0 +1,13 @@
+{
+  "name": "@darwin-studio/vue-ui-style-dictionary",
+  "version": "0.1.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build:styles": "node build.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "style-dictionary": "^3.7.0"
+  }
+}

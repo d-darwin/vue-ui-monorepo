@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build:storybook": "build-storybook"
   },
   "dependencies": {
     "@darwin-studio/vue-ui": "^0.1.1"

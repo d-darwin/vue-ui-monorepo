@@ -16,7 +16,8 @@
     "version:update": "lerna version --no-push",
     "prepare": "husky install",
     "build": "yarn workspace @darwin-studio/vue-ui build",
-    "build-storybook": "yarn workspace @darwin-studio/vue-ui-storybook build-storybook"
+    "build:styles":"yarn workspace @darwin-studio/vue-ui-style-dictionary build:styles",
+    "build:storybook": "yarn workspace @darwin-studio/vue-ui-storybook build:storybook storybook"
   },
   "devDependencies": {
     "husky": "^7.0.4",
