@@ -1,10 +1,3 @@
-let LOCAL_INDENT_NAME = '[local]';
-/* TODO
-if (process.env.NODE_ENV === 'production') {
-  LOCAL_INDENT_NAME = '[name]_[local]_[hash:base64:5]';
-}
-*/
-
 module.exports = {
   "stories": [
     "../stories/**/*.stories.mdx",
@@ -25,7 +18,7 @@ module.exports = {
         loader: 'css-loader',
         options: {
           modules: {
-            localIdentName: LOCAL_INDENT_NAME,
+            localIdentName: '[local]',
           },
         }
       },

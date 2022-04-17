@@ -1,5 +1,5 @@
 import { PropType, defineComponent, VNode } from "vue";
-import Content from "@/components/types/content";
+import Content from "@/types/content";
 import styles from "./index.css?module";
 
 export default defineComponent({
