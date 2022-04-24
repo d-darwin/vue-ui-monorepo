@@ -2,7 +2,8 @@
   "name": "@darwin-studio/vue-ui-codegen",
   "version": "0.4.0",
   "scripts": {
-    "build": "tsc index.ts --resolveJsonModule && node index.js"
+    "build": "node index.js",
+    "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
   "devDependencies": {

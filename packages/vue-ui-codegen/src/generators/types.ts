@@ -1,7 +1,7 @@
-import * as fs from "fs";
 import * as config from "../../config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import prepareTypeString from "../utils/prepareTypeString";
+import writeTypeToFile from "../utils/writeTypeToFile";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -12,21 +12,23 @@ export default async () => {
     log("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", LOG_TYPE.ERROR);
     return;
   }
+  const sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
+  if (sizeDesignTokens) {
+    const sizeTypeStrings: string[] = [];
 
-  // TODO: move to helpers ???
-  let fileStream: fs.WriteStream;
-  try {
-    fileStream = fs.createWriteStream(config.TYPES_FILE_PATH);
-    fileStream.on("error", (error: Error) => {
-      log(error.message, LOG_TYPE.ERROR);
-      return;
-    });
-  } catch {
-    log("Can't create write stream for TYPES_FILE_PATH. Check config.json", LOG_TYPE.ERROR);
+    sizeTypeStrings.push(
+      `import { ${config.TOKENS.SIZE.CONSTANT_NAME} } from "../constants/size";\n` // TODO: get from config, imports and declarations are separate
+    );
+    sizeTypeStrings.push(
+      prepareTypeString(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME)
+    );
+
+    writeTypeToFile(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_NAME);
   }
 
+
   /* TODO replace with 2 steps: data collection, data write */
-  const designTokenTypes = Object.keys(designTokens);
+  /*const designTokenTypes = Object.keys(designTokens);
   designTokenTypes.forEach((tokenType, tokenIndex) => {
     const typeStrings: string[] = []; // TODO: choose more accurate name
 
@@ -60,5 +62,5 @@ export default async () => {
         }
       });
     }
-  })
+  })*/
 }
