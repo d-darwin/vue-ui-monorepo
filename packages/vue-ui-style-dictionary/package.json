@@ -1,13 +1,32 @@
 {
   "name": "@darwin-studio/vue-ui-style-dictionary",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build:styles": "node build.js"
+    "build": "node build.js"
   },
   "devDependencies": {
     "eslint": "^8.13.0",
     "style-dictionary": "^3.7.0"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "parser": "babel-eslint",
+      "ecmaVersion": 2020
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
