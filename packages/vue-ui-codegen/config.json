@@ -11,7 +11,9 @@
       "CLASS_PREFIX": "size"
     },
     "FONT": {
-      "NAME": "font"
+      "NAME": "font",
+      "CSS_FILE_NAME": "./build/styles/font.css",
+      "CSS_CLASS_PREFIX": "font"
     }
   }
 }

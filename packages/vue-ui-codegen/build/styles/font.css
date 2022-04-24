@@ -1,0 +1,21 @@
+@import '@darwin-studio/vue-ui-style-dictionary';
+
+.fontTiny {
+  font: var(--font-tiny);
+}
+
+.fontSmall {
+  font: var(--font-small);
+}
+
+.fontMedium {
+  font: var(--font-medium);
+}
+
+.fontLarge {
+  font: var(--font-large);
+}
+
+.fontHuge {
+  font: var(--font-huge);
+}
