@@ -1,12 +1,12 @@
 {
   "name": "@darwin-studio/vue-ui-codegen",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "scripts": {
     "build": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
   "devDependencies": {
-    "@darwin-studio/vue-ui-style-dictionary": "^0.3.0",
+    "@darwin-studio/vue-ui-style-dictionary": "^0.4.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "camel-case": "^4.1.2",
