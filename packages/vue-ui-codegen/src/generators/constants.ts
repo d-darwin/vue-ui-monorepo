@@ -1,4 +1,4 @@
-import * as fs from "fs"; // TODO: why can't find
+import * as fs from "fs";
 import * as config from "../../config.json"; // TODO: path from root
 import log, { LOG_TYPE } from "../utils/log";
 import prepareConstantString from "../utils/prepareConstantString";
@@ -16,13 +16,13 @@ export default async () => {
   // TODO: move to helpers ???
   let fileStream: fs.WriteStream;
   try {
-    fileStream = fs.createWriteStream(config.DYNAMIC_CONSTANTS_FILE_PATH);
+    fileStream = fs.createWriteStream(config.CONSTANTS_FILE_PATH);
     fileStream.on("error", (error: Error) => {
       log(error.message, LOG_TYPE.ERROR);
       return;
     });
   } catch {
-    log("Can't create write stream was created for DYNAMIC_CONSTANTS_FILE_PATH. Check config.json", LOG_TYPE.ERROR);
+    log("Can't create write stream for CONSTANTS_FILE_PATH. Check config.json", LOG_TYPE.ERROR);
   }
 
   /* TODO replace with 2 steps: data collection, data write */
@@ -44,6 +44,7 @@ export default async () => {
       default:
     }
 
+    // TODO: make helper
     if (constantStrings.length > 2) {
       fileStream.on("open", () => {
         if (tokenIndex > 0) {

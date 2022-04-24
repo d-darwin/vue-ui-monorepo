@@ -7,7 +7,6 @@
   "main": "index.js",
   "devDependencies": {
     "@darwin-studio/vue-ui-style-dictionary": "^0.3.0",
-    "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "chalk": "^4.0.0",

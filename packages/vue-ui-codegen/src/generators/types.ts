@@ -1,5 +1,7 @@
+import * as fs from "fs";
 import * as config from "../../config.json";
 import log, { LOG_TYPE } from "../utils/log";
+import prepareTypeString from "../utils/prepareTypeString";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -11,5 +13,52 @@ export default async () => {
     return;
   }
 
-  console.log('TODO: generate types')
+  // TODO: move to helpers ???
+  let fileStream: fs.WriteStream;
+  try {
+    fileStream = fs.createWriteStream(config.TYPES_FILE_PATH);
+    fileStream.on("error", (error: Error) => {
+      log(error.message, LOG_TYPE.ERROR);
+      return;
+    });
+  } catch {
+    log("Can't create write stream for TYPES_FILE_PATH. Check config.json", LOG_TYPE.ERROR);
+  }
+
+  /* TODO replace with 2 steps: data collection, data write */
+  const designTokenTypes = Object.keys(designTokens);
+  designTokenTypes.forEach((tokenType, tokenIndex) => {
+    const typeStrings: string[] = []; // TODO: choose more accurate name
+
+    switch (tokenType) {
+      case config.TOKENS.SIZE.NAME:
+        typeStrings.push(
+          `import { ${config.TOKENS.SIZE.CONSTANT_NAME} } from "./constants";\n` // TODO: get from config, imports and declarations are separate
+        );
+
+        typeStrings.push(
+          prepareTypeString(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME)
+        );
+
+        break;
+      default:
+    }
+
+    if (typeStrings.length >= 2) {
+      fileStream.on("open", () => {
+        if (tokenIndex > 0) {
+          fileStream.write("\n");
+        }
+
+        typeStrings.forEach((str) => {
+          fileStream.write(`${str}\n`);
+        });
+
+        const isLastToken = tokenIndex >= designTokenTypes.length - 1;
+        if (isLastToken) {
+          fileStream.end();
+        }
+      });
+    }
+  })
 }
