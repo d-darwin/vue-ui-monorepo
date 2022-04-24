@@ -10,13 +10,7 @@
       }],
       "transforms": [
         "name/cti/kebab",
-        "color/css",
-        "size/pixel",
-        "radius/pixel",
-        "spacing/pixel",
-        "border/pixel/style",
-        "font/string",
-        "motion/transition"
+        "color/css"
       ]
     }
   }
