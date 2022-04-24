@@ -716,6 +716,123 @@
       }
     }
   },
+  "font": {
+    "tiny": {
+      "description": "Arial, Helvetica, sans-serif",
+      "type": "custom-fontStyle",
+      "value": {
+        "fontSize": 12,
+        "textDecoration": "none",
+        "fontFamily": "Arial",
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "fontStretch": "normal",
+        "letterSpacing": 0,
+        "lineHeight": 12,
+        "paragraphIndent": 0,
+        "paragraphSpacing": 0,
+        "textCase": "none"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:14e6b7ce39128dd0bd0754c7878dfaf0189f2cab,",
+          "exportKey": "font"
+        }
+      }
+    },
+    "small": {
+      "description": "Arial, Helvetica, sans-serif",
+      "type": "custom-fontStyle",
+      "value": {
+        "fontSize": 13,
+        "textDecoration": "none",
+        "fontFamily": "Arial",
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "fontStretch": "normal",
+        "letterSpacing": 0,
+        "lineHeight": 20,
+        "paragraphIndent": 0,
+        "paragraphSpacing": 0,
+        "textCase": "none"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:75b98905d2e61688d06357d555f7c62fba4bb353,",
+          "exportKey": "font"
+        }
+      }
+    },
+    "medium": {
+      "description": "Arial, Helvetica, sans-serif",
+      "type": "custom-fontStyle",
+      "value": {
+        "fontSize": 15,
+        "textDecoration": "none",
+        "fontFamily": "Arial",
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "fontStretch": "normal",
+        "letterSpacing": 0,
+        "lineHeight": 22,
+        "paragraphIndent": 0,
+        "paragraphSpacing": 0,
+        "textCase": "none"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:0a21dc77efd0fd2065e304eec48c807a6ce61316,",
+          "exportKey": "font"
+        }
+      }
+    },
+    "large": {
+      "description": "Arial, Helvetica, sans-serif",
+      "type": "custom-fontStyle",
+      "value": {
+        "fontSize": 18,
+        "textDecoration": "none",
+        "fontFamily": "Arial",
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "fontStretch": "normal",
+        "letterSpacing": 0,
+        "lineHeight": 26,
+        "paragraphIndent": 0,
+        "paragraphSpacing": 0,
+        "textCase": "none"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:9db6579819d6637dcaebe5f907d387f3dfd82b11,",
+          "exportKey": "font"
+        }
+      }
+    },
+    "huge": {
+      "description": "Arial, Helvetica, sans-serif",
+      "type": "custom-fontStyle",
+      "value": {
+        "fontSize": 25,
+        "textDecoration": "none",
+        "fontFamily": "Arial",
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "fontStretch": "normal",
+        "letterSpacing": 0,
+        "lineHeight": 34,
+        "paragraphIndent": 0,
+        "paragraphSpacing": 0,
+        "textCase": "none"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:ffe6c905818e89ad2b855fa50fcf5b8a446c5cc2,",
+          "exportKey": "font"
+        }
+      }
+    }
+  },
   "typography": {
     "tiny": {
       "description": "Arial, Helvetica, sans-serif",

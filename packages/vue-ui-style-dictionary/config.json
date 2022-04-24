@@ -10,7 +10,9 @@
       }],
       "transforms": [
         "name/cti/kebab",
-        "color/css"
+        "color/css",
+
+        "font/string"
       ]
     }
   }
