@@ -6,8 +6,10 @@
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
+  "dependencies": {
+    "@darwin-studio/vue-ui-style-dictionary": "^0.4.0"
+  },
   "devDependencies": {
-    "@darwin-studio/vue-ui-style-dictionary": "^0.4.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "camel-case": "^4.1.2",

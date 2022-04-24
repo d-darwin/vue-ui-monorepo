@@ -6,6 +6,7 @@ export default {
   component: DTypography,
   args: {
     content: "Some text",
+    size: "medium", // TODO: use select
   },
 };
 

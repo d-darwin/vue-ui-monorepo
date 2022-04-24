@@ -1,6 +1,6 @@
 {
   "DESIGN_TOKENS_SOURCE": "@darwin-studio/vue-ui-style-dictionary",
-  "CSS_VARIABLES_SOURCE": "@darwin-studio/vue-ui-style-dictionary/build/variables.css",
+  "CSS_VARIABLES_SOURCE": "~@darwin-studio/vue-ui-style-dictionary/build/variables.css",
   "TOKENS": {
     "SIZE": {
       "NAME": "size",

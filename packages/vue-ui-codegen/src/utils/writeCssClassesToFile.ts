@@ -7,7 +7,7 @@ export default function(fileClassStrings: string[], filePath: string): void {
     const sizeFileStream = fs.createWriteStream(filePath);
     sizeFileStream.on("open", () => {
       sizeFileStream.write(
-        `@import '${config.DESIGN_TOKENS_SOURCE}';\n`
+        `@import '${config.CSS_VARIABLES_SOURCE}';\n`
       );
 
       fileClassStrings.forEach((classStrings, classIndex) => {
