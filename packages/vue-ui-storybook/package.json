@@ -4,8 +4,8 @@
   "description": "TODO",
   "main": ".eslintrc.js",
   "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build:storybook": "build-storybook"
+    "start": "start-storybook -p 6006",
+    "build": "build-storybook"
   },
   "dependencies": {
     "@darwin-studio/vue-ui": "^0.2.1"

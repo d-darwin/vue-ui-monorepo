@@ -1,0 +1,15 @@
+{
+  "DESIGN_TOKENS_SOURCE": "@darwin-studio/vue-ui-style-dictionary",
+  "CSS_VARIABLES_SOURCE": "@darwin-studio/vue-ui-style-dictionary/build/variables.css",
+  "DYNAMIC_CONSTANTS_FILE_PATH": "./build/constants.ts",
+  "TOKENS": {
+    "SIZE": {
+      "NAME": "size",
+      "CONSTANT_NAME": "SIZE",
+      "CLASS_PREFIX": "size"
+    },
+    "FONT": {
+      "NAME": "font"
+    }
+  }
+}
