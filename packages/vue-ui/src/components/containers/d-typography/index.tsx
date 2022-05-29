@@ -2,7 +2,7 @@ import { PropType, defineComponent, VNode } from "vue";
 import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css?module"; // TODO: not module, common style ???
 import { Size } from "@darwin-studio/vue-ui-codegen/build/types/size";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
-import Content from "@/components/types/content";
+import Content from "@/types/content";
 import styles from "./index.css?module";
 
 export default defineComponent({
