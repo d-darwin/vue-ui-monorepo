@@ -6,15 +6,18 @@ if (process.env.NODE_ENV === 'production') {
 */
 
 module.exports = {
-  "stories": [
-    "../stories/**/*.stories.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  "addons": [
+  core: {
+    builder: "webpack5",
+  },
+  framework: "@storybook/vue3",
+  addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials"
   ],
-  "framework": "@storybook/vue3",
+  stories: [
+    "../stories/**/*.stories.mdx",
+    "../stories/**/*.stories.@(js|jsx|ts|tsx)"
+  ],
   webpackFinal: async (config) => {
     const cssRule = config.module.rules.find(
       rule => rule.test.toString() === '/\\.css$/'

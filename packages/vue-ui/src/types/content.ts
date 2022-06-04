@@ -1,2 +1,2 @@
-type Content = string | number;
+type Content = string | number; // TODO: ... | VNode ???
 export default Content;

@@ -9,3 +9,5 @@ declare module "*.css?module" {
 }
 
 declare module "@darwin-studio/button-ee";
+
+declare module "*.json";

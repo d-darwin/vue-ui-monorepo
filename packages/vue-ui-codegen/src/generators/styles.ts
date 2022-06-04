@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import * as config from "../../config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import prepareCssClassName from "../utils/prepareCssClassName";
