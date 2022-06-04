@@ -26,11 +26,9 @@
     ]
   },
   "include": [
-    "arg-types/**/*.ts",
-    "arg-types/**/*.tsx",
     "stories/**/*.ts",
     "stories/**/*.tsx",
-    "@darwin-studio/button-ee/src/typings.d.ts"
+    "@darwin-studio/vue-ui/src/typings.d.ts"
   ],
   "exclude": [
     "node_modules"

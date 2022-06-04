@@ -1,23 +1,38 @@
 import { Story } from "@storybook/vue3";
 import DTypography from "@darwin-studio/vue-ui/src/components/containers/d-typography";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
 
 export default {
   title: "DTypography",
   component: DTypography,
+  argTypes: {
+    size: {
+      control: { type: "select" },
+      options: Object.values(SIZE),
+    },
+  },
   args: {
-    content: "Some text",
-    size: "medium", // TODO: use select
+    content: "Some text content",
+    html: "",
+    size: SIZE.MEDIUM,
+    tag: "div",
   },
 };
 
-const Template: Story<{ content: string }> = (args: { content: string }) => ({
+const Template: Story = (args) => ({
   components: { DTypography },
   setup() {
     return { args };
   },
   template: `<DTypography v-bind="args" />`,
 });
-
 export const Default = Template.bind({});
 
-// TODO: with slot
+const SlotTemplate: Story = (args) => ({
+  components: { DTypography },
+  setup() {
+    return { args };
+  },
+  template: `<DTypography v-bind="args">Some <a href="#">slot</a> content</DTypography>`,
+});
+export const SlotDefault = SlotTemplate.bind({});
