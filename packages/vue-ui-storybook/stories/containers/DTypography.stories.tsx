@@ -19,3 +19,5 @@ const Template: Story<{ content: string }> = (args: { content: string }) => ({
 });
 
 export const Default = Template.bind({});
+
+// TODO: with slot
