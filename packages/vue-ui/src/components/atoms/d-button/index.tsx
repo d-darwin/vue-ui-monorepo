@@ -1,5 +1,4 @@
 import { defineComponent, PropType, VNode } from "vue";
-import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css?module"; // TODO: not module, common style ???
 import { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import { Text } from "@/types/text";
@@ -8,7 +7,7 @@ import config from "@darwin-studio/vue-ui-codegen/config.json";
 import styles from "./index.css?module";
 
 export default defineComponent({
-  name: "DTypography",
+  name: "DButton",
 
   props: {
     text: {
@@ -34,7 +33,7 @@ export default defineComponent({
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
-      return [styles.dButton, fontStyles[sizeClassName]];
+      return [styles.dButton, styles[sizeClassName]];
     },
   },
 

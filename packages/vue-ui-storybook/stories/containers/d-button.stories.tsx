@@ -1,10 +1,10 @@
 import { Story } from "@storybook/vue3";
-import DTypography from "@darwin-studio/vue-ui/src/components/containers/d-typography";
+import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
 
 export default {
-  title: "containers/DTypography",
-  component: DTypography,
+  title: "atoms/DButton",
+  component: DButton,
   argTypes: {
     size: {
       control: { type: "select" },
@@ -20,19 +20,19 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DTypography },
+  components: { DButton },
   setup() {
     return { args };
   },
-  template: `<DTypography v-bind="args" />`,
+  template: `<DButton v-bind="args" />`,
 });
 export const Default = Template.bind({});
 
 const SlotTemplate: Story = (args) => ({
-  components: { DTypography },
+  components: { DButton },
   setup() {
     return { args };
   },
-  template: `<DTypography v-bind="args">Some <a href="#">slot</a> content</DTypography>`,
+  template: `<DButton v-bind="args">Some <a href="#">slot</a> content</DButton>`,
 });
 export const SlotDefault = SlotTemplate.bind({});
