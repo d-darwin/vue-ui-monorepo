@@ -4,7 +4,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TO
 import { Text } from "@/types/text";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
-import styles from "./index.css?module";
+import styles from "./index.module.css";
 
 export default defineComponent({
   name: "DButton",

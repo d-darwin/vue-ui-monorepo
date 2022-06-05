@@ -1,4 +1,4 @@
-declare module "*.css?module" {
+declare module "*.css" {
   interface IClassNames {
     [className: string]: string;
   }

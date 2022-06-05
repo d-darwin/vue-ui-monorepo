@@ -1,12 +1,12 @@
 import { PropType, defineComponent, VNode } from "vue";
-import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css?module"; // TODO: not module, common style ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css"; // TODO: module, common style ???
 import { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path ???
 import { Text } from "@/types/text";
 import { TagName, TAG_NAME_DEFAULTS } from "../../../types/tag-name"; // TODO: fix shorthand
-import styles from "./index.css?module";
+import styles from "./index.module.css";
 
 export default defineComponent({
   name: "DTypography",
