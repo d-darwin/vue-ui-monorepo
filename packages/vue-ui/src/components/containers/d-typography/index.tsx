@@ -16,7 +16,6 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     html: {
-      // TODO: name
       // TODO: warning
       type: String,
     },
@@ -44,7 +43,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     if (this.html) {
-      return <Tag class={this.classes} vHtml={this.html} />;
+      return <Tag class={this.classes} v-html={this.html} />;
     }
 
     return (

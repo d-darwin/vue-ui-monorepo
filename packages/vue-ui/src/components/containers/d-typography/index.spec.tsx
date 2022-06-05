@@ -7,18 +7,21 @@ import config from "@darwin-studio/vue-ui-codegen/config.json";
 describe("DTypography", () => {
   const wrapper = shallowMount(DTypography);
 
+  // TODO: make case factory
   it("Renders props.content when passed", async () => {
-    const content = "Some text content";
-    await wrapper.setProps({ content });
-    expect(wrapper.text()).toMatch(content);
+    const text = "Some text content";
+    await wrapper.setProps({ text });
+    expect(wrapper.text()).toMatch(text);
   });
 
+  // TODO: make case factory
   it("Renders props.html when passed", async () => {
     const html = "Some <b>html</b> content";
-    await wrapper.setProps({ content: "", html });
+    await wrapper.setProps({ text: "", html });
     expect(wrapper.html()).toMatch(html);
   });
 
+  // TODO: make facase ctory
   it("Renders $slots.default when passed", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DTypography, {

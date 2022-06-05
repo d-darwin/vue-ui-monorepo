@@ -8,6 +8,10 @@ export default defineComponent({
     text: {
       type: [String, Number] as PropType<Text>,
     },
+    html: {
+      // TODO: warning
+      type: String,
+    },
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
     },
@@ -21,6 +25,14 @@ export default defineComponent({
   },
 
   render(): VNode {
-    return <button onClick={this.clickHandler}>{this.text}</button>;
+    if (this.html) {
+      return <button onClick={this.clickHandler} v-html={this.html} />;
+    }
+
+    return (
+      <button onClick={this.clickHandler}>
+        {this.$slots.default?.() || this.text}
+      </button>
+    );
   },
 });

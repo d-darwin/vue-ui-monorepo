@@ -12,13 +12,13 @@ describe("DButton", () => {
     expect(wrapper.text()).toMatch(text);
   });
 
-  /*
   it("Renders props.html when passed", async () => {
     const html = "Some <b>html</b> content";
-    await wrapper.setProps({ content: "", html });
+    await wrapper.setProps({ text: "", html });
     expect(wrapper.html()).toMatch(html);
   });
 
+  /*
   it("Renders $slots.default when passed", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DButton, {
