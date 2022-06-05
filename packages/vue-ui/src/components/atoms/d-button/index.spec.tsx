@@ -2,6 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import DButton from "@/components/atoms/d-button";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import config from "@darwin-studio/vue-ui-codegen/config.json";
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
@@ -18,7 +19,6 @@ describe("DButton", () => {
     expect(wrapper.html()).toMatch(html);
   });
 
-  /*
   it("Renders $slots.default when passed", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DButton, {
@@ -29,15 +29,22 @@ describe("DButton", () => {
     expect(wrapper.html()).toMatch(slotContent);
   });
 
+  it("Renders dButton class name", async () => {
+    expect(wrapper.classes().includes("dButton")).toEqual(true);
+  });
+
   it("Renders props.size to font class when passed", async () => {
     const size = SIZE.HUGE;
     await wrapper.setProps({ size });
-    const fontClassName = prepareCssClassName(
-      config.TOKENS.FONT.CSS_CLASS_PREFIX,
+    const sizeClassName = prepareCssClassName(
+      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-    expect(wrapper.classes().includes(fontClassName)).toEqual(true);
-  });*/
+
+    console.log(wrapper.classes());
+
+    expect(wrapper.classes().includes(sizeClassName)).toEqual(true);
+  });
 
   it("Emits click event when clicked", async () => {
     await wrapper.find("button").trigger("click");

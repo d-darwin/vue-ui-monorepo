@@ -6,8 +6,8 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path ???
 import { Text } from "@/types/text";
 import { TagName, TAG_NAME_DEFAULTS } from "../../../types/tag-name"; // TODO: fix shorthand
-
 import styles from "./index.css?module";
+
 export default defineComponent({
   name: "DTypography",
 

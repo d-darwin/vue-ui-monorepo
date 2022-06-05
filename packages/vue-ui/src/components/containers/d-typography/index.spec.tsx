@@ -32,6 +32,10 @@ describe("DTypography", () => {
     expect(wrapper.html()).toMatch(slotContent);
   });
 
+  it("Renders dTypography class name", async () => {
+    expect(wrapper.classes().includes("dTypography")).toEqual(true);
+  });
+
   it("Renders props.size to font class when passed", async () => {
     const size = SIZE.HUGE;
     await wrapper.setProps({ size });
@@ -41,8 +45,6 @@ describe("DTypography", () => {
     );
     expect(wrapper.classes().includes(fontClassName)).toEqual(true);
   });
-
-  // TODO: dTypography class
 
   it("Renders props.tag when passed", async () => {
     const tag = "address";
