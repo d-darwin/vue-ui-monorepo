@@ -1,9 +1,9 @@
 import { defineComponent, PropType, VNode } from "vue";
-import { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
+import type { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
-import { Text } from "@/types/text";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
+import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 
 export default defineComponent({
