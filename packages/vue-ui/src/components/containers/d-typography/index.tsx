@@ -13,7 +13,6 @@ export default defineComponent({
 
   props: {
     text: {
-      // TODO: name
       type: [String, Number] as PropType<Text>,
     },
     html: {

@@ -1,9 +1,13 @@
 import { defineComponent, PropType, VNode } from "vue";
+import { Text } from "@/types/text";
 
 export default defineComponent({
   name: "DTypography",
 
   props: {
+    text: {
+      type: [String, Number] as PropType<Text>,
+    },
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
     },
@@ -17,6 +21,6 @@ export default defineComponent({
   },
 
   render(): VNode {
-    return <button onClick={this.clickHandler}>Button</button>;
+    return <button onClick={this.clickHandler}>{this.text}</button>;
   },
 });
