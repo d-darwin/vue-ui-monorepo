@@ -40,9 +40,6 @@ describe("DButton", () => {
       config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-
-    console.log(wrapper.classes());
-
     expect(wrapper.classes().includes(sizeClassName)).toEqual(true);
   });
 
