@@ -1,15 +1,20 @@
 {
   "DESIGN_TOKENS_SOURCE": "@darwin-studio/vue-ui-style-dictionary",
-  "CSS_VARIABLES_SOURCE": "@darwin-studio/vue-ui-style-dictionary/build/variables.css",
-  "DYNAMIC_CONSTANTS_FILE_PATH": "./build/constants.ts",
+  "CSS_VARIABLES_SOURCE": "~@darwin-studio/vue-ui-style-dictionary/build/variables.css",
   "TOKENS": {
     "SIZE": {
       "NAME": "size",
       "CONSTANT_NAME": "SIZE",
-      "CLASS_PREFIX": "size"
+      "CONSTANT_FILE_NAME": "./build/constants/size.ts",
+      "TYPE_NAME": "Size",
+      "TYPE_FILE_NAME": "./build/types/size.ts",
+      "CSS_CLASS_PREFIX": "size",
+      "CSS_FILE_NAME": "./build/styles/size.css"
     },
     "FONT": {
-      "NAME": "font"
+      "NAME": "font",
+      "CSS_CLASS_PREFIX": "font",
+      "CSS_FILE_NAME": "./build/styles/font.css"
     }
   }
 }

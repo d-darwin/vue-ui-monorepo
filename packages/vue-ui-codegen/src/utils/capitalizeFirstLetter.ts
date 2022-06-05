@@ -1,0 +1,7 @@
+/**
+ * Capitalize the first letter of the str
+ * @param str
+ */
+export default function(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
