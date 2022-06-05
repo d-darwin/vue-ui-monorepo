@@ -44,7 +44,7 @@ var addSorting = (function() {
     // loads the search box
     function addSearchBox() {
         var template = document.getElementById('filterTemplate');
-        var templateClone = template.content.cloneNode(true);
+        var templateClone = template.text.cloneNode(true);
         templateClone.getElementById('fileSearch').oninput = onFilterInput;
         template.parentElement.appendChild(templateClone);
     }

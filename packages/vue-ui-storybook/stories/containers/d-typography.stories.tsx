@@ -12,7 +12,7 @@ export default {
     },
   },
   args: {
-    content: "Some text content",
+    text: "Some text content",
     html: "",
     size: SIZE.MEDIUM,
     tag: "div",

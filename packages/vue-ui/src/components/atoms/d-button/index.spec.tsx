@@ -6,12 +6,13 @@ import config from "@darwin-studio/vue-ui-codegen/config.json";
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
 
-  /*it("Renders props.content when passed", async () => {
-    const content = "Some text content";
-    await wrapper.setProps({ content });
-    expect(wrapper.text()).toMatch(content);
+  it("Renders props.content when passed", async () => {
+    const text = "Some text content";
+    await wrapper.setProps({ text });
+    expect(wrapper.text()).toMatch(text);
   });
 
+  /*
   it("Renders props.html when passed", async () => {
     const html = "Some <b>html</b> content";
     await wrapper.setProps({ content: "", html });

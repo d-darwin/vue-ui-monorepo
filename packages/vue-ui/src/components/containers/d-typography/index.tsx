@@ -4,7 +4,7 @@ import { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: 
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path ???
-import { Content } from "@/types/content";
+import { Text } from "@/types/text";
 import { TagName, TAG_NAME_DEFAULTS } from "../../../types/tag-name"; // TODO: fix shorthand
 
 import styles from "./index.css?module";
@@ -12,9 +12,9 @@ export default defineComponent({
   name: "DTypography",
 
   props: {
-    content: {
+    text: {
       // TODO: name
-      type: [String, Number] as PropType<Content>,
+      type: [String, Number] as PropType<Text>,
     },
     html: {
       // TODO: name
@@ -49,7 +49,7 @@ export default defineComponent({
     }
 
     return (
-      <Tag class={this.classes}>{this.$slots.default?.() || this.content}</Tag>
+      <Tag class={this.classes}>{this.$slots.default?.() || this.text}</Tag>
     );
   },
 });
