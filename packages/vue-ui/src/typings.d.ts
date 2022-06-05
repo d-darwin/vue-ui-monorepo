@@ -1,5 +1,3 @@
-declare module "@/*";
-
 declare module "*.css?module" {
   interface IClassNames {
     [className: string]: string;
@@ -8,4 +6,4 @@ declare module "*.css?module" {
   export = classNames;
 }
 
-declare module "@darwin-studio/button-ee";
+declare module "*.json";

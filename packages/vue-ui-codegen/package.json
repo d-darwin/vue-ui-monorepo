@@ -1,15 +1,18 @@
 {
   "name": "@darwin-studio/vue-ui-codegen",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "scripts": {
-    "build": "tsc index.ts --resolveJsonModule && node index.js"
+    "build": "node index.js",
+    "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
+  "dependencies": {
+    "@darwin-studio/vue-ui-style-dictionary": "^0.5.0"
+  },
   "devDependencies": {
-    "@darwin-studio/vue-ui-style-dictionary": "^0.3.0",
-    "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
+    "camel-case": "^4.1.2",
     "chalk": "^4.0.0",
     "eslint": "^6.7.2",
     "typescript": "^4.6.3"
