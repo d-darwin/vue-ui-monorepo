@@ -10,6 +10,9 @@ export default defineComponent({
   name: "DButton",
 
   props: {
+    /**
+     * TODO: Add description
+     */
     text: {
       type: [String, Number] as PropType<Text>,
     },
@@ -21,12 +24,25 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM,
     },
-    // TODO: tag ???
+    /*colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.primary,
+    },*/
+    /*rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.medium,
+    },*/
+    /*??? padding: {
+      type: String as PropType<Padding>,
+      default: PADDING.default,
+    },*/
+    // TODO: tag -> a11y ???
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
     },
   },
 
+  // TODO: move to setup()
   computed: {
     classes(): string[] {
       const sizeClassName = prepareCssClassName(
@@ -38,8 +54,10 @@ export default defineComponent({
   },
 
   methods: {
+    // TODO: move to setup()
     clickHandler(): void | Promise<void> {
       // TODO: preventDefault
+      // TODO: non native onClick
       this.whenClick?.();
     },
   },

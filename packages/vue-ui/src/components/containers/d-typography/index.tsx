@@ -6,7 +6,7 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@/constants/tag-name";
+import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
 
 export default defineComponent({
@@ -20,6 +20,7 @@ export default defineComponent({
       // TODO: warning
       type: String,
     },
+    // TODO: use fontSize const ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM,
@@ -30,6 +31,7 @@ export default defineComponent({
     },
   },
 
+  // TODO: move to setup()
   computed: {
     classes(): string[] {
       const fontClassName = prepareCssClassName(

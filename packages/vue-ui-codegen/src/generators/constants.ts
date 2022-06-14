@@ -26,5 +26,20 @@ export default async () => {
 
     writeConstantToFile(sizeConstantStrings, config.TOKENS.SIZE.CONSTANT_FILE_NAME);
   }
+
+  // TODO
+  /*const colorSchemeTokens = designTokens[config.TOKENS.SIZE.NAME];
+  if (sizeDesignTokens) {
+    const sizeConstantStrings: string[] = [];
+
+    sizeConstantStrings.push(`export const ${config.TOKENS.SIZE.CONSTANT_NAME} = {`);
+    const sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
+    sizeTokenVariantNameList.forEach((sizeTokenVariantName) => {
+      sizeConstantStrings.push(prepareConstantString(sizeTokenVariantName));
+    })
+    sizeConstantStrings.push("} as const;");
+
+    writeConstantToFile(sizeConstantStrings, config.TOKENS.SIZE.CONSTANT_FILE_NAME);
+  }*/
 }
 

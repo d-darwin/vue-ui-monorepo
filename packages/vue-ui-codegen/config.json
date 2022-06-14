@@ -15,6 +15,15 @@
       "NAME": "font",
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_NAME": "./build/styles/font.css"
+    },
+    "COLOR_SCHEME": {
+      "NAME": "color",
+      "CONSTANT_NAME": "COLOR_SCHEME",
+      "CONSTANT_FILE_NAME": "./build/constants/color-scheme.ts",
+      "TYPE_NAME": "ColorScheme",
+      "TYPE_FILE_NAME": "./build/types/color-scheme.ts",
+      "CSS_CLASS_PREFIX": "color",
+      "CSS_FILE_NAME": "./build/styles/color-scheme.css"
     }
   }
 }
