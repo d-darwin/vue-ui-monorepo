@@ -72,7 +72,6 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     colorSchemeConstantStrings_1.push("export const ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " = {"));
                     colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
                         .filter(function (designTokenName) { return !designTokenName.includes('-'); });
-                    console.log(colorSchemeTokenVariantNameList);
                     // TODO: now there is restriction - colorSchemeName has to be exactly one world
                     colorSchemeTokenVariantNameList.forEach(function (colorSchemeTokenVariantName) {
                         colorSchemeConstantStrings_1.push((0, prepareConstantString_1["default"])(colorSchemeTokenVariantName));

@@ -41,7 +41,7 @@ var log_1 = require("../utils/log");
 var prepareTypeString_1 = require("../utils/prepareTypeString");
 var writeTypeToFile_1 = require("../utils/writeTypeToFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeDesignTokens, sizeTypeStrings;
+    var designTokens, _a, sizeDesignTokens, sizeTypeStrings, colorSchemeDesignTokens, colorSchemeTypeStrings;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -62,6 +62,14 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     );
                     sizeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME));
                     (0, writeTypeToFile_1["default"])(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_NAME);
+                }
+                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
+                if (colorSchemeDesignTokens) {
+                    colorSchemeTypeStrings = [];
+                    colorSchemeTypeStrings.push("import { ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " } from \"../constants/color-scheme\";\n") // TODO: get from config, imports and declarations are separate
+                    );
+                    colorSchemeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME));
+                    (0, writeTypeToFile_1["default"])(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_NAME);
                 }
                 return [2 /*return*/];
         }
