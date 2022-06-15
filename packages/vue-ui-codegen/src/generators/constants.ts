@@ -36,9 +36,9 @@ export default async () => {
     const colorSchemeConstantStrings: string[] = [];
 
     colorSchemeConstantStrings.push(`export const ${config.TOKENS.COLOR_SCHEME.CONSTANT_NAME} = {`);
-    // TODO: make it callback func in ConstantStringsGenerator func
+    // TODO: make it callback func in ConstantStringsGenerator func - filter
     const colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
-      .filter(designTokenName => !designTokenName.includes('-'))
+      .filter(designTokenName => !designTokenName.includes('-'));
     // TODO: now there is restriction - colorSchemeName has to be exactly one world
     colorSchemeTokenVariantNameList.forEach((colorSchemeTokenVariantName) => {
       colorSchemeConstantStrings.push(prepareConstantString(colorSchemeTokenVariantName));

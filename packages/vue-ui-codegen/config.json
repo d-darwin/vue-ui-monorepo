@@ -22,7 +22,7 @@
       "CONSTANT_FILE_NAME": "./build/constants/color-scheme.ts",
       "TYPE_NAME": "ColorScheme",
       "TYPE_FILE_NAME": "./build/types/color-scheme.ts",
-      "CSS_CLASS_PREFIX": "color",
+      "CSS_CLASS_PREFIX": "colorScheme",
       "CSS_FILE_NAME": "./build/styles/color-scheme.css"
     }
   }

@@ -41,8 +41,9 @@ var log_1 = require("../utils/log");
 var prepareCssClassName_1 = require("../utils/prepareCssClassName");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");
 var writeCssClassesToFile_1 = require("../utils/writeCssClassesToFile");
+var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, fontDesignTokens, fontCssClasses_1, fontTokenVariantNameList;
+    var designTokens, _a, fontDesignTokens, fontCssClasses_1, fontTokenVariantNameList, colorSchemeDesignTokens, colorSchemeCssClasses_1, colorSchemeTokenVariantNameList;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -66,6 +67,19 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                         fontCssClasses_1.push((0, generateFontCssClass_1["default"])(className, customPropertyName));
                     });
                     (0, writeCssClassesToFile_1["default"])(fontCssClasses_1, config.TOKENS.FONT.CSS_FILE_NAME);
+                }
+                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
+                if (colorSchemeDesignTokens) {
+                    colorSchemeCssClasses_1 = [];
+                    colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
+                        .filter(function (designTokenName) { return !designTokenName.includes('-'); });
+                    // TODO: now there is restriction - colorSchemeName has to be exactly one world
+                    colorSchemeTokenVariantNameList.forEach(function (colorSchemeTokenVariantName) {
+                        var className = (0, prepareCssClassName_1["default"])(config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX, colorSchemeTokenVariantName);
+                        var customPropertyName = "--".concat(config.TOKENS.COLOR_SCHEME.NAME, "-").concat(colorSchemeTokenVariantName);
+                        colorSchemeCssClasses_1.push((0, generateColorSchemeCssClasses_1["default"])(className, customPropertyName));
+                    });
+                    (0, writeCssClassesToFile_1["default"])(colorSchemeCssClasses_1, config.TOKENS.COLOR_SCHEME.CSS_FILE_NAME);
                 }
                 return [2 /*return*/];
         }

@@ -3,6 +3,7 @@ import log, { LOG_TYPE } from "../utils/log";
 import prepareCssClassName from "../utils/prepareCssClassName";
 import generateFontCssClass from "../utils/generateFontCssClass";
 import writeClassesToFile from "../utils/writeCssClassesToFile";
+import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -14,6 +15,7 @@ export default async () => {
     return;
   }
 
+  // TODO: make generator
   const fontDesignTokens = designTokens[config.TOKENS.FONT.NAME];
   if (fontDesignTokens) {
     const fontCssClasses: string[] = [];
@@ -29,5 +31,26 @@ export default async () => {
     })
 
     writeClassesToFile(fontCssClasses, config.TOKENS.FONT.CSS_FILE_NAME);
+  }
+
+  // TODO: make generator
+  const colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
+  if (colorSchemeDesignTokens) {
+    const colorSchemeCssClasses: string[] = [];
+    // TODO: make it callback func in ConstantStringsGenerator func - filter
+    const colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
+      .filter(designTokenName => !designTokenName.includes('-'));
+    // TODO: now there is restriction - colorSchemeName has to be exactly one world
+    colorSchemeTokenVariantNameList.forEach((colorSchemeTokenVariantName) => {
+      const className = prepareCssClassName(
+        config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        colorSchemeTokenVariantName
+      );
+      const customPropertyName = `--${config.TOKENS.COLOR_SCHEME.NAME}-${colorSchemeTokenVariantName}`;
+
+      colorSchemeCssClasses.push(generateColorSchemeCssClasses(className, customPropertyName));
+    })
+
+    writeClassesToFile(colorSchemeCssClasses, config.TOKENS.COLOR_SCHEME.CSS_FILE_NAME);
   }
 }
