@@ -13,11 +13,14 @@ export default async () => {
     return;
   }
 
+  // TODO: fontSize ???
+
   const sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
   if (sizeDesignTokens) {
     const sizeConstantStrings: string[] = [];
 
     sizeConstantStrings.push(`export const ${config.TOKENS.SIZE.CONSTANT_NAME} = {`);
+
     const sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
     sizeTokenVariantNameList.forEach((sizeTokenVariantName) => {
       sizeConstantStrings.push(prepareConstantString(sizeTokenVariantName));
@@ -28,18 +31,21 @@ export default async () => {
   }
 
   // TODO
-  /*const colorSchemeTokens = designTokens[config.TOKENS.SIZE.NAME];
+  const colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
   if (sizeDesignTokens) {
-    const sizeConstantStrings: string[] = [];
+    const colorSchemeConstantStrings: string[] = [];
 
-    sizeConstantStrings.push(`export const ${config.TOKENS.SIZE.CONSTANT_NAME} = {`);
-    const sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
-    sizeTokenVariantNameList.forEach((sizeTokenVariantName) => {
-      sizeConstantStrings.push(prepareConstantString(sizeTokenVariantName));
+    colorSchemeConstantStrings.push(`export const ${config.TOKENS.COLOR_SCHEME.CONSTANT_NAME} = {`);
+    // TODO: make it callback func in ConstantStringsGenerator func
+    const colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
+      .filter(designTokenName => !designTokenName.includes('-'))
+    // TODO: now there is restriction - colorSchemeName has to be exactly one world
+    colorSchemeTokenVariantNameList.forEach((colorSchemeTokenVariantName) => {
+      colorSchemeConstantStrings.push(prepareConstantString(colorSchemeTokenVariantName));
     })
-    sizeConstantStrings.push("} as const;");
+    colorSchemeConstantStrings.push("} as const;");
 
-    writeConstantToFile(sizeConstantStrings, config.TOKENS.SIZE.CONSTANT_FILE_NAME);
-  }*/
+    writeConstantToFile(colorSchemeConstantStrings, config.TOKENS.COLOR_SCHEME.CONSTANT_FILE_NAME);
+  }
 }
 
