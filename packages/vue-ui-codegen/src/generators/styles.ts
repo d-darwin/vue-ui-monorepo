@@ -4,6 +4,7 @@ import prepareCssClassName from "../utils/prepareCssClassName";
 import generateFontCssClass from "../utils/generateFontCssClass";
 import writeClassesToFile from "../utils/writeCssClassesToFile";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
+import generateSizeCssClass from "../utils/generateSizeCssClass";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -13,6 +14,24 @@ export default async () => {
   } catch {
     log("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", LOG_TYPE.ERROR);
     return;
+  }
+
+  // TODO: make generator
+  const sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
+  if (sizeDesignTokens) {
+    const sizeCssClasses: string[] = [];
+    const sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
+    sizeTokenVariantNameList.forEach((sizeTokenVariantName) => {
+      const className = prepareCssClassName(
+        config.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        sizeTokenVariantName
+      );
+      const customPropertyName = `--${config.TOKENS.SIZE.NAME}-${sizeTokenVariantName}`;
+
+      sizeCssClasses.push(generateSizeCssClass(className, customPropertyName));
+    })
+
+    writeClassesToFile(sizeCssClasses, config.TOKENS.SIZE.CSS_FILE_NAME);
   }
 
   // TODO: make generator
@@ -47,7 +66,8 @@ export default async () => {
         colorSchemeTokenVariantName
       );
       const customPropertyName = `--${config.TOKENS.COLOR_SCHEME.NAME}-${colorSchemeTokenVariantName}`;
-
+      // TODO: make cssClasses generator
+      // TODO: make cssClasses generator
       colorSchemeCssClasses.push(generateColorSchemeCssClasses(className, customPropertyName));
     })
 

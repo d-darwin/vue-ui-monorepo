@@ -42,8 +42,9 @@ var prepareCssClassName_1 = require("../utils/prepareCssClassName");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");
 var writeCssClassesToFile_1 = require("../utils/writeCssClassesToFile");
 var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
+var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, fontDesignTokens, fontCssClasses_1, fontTokenVariantNameList, colorSchemeDesignTokens, colorSchemeCssClasses_1, colorSchemeTokenVariantNameList;
+    var designTokens, _a, sizeDesignTokens, sizeCssClasses_1, sizeTokenVariantNameList, fontDesignTokens, fontCssClasses_1, fontTokenVariantNameList, colorSchemeDesignTokens, colorSchemeCssClasses_1, colorSchemeTokenVariantNameList;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -57,6 +58,17 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
             case 3:
+                sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
+                if (sizeDesignTokens) {
+                    sizeCssClasses_1 = [];
+                    sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
+                    sizeTokenVariantNameList.forEach(function (sizeTokenVariantName) {
+                        var className = (0, prepareCssClassName_1["default"])(config.TOKENS.SIZE.CSS_CLASS_PREFIX, sizeTokenVariantName);
+                        var customPropertyName = "--".concat(config.TOKENS.SIZE.NAME, "-").concat(sizeTokenVariantName);
+                        sizeCssClasses_1.push((0, generateSizeCssClass_1["default"])(className, customPropertyName));
+                    });
+                    (0, writeCssClassesToFile_1["default"])(sizeCssClasses_1, config.TOKENS.SIZE.CSS_FILE_NAME);
+                }
                 fontDesignTokens = designTokens[config.TOKENS.FONT.NAME];
                 if (fontDesignTokens) {
                     fontCssClasses_1 = [];
@@ -77,6 +89,8 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     colorSchemeTokenVariantNameList.forEach(function (colorSchemeTokenVariantName) {
                         var className = (0, prepareCssClassName_1["default"])(config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX, colorSchemeTokenVariantName);
                         var customPropertyName = "--".concat(config.TOKENS.COLOR_SCHEME.NAME, "-").concat(colorSchemeTokenVariantName);
+                        // TODO: make cssClasses generator
+                        // TODO: make cssClasses generator
                         colorSchemeCssClasses_1.push((0, generateColorSchemeCssClasses_1["default"])(className, customPropertyName));
                     });
                     (0, writeCssClassesToFile_1["default"])(colorSchemeCssClasses_1, config.TOKENS.COLOR_SCHEME.CSS_FILE_NAME);

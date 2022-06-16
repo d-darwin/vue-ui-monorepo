@@ -5,6 +5,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TO
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/build/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/build/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/build/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";
@@ -24,6 +25,7 @@ export default defineComponent({
       // TODO: warning
       type: String,
     },
+    // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM,
@@ -36,9 +38,9 @@ export default defineComponent({
       type: String as PropType<Rounding>,
       default: ROUNDING.medium,
     },*/
-    /*??? padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.default,
+    /*??? paddingType: {
+      type: String as PropType<PaddingType>,
+      default: PADDING_TYPE.default,
     },*/
     // TODO: tag -> a11y ???
     whenClick: {
@@ -53,13 +55,14 @@ export default defineComponent({
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      // TODO: font
       const colorSchemeClassName = prepareCssClassName(
         config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
       );
       return [
         styles.dButton,
-        styles[sizeClassName],
+        sizeStyles[sizeClassName],
         colorSchemeStyles[colorSchemeClassName],
       ];
     },
