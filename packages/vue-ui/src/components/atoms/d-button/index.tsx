@@ -4,8 +4,9 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // T
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/build/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme"; // TODO: shorter path, default export ???
-import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/build/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/build/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/build/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";
@@ -55,6 +56,10 @@ export default defineComponent({
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      const fontClassName = prepareCssClassName(
+        config.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.size
+      );
       // TODO: font
       const colorSchemeClassName = prepareCssClassName(
         config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
@@ -63,6 +68,7 @@ export default defineComponent({
       return [
         styles.dButton,
         sizeStyles[sizeClassName],
+        fontStyles[fontClassName],
         colorSchemeStyles[colorSchemeClassName],
       ];
     },
