@@ -1,6 +1,7 @@
 import { Story } from "@storybook/vue3";
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme";
 
 export default {
   title: "atoms/DButton",
@@ -10,12 +11,16 @@ export default {
       control: { type: "select" },
       options: Object.values(SIZE),
     },
+    colorScheme: {
+      control: { type: "select" },
+      options: Object.values(COLOR_SCHEME),
+    },
   },
   args: {
     text: "Some text content",
     html: "",
     size: SIZE.MEDIUM,
-    tag: "div",
+    colorScheme: COLOR_SCHEME.PRIMARY,
   },
 };
 

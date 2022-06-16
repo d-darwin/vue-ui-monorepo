@@ -1,8 +1,12 @@
 import { defineComponent, PropType, VNode } from "vue";
+// TODO: add import order rule
 import type { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import config from "@darwin-studio/vue-ui-codegen/config.json";
+import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/build/types/color-scheme"; // TODO: shorter path, default export ???
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme"; // TODO: shorter path, default export ???
+import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/build/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
+import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 
@@ -24,10 +28,10 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM,
     },
-    /*colorScheme: {
+    colorScheme: {
       type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.primary,
-    },*/
+      default: COLOR_SCHEME.PRIMARY,
+    },
     /*rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.medium,
@@ -49,7 +53,15 @@ export default defineComponent({
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
-      return [styles.dButton, styles[sizeClassName]];
+      const colorSchemeClassName = prepareCssClassName(
+        config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        this.colorScheme
+      );
+      return [
+        styles.dButton,
+        styles[sizeClassName],
+        colorSchemeStyles[colorSchemeClassName],
+      ];
     },
   },
 
