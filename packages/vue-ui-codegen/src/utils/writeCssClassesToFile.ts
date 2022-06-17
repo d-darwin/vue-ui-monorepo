@@ -2,10 +2,11 @@ import * as fs from "fs";
 import * as config from "../../config.json";
 import log, { LOG_TYPE } from "./log";
 
-export default function(fileClassStrings: string[], filePath: string): void {
+export default async function(fileClassStrings: string[], filePath: string): Promise<void> {
   if (fileClassStrings.length) {
-    const sizeFileStream = fs.createWriteStream(filePath);
-    sizeFileStream.on("open", () => {
+    const sizeFileStream = await fs.createWriteStream(filePath);
+
+    sizeFileStream.on("open", async () => {
       sizeFileStream.write(
         `@import '${config.CSS_VARIABLES_SOURCE}';\n`
       );

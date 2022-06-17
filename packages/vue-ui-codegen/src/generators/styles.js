@@ -38,13 +38,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var config = require("../../config.json");
 var log_1 = require("../utils/log");
-var prepareCssClassName_1 = require("../utils/prepareCssClassName");
+var generateStylesFile_1 = require("../utils/generateStylesFile");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");
-var writeCssClassesToFile_1 = require("../utils/writeCssClassesToFile");
 var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeDesignTokens, sizeCssClasses_1, sizeTokenVariantNameList, fontDesignTokens, fontCssClasses_1, fontTokenVariantNameList, colorSchemeDesignTokens, colorSchemeCssClasses_1, colorSchemeTokenVariantNameList;
+    var designTokens, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -57,44 +56,18 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 _a = _b.sent();
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
-            case 3:
-                sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
-                if (sizeDesignTokens) {
-                    sizeCssClasses_1 = [];
-                    sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
-                    sizeTokenVariantNameList.forEach(function (sizeTokenVariantName) {
-                        var className = (0, prepareCssClassName_1["default"])(config.TOKENS.SIZE.CSS_CLASS_PREFIX, sizeTokenVariantName);
-                        var customPropertyName = "--".concat(config.TOKENS.SIZE.NAME, "-").concat(sizeTokenVariantName);
-                        sizeCssClasses_1.push((0, generateSizeCssClass_1["default"])(className, customPropertyName));
-                    });
-                    (0, writeCssClassesToFile_1["default"])(sizeCssClasses_1, config.TOKENS.SIZE.CSS_FILE_NAME);
-                }
-                fontDesignTokens = designTokens[config.TOKENS.FONT.NAME];
-                if (fontDesignTokens) {
-                    fontCssClasses_1 = [];
-                    fontTokenVariantNameList = Object.keys(fontDesignTokens);
-                    fontTokenVariantNameList.forEach(function (fontTokenVariantName) {
-                        var className = (0, prepareCssClassName_1["default"])(config.TOKENS.FONT.CSS_CLASS_PREFIX, fontTokenVariantName);
-                        var customPropertyName = "--".concat(config.TOKENS.FONT.NAME, "-").concat(fontTokenVariantName);
-                        fontCssClasses_1.push((0, generateFontCssClass_1["default"])(className, customPropertyName));
-                    });
-                    (0, writeCssClassesToFile_1["default"])(fontCssClasses_1, config.TOKENS.FONT.CSS_FILE_NAME);
-                }
-                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
-                if (colorSchemeDesignTokens) {
-                    colorSchemeCssClasses_1 = [];
-                    colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
-                        .filter(function (designTokenName) { return !designTokenName.includes('-'); });
-                    // TODO: now there is restriction - colorSchemeName has to be exactly one world
-                    colorSchemeTokenVariantNameList.forEach(function (colorSchemeTokenVariantName) {
-                        var className = (0, prepareCssClassName_1["default"])(config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX, colorSchemeTokenVariantName);
-                        var customPropertyName = "--".concat(config.TOKENS.COLOR_SCHEME.NAME, "-").concat(colorSchemeTokenVariantName);
-                        // TODO: make cssClasses generator
-                        // TODO: make cssClasses generator
-                        colorSchemeCssClasses_1.push((0, generateColorSchemeCssClasses_1["default"])(className, customPropertyName));
-                    });
-                    (0, writeCssClassesToFile_1["default"])(colorSchemeCssClasses_1, config.TOKENS.COLOR_SCHEME.CSS_FILE_NAME);
-                }
+            case 3: return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[config.TOKENS.SIZE.NAME], config.TOKENS.SIZE, null, // TODO: move to config ???
+                generateSizeCssClass_1["default"])];
+            case 4:
+                _b.sent();
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[config.TOKENS.FONT.NAME], config.TOKENS.FONT, null, // TODO: move to config ???
+                    generateFontCssClass_1["default"])];
+            case 5:
+                _b.sent();
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[config.TOKENS.COLOR_SCHEME.NAME], config.TOKENS.COLOR_SCHEME, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); }, // TODO: move to config ???
+                    generateColorSchemeCssClasses_1["default"])];
+            case 6:
+                _b.sent();
                 return [2 /*return*/];
         }
     });

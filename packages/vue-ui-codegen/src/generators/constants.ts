@@ -5,7 +5,7 @@ import writeConstantToFile from "../utils/writeConstantToFile";
 
 export default async () => {
   // TODO: move to helpers ???
-  let designTokens: Record<string, any>; // TODO: more accurate toke type
+  let designTokens: Record<string, any>; // TODO: more accurate token type
   try {
     designTokens = await import(config.DESIGN_TOKENS_SOURCE);
   } catch {

@@ -13,6 +13,10 @@
     },
     "FONT": {
       "NAME": "font",
+      "CONSTANT_NAME": "_",
+      "CONSTANT_FILE_NAME": "_",
+      "TYPE_NAME": "_",
+      "TYPE_FILE_NAME": "_",
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_NAME": "./build/styles/font.css"
     },
