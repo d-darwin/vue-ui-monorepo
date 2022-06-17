@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as config from "../../config.json";
 import log, { LOG_TYPE } from "./log";
 
+// TODO: generalize with other write functions
 export default async function(fileClassStrings: string[], filePath: string): Promise<void> {
   if (fileClassStrings.length) {
     const sizeFileStream = await fs.createWriteStream(filePath);

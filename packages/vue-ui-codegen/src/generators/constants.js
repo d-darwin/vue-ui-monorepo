@@ -38,10 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var config = require("../../config.json"); // TODO: path from root
 var log_1 = require("../utils/log");
-var prepareConstantString_1 = require("../utils/prepareConstantString");
-var writeConstantToFile_1 = require("../utils/writeConstantToFile");
+var generateConstantsFile_1 = require("../utils/generateConstantsFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeDesignTokens, sizeConstantStrings_1, sizeTokenVariantNameList, colorSchemeDesignTokens, colorSchemeConstantStrings_1, colorSchemeTokenVariantNameList;
+    var designTokens, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -54,31 +53,15 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 _a = _b.sent();
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
-            case 3:
-                sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
-                if (sizeDesignTokens) {
-                    sizeConstantStrings_1 = [];
-                    sizeConstantStrings_1.push("export const ".concat(config.TOKENS.SIZE.CONSTANT_NAME, " = {"));
-                    sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
-                    sizeTokenVariantNameList.forEach(function (sizeTokenVariantName) {
-                        sizeConstantStrings_1.push((0, prepareConstantString_1["default"])(sizeTokenVariantName));
-                    });
-                    sizeConstantStrings_1.push("} as const;");
-                    (0, writeConstantToFile_1["default"])(sizeConstantStrings_1, config.TOKENS.SIZE.CONSTANT_FILE_NAME);
-                }
-                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
-                if (sizeDesignTokens) {
-                    colorSchemeConstantStrings_1 = [];
-                    colorSchemeConstantStrings_1.push("export const ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " = {"));
-                    colorSchemeTokenVariantNameList = Object.keys(colorSchemeDesignTokens)
-                        .filter(function (designTokenName) { return !designTokenName.includes('-'); });
-                    // TODO: now there is restriction - colorSchemeName has to be exactly one world
-                    colorSchemeTokenVariantNameList.forEach(function (colorSchemeTokenVariantName) {
-                        colorSchemeConstantStrings_1.push((0, prepareConstantString_1["default"])(colorSchemeTokenVariantName));
-                    });
-                    colorSchemeConstantStrings_1.push("} as const;");
-                    (0, writeConstantToFile_1["default"])(colorSchemeConstantStrings_1, config.TOKENS.COLOR_SCHEME.CONSTANT_FILE_NAME);
-                }
+            case 3: 
+            // TODO: fontSize ???
+            return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[config.TOKENS.SIZE.NAME], config.TOKENS.SIZE, null)];
+            case 4:
+                // TODO: fontSize ???
+                _b.sent();
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[config.TOKENS.COLOR_SCHEME.NAME], config.TOKENS.COLOR_SCHEME, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); })];
+            case 5:
+                _b.sent();
                 return [2 /*return*/];
         }
     });

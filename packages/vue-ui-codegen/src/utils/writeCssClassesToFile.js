@@ -39,6 +39,7 @@ exports.__esModule = true;
 var fs = require("fs");
 var config = require("../../config.json");
 var log_1 = require("./log");
+// TODO: generalize with other write functions
 function default_1(fileClassStrings, filePath) {
     return __awaiter(this, void 0, void 0, function () {
         var sizeFileStream_1;

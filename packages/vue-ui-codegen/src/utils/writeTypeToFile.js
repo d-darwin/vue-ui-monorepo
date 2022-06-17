@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var fs = require("fs");
 var log_1 = require("./log");
+// TODO: generalize with other write functions
 function default_1(constantStrings, filePath) {
     if (constantStrings.length) {
         var sizeFileStream_1 = fs.createWriteStream(filePath);

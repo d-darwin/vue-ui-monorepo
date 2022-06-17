@@ -1,8 +1,6 @@
 import prepareCssClassName from "../utils/prepareCssClassName";
 import writeClassesToFile from "../utils/writeCssClassesToFile";
-
-// TODO: move somewhere else
-type ConfigKey = 'NAME' | 'CONSTANT_NAME' | 'CONSTANT_FILE_NAME' | 'TYPE_NAME' | 'TYPE_FILE_NAME' | 'CSS_CLASS_PREFIX' | 'CSS_FILE_NAME';
+import { ConfigKey } from "../types";
 
 // TODO: descr
 // TODO: try to reduce args
@@ -16,10 +14,12 @@ export default async function (
   if (designTokens) {
     const cssClasses: string[] = [];
 
-    const tokenVariantNameList = tokenNameFilter ? tokenNameFilter(Object.keys(designTokens)) : Object.keys(designTokens);
-    tokenVariantNameList?.forEach((colorSchemeTokenVariantName) => {
-      const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, colorSchemeTokenVariantName);
-      const customPropertyName = `--${designTokenConfig.NAME}-${colorSchemeTokenVariantName}`;
+    const tokenVariantNameList = tokenNameFilter
+      ? tokenNameFilter(Object.keys(designTokens))
+      : Object.keys(designTokens);
+    tokenVariantNameList?.forEach((tokenVariantName) => {
+      const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
+      const customPropertyName = `--${designTokenConfig.NAME}-${tokenVariantName}`;
       cssClasses.push(cssClassGenerator(className, customPropertyName));
     })
 

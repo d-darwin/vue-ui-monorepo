@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import log, { LOG_TYPE } from "./log";
 
+// TODO: generalize with other write functions
 export default function(constantStrings: string[], filePath: string): void {
   if (constantStrings.length) {
     const sizeFileStream = fs.createWriteStream(filePath);
