@@ -21,6 +21,6 @@ export default async function (
     })
     constantStrings.push("} as const;");
 
-    await writeConstantToFile(constantStrings, designTokenConfig.CONSTANT_FILE_NAME);
+    await writeConstantToFile(constantStrings, designTokenConfig.CONSTANT_FILE_PATH);
   }
 }

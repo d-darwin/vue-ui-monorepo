@@ -5,29 +5,29 @@
     "SIZE": {
       "NAME": "size",
       "CONSTANT_NAME": "SIZE",
-      "CONSTANT_FILE_NAME": "./build/constants/size.ts",
+      "CONSTANT_FILE_PATH": "./build/constants/size.ts",
       "TYPE_NAME": "Size",
-      "TYPE_FILE_NAME": "./build/types/size.ts",
+      "TYPE_FILE_PATH": "./build/types/size.ts",
       "CSS_CLASS_PREFIX": "size",
-      "CSS_FILE_NAME": "./build/styles/size.css"
+      "CSS_FILE_PATH": "./build/styles/size.css"
     },
     "FONT": {
       "NAME": "font",
       "CONSTANT_NAME": "_",
-      "CONSTANT_FILE_NAME": "_",
+      "CONSTANT_FILE_PATH": "_",
       "TYPE_NAME": "_",
-      "TYPE_FILE_NAME": "_",
+      "TYPE_FILE_PATH": "_",
       "CSS_CLASS_PREFIX": "font",
-      "CSS_FILE_NAME": "./build/styles/font.css"
+      "CSS_FILE_PATH": "./build/styles/font.css"
     },
     "COLOR_SCHEME": {
       "NAME": "color",
       "CONSTANT_NAME": "COLOR_SCHEME",
-      "CONSTANT_FILE_NAME": "./build/constants/color-scheme.ts",
+      "CONSTANT_FILE_PATH": "./build/constants/color-scheme.ts",
       "TYPE_NAME": "ColorScheme",
-      "TYPE_FILE_NAME": "./build/types/color-scheme.ts",
+      "TYPE_FILE_PATH": "./build/types/color-scheme.ts",
       "CSS_CLASS_PREFIX": "colorScheme",
-      "CSS_FILE_NAME": "./build/styles/color-scheme.css"
+      "CSS_FILE_PATH": "./build/styles/color-scheme.css"
     }
   }
 }

@@ -25,7 +25,7 @@ export default async () => {
       prepareTypeString(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME)
     );
 
-    writeTypeToFile(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_NAME);
+    writeTypeToFile(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_PATH);
   }
 
   const colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
@@ -39,6 +39,6 @@ export default async () => {
       prepareTypeString(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME)
     );
 
-    writeTypeToFile(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_NAME);
+    writeTypeToFile(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH);
   }
 }

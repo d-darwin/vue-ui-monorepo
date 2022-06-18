@@ -36,42 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var config = require("../../config.json");
-var log_1 = require("../utils/log");
-var prepareTypeString_1 = require("../utils/prepareTypeString");
-var writeTypeToFile_1 = require("../utils/writeTypeToFile");
-exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeDesignTokens, sizeTypeStrings, colorSchemeDesignTokens, colorSchemeTypeStrings;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Promise.resolve().then(function () { return require(config.DESIGN_TOKENS_SOURCE); })];
-            case 1:
-                designTokens = _b.sent();
-                return [3 /*break*/, 3];
-            case 2:
-                _a = _b.sent();
-                (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
-                return [2 /*return*/];
-            case 3:
-                sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
-                if (sizeDesignTokens) {
-                    sizeTypeStrings = [];
-                    sizeTypeStrings.push("import { ".concat(config.TOKENS.SIZE.CONSTANT_NAME, " } from \"../constants/size\";\n") // TODO: get from config, imports and declarations are separate
-                    );
-                    sizeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_PATH);
-                }
-                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
-                if (colorSchemeDesignTokens) {
-                    colorSchemeTypeStrings = [];
-                    colorSchemeTypeStrings.push("import { ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " } from \"../constants/color-scheme\";\n") // TODO: get from config, imports and declarations are separate
-                    );
-                    colorSchemeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH);
-                }
-                return [2 /*return*/];
-        }
+var prepareConstantString_1 = require("../utils/prepareConstantString");
+var writeConstantToFile_1 = require("../utils/writeConstantToFile");
+function default_1(
+// TODO: more accurate type
+designTokens, designTokenConfig, tokenNameFilter) {
+    return __awaiter(this, void 0, void 0, function () {
+        var constantStrings_1, tokenVariantNameList;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!designTokens) return [3 /*break*/, 2];
+                    constantStrings_1 = [];
+                    constantStrings_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, " = {"));
+                    tokenVariantNameList = tokenNameFilter
+                        ? tokenNameFilter(Object.keys(designTokens))
+                        : Object.keys(designTokens);
+                    tokenVariantNameList.forEach(function (tokenVariantName) {
+                        constantStrings_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
+                    });
+                    constantStrings_1.push("} as const;");
+                    return [4 /*yield*/, (0, writeConstantToFile_1["default"])(constantStrings_1, designTokenConfig.CONSTANT_FILE_PATH)];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
+            }
+        });
     });
-}); });
+}
+exports["default"] = default_1;

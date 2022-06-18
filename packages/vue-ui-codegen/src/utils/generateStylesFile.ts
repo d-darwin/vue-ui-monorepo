@@ -23,6 +23,6 @@ export default async function (
       cssClasses.push(cssClassGenerator(className, customPropertyName));
     })
 
-    await writeClassesToFile(cssClasses, designTokenConfig.CSS_FILE_NAME);
+    await writeClassesToFile(cssClasses, designTokenConfig.CSS_FILE_PATH);
   }
 }
