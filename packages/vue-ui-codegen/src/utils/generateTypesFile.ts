@@ -13,7 +13,7 @@ export default async function (
     const typeStringList: string[] = [];
 
     typeStringList.push(
-      `import { ${designTokenConfig.CONSTANT_NAME} } from "..${designTokenConfig.CONSTANT_FILE_PATH}";\n` // TODO: more flexible source - global @darwin-ui-vue///
+      `import { ${designTokenConfig.CONSTANT_NAME} } from "${config.PACKAGE_NAME}/${config.OUT_DIR}${designTokenConfig.CONSTANT_FILE_PATH}";\n`
     );
     typeStringList.push(
       prepareTypeString(designTokenConfig.TYPE_NAME, designTokenConfig.CONSTANT_NAME)

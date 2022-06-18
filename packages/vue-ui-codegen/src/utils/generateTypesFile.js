@@ -49,8 +49,7 @@ function default_1(designTokens, designTokenConfig) {
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
                     typeStringList = [];
-                    typeStringList.push("import { ".concat(designTokenConfig.CONSTANT_NAME, " } from \"..").concat(designTokenConfig.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
-                    );
+                    typeStringList.push("import { ".concat(designTokenConfig.CONSTANT_NAME, " } from \"").concat(config.PACKAGE_NAME, "/").concat(config.OUT_DIR).concat(designTokenConfig.CONSTANT_FILE_PATH, "\";\n"));
                     typeStringList.push((0, prepareTypeString_1["default"])(designTokenConfig.TYPE_NAME, designTokenConfig.CONSTANT_NAME));
                     return [4 /*yield*/, (0, writeFile_1["default"])(typeStringList, config.OUT_DIR + designTokenConfig.TYPE_FILE_PATH + config.TYPE_FILE_EXT)];
                 case 1:
