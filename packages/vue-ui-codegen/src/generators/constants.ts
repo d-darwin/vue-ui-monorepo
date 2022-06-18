@@ -1,10 +1,11 @@
 import * as config from "../../config.json"; // TODO: path from root
 import log, { LOG_TYPE } from "../utils/log";
 import generateConstantsFile from "../utils/generateConstantsFile";
+import type { DesignTokens } from "../types";
 
 export default async () => {
   // TODO: move to helpers ???
-  let designTokens: Record<string, any>; // TODO: more accurate token type
+  let designTokens: DesignTokens;
   try {
     designTokens = await import(config.DESIGN_TOKENS_SOURCE);
   } catch {

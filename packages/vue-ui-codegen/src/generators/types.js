@@ -38,10 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var config = require("../../config.json");
 var log_1 = require("../utils/log");
-var prepareTypeString_1 = require("../utils/prepareTypeString");
-var writeTypeToFile_1 = require("../utils/writeTypeToFile");
+var generateTypesFile_1 = require("../utils/generateTypesFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeDesignTokens, sizeTypeStrings, colorSchemeDesignTokens, colorSchemeTypeStrings;
+    var designTokens, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -54,23 +53,15 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 _a = _b.sent();
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
-            case 3:
-                sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
-                if (sizeDesignTokens) {
-                    sizeTypeStrings = [];
-                    sizeTypeStrings.push("import { ".concat(config.TOKENS.SIZE.CONSTANT_NAME, " } from \"..").concat(config.TOKENS.SIZE.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
-                    );
-                    sizeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(sizeTypeStrings, config.OUT_DIR + config.TOKENS.SIZE.TYPE_FILE_PATH + config.TYPE_FILE_EXT);
-                }
-                colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
-                if (colorSchemeDesignTokens) {
-                    colorSchemeTypeStrings = [];
-                    colorSchemeTypeStrings.push("import { ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " } from \"..").concat(config.TOKENS.COLOR_SCHEME.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
-                    );
-                    colorSchemeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(colorSchemeTypeStrings, config.OUT_DIR + config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH + config.TYPE_FILE_EXT);
-                }
+            case 3: 
+            // TODO: fontSize ???
+            return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[config.TOKENS.SIZE.NAME], config.TOKENS.SIZE)];
+            case 4:
+                // TODO: fontSize ???
+                _b.sent();
+                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[config.TOKENS.COLOR_SCHEME.NAME], config.TOKENS.COLOR_SCHEME)];
+            case 5:
+                _b.sent();
                 return [2 /*return*/];
         }
     });

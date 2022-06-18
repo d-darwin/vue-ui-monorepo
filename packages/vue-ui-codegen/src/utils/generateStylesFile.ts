@@ -1,19 +1,18 @@
 import prepareCssClassName from "../utils/prepareCssClassName";
 import writeClassesToFile from "../utils/writeCssClassesToFile";
-import { ConfigKey } from "../types";
+import type { ConfigKey, DesignTokens } from "../types";
 import * as config from "../../config.json";
 
 // TODO: descr
 // TODO: try to reduce args
 export default async function (
-  // TODO: more accurate type
-  designTokens: Record<string, any>,
+  designTokens: DesignTokens,
   designTokenConfig: Record<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
   cssClassGenerator: (className: string, customPropertyName: string) => string,
 ): Promise<void> {
   if (designTokens) {
-    const cssClasses: string[] = [];
+    const cssClassStringList: string[] = [];
 
     const tokenVariantNameList = tokenNameFilter
       ? tokenNameFilter(Object.keys(designTokens))
@@ -21,11 +20,11 @@ export default async function (
     tokenVariantNameList?.forEach((tokenVariantName) => {
       const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
       const customPropertyName = `--${designTokenConfig.NAME}-${tokenVariantName}`;
-      cssClasses.push(cssClassGenerator(className, customPropertyName));
+      cssClassStringList.push(cssClassGenerator(className, customPropertyName));
     })
 
     await writeClassesToFile(
-      cssClasses,
+      cssClassStringList,
       config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT
     );
   }

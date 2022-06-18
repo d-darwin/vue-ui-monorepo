@@ -4,10 +4,11 @@ import generateStylesFile from "../utils/generateStylesFile";
 import generateFontCssClass from "../utils/generateFontCssClass";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
+import type { DesignTokens } from "../types";
 
 export default async () => {
   // TODO: move to helpers ???
-  let designTokens: Record<string, any>; // TODO: more accurate token type
+  let designTokens: DesignTokens;
   try {
     designTokens = await import(config.DESIGN_TOKENS_SOURCE);
   } catch {

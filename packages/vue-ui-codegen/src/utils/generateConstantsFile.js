@@ -39,25 +39,23 @@ exports.__esModule = true;
 var prepareConstantString_1 = require("../utils/prepareConstantString");
 var writeConstantToFile_1 = require("../utils/writeConstantToFile");
 var config = require("../../config.json");
-function default_1(
-// TODO: more accurate type
-designTokens, designTokenConfig, tokenNameFilter) {
+function default_1(designTokens, designTokenConfig, tokenNameFilter) {
     return __awaiter(this, void 0, void 0, function () {
-        var constantStrings_1, tokenVariantNameList;
+        var constantStringList_1, tokenVariantNameList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
-                    constantStrings_1 = [];
-                    constantStrings_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, " = {"));
+                    constantStringList_1 = [];
+                    constantStringList_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, " = {"));
                     tokenVariantNameList = tokenNameFilter
                         ? tokenNameFilter(Object.keys(designTokens))
                         : Object.keys(designTokens);
                     tokenVariantNameList.forEach(function (tokenVariantName) {
-                        constantStrings_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
+                        constantStringList_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
                     });
-                    constantStrings_1.push("} as const;");
-                    return [4 /*yield*/, (0, writeConstantToFile_1["default"])(constantStrings_1, config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT)];
+                    constantStringList_1.push("} as const;");
+                    return [4 /*yield*/, (0, writeConstantToFile_1["default"])(constantStringList_1, config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT)];
                 case 1:
                     _a.sent();
                     _a.label = 2;

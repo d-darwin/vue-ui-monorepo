@@ -41,25 +41,23 @@ var writeCssClassesToFile_1 = require("../utils/writeCssClassesToFile");
 var config = require("../../config.json");
 // TODO: descr
 // TODO: try to reduce args
-function default_1(
-// TODO: more accurate type
-designTokens, designTokenConfig, tokenNameFilter, cssClassGenerator) {
+function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGenerator) {
     return __awaiter(this, void 0, void 0, function () {
-        var cssClasses_1, tokenVariantNameList;
+        var cssClassStringList_1, tokenVariantNameList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
-                    cssClasses_1 = [];
+                    cssClassStringList_1 = [];
                     tokenVariantNameList = tokenNameFilter
                         ? tokenNameFilter(Object.keys(designTokens))
                         : Object.keys(designTokens);
                     tokenVariantNameList === null || tokenVariantNameList === void 0 ? void 0 : tokenVariantNameList.forEach(function (tokenVariantName) {
                         var className = (0, prepareCssClassName_1["default"])(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
                         var customPropertyName = "--".concat(designTokenConfig.NAME, "-").concat(tokenVariantName);
-                        cssClasses_1.push(cssClassGenerator(className, customPropertyName));
+                        cssClassStringList_1.push(cssClassGenerator(className, customPropertyName));
                     });
-                    return [4 /*yield*/, (0, writeCssClassesToFile_1["default"])(cssClasses_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
+                    return [4 /*yield*/, (0, writeCssClassesToFile_1["default"])(cssClassStringList_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
                 case 1:
                     _a.sent();
                     _a.label = 2;
