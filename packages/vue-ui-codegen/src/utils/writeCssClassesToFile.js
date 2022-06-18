@@ -48,7 +48,7 @@ function default_1(fileClassStrings, filePath) {
             switch (_a.label) {
                 case 0:
                     if (!fileClassStrings.length) return [3 /*break*/, 2];
-                    return [4 /*yield*/, fs.createWriteStream(filePath)];
+                    return [4 /*yield*/, fs.createWriteStream(config.OUT_DIR + filePath)];
                 case 1:
                     sizeFileStream_1 = _a.sent();
                     sizeFileStream_1.on("open", function () { return __awaiter(_this, void 0, void 0, function () {

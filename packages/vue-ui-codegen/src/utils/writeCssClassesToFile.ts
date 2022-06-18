@@ -5,7 +5,7 @@ import log, { LOG_TYPE } from "./log";
 // TODO: generalize with other write functions
 export default async function(fileClassStrings: string[], filePath: string): Promise<void> {
   if (fileClassStrings.length) {
-    const sizeFileStream = await fs.createWriteStream(filePath);
+    const sizeFileStream = await fs.createWriteStream(config.OUT_DIR + filePath);
 
     sizeFileStream.on("open", async () => {
       sizeFileStream.write(

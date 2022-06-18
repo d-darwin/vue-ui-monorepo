@@ -1,11 +1,12 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
+var config = require("../../config.json"); // TODO: path from root
 var log_1 = require("./log");
 // TODO: generalize with other write functions
 function default_1(constantStrings, filePath) {
     if (constantStrings.length) {
-        var sizeFileStream_1 = fs.createWriteStream(filePath);
+        var sizeFileStream_1 = fs.createWriteStream(config.OUT_DIR + filePath);
         sizeFileStream_1.on("open", function () {
             constantStrings.forEach(function (classStrings, classIndex) {
                 sizeFileStream_1.write("".concat(classStrings, "\n"));
