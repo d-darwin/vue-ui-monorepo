@@ -1,4 +1,4 @@
-import * as config from "../../config.json"; // TODO: path from root
+import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import generateConstantsFile from "../utils/generateConstantsFile";
 import type { DesignTokens } from "../types";

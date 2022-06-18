@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var config = require("../../config.json");
+var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateStylesFile_1 = require("../utils/generateStylesFile");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");

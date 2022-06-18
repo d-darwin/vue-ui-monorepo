@@ -1,7 +1,8 @@
 import { Story } from "@storybook/vue3";
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme";
+// TODO: use vue-ui-codegen/config.json to define path
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 
 export default {
   title: "atoms/DButton",

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var config = require("../../config.json"); // TODO: path from root
+var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateConstantsFile_1 = require("../utils/generateConstantsFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {

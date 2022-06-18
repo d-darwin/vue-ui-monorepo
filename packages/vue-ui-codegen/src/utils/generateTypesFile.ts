@@ -1,7 +1,7 @@
+import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import type { ConfigKey, DesignTokens } from "../types";
 import prepareTypeString from "./prepareTypeString";
 import writeFile from "./writeFile";
-import * as config from "../../config.json";
 
 // TODO: descr
 // TODO: try to reduce args

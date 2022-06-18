@@ -1,4 +1,4 @@
-import * as config from "../../config.json";
+import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import generateStylesFile from "../utils/generateStylesFile";
 import generateFontCssClass from "../utils/generateFontCssClass";

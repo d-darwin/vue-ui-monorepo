@@ -1,4 +1,5 @@
-@import '~@darwin-studio/vue-ui-codegen/build/styles/font.css';
+/*TODO: get @darwin-studio/vue-ui-codegen paths from config.json*/
+@import '~@darwin-studio/vue-ui-codegen/dist/styles/font.css';
 
 .dTypography {
   /*TODO*/

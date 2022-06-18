@@ -1,6 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import DButton from "@/components/atoms/d-button";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
+// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import config from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 

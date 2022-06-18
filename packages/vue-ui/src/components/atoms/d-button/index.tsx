@@ -1,13 +1,13 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import order rule
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import type { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
-import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/build/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/build/constants/color-scheme"; // TODO: shorter path, default export ???
-import sizeStyles from "@darwin-studio/vue-ui-codegen/build/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/vue-ui-codegen/build/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/build/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";

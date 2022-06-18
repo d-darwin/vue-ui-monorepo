@@ -2,7 +2,7 @@
   "PACKAGE_NAME": "@darwin-studio/vue-ui-codegen",
   "DESIGN_TOKENS_SOURCE": "@darwin-studio/vue-ui-style-dictionary",
   "CSS_VARIABLES_SOURCE": "~@darwin-studio/vue-ui-style-dictionary/build/variables.css",
-  "OUT_DIR": "build",
+  "OUT_DIR": "dist",
   "CONSTANT_FILE_EXT": ".ts",
   "TYPE_FILE_EXT": ".ts",
   "STYLES_FILE_EXT": ".css",

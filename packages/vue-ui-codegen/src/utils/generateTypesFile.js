@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var prepareTypeString_1 = require("./prepareTypeString");
 var writeFile_1 = require("./writeFile");
-var config = require("../../config.json");
 // TODO: descr
 // TODO: try to reduce args
 function default_1(designTokens, designTokenConfig) {
