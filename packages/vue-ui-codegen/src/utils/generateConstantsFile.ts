@@ -1,6 +1,7 @@
 import prepareConstantString from "../utils/prepareConstantString";
 import writeConstantToFile from "../utils/writeConstantToFile";
 import { ConfigKey } from "../types";
+import * as config from "../../config.json";
 
 export default async function (
   // TODO: more accurate type
@@ -21,6 +22,9 @@ export default async function (
     })
     constantStrings.push("} as const;");
 
-    await writeConstantToFile(constantStrings, designTokenConfig.CONSTANT_FILE_PATH);
+    await writeConstantToFile(
+      constantStrings,
+      config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT
+    );
   }
 }

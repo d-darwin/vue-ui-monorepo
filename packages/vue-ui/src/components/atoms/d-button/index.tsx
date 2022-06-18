@@ -1,5 +1,6 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import order rule
+// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 import type { Size } from "@darwin-studio/vue-ui-codegen/build/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/build/types/color-scheme"; // TODO: shorter path, default export ???

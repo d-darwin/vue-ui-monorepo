@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var prepareConstantString_1 = require("../utils/prepareConstantString");
 var writeConstantToFile_1 = require("../utils/writeConstantToFile");
+var config = require("../../config.json");
 function default_1(
 // TODO: more accurate type
 designTokens, designTokenConfig, tokenNameFilter) {
@@ -56,7 +57,7 @@ designTokens, designTokenConfig, tokenNameFilter) {
                         constantStrings_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
                     });
                     constantStrings_1.push("} as const;");
-                    return [4 /*yield*/, (0, writeConstantToFile_1["default"])(constantStrings_1, designTokenConfig.CONSTANT_FILE_PATH)];
+                    return [4 /*yield*/, (0, writeConstantToFile_1["default"])(constantStrings_1, config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT)];
                 case 1:
                     _a.sent();
                     _a.label = 2;

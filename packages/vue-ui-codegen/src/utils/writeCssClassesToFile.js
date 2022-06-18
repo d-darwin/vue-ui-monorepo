@@ -40,30 +40,31 @@ var fs = require("fs");
 var config = require("../../config.json");
 var log_1 = require("./log");
 // TODO: generalize with other write functions
-function default_1(fileClassStrings, filePath) {
+function default_1(fileStringList, filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var sizeFileStream_1;
+        var fileStream_1;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!fileClassStrings.length) return [3 /*break*/, 2];
-                    return [4 /*yield*/, fs.createWriteStream(config.OUT_DIR + filePath)];
+                    if (!fileStringList.length) return [3 /*break*/, 2];
+                    return [4 /*yield*/, fs.createWriteStream(filePath)];
                 case 1:
-                    sizeFileStream_1 = _a.sent();
-                    sizeFileStream_1.on("open", function () { return __awaiter(_this, void 0, void 0, function () {
+                    fileStream_1 = _a.sent();
+                    fileStream_1.on("open", function () { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
-                            sizeFileStream_1.write("@import '".concat(config.CSS_VARIABLES_SOURCE, "';\n"));
-                            fileClassStrings.forEach(function (classStrings, classIndex) {
-                                sizeFileStream_1.write("\n".concat(classStrings, "\n"));
-                                if (classIndex >= fileClassStrings.length - 1) {
-                                    sizeFileStream_1.end();
+                            fileStream_1.write("@import '".concat(config.CSS_VARIABLES_SOURCE, "';\n") // TODO: move to call
+                            );
+                            fileStringList.forEach(function (fileString, index) {
+                                fileStream_1.write("\n".concat(fileString, "\n"));
+                                if (index >= fileStringList.length - 1) {
+                                    fileStream_1.end();
                                 }
                             });
                             return [2 /*return*/];
                         });
                     }); });
-                    sizeFileStream_1.on("error", function (error) {
+                    fileStream_1.on("error", function (error) {
                         (0, log_1["default"])(error.message, log_1.LOG_TYPE.ERROR);
                     });
                     _a.label = 2;

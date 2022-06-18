@@ -3,25 +3,25 @@ import * as config from "../../config.json";
 import log, { LOG_TYPE } from "./log";
 
 // TODO: generalize with other write functions
-export default async function(fileClassStrings: string[], filePath: string): Promise<void> {
-  if (fileClassStrings.length) {
-    const sizeFileStream = await fs.createWriteStream(config.OUT_DIR + filePath);
+export default async function(fileStringList: string[], filePath: string): Promise<void> {
+  if (fileStringList.length) {
+    const fileStream = await fs.createWriteStream(filePath);
 
-    sizeFileStream.on("open", async () => {
-      sizeFileStream.write(
-        `@import '${config.CSS_VARIABLES_SOURCE}';\n`
+    fileStream.on("open", async () => {
+      fileStream.write(
+        `@import '${config.CSS_VARIABLES_SOURCE}';\n` // TODO: move to call
       );
 
-      fileClassStrings.forEach((classStrings, classIndex) => {
-        sizeFileStream.write(`\n${classStrings}\n`);
+      fileStringList.forEach((fileString, index) => {
+        fileStream.write(`\n${fileString}\n`);
 
-        if (classIndex >= fileClassStrings.length - 1) {
-          sizeFileStream.end();
+        if (index >= fileStringList.length - 1) {
+          fileStream.end();
         }
       });
     });
 
-    sizeFileStream.on("error", (error) => {
+    fileStream.on("error", (error) => {
       log(error.message, LOG_TYPE.ERROR);
     });
   }

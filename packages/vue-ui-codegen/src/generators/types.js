@@ -58,18 +58,18 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
                 if (sizeDesignTokens) {
                     sizeTypeStrings = [];
-                    sizeTypeStrings.push("import { ".concat(config.TOKENS.SIZE.CONSTANT_NAME, " } from \"../constants/size\";\n") // TODO: get from config, imports and declarations are separate
+                    sizeTypeStrings.push("import { ".concat(config.TOKENS.SIZE.CONSTANT_NAME, " } from \"..").concat(config.TOKENS.SIZE.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
                     );
                     sizeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_PATH);
+                    (0, writeTypeToFile_1["default"])(sizeTypeStrings, config.OUT_DIR + config.TOKENS.SIZE.TYPE_FILE_PATH + config.TYPE_FILE_EXT);
                 }
                 colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
                 if (colorSchemeDesignTokens) {
                     colorSchemeTypeStrings = [];
-                    colorSchemeTypeStrings.push("import { ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " } from \"../constants/color-scheme\";\n") // TODO: get from config, imports and declarations are separate
+                    colorSchemeTypeStrings.push("import { ".concat(config.TOKENS.COLOR_SCHEME.CONSTANT_NAME, " } from \"..").concat(config.TOKENS.COLOR_SCHEME.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
                     );
                     colorSchemeTypeStrings.push((0, prepareTypeString_1["default"])(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME));
-                    (0, writeTypeToFile_1["default"])(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH);
+                    (0, writeTypeToFile_1["default"])(colorSchemeTypeStrings, config.OUT_DIR + config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH + config.TYPE_FILE_EXT);
                 }
                 return [2 /*return*/];
         }

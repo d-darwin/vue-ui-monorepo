@@ -1,6 +1,7 @@
 import prepareCssClassName from "../utils/prepareCssClassName";
 import writeClassesToFile from "../utils/writeCssClassesToFile";
 import { ConfigKey } from "../types";
+import * as config from "../../config.json";
 
 // TODO: descr
 // TODO: try to reduce args
@@ -23,6 +24,9 @@ export default async function (
       cssClasses.push(cssClassGenerator(className, customPropertyName));
     })
 
-    await writeClassesToFile(cssClasses, designTokenConfig.CSS_FILE_PATH);
+    await writeClassesToFile(
+      cssClasses,
+      config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT
+    );
   }
 }

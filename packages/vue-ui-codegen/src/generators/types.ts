@@ -19,13 +19,16 @@ export default async () => {
     const sizeTypeStrings: string[] = [];
 
     sizeTypeStrings.push(
-      `import { ${config.TOKENS.SIZE.CONSTANT_NAME} } from "../constants/size";\n` // TODO: get from config, imports and declarations are separate
+      `import { ${config.TOKENS.SIZE.CONSTANT_NAME} } from "..${config.TOKENS.SIZE.CONSTANT_FILE_PATH}";\n` // TODO: more flexible source - global @darwin-ui-vue///
     );
     sizeTypeStrings.push(
       prepareTypeString(config.TOKENS.SIZE.TYPE_NAME, config.TOKENS.SIZE.CONSTANT_NAME)
     );
 
-    writeTypeToFile(sizeTypeStrings, config.TOKENS.SIZE.TYPE_FILE_PATH);
+    writeTypeToFile(
+      sizeTypeStrings,
+    config.OUT_DIR + config.TOKENS.SIZE.TYPE_FILE_PATH + config.TYPE_FILE_EXT
+    );
   }
 
   const colorSchemeDesignTokens = designTokens[config.TOKENS.COLOR_SCHEME.NAME];
@@ -33,12 +36,15 @@ export default async () => {
     const colorSchemeTypeStrings: string[] = [];
 
     colorSchemeTypeStrings.push(
-      `import { ${config.TOKENS.COLOR_SCHEME.CONSTANT_NAME} } from "../constants/color-scheme";\n` // TODO: get from config, imports and declarations are separate
+      `import { ${config.TOKENS.COLOR_SCHEME.CONSTANT_NAME} } from "..${config.TOKENS.COLOR_SCHEME.CONSTANT_FILE_PATH}";\n` // TODO: more flexible source - global @darwin-ui-vue///
     );
     colorSchemeTypeStrings.push(
       prepareTypeString(config.TOKENS.COLOR_SCHEME.TYPE_NAME, config.TOKENS.COLOR_SCHEME.CONSTANT_NAME)
     );
 
-    writeTypeToFile(colorSchemeTypeStrings, config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH);
+    writeTypeToFile(
+      colorSchemeTypeStrings,
+      config.OUT_DIR + config.TOKENS.COLOR_SCHEME.TYPE_FILE_PATH + config.TYPE_FILE_EXT
+    );
   }
 }

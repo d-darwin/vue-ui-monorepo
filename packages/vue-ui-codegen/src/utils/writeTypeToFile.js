@@ -1,21 +1,20 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
-var config = require("../../config.json"); // TODO: path from root
 var log_1 = require("./log");
 // TODO: generalize with other write functions
-function default_1(constantStrings, filePath) {
-    if (constantStrings.length) {
-        var sizeFileStream_1 = fs.createWriteStream(config.OUT_DIR + filePath);
-        sizeFileStream_1.on("open", function () {
-            constantStrings.forEach(function (classStrings, classIndex) {
-                sizeFileStream_1.write("".concat(classStrings, "\n"));
-                if (classIndex >= constantStrings.length - 1) {
-                    sizeFileStream_1.end();
+function default_1(fileStringList, filePath) {
+    if (fileStringList.length) {
+        var fileStream_1 = fs.createWriteStream(filePath);
+        fileStream_1.on("open", function () {
+            fileStringList.forEach(function (fileString, index) {
+                fileStream_1.write("".concat(fileString, "\n"));
+                if (index >= fileStringList.length - 1) {
+                    fileStream_1.end();
                 }
             });
         });
-        sizeFileStream_1.on("error", function (error) {
+        fileStream_1.on("error", function (error) {
             (0, log_1["default"])(error.message, log_1.LOG_TYPE.ERROR);
         });
     }
