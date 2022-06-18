@@ -1,6 +1,6 @@
 import type { ConfigKey, DesignTokens } from "../types";
 import prepareTypeString from "./prepareTypeString";
-import writeTypeToFile from "./writeTypeToFile";
+import writeFile from "./writeFile";
 import * as config from "../../config.json";
 
 // TODO: descr
@@ -19,7 +19,7 @@ export default async function (
       prepareTypeString(designTokenConfig.TYPE_NAME, designTokenConfig.CONSTANT_NAME)
     );
 
-    writeTypeToFile(
+    await writeFile(
       typeStringList,
       config.OUT_DIR + designTokenConfig.TYPE_FILE_PATH + config.TYPE_FILE_EXT
     );

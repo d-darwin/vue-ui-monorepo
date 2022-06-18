@@ -1,5 +1,5 @@
 import prepareConstantString from "../utils/prepareConstantString";
-import writeConstantToFile from "../utils/writeConstantToFile";
+import writeFile from "./writeFile";
 import type { ConfigKey, DesignTokens } from "../types";
 import * as config from "../../config.json";
 
@@ -21,7 +21,7 @@ export default async function (
     })
     constantStringList.push("} as const;");
 
-    await writeConstantToFile(
+    await writeFile(
       constantStringList,
       config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT
     );

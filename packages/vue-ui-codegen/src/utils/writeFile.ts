@@ -1,10 +1,9 @@
 import * as fs from "fs";
 import log, { LOG_TYPE } from "./log";
 
-// TODO: generalize with other write functions
-export default function(fileStringList: string[], filePath: string): void {
+export default async function(fileStringList: string[], filePath: string): Promise<void> {
   if (fileStringList.length) {
-    const fileStream = fs.createWriteStream(filePath);
+    const fileStream = await fs.createWriteStream(filePath);
 
     fileStream.on("open", () => {
       fileStringList.forEach((fileString, index) => {
@@ -17,6 +16,7 @@ export default function(fileStringList: string[], filePath: string): void {
     });
 
     fileStream.on("error", (error) => {
+      // TODO: throw error ???
       log(error.message, LOG_TYPE.ERROR);
     });
   }

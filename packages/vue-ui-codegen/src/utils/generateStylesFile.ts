@@ -1,5 +1,5 @@
 import prepareCssClassName from "../utils/prepareCssClassName";
-import writeClassesToFile from "../utils/writeCssClassesToFile";
+import writeFile from "../utils/writeFile";
 import type { ConfigKey, DesignTokens } from "../types";
 import * as config from "../../config.json";
 
@@ -14,6 +14,10 @@ export default async function (
   if (designTokens) {
     const cssClassStringList: string[] = [];
 
+    cssClassStringList.push(
+      `@import '${config.CSS_VARIABLES_SOURCE}';\n`
+    );
+
     const tokenVariantNameList = tokenNameFilter
       ? tokenNameFilter(Object.keys(designTokens))
       : Object.keys(designTokens);
@@ -23,7 +27,7 @@ export default async function (
       cssClassStringList.push(cssClassGenerator(className, customPropertyName));
     })
 
-    await writeClassesToFile(
+    await writeFile(
       cssClassStringList,
       config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT
     );

@@ -16,23 +16,26 @@ export default async () => {
     return;
   }
 
+  const sizeTokenConfig = config.TOKENS.SIZE;
   await generateStylesFile(
-    designTokens[config.TOKENS.SIZE.NAME],
-    config.TOKENS.SIZE,
+    designTokens[sizeTokenConfig.NAME],
+    sizeTokenConfig,
     null, // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
   )
 
+  const fontTokenConfig = config.TOKENS.FONT;
   await generateStylesFile(
-    designTokens[config.TOKENS.FONT.NAME],
-    config.TOKENS.FONT,
+    designTokens[fontTokenConfig.NAME],
+    fontTokenConfig,
     null, // TODO: move to config ???
     generateFontCssClass, // TODO: move to config ???
   )
 
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateStylesFile(
-    designTokens[config.TOKENS.COLOR_SCHEME.NAME],
-    config.TOKENS.COLOR_SCHEME,
+    designTokens[colorSchemeTokenConfig.NAME],
+    colorSchemeTokenConfig,
     (designTokenNames: string[]) => designTokenNames.filter(
       designTokenName => !designTokenName.includes('-')
     ), // TODO: move to config ???

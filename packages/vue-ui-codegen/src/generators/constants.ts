@@ -15,18 +15,17 @@ export default async () => {
 
   // TODO: fontSize ???
 
-  await generateConstantsFile(
-    designTokens[config.TOKENS.SIZE.NAME],
-    config.TOKENS.SIZE,
-    null,
-  );
+  const sizeTokenConfig = config.TOKENS.SIZE;
+  await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null);
 
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateConstantsFile(
-    designTokens[config.TOKENS.COLOR_SCHEME.NAME],
-    config.TOKENS.COLOR_SCHEME,
+    designTokens[colorSchemeTokenConfig.NAME],
+    colorSchemeTokenConfig,
+    // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
       designTokenName => !designTokenName.includes('-')
-    ), // TODO: move to config ???
+    ),
   );
 }
 

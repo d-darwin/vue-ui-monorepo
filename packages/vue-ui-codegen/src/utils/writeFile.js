@@ -36,28 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var prepareConstantString_1 = require("../utils/prepareConstantString");
-var writeFile_1 = require("./writeFile");
-var config = require("../../config.json");
-function default_1(designTokens, designTokenConfig, tokenNameFilter) {
+var fs = require("fs");
+var log_1 = require("./log");
+function default_1(fileStringList, filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var constantStringList_1, tokenVariantNameList;
+        var fileStream_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!designTokens) return [3 /*break*/, 2];
-                    constantStringList_1 = [];
-                    constantStringList_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, " = {"));
-                    tokenVariantNameList = tokenNameFilter
-                        ? tokenNameFilter(Object.keys(designTokens))
-                        : Object.keys(designTokens);
-                    tokenVariantNameList.forEach(function (tokenVariantName) {
-                        constantStringList_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
-                    });
-                    constantStringList_1.push("} as const;");
-                    return [4 /*yield*/, (0, writeFile_1["default"])(constantStringList_1, config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT)];
+                    if (!fileStringList.length) return [3 /*break*/, 2];
+                    return [4 /*yield*/, fs.createWriteStream(filePath)];
                 case 1:
-                    _a.sent();
+                    fileStream_1 = _a.sent();
+                    fileStream_1.on("open", function () {
+                        fileStringList.forEach(function (fileString, index) {
+                            fileStream_1.write("".concat(fileString, "\n"));
+                            if (index >= fileStringList.length - 1) {
+                                fileStream_1.end();
+                            }
+                        });
+                    });
+                    fileStream_1.on("error", function (error) {
+                        // TODO: throw error ???
+                        (0, log_1["default"])(error.message, log_1.LOG_TYPE.ERROR);
+                    });
                     _a.label = 2;
                 case 2: return [2 /*return*/];
             }

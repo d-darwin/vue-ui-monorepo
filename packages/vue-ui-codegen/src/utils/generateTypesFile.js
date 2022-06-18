@@ -36,37 +36,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var fs = require("fs");
+var prepareTypeString_1 = require("./prepareTypeString");
+var writeFile_1 = require("./writeFile");
 var config = require("../../config.json");
-var log_1 = require("./log");
-// TODO: generalize with other write functions
-function default_1(fileStringList, filePath) {
+// TODO: descr
+// TODO: try to reduce args
+function default_1(designTokens, designTokenConfig) {
     return __awaiter(this, void 0, void 0, function () {
-        var fileStream_1;
-        var _this = this;
+        var typeStringList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!fileStringList.length) return [3 /*break*/, 2];
-                    return [4 /*yield*/, fs.createWriteStream(filePath)];
+                    if (!designTokens) return [3 /*break*/, 2];
+                    typeStringList = [];
+                    typeStringList.push("import { ".concat(designTokenConfig.CONSTANT_NAME, " } from \"..").concat(designTokenConfig.CONSTANT_FILE_PATH, "\";\n") // TODO: more flexible source - global @darwin-ui-vue///
+                    );
+                    typeStringList.push((0, prepareTypeString_1["default"])(designTokenConfig.TYPE_NAME, designTokenConfig.CONSTANT_NAME));
+                    return [4 /*yield*/, (0, writeFile_1["default"])(typeStringList, config.OUT_DIR + designTokenConfig.TYPE_FILE_PATH + config.TYPE_FILE_EXT)];
                 case 1:
-                    fileStream_1 = _a.sent();
-                    fileStream_1.on("open", function () { return __awaiter(_this, void 0, void 0, function () {
-                        return __generator(this, function (_a) {
-                            fileStream_1.write("@import '".concat(config.CSS_VARIABLES_SOURCE, "';\n") // TODO: move to call
-                            );
-                            fileStringList.forEach(function (fileString, index) {
-                                fileStream_1.write("\n".concat(fileString, "\n"));
-                                if (index >= fileStringList.length - 1) {
-                                    fileStream_1.end();
-                                }
-                            });
-                            return [2 /*return*/];
-                        });
-                    }); });
-                    fileStream_1.on("error", function (error) {
-                        (0, log_1["default"])(error.message, log_1.LOG_TYPE.ERROR);
-                    });
+                    _a.sent();
                     _a.label = 2;
                 case 2: return [2 /*return*/];
             }

@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var prepareCssClassName_1 = require("../utils/prepareCssClassName");
-var writeCssClassesToFile_1 = require("../utils/writeCssClassesToFile");
+var writeFile_1 = require("../utils/writeFile");
 var config = require("../../config.json");
 // TODO: descr
 // TODO: try to reduce args
@@ -49,6 +49,7 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGen
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
                     cssClassStringList_1 = [];
+                    cssClassStringList_1.push("@import '".concat(config.CSS_VARIABLES_SOURCE, "';\n"));
                     tokenVariantNameList = tokenNameFilter
                         ? tokenNameFilter(Object.keys(designTokens))
                         : Object.keys(designTokens);
@@ -57,7 +58,7 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGen
                         var customPropertyName = "--".concat(designTokenConfig.NAME, "-").concat(tokenVariantName);
                         cssClassStringList_1.push(cssClassGenerator(className, customPropertyName));
                     });
-                    return [4 /*yield*/, (0, writeCssClassesToFile_1["default"])(cssClassStringList_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
+                    return [4 /*yield*/, (0, writeFile_1["default"])(cssClassStringList_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
                 case 1:
                     _a.sent();
                     _a.label = 2;
