@@ -13,11 +13,12 @@ export default async () => {
     return;
   }
 
-  // TODO: fontSize ???
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
+  await generateTypesFile(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig);
+
+  const fontTokenConfig = config.TOKENS.FONT;
+  await generateTypesFile(designTokens[fontTokenConfig.NAME], fontTokenConfig);
 
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateTypesFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig);
-
-  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
-  await generateTypesFile(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig)
 }

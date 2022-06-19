@@ -40,7 +40,7 @@ var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateTypesFile_1 = require("../utils/generateTypesFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, sizeTokenConfig, colorSchemeTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -54,13 +54,17 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
             case 3:
-                sizeTokenConfig = config.TOKENS.SIZE;
-                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig)];
-            case 4:
-                _b.sent();
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
                 return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig)];
+            case 4:
+                _b.sent();
+                fontTokenConfig = config.TOKENS.FONT;
+                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[fontTokenConfig.NAME], fontTokenConfig)];
             case 5:
+                _b.sent();
+                sizeTokenConfig = config.TOKENS.SIZE;
+                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig)];
+            case 6:
                 _b.sent();
                 return [2 /*return*/];
         }

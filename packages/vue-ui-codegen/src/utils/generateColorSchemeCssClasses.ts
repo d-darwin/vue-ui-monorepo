@@ -3,7 +3,7 @@ export default function (
   className: string,
   customPropertyName: string
 ): string {
-  return `.${className} {
+  return `\n.${className} {
   color: var(${customPropertyName});
   background-color: var(${customPropertyName}-background);
 }
