@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 19 Jun 2022 09:35:37 GMT
+ * Generated on Sun, 19 Jun 2022 09:46:46 GMT
  */
 
 :root {
@@ -75,16 +75,16 @@
   --color-inverse-outline: #ff843fff;
   --color-danger-outline: #325efaff;
   --color-text: #282828ff;
-  --font-tiny: 400 12px/12px "Arial";
-  --font-small: 400 13px/20px "Arial";
-  --font-medium: 400 15px/22px "Arial";
-  --font-large: 400 18px/26px "Arial";
-  --font-huge: 700 25px/34px "Arial";
-  --font-h5: 700 12px/22px "Arial";
-  --font-h4: 700 19px/26px "Arial";
-  --font-h3: 700 25px/34px "Arial";
-  --font-h2: 700 36px/46px "Arial";
-  --font-h1: 700 48px/60px "Arial";
+  --font-tiny: 400 12px/12px Arial, Helvetica, sans-serif;
+  --font-small: 400 13px/20px Arial, Helvetica, sans-serif;
+  --font-medium: 400 15px/22px Arial, Helvetica, sans-serif;
+  --font-large: 400 18px/26px Arial, Helvetica, sans-serif;
+  --font-huge: 700 25px/34px Arial, Helvetica, sans-serif;
+  --font-h5: 700 12px/22px Arial, Helvetica, sans-serif;
+  --font-h4: 700 19px/26px Arial, Helvetica, sans-serif;
+  --font-h3: 700 25px/34px Arial, Helvetica, sans-serif;
+  --font-h2: 700 36px/46px Arial, Helvetica, sans-serif;
+  --font-h1: 700 48px/60px Arial, Helvetica, sans-serif;
   --typography-tiny-font-size: 12px;
   --typography-tiny-text-decoration: none;
   --typography-tiny-font-family: Arial;
