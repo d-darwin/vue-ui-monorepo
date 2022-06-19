@@ -10,6 +10,7 @@ export const LOG_TYPE = {
 
 type LogType = (typeof LOG_TYPE)[keyof typeof LOG_TYPE];
 
+// TODO: descr
 export default function(message: string, type: LogType = LOG_TYPE.INFO): void {
   switch (type) {
     case LOG_TYPE.INFO:

@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import log, { LOG_TYPE } from "./log";
 
+// TODO: descr
 export default async function(fileStringList: string[], filePath: string): Promise<void> {
   if (fileStringList.length) {
     // TODO: make dirs if not exists

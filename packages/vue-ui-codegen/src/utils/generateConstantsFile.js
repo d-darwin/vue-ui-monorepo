@@ -39,6 +39,7 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var prepareConstantString_1 = require("../utils/prepareConstantString");
 var writeFile_1 = require("./writeFile");
+// TODO: descr
 function default_1(designTokens, designTokenConfig, tokenNameFilter) {
     return __awaiter(this, void 0, void 0, function () {
         var constantStringList_1, tokenVariantNameList;

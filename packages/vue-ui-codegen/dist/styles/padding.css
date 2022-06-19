@@ -1,0 +1,45 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.paddingEqualTiny {
+  padding: var(--spacing-equal-tiny);
+}
+
+.paddingEqualSmall {
+  padding: var(--spacing-equal-small);
+}
+
+.paddingEqualMedium {
+  padding: var(--spacing-equal-medium);
+}
+
+.paddingEqualLarge {
+  padding: var(--spacing-equal-large);
+}
+
+.paddingEqualHuge {
+  padding: var(--spacing-equal-huge);
+}
+
+.paddingDefaultTiny {
+  padding: var(--spacing-default-tiny);
+}
+
+.paddingDefaultSmall {
+  padding: var(--spacing-default-small);
+}
+
+.paddingDefaultMedium {
+  padding: var(--spacing-default-medium);
+}
+
+.paddingDefaultLarge {
+  padding: var(--spacing-default-large);
+}
+
+.paddingDefaultHuge {
+  padding: var(--spacing-default-huge);
+}
+
+.paddingNone {
+  padding: var(--spacing-none);
+}

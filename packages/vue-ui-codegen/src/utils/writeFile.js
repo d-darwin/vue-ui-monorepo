@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var fs = require("fs");
 var log_1 = require("./log");
+// TODO: descr
 function default_1(fileStringList, filePath) {
     return __awaiter(this, void 0, void 0, function () {
         var fileStream_1;

@@ -1,8 +1,9 @@
 import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import generateStylesFile from "../utils/generateStylesFile";
-import generateFontCssClass from "../utils/generateFontCssClass";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
+import generateFontCssClass from "../utils/generateFontCssClass";
+import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
 
@@ -40,5 +41,13 @@ export default async () => {
     sizeTokenConfig,
     null, // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
+  )
+
+  const paddingTokenConfig = config.TOKENS.PADDING;
+  await generateStylesFile(
+    designTokens[paddingTokenConfig.NAME],
+    paddingTokenConfig,
+    null, // TODO: move to config ???
+    generatePaddingCssClass, // TODO: move to config ???
   )
 }

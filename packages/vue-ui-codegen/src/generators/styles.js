@@ -39,11 +39,12 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateStylesFile_1 = require("../utils/generateStylesFile");
-var generateFontCssClass_1 = require("../utils/generateFontCssClass");
 var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
+var generateFontCssClass_1 = require("../utils/generateFontCssClass");
+var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -71,6 +72,11 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
             case 6:
+                _b.sent();
+                paddingTokenConfig = config.TOKENS.PADDING;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig, null, // TODO: move to config ???
+                    generatePaddingCssClass_1["default"])];
+            case 7:
                 _b.sent();
                 return [2 /*return*/];
         }
