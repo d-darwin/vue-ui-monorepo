@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, PropType, ref, VNode } from "vue";
 // TODO: add import order rule
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 // TODO: add constants/index
@@ -59,48 +59,47 @@ export default defineComponent({
     },
   },
 
-  // TODO: move to setup()
-  computed: {
-    classes(): string[] {
-      const colorSchemeClassName = prepareCssClassName(
-        config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        config.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const paddingClassName = prepareCssClassName(
-        config.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        config.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const sizeClassName = prepareCssClassName(
-        config.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
+  setup(props) {
+    const colorSchemeClassName = prepareCssClassName(
+      config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+      props.colorScheme
+    );
+    // TODO: font and size separately
+    const fontClassName = prepareCssClassName(
+      config.TOKENS.FONT.CSS_CLASS_PREFIX,
+      props.size
+    );
+    const paddingClassName = prepareCssClassName(
+      config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      props.padding
+    );
+    const paddingSizeClassName = prepareCssClassName(
+      config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      `${props.padding}-${props.size}`
+    );
+    const sizeClassName = prepareCssClassName(
+      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
+      props.size
+    );
 
-      return [
-        styles.dButton,
-        colorSchemeStyles[colorSchemeClassName],
-        fontStyles[fontClassName],
-        paddingStyles[paddingSizeClassName] ?? paddingStyles[paddingClassName],
-        sizeStyles[sizeClassName],
-      ];
-    },
-  },
+    const classes = ref([
+      styles.dButton,
+      colorSchemeStyles[colorSchemeClassName],
+      fontStyles[fontClassName],
+      paddingStyles[paddingSizeClassName] ?? paddingStyles[paddingClassName],
+      sizeStyles[sizeClassName],
+    ]);
 
-  methods: {
-    // TODO: move to setup()
-    clickHandler(): void | Promise<void> {
+    const clickHandler = (): void | Promise<void> => {
       // TODO: preventDefault
       // TODO: non native onClick
-      this.whenClick?.();
-    },
+      props.whenClick?.();
+    };
+
+    return {
+      classes,
+      clickHandler,
+    };
   },
 
   render(): VNode {
