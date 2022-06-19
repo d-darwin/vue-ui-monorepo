@@ -1,11 +1,11 @@
-import * as config from "../../config.json"; // TODO: path from root
+import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
-import prepareConstantString from "../utils/prepareConstantString";
-import writeConstantToFile from "../utils/writeConstantToFile";
+import generateConstantsFile from "../utils/generateConstantsFile";
+import type { DesignTokens } from "../types";
 
 export default async () => {
   // TODO: move to helpers ???
-  let designTokens: Record<string, any>; // TODO: more accurate toke type
+  let designTokens: DesignTokens;
   try {
     designTokens = await import(config.DESIGN_TOKENS_SOURCE);
   } catch {
@@ -13,18 +13,19 @@ export default async () => {
     return;
   }
 
-  const sizeDesignTokens = designTokens[config.TOKENS.SIZE.NAME];
-  if (sizeDesignTokens) {
-    const sizeConstantStrings: string[] = [];
+  // TODO: fontSize ???
 
-    sizeConstantStrings.push(`export const ${config.TOKENS.SIZE.CONSTANT_NAME} = {`);
-    const sizeTokenVariantNameList = Object.keys(sizeDesignTokens);
-    sizeTokenVariantNameList.forEach((sizeTokenVariantName) => {
-      sizeConstantStrings.push(prepareConstantString(sizeTokenVariantName));
-    })
-    sizeConstantStrings.push("} as const;");
+  const sizeTokenConfig = config.TOKENS.SIZE;
+  await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null);
 
-    writeConstantToFile(sizeConstantStrings, config.TOKENS.SIZE.CONSTANT_FILE_NAME);
-  }
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
+  await generateConstantsFile(
+    designTokens[colorSchemeTokenConfig.NAME],
+    colorSchemeTokenConfig,
+    // TODO: move to config ???
+    (designTokenNames: string[]) => designTokenNames.filter(
+      designTokenName => !designTokenName.includes('-')
+    ),
+  );
 }
 

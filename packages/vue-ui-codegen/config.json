@@ -1,20 +1,38 @@
 {
+  "PACKAGE_NAME": "@darwin-studio/vue-ui-codegen",
   "DESIGN_TOKENS_SOURCE": "@darwin-studio/vue-ui-style-dictionary",
   "CSS_VARIABLES_SOURCE": "~@darwin-studio/vue-ui-style-dictionary/build/variables.css",
+  "OUT_DIR": "dist",
+  "CONSTANT_FILE_EXT": ".ts",
+  "TYPE_FILE_EXT": ".ts",
+  "STYLES_FILE_EXT": ".css",
   "TOKENS": {
     "SIZE": {
       "NAME": "size",
       "CONSTANT_NAME": "SIZE",
-      "CONSTANT_FILE_NAME": "./build/constants/size.ts",
+      "CONSTANT_FILE_PATH": "/constants/size",
       "TYPE_NAME": "Size",
-      "TYPE_FILE_NAME": "./build/types/size.ts",
+      "TYPE_FILE_PATH": "/types/size",
       "CSS_CLASS_PREFIX": "size",
-      "CSS_FILE_NAME": "./build/styles/size.css"
+      "CSS_FILE_PATH": "/styles/size"
     },
     "FONT": {
       "NAME": "font",
+      "CONSTANT_NAME": "_",
+      "CONSTANT_FILE_PATH": "_",
+      "TYPE_NAME": "_",
+      "TYPE_FILE_PATH": "_",
       "CSS_CLASS_PREFIX": "font",
-      "CSS_FILE_NAME": "./build/styles/font.css"
+      "CSS_FILE_PATH": "/styles/font"
+    },
+    "COLOR_SCHEME": {
+      "NAME": "color",
+      "CONSTANT_NAME": "COLOR_SCHEME",
+      "CONSTANT_FILE_PATH": "/constants/color-scheme",
+      "TYPE_NAME": "ColorScheme",
+      "TYPE_FILE_PATH": "/types/color-scheme",
+      "CSS_CLASS_PREFIX": "colorScheme",
+      "CSS_FILE_PATH": "/styles/color-scheme"
     }
   }
 }

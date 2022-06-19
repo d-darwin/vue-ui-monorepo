@@ -17,7 +17,6 @@
       "jest"
     ],
     "paths": {
-      "@/types/*": ["src/types/*"],
       "@/*": ["src/*"]
     },
     "lib": [
@@ -33,6 +32,7 @@
     "src/**/*.vue",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "coverage"
   ]
 }

@@ -1,12 +1,14 @@
-import * as config from "../../config.json";
+import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
-import prepareCssClassName from "../utils/prepareCssClassName";
+import generateStylesFile from "../utils/generateStylesFile";
 import generateFontCssClass from "../utils/generateFontCssClass";
-import writeClassesToFile from "../utils/writeCssClassesToFile";
+import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
+import generateSizeCssClass from "../utils/generateSizeCssClass";
+import type { DesignTokens } from "../types";
 
 export default async () => {
   // TODO: move to helpers ???
-  let designTokens: Record<string, any>; // TODO: more accurate toke type
+  let designTokens: DesignTokens;
   try {
     designTokens = await import(config.DESIGN_TOKENS_SOURCE);
   } catch {
@@ -14,20 +16,29 @@ export default async () => {
     return;
   }
 
-  const fontDesignTokens = designTokens[config.TOKENS.FONT.NAME];
-  if (fontDesignTokens) {
-    const fontCssClasses: string[] = [];
-    const fontTokenVariantNameList = Object.keys(fontDesignTokens);
-    fontTokenVariantNameList.forEach((fontTokenVariantName) => {
-      const className = prepareCssClassName(
-        config.TOKENS.FONT.CSS_CLASS_PREFIX,
-        fontTokenVariantName
-      );
-      const customPropertyName = `--${config.TOKENS.FONT.NAME}-${fontTokenVariantName}`;
+  const sizeTokenConfig = config.TOKENS.SIZE;
+  await generateStylesFile(
+    designTokens[sizeTokenConfig.NAME],
+    sizeTokenConfig,
+    null, // TODO: move to config ???
+    generateSizeCssClass, // TODO: move to config ???
+  )
 
-      fontCssClasses.push(generateFontCssClass(className, customPropertyName));
-    })
+  const fontTokenConfig = config.TOKENS.FONT;
+  await generateStylesFile(
+    designTokens[fontTokenConfig.NAME],
+    fontTokenConfig,
+    null, // TODO: move to config ???
+    generateFontCssClass, // TODO: move to config ???
+  )
 
-    writeClassesToFile(fontCssClasses, config.TOKENS.FONT.CSS_FILE_NAME);
-  }
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
+  await generateStylesFile(
+    designTokens[colorSchemeTokenConfig.NAME],
+    colorSchemeTokenConfig,
+    (designTokenNames: string[]) => designTokenNames.filter(
+      designTokenName => !designTokenName.includes('-')
+    ), // TODO: move to config ???
+    generateColorSchemeCssClasses, // TODO: move to config ???
+  )
 }

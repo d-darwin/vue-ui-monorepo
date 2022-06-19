@@ -1,6 +1,0 @@
-@import '~@darwin-studio/vue-ui-codegen/build/styles/font.css';
-
-.dTypography {
-  /*TODO*/
-  color: var(--color-primary-background);
-}

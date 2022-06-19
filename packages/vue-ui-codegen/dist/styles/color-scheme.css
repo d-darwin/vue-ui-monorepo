@@ -1,0 +1,97 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.colorSchemePrimary {
+  color: var(--color-primary);
+  background-color: var(--color-primary-background);
+}
+
+.colorSchemePrimary:hover {
+  color: var(--color-primary-hover);
+  background-color: var(--color-primary-background-hover);
+}
+
+.colorSchemePrimary:active {
+  color: var(--color-primary-active);
+  background-color: var(--color-primary-background-active);
+}
+
+.colorSchemePrimary:disabled {
+  color: var(--color-primary-disabled);
+  background-color: var(--color-primary-background-disabled);
+}
+.colorSchemeSecondary {
+  color: var(--color-secondary);
+  background-color: var(--color-secondary-background);
+}
+
+.colorSchemeSecondary:hover {
+  color: var(--color-secondary-hover);
+  background-color: var(--color-secondary-background-hover);
+}
+
+.colorSchemeSecondary:active {
+  color: var(--color-secondary-active);
+  background-color: var(--color-secondary-background-active);
+}
+
+.colorSchemeSecondary:disabled {
+  color: var(--color-secondary-disabled);
+  background-color: var(--color-secondary-background-disabled);
+}
+.colorSchemeAlternative {
+  color: var(--color-alternative);
+  background-color: var(--color-alternative-background);
+}
+
+.colorSchemeAlternative:hover {
+  color: var(--color-alternative-hover);
+  background-color: var(--color-alternative-background-hover);
+}
+
+.colorSchemeAlternative:active {
+  color: var(--color-alternative-active);
+  background-color: var(--color-alternative-background-active);
+}
+
+.colorSchemeAlternative:disabled {
+  color: var(--color-alternative-disabled);
+  background-color: var(--color-alternative-background-disabled);
+}
+.colorSchemeInverse {
+  color: var(--color-inverse);
+  background-color: var(--color-inverse-background);
+}
+
+.colorSchemeInverse:hover {
+  color: var(--color-inverse-hover);
+  background-color: var(--color-inverse-background-hover);
+}
+
+.colorSchemeInverse:active {
+  color: var(--color-inverse-active);
+  background-color: var(--color-inverse-background-active);
+}
+
+.colorSchemeInverse:disabled {
+  color: var(--color-inverse-disabled);
+  background-color: var(--color-inverse-background-disabled);
+}
+.colorSchemeDanger {
+  color: var(--color-danger);
+  background-color: var(--color-danger-background);
+}
+
+.colorSchemeDanger:hover {
+  color: var(--color-danger-hover);
+  background-color: var(--color-danger-background-hover);
+}
+
+.colorSchemeDanger:active {
+  color: var(--color-danger-active);
+  background-color: var(--color-danger-background-active);
+}
+
+.colorSchemeDanger:disabled {
+  color: var(--color-danger-disabled);
+  background-color: var(--color-danger-background-disabled);
+}

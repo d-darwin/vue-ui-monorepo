@@ -1,9 +1,10 @@
 import { Story } from "@storybook/vue3";
 import DTypography from "@darwin-studio/vue-ui/src/components/containers/d-typography";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/build/constants/size";
+// TODO: use vue-ui-codegen/config.json to define path
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 
 export default {
-  title: "DTypography",
+  title: "containers/DTypography",
   component: DTypography,
   argTypes: {
     size: {
@@ -12,7 +13,7 @@ export default {
     },
   },
   args: {
-    content: "Some text content",
+    text: "Some text content",
     html: "",
     size: SIZE.MEDIUM,
     tag: "div",

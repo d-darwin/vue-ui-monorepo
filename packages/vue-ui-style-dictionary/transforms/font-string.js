@@ -13,6 +13,7 @@ module.exports = {
     return token.type === "custom-fontStyle";
   },
   transformer: function ({ value: font }, { options }) {
+    // TODO: get exact font family from description
     // font: font-style font-variant font-weight font-size/line-height font-family;
     return `${notDefault(font.fontStretch, "normal")} ${notDefault(
       font.fontStyle,
