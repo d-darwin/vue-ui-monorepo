@@ -16,12 +16,14 @@ export default async () => {
     return;
   }
 
-  const sizeTokenConfig = config.TOKENS.SIZE;
+  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateStylesFile(
-    designTokens[sizeTokenConfig.NAME],
-    sizeTokenConfig,
-    null, // TODO: move to config ???
-    generateSizeCssClass, // TODO: move to config ???
+    designTokens[colorSchemeTokenConfig.NAME],
+    colorSchemeTokenConfig,
+    (designTokenNames: string[]) => designTokenNames.filter(
+      designTokenName => !designTokenName.includes('-')
+    ), // TODO: move to config ???
+    generateColorSchemeCssClasses, // TODO: move to config ???
   )
 
   const fontTokenConfig = config.TOKENS.FONT;
@@ -32,13 +34,11 @@ export default async () => {
     generateFontCssClass, // TODO: move to config ???
   )
 
-  const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
+  const sizeTokenConfig = config.TOKENS.SIZE;
   await generateStylesFile(
-    designTokens[colorSchemeTokenConfig.NAME],
-    colorSchemeTokenConfig,
-    (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-')
-    ), // TODO: move to config ???
-    generateColorSchemeCssClasses, // TODO: move to config ???
+    designTokens[sizeTokenConfig.NAME],
+    sizeTokenConfig,
+    null, // TODO: move to config ???
+    generateSizeCssClass, // TODO: move to config ???
   )
 }

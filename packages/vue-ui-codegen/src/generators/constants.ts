@@ -13,11 +13,6 @@ export default async () => {
     return;
   }
 
-  // TODO: fontSize ???
-
-  const sizeTokenConfig = config.TOKENS.SIZE;
-  await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null);
-
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateConstantsFile(
     designTokens[colorSchemeTokenConfig.NAME],
@@ -27,5 +22,11 @@ export default async () => {
       designTokenName => !designTokenName.includes('-')
     ),
   );
+
+  const fontTokenConfig = config.TOKENS.FONT;
+  await generateConstantsFile(designTokens[fontTokenConfig.NAME], fontTokenConfig, null);
+
+  const sizeTokenConfig = config.TOKENS.SIZE;
+  await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null);
 }
 

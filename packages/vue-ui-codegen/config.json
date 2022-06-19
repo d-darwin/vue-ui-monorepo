@@ -18,10 +18,10 @@
     },
     "FONT": {
       "NAME": "font",
-      "CONSTANT_NAME": "_",
-      "CONSTANT_FILE_PATH": "_",
-      "TYPE_NAME": "_",
-      "TYPE_FILE_PATH": "_",
+      "CONSTANT_NAME": "FONT",
+      "CONSTANT_FILE_PATH": "/constants/font",
+      "TYPE_NAME": "Font",
+      "TYPE_FILE_PATH": "/types/font",
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_PATH": "/styles/font"
     },
