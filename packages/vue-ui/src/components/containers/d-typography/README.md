@@ -5,6 +5,5 @@ Pass any args you need (eg. style).
 Try not to use if you need only font styles.  
 
 Определяет:
-* расстояние между параграфами
 * размер табуляции (отступа)
 * ???

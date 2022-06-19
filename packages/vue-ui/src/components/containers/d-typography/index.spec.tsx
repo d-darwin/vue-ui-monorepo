@@ -22,7 +22,7 @@ describe("DTypography", () => {
     expect(wrapper.html()).toMatch(html);
   });
 
-  // TODO: make facade factory
+  // TODO: make case factory
   it("Renders $slots.default when passed", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DTypography, {

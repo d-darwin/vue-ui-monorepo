@@ -1,7 +1,18 @@
-/*TODO: get @darwin-studio/vue-ui-codegen paths from config.json*/
+/* TODO: get @darwin-studio/vue-ui-codegen paths from config.json */
 @import '~@darwin-studio/vue-ui-codegen/dist/styles/font.css';
 
 .dTypography {
-  /*TODO*/
   color: var(--color-text);
+}
+
+.dTypography > * {
+  margin: 1em 0;
+}
+
+.dTypography > :first-child {
+  margin-top: 0;
+}
+
+.dTypography > :last-child {
+  margin-bottom: 0;
 }
