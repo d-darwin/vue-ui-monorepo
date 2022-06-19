@@ -49,7 +49,7 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGen
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
                     cssClassStringList_1 = [];
-                    cssClassStringList_1.push("@import '".concat(config.CSS_VARIABLES_SOURCE, "';\n"));
+                    cssClassStringList_1.push("@import '".concat(config.CSS_VARIABLES_SOURCE, "';"));
                     tokenVariantNameList = tokenNameFilter
                         ? tokenNameFilter(Object.keys(designTokens))
                         : Object.keys(designTokens);

@@ -15,7 +15,7 @@ export default async function (
     const cssClassStringList: string[] = [];
 
     cssClassStringList.push(
-      `@import '${config.CSS_VARIABLES_SOURCE}';\n`
+      `@import '${config.CSS_VARIABLES_SOURCE}';`
     );
 
     const tokenVariantNameList = tokenNameFilter

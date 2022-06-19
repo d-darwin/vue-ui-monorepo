@@ -3,15 +3,39 @@
 .fontTiny {
   font: var(--font-tiny);
 }
+
 .fontSmall {
   font: var(--font-small);
 }
+
 .fontMedium {
   font: var(--font-medium);
 }
+
 .fontLarge {
   font: var(--font-large);
 }
+
 .fontHuge {
   font: var(--font-huge);
+}
+
+.fontH5 {
+  font: var(--font-h5);
+}
+
+.fontH4 {
+  font: var(--font-h4);
+}
+
+.fontH3 {
+  font: var(--font-h3);
+}
+
+.fontH2 {
+  font: var(--font-h2);
+}
+
+.fontH1 {
+  font: var(--font-h1);
 }
