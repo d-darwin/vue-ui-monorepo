@@ -33,21 +33,23 @@ describe("DTypography", () => {
     expect(wrapper.html()).toMatch(slotContent);
   });
 
-  // TODO: classes are not rendered in jest ???
   it("Renders dTypography class name", async () => {
     console.log("wrapper.html()", wrapper.html());
-    expect(wrapper.classes().includes("dTypography")).toEqual(true);
+    expect(wrapper.classes()).toContain("dTypography"); // TODO: get from the component name ??
   });
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
-    await wrapper.setProps({ font });
+    console.log(wrapper.classes()); // TODO: remove
+    await wrapper.setProps({ font }); // TODO: why it doesn't work ???
+    await wrapper.vm.$forceUpdate(); // TODO: this one doesn't work eather
     const fontClassName = prepareCssClassName(
       config.TOKENS.FONT.CSS_CLASS_PREFIX,
       font
     );
-    expect(wrapper.classes().includes(fontClassName)).toEqual(true);
+    console.log(wrapper.classes()); // TODO: remove
+    expect(wrapper.classes()).toContain(fontClassName);
   });
 
   it("Renders props.tag when passed", async () => {

@@ -32,20 +32,18 @@ describe("DButton", () => {
 
   // TODO: classes are not rendered in jest ???
   it("Renders dButton class name", async () => {
-    console.log(wrapper.classes());
-
-    expect(wrapper.classes().includes("dButton")).toEqual(true);
+    expect(wrapper.classes()).toContain("dButton");
   });
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.size to size class when passed", async () => {
     const size = SIZE.HUGE;
-    await wrapper.setProps({ size });
+    await wrapper.setProps({ size }); // TODO: why it doesn't work ???
     const sizeClassName = prepareCssClassName(
       config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-    expect(wrapper.classes().includes(sizeClassName)).toEqual(true);
+    expect(wrapper.classes()).toContain(sizeClassName);
   });
 
   // TODO: other classes tests

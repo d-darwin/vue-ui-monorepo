@@ -58,7 +58,7 @@ export default defineComponent({
       return <Tag class={this.classes} v-html={this.html} />;
     }
 
-    console.log("render", this.font, styles.dTypography, this.classes);
+    console.log("render", this.font);
 
     return (
       <Tag class={this.classes}>{this.$slots.default?.() || this.text}</Tag>
