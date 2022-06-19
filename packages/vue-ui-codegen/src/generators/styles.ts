@@ -39,7 +39,9 @@ export default async () => {
   await generateStylesFile(
     designTokens[sizeTokenConfig.NAME],
     sizeTokenConfig,
-    null, // TODO: move to config ???
+    (designTokenNames: string[]) => designTokenNames.filter(
+      designTokenName => !designTokenName.includes('-')
+    ), // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
   )
 

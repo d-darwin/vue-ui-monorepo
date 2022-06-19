@@ -69,7 +69,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 5:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, // TODO: move to config ???
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); }, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
             case 6:
                 _b.sent();

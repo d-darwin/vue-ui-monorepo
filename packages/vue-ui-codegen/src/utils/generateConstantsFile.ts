@@ -7,15 +7,23 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: Record<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
+  tokenNameTransformer: ((tokenNames: string[]) => string[]) | null
 ): Promise<void> {
   if (designTokens) {
     const constantStringList: string[] = [];
 
     constantStringList.push(`export const ${designTokenConfig.CONSTANT_NAME} = {`);
 
-    const tokenVariantNameList = tokenNameFilter
-      ? tokenNameFilter(Object.keys(designTokens))
-      : Object.keys(designTokens);
+    let tokenVariantNameList = Object.keys(designTokens);
+
+    if (tokenNameFilter) {
+      tokenVariantNameList = tokenNameFilter(tokenVariantNameList);
+    }
+
+    if (tokenNameTransformer) {
+      tokenVariantNameList = tokenNameTransformer(tokenVariantNameList);
+    }
+
     tokenVariantNameList.forEach((tokenVariantName) => {
       constantStringList.push(prepareConstantString(tokenVariantName));
     })
