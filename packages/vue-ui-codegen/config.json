@@ -7,14 +7,14 @@
   "TYPE_FILE_EXT": ".ts",
   "STYLES_FILE_EXT": ".css",
   "TOKENS": {
-    "SIZE": {
-      "NAME": "size",
-      "CONSTANT_NAME": "SIZE",
-      "CONSTANT_FILE_PATH": "/constants/size",
-      "TYPE_NAME": "Size",
-      "TYPE_FILE_PATH": "/types/size",
-      "CSS_CLASS_PREFIX": "size",
-      "CSS_FILE_PATH": "/styles/size"
+    "COLOR_SCHEME": {
+      "NAME": "color",
+      "CONSTANT_NAME": "COLOR_SCHEME",
+      "CONSTANT_FILE_PATH": "/constants/color-scheme",
+      "TYPE_NAME": "ColorScheme",
+      "TYPE_FILE_PATH": "/types/color-scheme",
+      "CSS_CLASS_PREFIX": "colorScheme",
+      "CSS_FILE_PATH": "/styles/color-scheme"
     },
     "FONT": {
       "NAME": "font",
@@ -25,14 +25,23 @@
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_PATH": "/styles/font"
     },
-    "COLOR_SCHEME": {
-      "NAME": "color",
-      "CONSTANT_NAME": "COLOR_SCHEME",
-      "CONSTANT_FILE_PATH": "/constants/color-scheme",
-      "TYPE_NAME": "ColorScheme",
-      "TYPE_FILE_PATH": "/types/color-scheme",
-      "CSS_CLASS_PREFIX": "colorScheme",
-      "CSS_FILE_PATH": "/styles/color-scheme"
+    "PADDING": {
+      "NAME": "spacing",
+      "CONSTANT_NAME": "PADDING",
+      "CONSTANT_FILE_PATH": "/constants/padding",
+      "TYPE_NAME": "Padding",
+      "TYPE_FILE_PATH": "/types/padding",
+      "CSS_CLASS_PREFIX": "padding",
+      "CSS_FILE_PATH": "/styles/padding"
+    },
+    "SIZE": {
+      "NAME": "size",
+      "CONSTANT_NAME": "SIZE",
+      "CONSTANT_FILE_PATH": "/constants/size",
+      "TYPE_NAME": "Size",
+      "TYPE_FILE_PATH": "/types/size",
+      "CSS_CLASS_PREFIX": "size",
+      "CSS_FILE_PATH": "/styles/size"
     }
   }
 }
