@@ -33,7 +33,7 @@ describe("DTypography", () => {
     expect(wrapper.html()).toMatch(slotContent);
   });
 
-  /*  // TODO: classes are not rendered in jest ???
+  // TODO: classes are not rendered in jest ???
   it("Renders dTypography class name", async () => {
     console.log("wrapper.html()", wrapper.html());
     expect(wrapper.classes().includes("dTypography")).toEqual(true);
@@ -48,7 +48,7 @@ describe("DTypography", () => {
       font
     );
     expect(wrapper.classes().includes(fontClassName)).toEqual(true);
-  });*/
+  });
 
   it("Renders props.tag when passed", async () => {
     const tag = "address";

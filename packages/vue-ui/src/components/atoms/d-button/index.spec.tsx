@@ -30,7 +30,7 @@ describe("DButton", () => {
     expect(wrapper.html()).toMatch(slotContent);
   });
 
-  /* // TODO: classes are not rendered in jest ???
+  // TODO: classes are not rendered in jest ???
   it("Renders dButton class name", async () => {
     console.log(wrapper.classes());
 
@@ -47,7 +47,7 @@ describe("DButton", () => {
     );
     expect(wrapper.classes().includes(sizeClassName)).toEqual(true);
   });
-*/
+
   // TODO: other classes tests
 
   it("Emits click event when clicked", async () => {
