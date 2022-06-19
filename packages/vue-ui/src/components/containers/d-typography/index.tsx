@@ -1,4 +1,4 @@
-import { PropType, defineComponent, VNode, ref } from "vue";
+import { PropType, defineComponent, VNode } from "vue";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
@@ -10,16 +10,12 @@ import type { TagName } from "@/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
 
-/**
- * This is a test.
- */
+// TODO: description
 export default defineComponent({
   name: "DTypography",
 
   props: {
-    /**
-     * Simple text string, to pass html consider using default slot or html prop
-     */
+    // TODO: description
     text: {
       type: [String, Number] as PropType<Text>,
     },
@@ -40,15 +36,15 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    const fontClassName = prepareCssClassName(
-      config.TOKENS.FONT.CSS_CLASS_PREFIX,
-      props.font
-    );
-
-    const classes = ref([styles.dTypography, fontStyles[fontClassName]]);
-
-    return { classes };
+  // TODO: move to setup() - tests fails ???
+  computed: {
+    classes(): string[] {
+      const fontClassName = prepareCssClassName(
+        config.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.font
+      );
+      return [styles.dTypography, fontStyles[fontClassName]];
+    },
   },
 
   render(): VNode {
@@ -57,8 +53,6 @@ export default defineComponent({
     if (this.html) {
       return <Tag class={this.classes} v-html={this.html} />;
     }
-
-    console.log("render", this.font);
 
     return (
       <Tag class={this.classes}>{this.$slots.default?.() || this.text}</Tag>

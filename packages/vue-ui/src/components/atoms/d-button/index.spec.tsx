@@ -38,7 +38,7 @@ describe("DButton", () => {
   // TODO: classes are not rendered in jest ???
   it("Renders props.size to size class when passed", async () => {
     const size = SIZE.HUGE;
-    await wrapper.setProps({ size }); // TODO: why it doesn't work ???
+    await wrapper.setProps({ size }); // TODO: why it doesn't work with composition api ???
     const sizeClassName = prepareCssClassName(
       config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
