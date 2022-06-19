@@ -19,6 +19,9 @@ export default async () => {
   const fontTokenConfig = config.TOKENS.FONT;
   await generateTypesFile(designTokens[fontTokenConfig.NAME], fontTokenConfig);
 
+  const paddingTokenConfig = config.TOKENS.PADDING;
+  await generateTypesFile(designTokens[paddingTokenConfig.NAME], paddingTokenConfig);
+
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateTypesFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig);
 }
