@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import DTypography from "@/components/containers/d-typography";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
@@ -22,7 +22,7 @@ describe("DTypography", () => {
     expect(wrapper.html()).toMatch(html);
   });
 
-  // TODO: make facase ctory
+  // TODO: make facade factory
   it("Renders $slots.default when passed", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DTypography, {
@@ -38,7 +38,7 @@ describe("DTypography", () => {
   });
 
   it("Renders props.size to font class when passed", async () => {
-    const size = SIZE.HUGE;
+    const size = FONT.HUGE;
     await wrapper.setProps({ size });
     const fontClassName = prepareCssClassName(
       config.TOKENS.FONT.CSS_CLASS_PREFIX,

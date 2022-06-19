@@ -1,8 +1,8 @@
 import { PropType, defineComponent, VNode } from "vue";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
-import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import type { Text } from "@/types/text";
@@ -21,10 +21,9 @@ export default defineComponent({
       // TODO: warning
       type: String,
     },
-    // TODO: use fontSize const ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM,
+    font: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
     },
     tag: {
       type: String as PropType<TagName>,
@@ -37,7 +36,7 @@ export default defineComponent({
     classes(): string[] {
       const fontClassName = prepareCssClassName(
         config.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
+        this.font
       );
       return [styles.dTypography, fontStyles[fontClassName]];
     },

@@ -1,21 +1,21 @@
 import { Story } from "@storybook/vue3";
 import DTypography from "@darwin-studio/vue-ui/src/components/containers/d-typography";
 // TODO: use vue-ui-codegen/config.json to define path
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 
 export default {
   title: "containers/DTypography",
   component: DTypography,
   argTypes: {
-    size: {
+    font: {
       control: { type: "select" },
-      options: Object.values(SIZE),
+      options: Object.values(FONT),
     },
   },
   args: {
     text: "Some text content",
     html: "",
-    size: SIZE.MEDIUM,
+    font: FONT.MEDIUM,
     tag: "div",
   },
 };

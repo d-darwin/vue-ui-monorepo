@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 19 Jun 2022 09:06:17 GMT
+ * Generated on Sun, 19 Jun 2022 09:35:37 GMT
  */
 
 :root {
@@ -74,6 +74,7 @@
   --color-alternative-outline: #325efaff;
   --color-inverse-outline: #ff843fff;
   --color-danger-outline: #325efaff;
+  --color-text: #282828ff;
   --font-tiny: 400 12px/12px "Arial";
   --font-small: 400 13px/20px "Arial";
   --font-medium: 400 15px/22px "Arial";
