@@ -3,6 +3,7 @@ import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 // TODO: use vue-ui-codegen/config.json to define path
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 
 export default {
@@ -17,6 +18,10 @@ export default {
       control: { type: "select" },
       options: Object.values(PADDING),
     },
+    rounding: {
+      control: { type: "select" },
+      options: Object.values(ROUNDING),
+    },
     size: {
       control: { type: "select" },
       options: Object.values(SIZE),
@@ -27,6 +32,7 @@ export default {
     html: "",
     colorScheme: COLOR_SCHEME.PRIMARY,
     padding: PADDING.DEFAULT,
+    rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,
   },
 };
