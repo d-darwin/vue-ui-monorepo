@@ -29,6 +29,7 @@ export default async () => {
   const fontTokenConfig = config.TOKENS.FONT;
   await generateConstantsFile(designTokens[fontTokenConfig.NAME], fontTokenConfig, null, null);
 
+  // NB: should to be generated before padding
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, null);
 
@@ -47,5 +48,8 @@ export default async () => {
       return acc
     }, [])
   );
+
+  const roundingTokenConfig = config.TOKENS.ROUNDING;
+  await generateConstantsFile(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, null);
 }
 

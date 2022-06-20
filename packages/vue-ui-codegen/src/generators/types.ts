@@ -22,6 +22,9 @@ export default async () => {
   const paddingTokenConfig = config.TOKENS.PADDING;
   await generateTypesFile(designTokens[paddingTokenConfig.NAME], paddingTokenConfig);
 
+  const roundingTokenConfig = config.TOKENS.ROUNDING;
+  await generateTypesFile(designTokens[roundingTokenConfig.NAME], roundingTokenConfig);
+
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateTypesFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig);
 }

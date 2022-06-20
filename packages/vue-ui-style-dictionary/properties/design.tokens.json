@@ -218,6 +218,88 @@
       }
     }
   },
+  "radius": {
+    "none": {
+      "description": null,
+      "type": "custom-radius",
+      "value": {
+        "smoothing": 0,
+        "topLeft": 0,
+        "topRight": 0,
+        "bottomLeft": 0,
+        "bottomRight": 0
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "radius"
+        }
+      }
+    },
+    "small": {
+      "description": null,
+      "type": "custom-radius",
+      "value": {
+        "smoothing": 0,
+        "topLeft": 2,
+        "topRight": 2,
+        "bottomLeft": 2,
+        "bottomRight": 2
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "radius"
+        }
+      }
+    },
+    "medium": {
+      "description": null,
+      "type": "custom-radius",
+      "value": {
+        "smoothing": 0,
+        "topLeft": 4,
+        "topRight": 4,
+        "bottomLeft": 4,
+        "bottomRight": 4
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "radius"
+        }
+      }
+    },
+    "large": {
+      "description": null,
+      "type": "custom-radius",
+      "value": {
+        "smoothing": 0,
+        "topLeft": 8,
+        "topRight": 8,
+        "bottomLeft": 8,
+        "bottomRight": 8
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "radius"
+        }
+      }
+    },
+    "full": {
+      "description": null,
+      "type": "custom-radius",
+      "value": {
+        "smoothing": 0,
+        "topLeft": 999,
+        "topRight": 999,
+        "bottomLeft": 999,
+        "bottomRight": 999
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "radius"
+        }
+      }
+    }
+  },
   "color": {
     "primary-background": {
       "description": "",

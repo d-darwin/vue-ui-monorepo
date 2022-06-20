@@ -1,0 +1,21 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.roundingNone {
+  border-radius: var(--radius-none);
+}
+
+.roundingSmall {
+  border-radius: var(--radius-small);
+}
+
+.roundingMedium {
+  border-radius: var(--radius-medium);
+}
+
+.roundingLarge {
+  border-radius: var(--radius-large);
+}
+
+.roundingFull {
+  border-radius: var(--radius-full);
+}

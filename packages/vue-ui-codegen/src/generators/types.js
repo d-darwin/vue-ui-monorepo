@@ -40,7 +40,7 @@ var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateTypesFile_1 = require("../utils/generateTypesFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, sizeTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -66,9 +66,13 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig)];
             case 6:
                 _b.sent();
+                roundingTokenConfig = config.TOKENS.ROUNDING;
+                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig)];
+            case 7:
+                _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
                 return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig)];
-            case 7:
+            case 8:
                 _b.sent();
                 return [2 /*return*/];
         }

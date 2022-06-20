@@ -42,7 +42,7 @@ var generateConstantsFile_1 = require("../utils/generateConstantsFile");
 var getNakedName_1 = require("../utils/getNakedName");
 var size_1 = require("../../dist/constants/size");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig, roundingTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -79,6 +79,10 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                         return acc;
                     }, []); })];
             case 7:
+                _b.sent();
+                roundingTokenConfig = config.TOKENS.ROUNDING;
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, null)];
+            case 8:
                 _b.sent();
                 return [2 /*return*/];
         }

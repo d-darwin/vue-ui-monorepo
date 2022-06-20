@@ -34,6 +34,15 @@
       "CSS_CLASS_PREFIX": "padding",
       "CSS_FILE_PATH": "/styles/padding"
     },
+    "ROUNDING": {
+      "NAME": "radius",
+      "CONSTANT_NAME": "ROUNDING",
+      "CONSTANT_FILE_PATH": "/constants/rounding",
+      "TYPE_NAME": "Rounding",
+      "TYPE_FILE_PATH": "/types/rounding",
+      "CSS_CLASS_PREFIX": "rounding",
+      "CSS_FILE_PATH": "/styles/rounding"
+    },
     "SIZE": {
       "NAME": "size",
       "CONSTANT_NAME": "SIZE",

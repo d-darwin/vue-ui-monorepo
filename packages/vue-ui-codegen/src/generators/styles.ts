@@ -4,6 +4,7 @@ import generateStylesFile from "../utils/generateStylesFile";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
 import generateFontCssClass from "../utils/generateFontCssClass";
 import generatePaddingCssClass from "../utils/generatePaddingCssClass";
+import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
 
@@ -35,6 +36,22 @@ export default async () => {
     generateFontCssClass, // TODO: move to config ???
   )
 
+  const paddingTokenConfig = config.TOKENS.PADDING;
+  await generateStylesFile(
+    designTokens[paddingTokenConfig.NAME],
+    paddingTokenConfig,
+    null, // TODO: move to config ???
+    generatePaddingCssClass, // TODO: move to config ???
+  )
+
+  const roundingTokenConfig = config.TOKENS.ROUNDING;
+  await generateStylesFile(
+    designTokens[roundingTokenConfig.NAME],
+    roundingTokenConfig,
+    null, // TODO: move to config ???
+    generateRoundingCssClass, // TODO: move to config ???
+  )
+
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateStylesFile(
     designTokens[sizeTokenConfig.NAME],
@@ -43,13 +60,5 @@ export default async () => {
       designTokenName => !designTokenName.includes('-')
     ), // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
-  )
-
-  const paddingTokenConfig = config.TOKENS.PADDING;
-  await generateStylesFile(
-    designTokens[paddingTokenConfig.NAME],
-    paddingTokenConfig,
-    null, // TODO: move to config ???
-    generatePaddingCssClass, // TODO: move to config ???
   )
 }
