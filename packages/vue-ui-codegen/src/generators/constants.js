@@ -60,7 +60,9 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
                     function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
-                    ); }, null)];
+                    ); }, 
+                    // TODO: combine filter and transformer ???
+                    null)];
             case 4:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;

@@ -25,6 +25,7 @@ export default async () => {
     (designTokenNames: string[]) => designTokenNames.filter(
       designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
     ),
+    // TODO: combine filter and transformer ???
     null
   );
 

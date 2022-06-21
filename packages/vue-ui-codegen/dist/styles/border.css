@@ -1,1 +1,101 @@
 @import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.borderDangerHuge {
+  border: var(--border-danger-huge);
+}
+
+.borderDangerLarge {
+  border: var(--border-danger-large);
+}
+
+.borderDangerMedium {
+  border: var(--border-danger-medium);
+}
+
+.borderDangerSmall {
+  border: var(--border-danger-small);
+}
+
+.borderDangerTiny {
+  border: var(--border-danger-tiny);
+}
+
+.borderInverseHuge {
+  border: var(--border-inverse-huge);
+}
+
+.borderInverseLarge {
+  border: var(--border-inverse-large);
+}
+
+.borderInverseMedium {
+  border: var(--border-inverse-medium);
+}
+
+.borderInverseSmall {
+  border: var(--border-inverse-small);
+}
+
+.borderInverseTiny {
+  border: var(--border-inverse-tiny);
+}
+
+.borderAlternativeHuge {
+  border: var(--border-alternative-huge);
+}
+
+.borderAlternativeLarge {
+  border: var(--border-alternative-large);
+}
+
+.borderAlternativeMedium {
+  border: var(--border-alternative-medium);
+}
+
+.borderAlternativeSmall {
+  border: var(--border-alternative-small);
+}
+
+.borderAlternativeTiny {
+  border: var(--border-alternative-tiny);
+}
+
+.borderSecondaryHuge {
+  border: var(--border-secondary-huge);
+}
+
+.borderSecondaryLarge {
+  border: var(--border-secondary-large);
+}
+
+.borderSecondaryMedium {
+  border: var(--border-secondary-medium);
+}
+
+.borderSecondarySmall {
+  border: var(--border-secondary-small);
+}
+
+.borderSecondaryTiny {
+  border: var(--border-secondary-tiny);
+}
+
+.borderPrimaryHuge {
+  border: var(--border-primary-huge);
+}
+
+.borderPrimaryLarge {
+  border: var(--border-primary-large);
+}
+
+.borderPrimaryMedium {
+  border: var(--border-primary-medium);
+}
+
+.borderPrimarySmall {
+  border: var(--border-primary-small);
+}
+
+.borderPrimaryTiny {
+  border: var(--border-primary-tiny);
+}

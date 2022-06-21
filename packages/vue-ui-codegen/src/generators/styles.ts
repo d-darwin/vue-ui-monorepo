@@ -19,18 +19,14 @@ export default async () => {
     return;
   }
 
-  // TODO: separate styles for background/text ???
   const borderTokenConfig = config.TOKENS.BORDER;
   await generateStylesFile(
     designTokens[borderTokenConfig.NAME],
     borderTokenConfig,
-    (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
-    ), // TODO: move to config ???
+    null, // TODO: move to config ???
     generateBorderCssClasses, // TODO: move to config ???
   )
 
-  // TODO: separate styles for background/text ???
   // TODO: separate styles for background/border/text ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateStylesFile(

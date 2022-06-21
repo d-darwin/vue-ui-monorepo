@@ -61,10 +61,8 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [2 /*return*/];
             case 3:
                 borderTokenConfig = config.TOKENS.BORDER;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[borderTokenConfig.NAME], borderTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
-                    ); }, // TODO: move to config ???
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[borderTokenConfig.NAME], borderTokenConfig, null, // TODO: move to config ???
                     generateBorderCssClasses_1["default"])
-                    // TODO: separate styles for background/text ???
                     // TODO: separate styles for background/border/text ???
                 ];
             case 4:
