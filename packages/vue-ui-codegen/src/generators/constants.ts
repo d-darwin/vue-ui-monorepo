@@ -15,13 +15,15 @@ export default async () => {
     return;
   }
 
+  /* TODO: collect size and colorScheme to filter them from the others */
+  // TODO: separate const for background/border/text ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateConstantsFile(
     designTokens[colorSchemeTokenConfig.NAME],
     colorSchemeTokenConfig,
     // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-')
+      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
     ),
     null
   );
@@ -29,10 +31,10 @@ export default async () => {
   const fontTokenConfig = config.TOKENS.FONT;
   await generateConstantsFile(designTokens[fontTokenConfig.NAME], fontTokenConfig, null, null);
 
-  // NB: should to be generated before padding
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateConstantsFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, null);
 
+  // TODO: should be generated base on current SIZE
   const paddingTokenConfig = config.TOKENS.PADDING;
   await generateConstantsFile(
     designTokens[paddingTokenConfig.NAME],
@@ -46,7 +48,7 @@ export default async () => {
       }
 
       return acc
-    }, [])
+    }, []) // TODO: move to config ??? add util ???
   );
 
   const roundingTokenConfig = config.TOKENS.ROUNDING;

@@ -7,6 +7,7 @@ import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
+import generateBorderCssClasses from "../utils/generateBorderCssClasses";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -18,12 +19,25 @@ export default async () => {
     return;
   }
 
+  // TODO: separate styles for background/text ???
+  const borderTokenConfig = config.TOKENS.BORDER;
+  await generateStylesFile(
+    designTokens[borderTokenConfig.NAME],
+    borderTokenConfig,
+    (designTokenNames: string[]) => designTokenNames.filter(
+      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
+    ), // TODO: move to config ???
+    generateBorderCssClasses, // TODO: move to config ???
+  )
+
+  // TODO: separate styles for background/text ???
+  // TODO: separate styles for background/border/text ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateStylesFile(
     designTokens[colorSchemeTokenConfig.NAME],
     colorSchemeTokenConfig,
     (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-')
+      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
     ), // TODO: move to config ???
     generateColorSchemeCssClasses, // TODO: move to config ???
   )
@@ -57,7 +71,7 @@ export default async () => {
     designTokens[sizeTokenConfig.NAME],
     sizeTokenConfig,
     (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-')
+      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
     ), // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
   )

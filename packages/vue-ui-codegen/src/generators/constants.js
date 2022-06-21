@@ -59,7 +59,8 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
-                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); }, null)];
+                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    ); }, null)];
             case 4:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;
@@ -77,7 +78,8 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                             acc.push(nakedVariantName);
                         }
                         return acc;
-                    }, []); })];
+                    }, []); } // TODO: move to config ??? add util ???
+                    )];
             case 7:
                 _b.sent();
                 roundingTokenConfig = config.TOKENS.ROUNDING;

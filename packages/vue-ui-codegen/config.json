@@ -7,6 +7,15 @@
   "TYPE_FILE_EXT": ".ts",
   "STYLES_FILE_EXT": ".css",
   "TOKENS": {
+    "BORDER": {
+      "NAME": "border",
+      "CONSTANT_NAME": "BORDER",
+      "CONSTANT_FILE_PATH": "/constants/border",
+      "TYPE_NAME": "Border",
+      "TYPE_FILE_PATH": "/types/border",
+      "CSS_CLASS_PREFIX": "border",
+      "CSS_FILE_PATH": "/styles/border"
+    },
     "COLOR_SCHEME": {
       "NAME": "color",
       "CONSTANT_NAME": "COLOR_SCHEME",

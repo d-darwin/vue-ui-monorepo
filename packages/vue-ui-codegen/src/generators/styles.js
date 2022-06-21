@@ -44,8 +44,9 @@ var generateFontCssClass_1 = require("../utils/generateFontCssClass");
 var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
+var generateBorderCssClasses_1 = require("../utils/generateBorderCssClasses");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -59,30 +60,41 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 (0, log_1["default"])("Can't import design tokens from DESIGN_TOKENS_SOURCE. Check config.json", log_1.LOG_TYPE.ERROR);
                 return [2 /*return*/];
             case 3:
-                colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); }, // TODO: move to config ???
-                    generateColorSchemeCssClasses_1["default"])];
+                borderTokenConfig = config.TOKENS.BORDER;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[borderTokenConfig.NAME], borderTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    ); }, // TODO: move to config ???
+                    generateBorderCssClasses_1["default"])
+                    // TODO: separate styles for background/text ???
+                    // TODO: separate styles for background/border/text ???
+                ];
             case 4:
+                _b.sent();
+                colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    ); }, // TODO: move to config ???
+                    generateColorSchemeCssClasses_1["default"])];
+            case 5:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[fontTokenConfig.NAME], fontTokenConfig, null, // TODO: move to config ???
                     generateFontCssClass_1["default"])];
-            case 5:
+            case 6:
                 _b.sent();
                 paddingTokenConfig = config.TOKENS.PADDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig, null, // TODO: move to config ???
                     generatePaddingCssClass_1["default"])];
-            case 6:
+            case 7:
                 _b.sent();
                 roundingTokenConfig = config.TOKENS.ROUNDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, // TODO: move to config ???
                     generateRoundingCssClass_1["default"])];
-            case 7:
+            case 8:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); }, // TODO: move to config ???
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    ); }, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
-            case 8:
+            case 9:
                 _b.sent();
                 return [2 /*return*/];
         }

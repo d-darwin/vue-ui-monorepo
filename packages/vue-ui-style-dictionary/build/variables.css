@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 20 Jun 2022 06:21:12 GMT
+ * Generated on Mon, 20 Jun 2022 06:56:09 GMT
  */
 
 :root {
@@ -20,6 +20,31 @@
   --spacing-default-large: 10px 24px 10px 24px;
   --spacing-default-huge: 14px 32px 14px 32px;
   --spacing-none: 0;
+  --border-danger-huge: none;
+  --border-danger-large: none;
+  --border-danger-medium: none;
+  --border-danger-small: none;
+  --border-danger-tiny: none;
+  --border-inverse-huge: none;
+  --border-inverse-large: none;
+  --border-inverse-medium: none;
+  --border-inverse-small: none;
+  --border-inverse-tiny: none;
+  --border-alternative-huge: none;
+  --border-alternative-large: none;
+  --border-alternative-medium: none;
+  --border-alternative-small: none;
+  --border-alternative-tiny: none;
+  --border-secondary-huge: 3px solid;
+  --border-secondary-large: 2px solid;
+  --border-secondary-medium: 2px solid;
+  --border-secondary-small: 1px solid;
+  --border-secondary-tiny: 1px solid;
+  --border-primary-huge: none;
+  --border-primary-large: none;
+  --border-primary-medium: none;
+  --border-primary-small: none;
+  --border-primary-tiny: none;
   --radius-none: 0;
   --radius-small: 2px;
   --radius-medium: 4px;
