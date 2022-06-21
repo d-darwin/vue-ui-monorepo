@@ -80,6 +80,11 @@ export default defineComponent({
   // TODO: move to setup() ???
   computed: {
     classes(): string[] {
+      // TODO: border and size and colorScheme separately ???
+      const borderClassName = prepareCssClassName(
+        config.TOKENS.BORDER.CSS_CLASS_PREFIX,
+        `${this.colorScheme}-${this.size}`
+      );
       const colorSchemeClassName = prepareCssClassName(
         config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
@@ -108,6 +113,7 @@ export default defineComponent({
 
       return [
         styles.dButton,
+        borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
         fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName] ?? paddingStyles[paddingClassName],
