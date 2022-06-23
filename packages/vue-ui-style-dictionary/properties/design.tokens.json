@@ -745,6 +745,533 @@
       }
     }
   },
+  "outline": {
+    "danger-huge": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 3,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "danger-large": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "danger-medium": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "danger-small": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "danger-tiny": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "inverse-huge": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 3,
+        "color": "#ff843fff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "inverse-large": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#ff843fff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "inverse-medium": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#ff843fff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "inverse-small": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#ff843fff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "inverse-tiny": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#ff843fff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "alternative-huge": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 3,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "alternative-large": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "alternative-medium": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "alternative-small": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "alternative-tiny": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "secondary-huge": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 3,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "secondary-large": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "secondary-medium": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "secondary-small": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "secondary-tiny": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "primary-huge": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 3,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "primary-large": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "primary-medium": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 2,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "primary-small": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    },
+    "primary-tiny": {
+      "description": null,
+      "type": "custom-stroke",
+      "value": {
+        "align": "outside",
+        "dashPattern": [
+          4,
+          4
+        ],
+        "lineCap": "none",
+        "lineJoin": "miter",
+        "miterLimit": 4,
+        "weight": 1,
+        "color": "#325efaff"
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "border"
+        }
+      }
+    }
+  },
   "radius": {
     "none": {
       "description": null,

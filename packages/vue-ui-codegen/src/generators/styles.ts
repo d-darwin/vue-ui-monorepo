@@ -1,13 +1,14 @@
 import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import log, { LOG_TYPE } from "../utils/log";
 import generateStylesFile from "../utils/generateStylesFile";
+import generateBorderCssClasses from "../utils/generateBorderCssClasses";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
 import generateFontCssClass from "../utils/generateFontCssClass";
+import generateOutlineCssClass from "../utils/generateOutlineCssClass";
 import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
-import generateBorderCssClasses from "../utils/generateBorderCssClasses";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -44,6 +45,14 @@ export default async () => {
     fontTokenConfig,
     null, // TODO: move to config ???
     generateFontCssClass, // TODO: move to config ???
+  )
+
+  const outlineTokenConfig = config.TOKENS.OUTLINE;
+  await generateStylesFile(
+    designTokens[outlineTokenConfig.NAME],
+    outlineTokenConfig,
+    null, // TODO: move to config ???
+    generateOutlineCssClass, // TODO: move to config ???
   )
 
   const paddingTokenConfig = config.TOKENS.PADDING;

@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 20 Jun 2022 06:56:09 GMT
+ * Generated on Tue, 21 Jun 2022 06:52:09 GMT
  */
 
 :root {
@@ -45,6 +45,31 @@
   --border-primary-medium: none;
   --border-primary-small: none;
   --border-primary-tiny: none;
+  --outline-danger-huge: 3px dashed;
+  --outline-danger-large: 2px dashed;
+  --outline-danger-medium: 2px dashed;
+  --outline-danger-small: 1px dashed;
+  --outline-danger-tiny: 1px dashed;
+  --outline-inverse-huge: 3px dashed;
+  --outline-inverse-large: 2px dashed;
+  --outline-inverse-medium: 2px dashed;
+  --outline-inverse-small: 1px dashed;
+  --outline-inverse-tiny: 1px dashed;
+  --outline-alternative-huge: 3px dashed;
+  --outline-alternative-large: 2px dashed;
+  --outline-alternative-medium: 2px dashed;
+  --outline-alternative-small: 1px dashed;
+  --outline-alternative-tiny: 1px dashed;
+  --outline-secondary-huge: 3px dashed;
+  --outline-secondary-large: 2px dashed;
+  --outline-secondary-medium: 2px dashed;
+  --outline-secondary-small: 1px dashed;
+  --outline-secondary-tiny: 1px dashed;
+  --outline-primary-huge: 3px dashed;
+  --outline-primary-large: 2px dashed;
+  --outline-primary-medium: 2px dashed;
+  --outline-primary-small: 1px dashed;
+  --outline-primary-tiny: 1px dashed;
   --radius-none: 0;
   --radius-small: 2px;
   --radius-medium: 4px;

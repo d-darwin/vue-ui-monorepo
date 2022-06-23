@@ -39,14 +39,15 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateStylesFile_1 = require("../utils/generateStylesFile");
+var generateBorderCssClasses_1 = require("../utils/generateBorderCssClasses");
 var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");
+var generateOutlineCssClass_1 = require("../utils/generateOutlineCssClass");
 var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
-var generateBorderCssClasses_1 = require("../utils/generateBorderCssClasses");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -78,21 +79,26 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     generateFontCssClass_1["default"])];
             case 6:
                 _b.sent();
+                outlineTokenConfig = config.TOKENS.OUTLINE;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[outlineTokenConfig.NAME], outlineTokenConfig, null, // TODO: move to config ???
+                    generateOutlineCssClass_1["default"])];
+            case 7:
+                _b.sent();
                 paddingTokenConfig = config.TOKENS.PADDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig, null, // TODO: move to config ???
                     generatePaddingCssClass_1["default"])];
-            case 7:
+            case 8:
                 _b.sent();
                 roundingTokenConfig = config.TOKENS.ROUNDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, // TODO: move to config ???
                     generateRoundingCssClass_1["default"])];
-            case 8:
+            case 9:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
                     ); }, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
-            case 9:
+            case 10:
                 _b.sent();
                 return [2 /*return*/];
         }

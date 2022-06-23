@@ -1,0 +1,126 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.outlineDangerHuge:focus-visible,
+.outlineDangerHuge[data-focus-visible-added] {
+  outline: var(--outline-danger-huge);
+}
+
+.outlineDangerLarge:focus-visible,
+.outlineDangerLarge[data-focus-visible-added] {
+  outline: var(--outline-danger-large);
+}
+
+.outlineDangerMedium:focus-visible,
+.outlineDangerMedium[data-focus-visible-added] {
+  outline: var(--outline-danger-medium);
+}
+
+.outlineDangerSmall:focus-visible,
+.outlineDangerSmall[data-focus-visible-added] {
+  outline: var(--outline-danger-small);
+}
+
+.outlineDangerTiny:focus-visible,
+.outlineDangerTiny[data-focus-visible-added] {
+  outline: var(--outline-danger-tiny);
+}
+
+.outlineInverseHuge:focus-visible,
+.outlineInverseHuge[data-focus-visible-added] {
+  outline: var(--outline-inverse-huge);
+}
+
+.outlineInverseLarge:focus-visible,
+.outlineInverseLarge[data-focus-visible-added] {
+  outline: var(--outline-inverse-large);
+}
+
+.outlineInverseMedium:focus-visible,
+.outlineInverseMedium[data-focus-visible-added] {
+  outline: var(--outline-inverse-medium);
+}
+
+.outlineInverseSmall:focus-visible,
+.outlineInverseSmall[data-focus-visible-added] {
+  outline: var(--outline-inverse-small);
+}
+
+.outlineInverseTiny:focus-visible,
+.outlineInverseTiny[data-focus-visible-added] {
+  outline: var(--outline-inverse-tiny);
+}
+
+.outlineAlternativeHuge:focus-visible,
+.outlineAlternativeHuge[data-focus-visible-added] {
+  outline: var(--outline-alternative-huge);
+}
+
+.outlineAlternativeLarge:focus-visible,
+.outlineAlternativeLarge[data-focus-visible-added] {
+  outline: var(--outline-alternative-large);
+}
+
+.outlineAlternativeMedium:focus-visible,
+.outlineAlternativeMedium[data-focus-visible-added] {
+  outline: var(--outline-alternative-medium);
+}
+
+.outlineAlternativeSmall:focus-visible,
+.outlineAlternativeSmall[data-focus-visible-added] {
+  outline: var(--outline-alternative-small);
+}
+
+.outlineAlternativeTiny:focus-visible,
+.outlineAlternativeTiny[data-focus-visible-added] {
+  outline: var(--outline-alternative-tiny);
+}
+
+.outlineSecondaryHuge:focus-visible,
+.outlineSecondaryHuge[data-focus-visible-added] {
+  outline: var(--outline-secondary-huge);
+}
+
+.outlineSecondaryLarge:focus-visible,
+.outlineSecondaryLarge[data-focus-visible-added] {
+  outline: var(--outline-secondary-large);
+}
+
+.outlineSecondaryMedium:focus-visible,
+.outlineSecondaryMedium[data-focus-visible-added] {
+  outline: var(--outline-secondary-medium);
+}
+
+.outlineSecondarySmall:focus-visible,
+.outlineSecondarySmall[data-focus-visible-added] {
+  outline: var(--outline-secondary-small);
+}
+
+.outlineSecondaryTiny:focus-visible,
+.outlineSecondaryTiny[data-focus-visible-added] {
+  outline: var(--outline-secondary-tiny);
+}
+
+.outlinePrimaryHuge:focus-visible,
+.outlinePrimaryHuge[data-focus-visible-added] {
+  outline: var(--outline-primary-huge);
+}
+
+.outlinePrimaryLarge:focus-visible,
+.outlinePrimaryLarge[data-focus-visible-added] {
+  outline: var(--outline-primary-large);
+}
+
+.outlinePrimaryMedium:focus-visible,
+.outlinePrimaryMedium[data-focus-visible-added] {
+  outline: var(--outline-primary-medium);
+}
+
+.outlinePrimarySmall:focus-visible,
+.outlinePrimarySmall[data-focus-visible-added] {
+  outline: var(--outline-primary-small);
+}
+
+.outlinePrimaryTiny:focus-visible,
+.outlinePrimaryTiny[data-focus-visible-added] {
+  outline: var(--outline-primary-tiny);
+}

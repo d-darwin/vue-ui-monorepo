@@ -34,6 +34,15 @@
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_PATH": "/styles/font"
     },
+    "OUTLINE": {
+      "NAME": "outline",
+      "CONSTANT_NAME": "OUTLINE",
+      "CONSTANT_FILE_PATH": "/constants/outline",
+      "TYPE_NAME": "Outline",
+      "TYPE_FILE_PATH": "/types/outline",
+      "CSS_CLASS_PREFIX": "outline",
+      "CSS_FILE_PATH": "/styles/outline"
+    },
     "PADDING": {
       "NAME": "spacing",
       "CONSTANT_NAME": "PADDING",
