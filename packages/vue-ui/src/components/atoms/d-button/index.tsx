@@ -10,6 +10,8 @@ import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import borderStyles from "@darwin-studio/vue-ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -17,6 +19,7 @@ import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";
@@ -60,18 +63,27 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: rename paddingType ???
     padding: {
       type: String as PropType<Padding>,
       default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * TODO: Add description
+     */
+    // TODO: rename roundingType ???
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
-    /*??? paddingType: {
-      type: String as PropType<PaddingType>,
-      default: PADDING_TYPE.default,
-    },*/
+    /**
+     * TODO: Add description
+     */
+    // TODO: rename transitionType ???
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
     // TODO: tag -> a11y ???
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
@@ -116,6 +128,10 @@ export default defineComponent({
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      const transitionClassName = prepareCssClassName(
+        config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
 
       return [
         styles.dButton,
@@ -126,6 +142,7 @@ export default defineComponent({
         paddingStyles[paddingSizeClassName] ?? paddingStyles[paddingClassName],
         roundingStyles[roundingClassName],
         sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
       ];
     },
   },
