@@ -13,6 +13,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TOD
 import borderStyles from "@darwin-studio/vue-ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -94,6 +95,11 @@ export default defineComponent({
         config.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.size
       );
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${this.colorScheme}-${this.size}`
+      );
       const paddingClassName = prepareCssClassName(
         config.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
@@ -116,6 +122,7 @@ export default defineComponent({
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
         fontStyles[fontClassName],
+        outlineStyles[outlineClassName],
         paddingStyles[paddingSizeClassName] ?? paddingStyles[paddingClassName],
         roundingStyles[roundingClassName],
         sizeStyles[sizeClassName],

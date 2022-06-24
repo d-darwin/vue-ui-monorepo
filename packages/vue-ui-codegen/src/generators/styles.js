@@ -46,6 +46,7 @@ var generateOutlineCssClass_1 = require("../utils/generateOutlineCssClass");
 var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
+var color_scheme_1 = require("../../dist/constants/color-scheme");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
     var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
     return __generator(this, function (_b) {
@@ -63,8 +64,9 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 3:
                 borderTokenConfig = config.TOKENS.BORDER;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[borderTokenConfig.NAME], borderTokenConfig, null, // TODO: move to config ???
-                    generateBorderCssClasses_1["default"])
-                    // TODO: separate styles for background/border/text ???
+                    generateBorderCssClasses_1["default"], // TODO: move to config ???
+                    Object.values(color_scheme_1.COLOR_SCHEME))
+                    // TODO: separate styles for background/color ???
                 ];
             case 4:
                 _b.sent();
@@ -81,7 +83,8 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 _b.sent();
                 outlineTokenConfig = config.TOKENS.OUTLINE;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[outlineTokenConfig.NAME], outlineTokenConfig, null, // TODO: move to config ???
-                    generateOutlineCssClass_1["default"])];
+                    generateOutlineCssClass_1["default"], // TODO: move to config ???
+                    Object.values(color_scheme_1.COLOR_SCHEME))];
             case 7:
                 _b.sent();
                 paddingTokenConfig = config.TOKENS.PADDING;

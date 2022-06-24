@@ -9,6 +9,7 @@ import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
+import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -20,15 +21,18 @@ export default async () => {
     return;
   }
 
+
   const borderTokenConfig = config.TOKENS.BORDER;
   await generateStylesFile(
     designTokens[borderTokenConfig.NAME],
     borderTokenConfig,
     null, // TODO: move to config ???
     generateBorderCssClasses, // TODO: move to config ???
+    Object.values(COLOR_SCHEME), // TODO: should be generated base on current COLOR_SCHEME
   )
 
-  // TODO: separate styles for background/border/text ???
+  // TODO: separate styles for background/color ???
+  // TODO: what to do with 'text' ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateStylesFile(
     designTokens[colorSchemeTokenConfig.NAME],
@@ -53,6 +57,7 @@ export default async () => {
     outlineTokenConfig,
     null, // TODO: move to config ???
     generateOutlineCssClass, // TODO: move to config ???
+    Object.values(COLOR_SCHEME), // TODO: should be generated base on current COLOR_SCHEME
   )
 
   const paddingTokenConfig = config.TOKENS.PADDING;

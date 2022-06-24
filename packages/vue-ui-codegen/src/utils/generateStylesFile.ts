@@ -2,6 +2,7 @@ import * as config from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "../utils/prepareCssClassName";
 import writeFile from "../utils/writeFile";
 import type { ConfigKey, DesignTokens } from "../types";
+import getNakedName from "./getNakedName";
 
 // TODO: descr
 // TODO: try to reduce args
@@ -9,7 +10,8 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: Record<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
-  cssClassGenerator: (className: string, customPropertyName: string) => string,
+  cssClassGenerator: (className: string, customPropertyName: string, colorClassPropertyName?: string) => string,
+  colorVariantList?: string[],
 ): Promise<void> {
   if (designTokens) {
     const cssClassStringList: string[] = [];
@@ -24,7 +26,14 @@ export default async function (
     tokenVariantNameList?.forEach((tokenVariantName) => {
       const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
       const customPropertyName = `--${designTokenConfig.NAME}-${tokenVariantName}`;
-      cssClassStringList.push(cssClassGenerator(className, customPropertyName));
+      if (colorVariantList?.length) {
+        const { extractedWord: colorVariantName } = getNakedName(customPropertyName, colorVariantList)
+        const colorCustomPropertyName = `--${config.TOKENS.COLOR_SCHEME.NAME}-${colorVariantName}-${designTokenConfig.NAME}`
+        cssClassStringList.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName));
+        return;
+      } else {
+        cssClassStringList.push(cssClassGenerator(className, customPropertyName));
+      }
     })
 
     await writeFile(

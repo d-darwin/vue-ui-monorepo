@@ -2,28 +2,30 @@
 exports.__esModule = true;
 /**
  * Clean up constantVariantName from prefixes or suffixes
- * @param constantVariantName
- * @param prefixOrPostfixList
+ * @param tokenVariantName
+ * @param extractionWordList
  */
-function default_1(constantVariantName, prefixOrPostfixList) {
-    var nakedVariantName = constantVariantName;
-    var nakedPrefixOrSuffixName = "";
-    prefixOrPostfixList.some(function (prefixOrSuffix) {
-        console.log(constantVariantName, prefixOrSuffix);
-        if (constantVariantName.startsWith(prefixOrSuffix)) {
-            console.log(1);
-            nakedVariantName = constantVariantName.replace("".concat(prefixOrSuffix, "-"), "");
-            nakedPrefixOrSuffixName = prefixOrSuffix;
+function default_1(tokenVariantName, extractionWordList) {
+    var nakedVariantName = tokenVariantName;
+    var extractedWord = "";
+    extractionWordList.some(function (word) {
+        if (tokenVariantName.startsWith(word)) {
+            nakedVariantName = tokenVariantName.replace("".concat(word, "-"), "");
+            extractedWord = word;
             return true;
         }
-        if (constantVariantName.endsWith(prefixOrSuffix)) {
-            console.log(2);
-            nakedVariantName = constantVariantName.replace("-".concat(prefixOrSuffix), "");
-            nakedPrefixOrSuffixName = prefixOrSuffix;
+        if (tokenVariantName.endsWith(word)) {
+            nakedVariantName = tokenVariantName.replace("-".concat(word), "");
+            extractedWord = word;
+            return true;
+        }
+        if (tokenVariantName.includes(word)) {
+            nakedVariantName = tokenVariantName.replace("-".concat(word, "-"), "");
+            extractedWord = word;
             return true;
         }
         return false;
     });
-    return { nakedVariantName: nakedVariantName, nakedPrefixOrSuffixName: nakedPrefixOrSuffixName };
+    return { nakedVariantName: nakedVariantName, extractedWord: extractedWord };
 }
 exports["default"] = default_1;

@@ -16,7 +16,7 @@ export default async () => {
   }
 
   /* TODO: collect size and colorScheme to filter them from the others */
-  // TODO: separate const for background/border/text ???
+  // TODO: what to do with 'text' ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateConstantsFile(
     designTokens[colorSchemeTokenConfig.NAME],

@@ -3,149 +3,119 @@
 .colorSchemePrimary {
   color: var(--color-primary);
   background-color: var(--color-primary-background);
-  border-color: var(--color-primary-border);
-  outline-color: var(--color-primary-outline);
 }
 
 .colorSchemePrimary:hover {
   color: var(--color-primary-hover);
   background-color: var(--color-primary-background-hover);
-  border-color: var(--color-primary-border-hover);
 }
 
 .colorSchemePrimary:active {
   color: var(--color-primary-active);
   background-color: var(--color-primary-background-active);
-  border-color: var(--color-primary-border-active);
 }
 
 .colorSchemePrimary:disabled {
   color: var(--color-primary-disabled);
   background-color: var(--color-primary-background-disabled);
-  border-color: var(--color-primary-border-disabled);
 }
 
 .colorSchemeSecondary {
   color: var(--color-secondary);
   background-color: var(--color-secondary-background);
-  border-color: var(--color-secondary-border);
-  outline-color: var(--color-secondary-outline);
 }
 
 .colorSchemeSecondary:hover {
   color: var(--color-secondary-hover);
   background-color: var(--color-secondary-background-hover);
-  border-color: var(--color-secondary-border-hover);
 }
 
 .colorSchemeSecondary:active {
   color: var(--color-secondary-active);
   background-color: var(--color-secondary-background-active);
-  border-color: var(--color-secondary-border-active);
 }
 
 .colorSchemeSecondary:disabled {
   color: var(--color-secondary-disabled);
   background-color: var(--color-secondary-background-disabled);
-  border-color: var(--color-secondary-border-disabled);
 }
 
 .colorSchemeAlternative {
   color: var(--color-alternative);
   background-color: var(--color-alternative-background);
-  border-color: var(--color-alternative-border);
-  outline-color: var(--color-alternative-outline);
 }
 
 .colorSchemeAlternative:hover {
   color: var(--color-alternative-hover);
   background-color: var(--color-alternative-background-hover);
-  border-color: var(--color-alternative-border-hover);
 }
 
 .colorSchemeAlternative:active {
   color: var(--color-alternative-active);
   background-color: var(--color-alternative-background-active);
-  border-color: var(--color-alternative-border-active);
 }
 
 .colorSchemeAlternative:disabled {
   color: var(--color-alternative-disabled);
   background-color: var(--color-alternative-background-disabled);
-  border-color: var(--color-alternative-border-disabled);
 }
 
 .colorSchemeInverse {
   color: var(--color-inverse);
   background-color: var(--color-inverse-background);
-  border-color: var(--color-inverse-border);
-  outline-color: var(--color-inverse-outline);
 }
 
 .colorSchemeInverse:hover {
   color: var(--color-inverse-hover);
   background-color: var(--color-inverse-background-hover);
-  border-color: var(--color-inverse-border-hover);
 }
 
 .colorSchemeInverse:active {
   color: var(--color-inverse-active);
   background-color: var(--color-inverse-background-active);
-  border-color: var(--color-inverse-border-active);
 }
 
 .colorSchemeInverse:disabled {
   color: var(--color-inverse-disabled);
   background-color: var(--color-inverse-background-disabled);
-  border-color: var(--color-inverse-border-disabled);
 }
 
 .colorSchemeDanger {
   color: var(--color-danger);
   background-color: var(--color-danger-background);
-  border-color: var(--color-danger-border);
-  outline-color: var(--color-danger-outline);
 }
 
 .colorSchemeDanger:hover {
   color: var(--color-danger-hover);
   background-color: var(--color-danger-background-hover);
-  border-color: var(--color-danger-border-hover);
 }
 
 .colorSchemeDanger:active {
   color: var(--color-danger-active);
   background-color: var(--color-danger-background-active);
-  border-color: var(--color-danger-border-active);
 }
 
 .colorSchemeDanger:disabled {
   color: var(--color-danger-disabled);
   background-color: var(--color-danger-background-disabled);
-  border-color: var(--color-danger-border-disabled);
 }
 
 .colorSchemeText {
   color: var(--color-text);
   background-color: var(--color-text-background);
-  border-color: var(--color-text-border);
-  outline-color: var(--color-text-outline);
 }
 
 .colorSchemeText:hover {
   color: var(--color-text-hover);
   background-color: var(--color-text-background-hover);
-  border-color: var(--color-text-border-hover);
 }
 
 .colorSchemeText:active {
   color: var(--color-text-active);
   background-color: var(--color-text-background-active);
-  border-color: var(--color-text-border-active);
 }
 
 .colorSchemeText:disabled {
   color: var(--color-text-disabled);
   background-color: var(--color-text-background-disabled);
-  border-color: var(--color-text-border-disabled);
 }

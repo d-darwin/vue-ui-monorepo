@@ -13,7 +13,7 @@ export default async () => {
     return;
   }
 
-  // TODO: separate types for background/border/text ???
+  // TODO: what to do with 'text' ???
   const colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
   await generateTypesFile(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig);
 

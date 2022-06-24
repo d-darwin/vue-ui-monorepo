@@ -1,31 +1,33 @@
 /**
  * Clean up constantVariantName from prefixes or suffixes
- * @param constantVariantName
- * @param prefixOrPostfixList
+ * @param tokenVariantName
+ * @param extractionWordList
  */
 export default function(
-  constantVariantName: string,
-  prefixOrPostfixList: string[]
-): { nakedVariantName: string; nakedPrefixOrSuffixName: string } {
-  let nakedVariantName = constantVariantName;
-  let nakedPrefixOrSuffixName = "";
+  tokenVariantName: string,
+  extractionWordList: string[]
+): { nakedVariantName: string; extractedWord: string } {
+  let nakedVariantName = tokenVariantName;
+  let extractedWord = "";
 
-  prefixOrPostfixList.some((prefixOrSuffix) => {
-    console.log(constantVariantName, prefixOrSuffix)
-    if (constantVariantName.startsWith(prefixOrSuffix)) {
-      console.log(1);
-      nakedVariantName = constantVariantName.replace(`${prefixOrSuffix}-`, "");
-      nakedPrefixOrSuffixName = prefixOrSuffix;
+  extractionWordList.some((word) => {
+    if (tokenVariantName.startsWith(word)) {
+      nakedVariantName = tokenVariantName.replace(`${word}-`, "");
+      extractedWord = word;
       return true;
     }
-    if (constantVariantName.endsWith(prefixOrSuffix)) {
-      console.log(2);
-      nakedVariantName = constantVariantName.replace(`-${prefixOrSuffix}`, "");
-      nakedPrefixOrSuffixName = prefixOrSuffix;
+    if (tokenVariantName.endsWith(word)) {
+      nakedVariantName = tokenVariantName.replace(`-${word}`, "");
+      extractedWord = word;
+      return true;
+    }
+    if (tokenVariantName.includes(word)) {
+      nakedVariantName = tokenVariantName.replace(`-${word}-`, "");
+      extractedWord = word;
       return true;
     }
     return false;
   });
 
-  return { nakedVariantName, nakedPrefixOrSuffixName };
+  return { nakedVariantName, extractedWord };
 }
