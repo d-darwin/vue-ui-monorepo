@@ -5,6 +5,7 @@ import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 
 export default {
   title: "atoms/DButton",
@@ -26,14 +27,19 @@ export default {
       control: { type: "select" },
       options: Object.values(SIZE),
     },
+    transition: {
+      control: { type: "select" },
+      options: Object.values(TRANSITION),
+    },
   },
   args: {
     text: "Some text content",
     html: "",
-    colorScheme: COLOR_SCHEME.PRIMARY,
-    padding: PADDING.DEFAULT,
-    rounding: ROUNDING.MEDIUM,
-    size: SIZE.MEDIUM,
+    colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
+    padding: PADDING.DEFAULT, // TODO: don't hardcode values
+    rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
+    size: SIZE.MEDIUM, // TODO: don't hardcode values
+    transition: TRANSITION.SLOW, // TODO: don't hardcode values
   },
 };
 
