@@ -1354,6 +1354,65 @@
       }
     }
   },
+  "motion": {
+    "slow": {
+      "description": null,
+      "type": "custom-transition",
+      "value": {
+        "transitionType": "scroll_animate",
+        "duration": 0.6,
+        "easingFunction": {
+          "x1": 0.41999998688697815,
+          "x2": 0.5799999833106995,
+          "y1": 0,
+          "y2": 1
+        }
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "motion"
+        }
+      }
+    },
+    "average": {
+      "description": null,
+      "type": "custom-transition",
+      "value": {
+        "transitionType": "scroll_animate",
+        "duration": 0.3,
+        "easingFunction": {
+          "x1": 0.41999998688697815,
+          "x2": 0.5799999833106995,
+          "y1": 0,
+          "y2": 1
+        }
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "motion"
+        }
+      }
+    },
+    "fast": {
+      "description": null,
+      "type": "custom-transition",
+      "value": {
+        "transitionType": "scroll_animate",
+        "duration": 0.15,
+        "easingFunction": {
+          "x1": 0.41999998688697815,
+          "x2": 0.5799999833106995,
+          "y1": 0,
+          "y2": 1
+        }
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "motion"
+        }
+      }
+    }
+  },
   "color": {
     "primary-background": {
       "description": "",

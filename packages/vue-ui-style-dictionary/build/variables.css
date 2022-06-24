@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Tue, 21 Jun 2022 06:52:09 GMT
+ * Generated on Fri, 24 Jun 2022 06:57:07 GMT
  */
 
 :root {
@@ -75,6 +75,9 @@
   --radius-medium: 4px;
   --radius-large: 8px;
   --radius-full: 10vmin;
+  --motion-slow: all 0.6s ease-in-out;
+  --motion-average: all 0.3s ease-in-out;
+  --motion-fast: all 0.15s ease-in-out;
   --color-primary-background: #321f54ff;
   --color-primary-background-hover: #5b4c76ff;
   --color-primary-background-active: #5b4c76ff;
