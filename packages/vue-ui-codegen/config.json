@@ -69,6 +69,15 @@
       "TYPE_FILE_PATH": "/types/size",
       "CSS_CLASS_PREFIX": "size",
       "CSS_FILE_PATH": "/styles/size"
+    },
+    "TRANSITION": {
+      "NAME": "motion",
+      "CONSTANT_NAME": "TRANSITION",
+      "CONSTANT_FILE_PATH": "/constants/transition",
+      "TYPE_NAME": "Transition",
+      "TYPE_FILE_PATH": "/types/transition",
+      "CSS_CLASS_PREFIX": "transition",
+      "CSS_FILE_PATH": "/styles/transition"
     }
   }
 }

@@ -54,5 +54,8 @@ export default async () => {
 
   const roundingTokenConfig = config.TOKENS.ROUNDING;
   await generateConstantsFile(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, null);
+
+  const transitionTokenConfig = config.TOKENS.TRANSITION;
+  await generateConstantsFile(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, null);
 }
 

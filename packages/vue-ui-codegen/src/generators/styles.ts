@@ -10,6 +10,7 @@ import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
 import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
+import generateTransitionCssClass from "../utils/generateTransitionCssClass";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -84,5 +85,13 @@ export default async () => {
       designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
     ), // TODO: move to config ???
     generateSizeCssClass, // TODO: move to config ???
+  )
+
+  const transitionTokenConfig = config.TOKENS.TRANSITION;
+  await generateStylesFile(
+    designTokens[transitionTokenConfig.NAME],
+    transitionTokenConfig,
+    null, // TODO: move to config ???
+    generateTransitionCssClass, // TODO: move to config ???
   )
 }

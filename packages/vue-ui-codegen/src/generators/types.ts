@@ -28,4 +28,7 @@ export default async () => {
 
   const sizeTokenConfig = config.TOKENS.SIZE;
   await generateTypesFile(designTokens[sizeTokenConfig.NAME], sizeTokenConfig);
+
+  const transitionTokenConfig = config.TOKENS.TRANSITION;
+  await generateTypesFile(designTokens[transitionTokenConfig.NAME], transitionTokenConfig);
 }

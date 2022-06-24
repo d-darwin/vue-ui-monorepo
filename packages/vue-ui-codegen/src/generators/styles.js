@@ -47,8 +47,9 @@ var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 var color_scheme_1 = require("../../dist/constants/color-scheme");
+var generateTransitionCssClass_1 = require("../utils/generateTransitionCssClass");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -67,6 +68,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     generateBorderCssClasses_1["default"], // TODO: move to config ???
                     Object.values(color_scheme_1.COLOR_SCHEME))
                     // TODO: separate styles for background/color ???
+                    // TODO: what to do with 'text' ???
                 ];
             case 4:
                 _b.sent();
@@ -102,6 +104,11 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     ); }, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
             case 10:
+                _b.sent();
+                transitionTokenConfig = config.TOKENS.TRANSITION;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, // TODO: move to config ???
+                    generateTransitionCssClass_1["default"])];
+            case 11:
                 _b.sent();
                 return [2 /*return*/];
         }
