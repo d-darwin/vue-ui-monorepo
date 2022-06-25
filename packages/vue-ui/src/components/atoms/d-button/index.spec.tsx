@@ -146,18 +146,6 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  it("Emits click event when clicked", async () => {
-    await wrapper.find("button").trigger("click");
-    expect(wrapper.emitted("click")).toBeTruthy();
-  });
-
-  it("Calls props.whenClick when clicked", async () => {
-    const whenClick = jest.fn();
-    await wrapper.setProps({ whenClick });
-    await wrapper.find("button").trigger("click");
-    expect(whenClick).toHaveBeenCalledTimes(1);
-  });
-
   it("Renders as 'button' html tag by default", () => {
     expect(wrapper.element.tagName).toEqual("BUTTON");
   });
@@ -175,8 +163,32 @@ describe("DButton", () => {
     expect(wrapper.element.tagName).toEqual("ROUTER-LINK");
   });
 
-  // TODO: click if not disabled
-  // TODO: no click if disabled
+  it("Doesn't emit click event when clicked if disabled", async () => {
+    await wrapper.setProps({ disabled: true });
+    await wrapper.trigger("click");
+    expect(wrapper.emitted("click")).toBeFalsy();
+  });
+
+  it("Emits click event when clicked", async () => {
+    await wrapper.setProps({ to: null, href: null, disabled: false });
+    await wrapper.trigger("click");
+    expect(wrapper.emitted("click")).toBeTruthy();
+  });
+
+  it("Calls props.whenClick when clicked", async () => {
+    const whenClick = jest.fn();
+    await wrapper.setProps({ whenClick, disabled: false });
+    await wrapper.trigger("click");
+    expect(whenClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("Doesn't call props.whenClick when clicked if disabled", async () => {
+    await wrapper.setProps({ disabled: true });
+    const whenClick = jest.fn();
+    await wrapper.setProps({ whenClick });
+    await wrapper.trigger("click");
+    expect(whenClick).toHaveBeenCalledTimes(0);
+  });
 
   // TODO: preventDefault
 });

@@ -84,9 +84,15 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: to \ href \
+    // TODO: to \ href
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
+    },
+    preventDefault: {
+      type: Boolean,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
 
@@ -164,10 +170,15 @@ export default defineComponent({
 
   methods: {
     // TODO: move to setup()
-    clickHandler(): void | Promise<void> {
-      // TODO: preventDefault
-      // TODO: non native onClick
-      this.whenClick?.();
+    clickHandler(event: MouseEvent): void | Promise<void> {
+      if (this.preventDefault) {
+        event.preventDefault();
+      }
+
+      if (!this.disabled) {
+        this.whenClick?.();
+        this.$emit("click");
+      }
     },
   },
 
