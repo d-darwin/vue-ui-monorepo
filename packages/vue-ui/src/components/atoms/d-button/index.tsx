@@ -84,7 +84,7 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: tag -> a11y ???
+    // TODO: to \ href \
     whenClick: {
       type: Function as PropType<() => void | Promise<void>>,
     },
@@ -146,6 +146,20 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
     },
+
+    // TODO: move to types
+    tag(): "button" | "a" | "router-link" {
+      if (this.$attrs["href"]) {
+        return "a";
+      }
+
+      // TODO: how to check $router presence
+      if (this.$attrs["to"]) {
+        return "router-link";
+      }
+
+      return "button";
+    },
   },
 
   methods: {
@@ -158,9 +172,11 @@ export default defineComponent({
   },
 
   render(): VNode {
+    const Tag = this.tag;
+
     if (this.html) {
       return (
-        <button
+        <Tag
           class={this.classes}
           onClick={this.clickHandler}
           v-html={this.html}
@@ -169,9 +185,9 @@ export default defineComponent({
     }
 
     return (
-      <button class={this.classes} onClick={this.clickHandler}>
+      <Tag class={this.classes} onClick={this.clickHandler}>
         {this.$slots.default?.() || this.text}
-      </button>
+      </Tag>
     );
   },
 });

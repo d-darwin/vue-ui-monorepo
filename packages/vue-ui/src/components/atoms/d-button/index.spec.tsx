@@ -158,9 +158,25 @@ describe("DButton", () => {
     expect(whenClick).toHaveBeenCalledTimes(1);
   });
 
-  // TODO: button / a / router-link - in the setup() ???
+  it("Renders as 'button' html tag by default", () => {
+    expect(wrapper.element.tagName).toEqual("BUTTON");
+  });
+
+  it("Renders as 'a' html tag if 'href' is passed", async () => {
+    await wrapper.setProps({ href: "http://some.href" }); // TODO: add href validator to the component
+    expect(wrapper.element.tagName).toEqual("A");
+  });
+
+  it("Renders as 'router-link' component if 'to' is passed", async () => {
+    await wrapper.setProps({
+      to: { path: "/some-relative-path" },
+      href: null,
+    }); // TODO: add to validator to the component
+    expect(wrapper.element.tagName).toEqual("ROUTER-LINK");
+  });
+
   // TODO: click if not disabled
   // TODO: no click if disabled
+
   // TODO: preventDefault
-  // TODO: ???
 });
