@@ -35,20 +35,17 @@ describe("DTypography", () => {
   });
 
   it("Renders dTypography class name", async () => {
-    console.log("wrapper.html()", wrapper.html());
     expect(wrapper.classes()).toContain("dTypography"); // TODO: get from the component name ??
   });
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
-    console.log(wrapper.classes()); // TODO: remove
     await wrapper.setProps({ font }); // TODO: why it doesn't work with composition api ???
     const fontClassName = prepareCssClassName(
       config.TOKENS.FONT.CSS_CLASS_PREFIX,
       font
     );
-    console.log(wrapper.classes()); // TODO: remove
     expect(wrapper.classes()).toContain(fontClassName);
   });
 
