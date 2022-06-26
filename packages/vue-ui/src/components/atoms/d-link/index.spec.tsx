@@ -5,39 +5,23 @@ import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TOD
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import {
+  baseClassCase,
+  propContentCase,
+  propHtmlCase,
+  slotDefaultCase,
+} from "@/utils/test-case-factories";
 
 describe("DLink", () => {
   const wrapper = shallowMount(DLink);
 
-  // TODO: add case factory
-  it("Renders props.content", async () => {
-    const text = "Some text content";
-    await wrapper.setProps({ text });
-    expect(wrapper.text()).toMatch(text);
-  });
+  propContentCase(wrapper);
 
-  // TODO: add case factory
-  it("Renders props.html", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
-  });
+  propHtmlCase(wrapper);
 
-  // TODO: add case factory
-  it("Renders $slots.default", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>";
-    const wrapper = shallowMount(DLink, {
-      slots: {
-        default: slotContent,
-      },
-    });
-    expect(wrapper.html()).toMatch(slotContent);
-  });
+  slotDefaultCase(wrapper);
 
-  // TODO: classes are not rendered in jest ???
-  it("Renders dLink class name", async () => {
-    expect(wrapper.classes()).toContain("dLink");
-  });
+  baseClassCase(wrapper, "dLink");
 
   it("Renders font class name", async () => {
     const font = FONT.SMALL;

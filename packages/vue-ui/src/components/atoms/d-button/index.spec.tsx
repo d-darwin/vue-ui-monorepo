@@ -8,39 +8,23 @@ import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import {
+  baseClassCase,
+  propContentCase,
+  propHtmlCase,
+  slotDefaultCase,
+} from "@/utils/test-case-factories";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
 
-  // TODO: add case factory
-  it("Renders props.content", async () => {
-    const text = "Some text content";
-    await wrapper.setProps({ text });
-    expect(wrapper.text()).toMatch(text);
-  });
+  propContentCase(wrapper);
 
-  // TODO: add case factory
-  it("Renders props.html", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
-  });
+  propHtmlCase(wrapper);
 
-  // TODO: add case factory
-  it("Renders $slots.default", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>";
-    const wrapper = shallowMount(DButton, {
-      slots: {
-        default: slotContent,
-      },
-    });
-    expect(wrapper.html()).toMatch(slotContent);
-  });
+  slotDefaultCase(wrapper);
 
-  // TODO: classes are not rendered in jest ???
-  it("Renders dButton class name", async () => {
-    expect(wrapper.classes()).toContain("dButton");
-  });
+  baseClassCase(wrapper, "dButton");
 
   // TODO: classes are not rendered in jest ???
   it("Renders border class name", async () => {

@@ -4,38 +4,23 @@ import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TOD
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import DTypography from "@/components/containers/d-typography";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
+import {
+  baseClassCase,
+  propContentCase,
+  propHtmlCase,
+  slotDefaultCase,
+} from "@/utils/test-case-factories";
 
 describe("DTypography", () => {
   const wrapper = shallowMount(DTypography);
 
-  // TODO: make case factory
-  it("Renders props.content when passed", async () => {
-    const text = "Some text content";
-    await wrapper.setProps({ text });
-    expect(wrapper.text()).toMatch(text);
-  });
+  propContentCase(wrapper);
 
-  // TODO: make case factory
-  it("Renders props.html when passed", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
-  });
+  propHtmlCase(wrapper);
 
-  // TODO: make case factory
-  it("Renders $slots.default when passed", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>";
-    const wrapper = shallowMount(DTypography, {
-      slots: {
-        default: slotContent,
-      },
-    });
-    expect(wrapper.html()).toMatch(slotContent);
-  });
+  slotDefaultCase(wrapper);
 
-  it("Renders dTypography class name", async () => {
-    expect(wrapper.classes()).toContain("dTypography"); // TODO: get from the component name ??
-  });
+  baseClassCase(wrapper, "dTypography");
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {
