@@ -23,7 +23,8 @@
       "TYPE_NAME": "ColorScheme",
       "TYPE_FILE_PATH": "/types/color-scheme",
       "CSS_CLASS_PREFIX": "colorScheme",
-      "CSS_FILE_PATH": "/styles/color-scheme"
+      "CSS_FILE_PATH": "/styles/color-scheme",
+      "IGNORE": ["text", "link"]
     },
     "FONT": {
       "NAME": "font",

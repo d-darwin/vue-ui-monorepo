@@ -1,7 +1,7 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import order rule
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-// TODO: add constants/index
+// TODO: add import/index ???
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -139,7 +139,7 @@ export default defineComponent({
         this.transition
       );
 
-      return [
+      const classes = [
         styles.dButton,
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
@@ -151,11 +151,18 @@ export default defineComponent({
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
       ];
+
+      if (this.disabled) {
+        classes.push("__disabled");
+      }
+
+      return classes;
     },
 
     // TODO: move to types
     tag(): "button" | "a" | "router-link" {
       if (this.$attrs["href"]) {
+        // TODO: add external links attrs ???
         return "a";
       }
 
@@ -171,7 +178,7 @@ export default defineComponent({
   methods: {
     // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault) {
+      if (this.preventDefault || this.disabled) {
         event.preventDefault();
       }
 
@@ -196,7 +203,11 @@ export default defineComponent({
     }
 
     return (
-      <Tag class={this.classes} onClick={this.clickHandler}>
+      <Tag
+        class={this.classes}
+        disabled={this.disabled}
+        onClick={this.clickHandler}
+      >
         {this.$slots.default?.() || this.text}
       </Tag>
     );

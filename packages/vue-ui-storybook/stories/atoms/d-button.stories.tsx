@@ -35,6 +35,9 @@ export default {
   args: {
     text: "Some text content",
     html: "",
+    href: "/some-link",
+    disabled: false,
+    preventDefault: false,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values

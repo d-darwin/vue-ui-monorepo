@@ -14,12 +14,14 @@ export default function (
   background-color: var(${customPropertyName}-background-hover);
 }
 
-.${className}:active {
+.${className}:active
+.${className}.__active {
   color: var(${customPropertyName}-active);
   background-color: var(${customPropertyName}-background-active);
 }
 
-.${className}:disabled {
+.${className}:disabled,
+.${className}.__disabled {
   color: var(${customPropertyName}-disabled);
   background-color: var(${customPropertyName}-background-disabled);
 }`;

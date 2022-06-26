@@ -23,7 +23,10 @@ export default async () => {
     colorSchemeTokenConfig,
     // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
+      designTokenName => {
+        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+        return !designTokenName.includes('-') && !isIgnored
+      } // TODO: more flexible filter
     ),
     // TODO: combine filter and transformer ???
     null

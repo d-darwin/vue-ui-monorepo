@@ -59,7 +59,10 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
-                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
+                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+                        return !designTokenName.includes('-') && !isIgnored;
+                    } // TODO: more flexible filter
                     ); }, 
                     // TODO: combine filter and transformer ???
                     null)];

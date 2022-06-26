@@ -1,7 +1,11 @@
 .dButton {
+  box-sizing: border-box;
+  display: inline-block;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.dButton:disabled {
+.dButton:disabled,
+.dButton.__disabled {
   cursor: not-allowed;
 }

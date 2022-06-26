@@ -8,36 +8,23 @@ import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import {
+  baseClassCase,
+  propContentCase,
+  propHtmlCase,
+  slotDefaultCase,
+} from "@/utils/test-case-factories";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
 
-  it("Renders props.content", async () => {
-    const text = "Some text content";
-    await wrapper.setProps({ text });
-    expect(wrapper.text()).toMatch(text);
-  });
+  propContentCase(wrapper);
 
-  it("Renders props.html", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
-  });
+  propHtmlCase(wrapper);
 
-  it("Renders $slots.default", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>";
-    const wrapper = shallowMount(DButton, {
-      slots: {
-        default: slotContent,
-      },
-    });
-    expect(wrapper.html()).toMatch(slotContent);
-  });
+  slotDefaultCase(wrapper);
 
-  // TODO: classes are not rendered in jest ???
-  it("Renders dButton class name", async () => {
-    expect(wrapper.classes()).toContain("dButton");
-  });
+  baseClassCase(wrapper, "dButton");
 
   // TODO: classes are not rendered in jest ???
   it("Renders border class name", async () => {
@@ -54,32 +41,32 @@ describe("DButton", () => {
   it("Renders props.colorScheme to color scheme class", async () => {
     const colorScheme = COLOR_SCHEME.INVERSE;
     await wrapper.setProps({ colorScheme });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
       colorScheme
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders font class name", async () => {
     const size = SIZE.SMALL;
     await wrapper.setProps({ size });
-    const ClassName = prepareCssClassName(
-      config.TOKENS.FONT.CSS_CLASS_PREFIX,
+    const className = prepareCssClassName(
+      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders outline class name", async () => {
     const size = SIZE.LARGE;
     const colorScheme = COLOR_SCHEME.SECONDARY;
     await wrapper.setProps({ size, colorScheme });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
       `${colorScheme}-${size}`
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
@@ -87,33 +74,33 @@ describe("DButton", () => {
     const size = SIZE.LARGE;
     const padding = PADDING.EQUAL;
     await wrapper.setProps({ size, padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       `${padding}-${size}`
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
   it("Renders size independent padding class name", async () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
   it("Renders size independent padding class name", async () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders props.rounding to rounding class", async () => {
@@ -196,4 +183,16 @@ describe("DButton", () => {
     await wrapper.vm.clickHandler(event);
     expect(event.preventDefault).toBeCalled();
   });
+
+  it("Renders __disabled class if prop.disabled is passed", async () => {
+    await wrapper.setProps({ href: "/some-link", disabled: true });
+    expect(wrapper.classes()).toContain("__disabled");
+  });
+
+  // TODO: check disabled attr
+  /*it("Renders :disabled attr if prop.disabled is passed and tag is Button", async () => {
+    await wrapper.setProps({ href: null, to: null, disabled: true });
+    console.log(wrapper.html());
+    expect(wrapper.attributes()).toContain("disabled");
+  });*/
 });

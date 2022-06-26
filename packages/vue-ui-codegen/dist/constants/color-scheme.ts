@@ -4,5 +4,4 @@ export const COLOR_SCHEME = {
   ALTERNATIVE: "alternative",
   INVERSE: "inverse",
   DANGER: "danger",
-  TEXT: "text",
 } as const;

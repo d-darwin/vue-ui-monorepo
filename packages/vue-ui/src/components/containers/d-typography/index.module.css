@@ -1,5 +1,4 @@
-/* TODO: get @darwin-studio/vue-ui-codegen paths from config.json */
-@import '~@darwin-studio/vue-ui-codegen/dist/styles/font.css';
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
 
 .dTypography {
   color: var(--color-text);
