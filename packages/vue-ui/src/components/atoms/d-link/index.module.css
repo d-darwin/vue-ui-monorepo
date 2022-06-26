@@ -3,3 +3,16 @@
 .DLink {
   color: var(--color-link);
 }
+
+.DLink:hover {
+  color: var(--color-link-hover);
+}
+
+.DLink:active {
+  color: var(--color-link-active);
+}
+
+.DLink:disabled {
+  color: var(--color-link-disabled);
+  cursor: not-allowed;
+}
