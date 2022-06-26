@@ -57,32 +57,32 @@ describe("DButton", () => {
   it("Renders props.colorScheme to color scheme class", async () => {
     const colorScheme = COLOR_SCHEME.INVERSE;
     await wrapper.setProps({ colorScheme });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
       colorScheme
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders font class name", async () => {
     const size = SIZE.SMALL;
     await wrapper.setProps({ size });
-    const ClassName = prepareCssClassName(
-      config.TOKENS.FONT.CSS_CLASS_PREFIX,
+    const className = prepareCssClassName(
+      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders outline class name", async () => {
     const size = SIZE.LARGE;
     const colorScheme = COLOR_SCHEME.SECONDARY;
     await wrapper.setProps({ size, colorScheme });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
       `${colorScheme}-${size}`
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
@@ -90,33 +90,33 @@ describe("DButton", () => {
     const size = SIZE.LARGE;
     const padding = PADDING.EQUAL;
     await wrapper.setProps({ size, padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       `${padding}-${size}`
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
   it("Renders size independent padding class name", async () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   // TODO: what if there is no such padding option ??
   it("Renders size independent padding class name", async () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
-    const ClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
-    expect(wrapper.classes()).toContain(ClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders props.rounding to rounding class", async () => {

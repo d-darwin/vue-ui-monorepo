@@ -4,7 +4,6 @@ import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TOD
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import DTypography from "@/components/containers/d-typography";
 import config from "@darwin-studio/vue-ui-codegen/config.json";
-import { nextTick } from "vue";
 
 describe("DTypography", () => {
   const wrapper = shallowMount(DTypography);
@@ -42,11 +41,11 @@ describe("DTypography", () => {
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
     await wrapper.setProps({ font }); // TODO: why it doesn't work with composition api ???
-    const fontClassName = prepareCssClassName(
+    const className = prepareCssClassName(
       config.TOKENS.FONT.CSS_CLASS_PREFIX,
       font
     );
-    expect(wrapper.classes()).toContain(fontClassName);
+    expect(wrapper.classes()).toContain(className);
   });
 
   it("Renders props.tag when passed", async () => {
