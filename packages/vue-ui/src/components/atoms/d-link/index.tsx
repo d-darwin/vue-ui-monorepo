@@ -80,13 +80,19 @@ export default defineComponent({
         this.transition
       );
 
-      return [
+      const classes = [
         styles.dLink,
         fontStyles[fontClassName],
         outlineStyles[outlineClassName],
         sizeStyles[fontClassName],
         transitionStyles[transitionClassName],
       ];
+
+      if (this.disabled) {
+        classes.push("__disabled");
+      }
+
+      return classes;
     },
 
     // TODO: move to types
@@ -103,7 +109,7 @@ export default defineComponent({
   methods: {
     // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault) {
+      if (this.preventDefault || this.disabled) {
         event.preventDefault();
       }
 

@@ -1,18 +1,18 @@
 @import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
 
-.DLink {
+.dLink {
   color: var(--color-link);
 }
 
-.DLink:hover {
+.dLink:hover {
   color: var(--color-link-hover);
 }
 
-.DLink:active {
+.dLink:active {
   color: var(--color-link-active);
 }
 
-.DLink:disabled {
+.dLink.__disabled {
   color: var(--color-link-disabled);
   cursor: not-allowed;
 }

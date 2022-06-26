@@ -96,4 +96,6 @@ describe("DLink", () => {
     await wrapper.vm.clickHandler(event);
     expect(event.preventDefault).toBeCalled();
   });
+
+  // TODO: __disabled attr or class test case
 });

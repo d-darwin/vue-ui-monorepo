@@ -139,7 +139,7 @@ export default defineComponent({
         this.transition
       );
 
-      return [
+      const classes = [
         styles.dButton,
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
@@ -151,6 +151,12 @@ export default defineComponent({
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
       ];
+
+      if (this.disabled) {
+        classes.push("__disabled");
+      }
+
+      return classes;
     },
 
     // TODO: move to types
@@ -172,7 +178,7 @@ export default defineComponent({
   methods: {
     // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault) {
+      if (this.preventDefault || this.disabled) {
         event.preventDefault();
       }
 
@@ -197,7 +203,11 @@ export default defineComponent({
     }
 
     return (
-      <Tag class={this.classes} onClick={this.clickHandler}>
+      <Tag
+        class={this.classes}
+        disabled={this.disabled}
+        onClick={this.clickHandler}
+      >
         {this.$slots.default?.() || this.text}
       </Tag>
     );

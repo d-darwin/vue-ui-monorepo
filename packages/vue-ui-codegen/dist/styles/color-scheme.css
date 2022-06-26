@@ -10,12 +10,14 @@
   background-color: var(--color-primary-background-hover);
 }
 
-.colorSchemePrimary:active {
+.colorSchemePrimary:active
+.colorSchemePrimary.__active {
   color: var(--color-primary-active);
   background-color: var(--color-primary-background-active);
 }
 
-.colorSchemePrimary:disabled {
+.colorSchemePrimary:disabled,
+.colorSchemePrimary.__disabled {
   color: var(--color-primary-disabled);
   background-color: var(--color-primary-background-disabled);
 }
@@ -30,12 +32,14 @@
   background-color: var(--color-secondary-background-hover);
 }
 
-.colorSchemeSecondary:active {
+.colorSchemeSecondary:active
+.colorSchemeSecondary.__active {
   color: var(--color-secondary-active);
   background-color: var(--color-secondary-background-active);
 }
 
-.colorSchemeSecondary:disabled {
+.colorSchemeSecondary:disabled,
+.colorSchemeSecondary.__disabled {
   color: var(--color-secondary-disabled);
   background-color: var(--color-secondary-background-disabled);
 }
@@ -50,12 +54,14 @@
   background-color: var(--color-alternative-background-hover);
 }
 
-.colorSchemeAlternative:active {
+.colorSchemeAlternative:active
+.colorSchemeAlternative.__active {
   color: var(--color-alternative-active);
   background-color: var(--color-alternative-background-active);
 }
 
-.colorSchemeAlternative:disabled {
+.colorSchemeAlternative:disabled,
+.colorSchemeAlternative.__disabled {
   color: var(--color-alternative-disabled);
   background-color: var(--color-alternative-background-disabled);
 }
@@ -70,12 +76,14 @@
   background-color: var(--color-inverse-background-hover);
 }
 
-.colorSchemeInverse:active {
+.colorSchemeInverse:active
+.colorSchemeInverse.__active {
   color: var(--color-inverse-active);
   background-color: var(--color-inverse-background-active);
 }
 
-.colorSchemeInverse:disabled {
+.colorSchemeInverse:disabled,
+.colorSchemeInverse.__disabled {
   color: var(--color-inverse-disabled);
   background-color: var(--color-inverse-background-disabled);
 }
@@ -90,12 +98,14 @@
   background-color: var(--color-danger-background-hover);
 }
 
-.colorSchemeDanger:active {
+.colorSchemeDanger:active
+.colorSchemeDanger.__active {
   color: var(--color-danger-active);
   background-color: var(--color-danger-background-active);
 }
 
-.colorSchemeDanger:disabled {
+.colorSchemeDanger:disabled,
+.colorSchemeDanger.__disabled {
   color: var(--color-danger-disabled);
   background-color: var(--color-danger-background-disabled);
 }

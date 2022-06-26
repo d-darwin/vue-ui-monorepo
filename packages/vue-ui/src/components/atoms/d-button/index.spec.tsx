@@ -183,4 +183,6 @@ describe("DButton", () => {
     await wrapper.vm.clickHandler(event);
     expect(event.preventDefault).toBeCalled();
   });
+
+  // TODO: __disabled attr or\and class test case
 });

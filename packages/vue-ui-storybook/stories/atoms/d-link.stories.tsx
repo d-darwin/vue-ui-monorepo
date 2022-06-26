@@ -21,6 +21,7 @@ export default {
     text: "Some text content",
     html: "",
     href: "/some-link",
+    disabled: false,
     font: FONT.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
   },
