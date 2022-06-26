@@ -184,5 +184,15 @@ describe("DButton", () => {
     expect(event.preventDefault).toBeCalled();
   });
 
-  // TODO: __disabled attr or\and class test case
+  it("Renders __disabled class if prop.disabled is passed", async () => {
+    await wrapper.setProps({ href: "/some-link", disabled: true });
+    expect(wrapper.classes()).toContain("__disabled");
+  });
+
+  // TODO: check disabled attr
+  /*it("Renders :disabled attr if prop.disabled is passed and tag is Button", async () => {
+    await wrapper.setProps({ href: null, to: null, disabled: true });
+    console.log(wrapper.html());
+    expect(wrapper.attributes()).toContain("disabled");
+  });*/
 });

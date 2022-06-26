@@ -97,5 +97,8 @@ describe("DLink", () => {
     expect(event.preventDefault).toBeCalled();
   });
 
-  // TODO: __disabled attr or class test case
+  it("Renders __disabled class if prop.disabled is passed", async () => {
+    await wrapper.setProps({ disabled: true });
+    expect(wrapper.classes()).toContain("__disabled");
+  });
 });
