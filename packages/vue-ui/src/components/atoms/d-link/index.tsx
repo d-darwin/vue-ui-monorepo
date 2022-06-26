@@ -1,7 +1,7 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import/index ???
-import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -37,10 +37,10 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    // TODO: description
+    font: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
     },
     /**
      * TODO: Add description
@@ -68,16 +68,12 @@ export default defineComponent({
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
         config.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
+        this.font
       );
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
         config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `primary-${this.size}` // TODO: no so flexible
-      );
-      const sizeClassName = prepareCssClassName(
-        config.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
+        `primary-medium` // TODO: not flexible at all
       );
       const transitionClassName = prepareCssClassName(
         config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
@@ -88,7 +84,7 @@ export default defineComponent({
         styles.dLink,
         fontStyles[fontClassName],
         outlineStyles[outlineClassName],
-        sizeStyles[sizeClassName],
+        sizeStyles[fontClassName],
         transitionStyles[transitionClassName],
       ];
     },
