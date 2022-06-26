@@ -1,12 +1,9 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import/index ???
-import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -40,13 +37,6 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * TODO: Add description
-     */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
@@ -75,10 +65,6 @@ export default defineComponent({
   // TODO: move to setup() ???
   computed: {
     classes(): string[] {
-      const colorSchemeClassName = prepareCssClassName(
-        config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
         config.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -87,7 +73,7 @@ export default defineComponent({
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
         config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${this.colorScheme}-${this.size}`
+        `primary-${this.size}` // TODO: no so flexible
       );
       const sizeClassName = prepareCssClassName(
         config.TOKENS.SIZE.CSS_CLASS_PREFIX,
@@ -100,7 +86,6 @@ export default defineComponent({
 
       return [
         styles.dLink,
-        colorSchemeStyles[colorSchemeClassName], // TODO: split color / backgraound color
         fontStyles[fontClassName],
         outlineStyles[outlineClassName],
         sizeStyles[sizeClassName],
