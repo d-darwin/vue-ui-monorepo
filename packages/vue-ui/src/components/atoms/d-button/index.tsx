@@ -86,7 +86,7 @@ export default defineComponent({
     },
     // TODO: to \ href
     whenClick: {
-      type: Function as PropType<() => void | Promise<void>>,
+      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
     preventDefault: {
       type: Boolean,
@@ -176,8 +176,8 @@ export default defineComponent({
       }
 
       if (!this.disabled) {
-        this.whenClick?.();
-        this.$emit("click");
+        this.whenClick?.(event);
+        this.$emit("click", { event });
       }
     },
   },

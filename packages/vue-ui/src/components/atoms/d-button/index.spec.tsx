@@ -190,5 +190,10 @@ describe("DButton", () => {
     expect(whenClick).toHaveBeenCalledTimes(0);
   });
 
-  // TODO: preventDefault
+  it("Calls $event.preventDefault if prop.eventDefault is passed", async () => {
+    const event = { preventDefault: jest.fn() } as unknown as MouseEvent;
+    await wrapper.setProps({ disabled: false, preventDefault: true });
+    await wrapper.vm.clickHandler(event);
+    expect(event.preventDefault).toBeCalled();
+  });
 });
