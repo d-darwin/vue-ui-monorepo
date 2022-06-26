@@ -1,0 +1,5 @@
+@supports (aspect-ratio: auto) {
+}
+
+@supports not (aspect-ratio: auto) {
+}
