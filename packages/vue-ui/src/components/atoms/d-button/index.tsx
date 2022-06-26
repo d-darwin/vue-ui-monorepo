@@ -156,6 +156,7 @@ export default defineComponent({
     // TODO: move to types
     tag(): "button" | "a" | "router-link" {
       if (this.$attrs["href"]) {
+        // TODO: add external links attrs ???
         return "a";
       }
 

@@ -12,18 +12,21 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
 
+  // TODO: add case factory
   it("Renders props.content", async () => {
     const text = "Some text content";
     await wrapper.setProps({ text });
     expect(wrapper.text()).toMatch(text);
   });
 
+  // TODO: add case factory
   it("Renders props.html", async () => {
     const html = "Some <b>html</b> content";
     await wrapper.setProps({ text: "", html });
     expect(wrapper.html()).toMatch(html);
   });
 
+  // TODO: add case factory
   it("Renders $slots.default", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
     const wrapper = shallowMount(DButton, {
