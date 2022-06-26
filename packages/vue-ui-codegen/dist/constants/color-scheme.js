@@ -6,6 +6,5 @@ exports.COLOR_SCHEME = {
     SECONDARY: "secondary",
     ALTERNATIVE: "alternative",
     INVERSE: "inverse",
-    DANGER: "danger",
-    TEXT: "text"
+    DANGER: "danger"
 };

@@ -38,9 +38,13 @@ export default async () => {
   await generateStylesFile(
     designTokens[colorSchemeTokenConfig.NAME],
     colorSchemeTokenConfig,
+    // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
-      designTokenName => !designTokenName.includes('-') // TODO: more flexible filter
-    ), // TODO: move to config ???
+      designTokenName => {
+        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+        return !designTokenName.includes('-') && !isIgnored
+      } // TODO: more flexible filter
+    ),
     generateColorSchemeCssClasses, // TODO: move to config ???
   )
 

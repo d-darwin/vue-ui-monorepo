@@ -73,9 +73,13 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 4:
                 _b.sent();
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
-                    ); }, // TODO: move to config ???
-                    generateColorSchemeCssClasses_1["default"])];
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
+                    // TODO: move to config ???
+                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
+                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+                        return !designTokenName.includes('-') && !isIgnored;
+                    } // TODO: more flexible filter
+                    ); }, generateColorSchemeCssClasses_1["default"])];
             case 5:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;
