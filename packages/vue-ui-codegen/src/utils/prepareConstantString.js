@@ -1,10 +1,7 @@
 "use strict";
 exports.__esModule = true;
+// TODO: descr
 function default_1(constantVariantName) {
-    var hasProhibitedChars = constantVariantName.includes("-") || constantVariantName.includes(" "); // TODO: do it more accurate
-    var constantVariantKey = hasProhibitedChars
-        ? "\"".concat(constantVariantName, "\"")
-        : constantVariantName;
-    return "  ".concat(constantVariantKey.toUpperCase(), ": \"").concat(constantVariantName, "\",");
+    return "  ".concat(constantVariantName.replace("-", "_").toUpperCase(), ": \"").concat(constantVariantName, "\",");
 }
 exports["default"] = default_1;

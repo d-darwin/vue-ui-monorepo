@@ -1,0 +1,101 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.outlineDangerHuge:focus-visible {
+  outline: var(--outline-danger-huge) var(--color-danger-outline);
+}
+
+.outlineDangerLarge:focus-visible {
+  outline: var(--outline-danger-large) var(--color-danger-outline);
+}
+
+.outlineDangerMedium:focus-visible {
+  outline: var(--outline-danger-medium) var(--color-danger-outline);
+}
+
+.outlineDangerSmall:focus-visible {
+  outline: var(--outline-danger-small) var(--color-danger-outline);
+}
+
+.outlineDangerTiny:focus-visible {
+  outline: var(--outline-danger-tiny) var(--color-danger-outline);
+}
+
+.outlineInverseHuge:focus-visible {
+  outline: var(--outline-inverse-huge) var(--color-inverse-outline);
+}
+
+.outlineInverseLarge:focus-visible {
+  outline: var(--outline-inverse-large) var(--color-inverse-outline);
+}
+
+.outlineInverseMedium:focus-visible {
+  outline: var(--outline-inverse-medium) var(--color-inverse-outline);
+}
+
+.outlineInverseSmall:focus-visible {
+  outline: var(--outline-inverse-small) var(--color-inverse-outline);
+}
+
+.outlineInverseTiny:focus-visible {
+  outline: var(--outline-inverse-tiny) var(--color-inverse-outline);
+}
+
+.outlineAlternativeHuge:focus-visible {
+  outline: var(--outline-alternative-huge) var(--color-alternative-outline);
+}
+
+.outlineAlternativeLarge:focus-visible {
+  outline: var(--outline-alternative-large) var(--color-alternative-outline);
+}
+
+.outlineAlternativeMedium:focus-visible {
+  outline: var(--outline-alternative-medium) var(--color-alternative-outline);
+}
+
+.outlineAlternativeSmall:focus-visible {
+  outline: var(--outline-alternative-small) var(--color-alternative-outline);
+}
+
+.outlineAlternativeTiny:focus-visible {
+  outline: var(--outline-alternative-tiny) var(--color-alternative-outline);
+}
+
+.outlineSecondaryHuge:focus-visible {
+  outline: var(--outline-secondary-huge) var(--color-secondary-outline);
+}
+
+.outlineSecondaryLarge:focus-visible {
+  outline: var(--outline-secondary-large) var(--color-secondary-outline);
+}
+
+.outlineSecondaryMedium:focus-visible {
+  outline: var(--outline-secondary-medium) var(--color-secondary-outline);
+}
+
+.outlineSecondarySmall:focus-visible {
+  outline: var(--outline-secondary-small) var(--color-secondary-outline);
+}
+
+.outlineSecondaryTiny:focus-visible {
+  outline: var(--outline-secondary-tiny) var(--color-secondary-outline);
+}
+
+.outlinePrimaryHuge:focus-visible {
+  outline: var(--outline-primary-huge) var(--color-primary-outline);
+}
+
+.outlinePrimaryLarge:focus-visible {
+  outline: var(--outline-primary-large) var(--color-primary-outline);
+}
+
+.outlinePrimaryMedium:focus-visible {
+  outline: var(--outline-primary-medium) var(--color-primary-outline);
+}
+
+.outlinePrimarySmall:focus-visible {
+  outline: var(--outline-primary-small) var(--color-primary-outline);
+}
+
+.outlinePrimaryTiny:focus-visible {
+  outline: var(--outline-primary-tiny) var(--color-primary-outline);
+}

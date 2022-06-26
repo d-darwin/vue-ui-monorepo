@@ -1,0 +1,401 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+.borderDangerHuge {
+  border: var(--border-danger-huge) var(--color-danger-border);
+}
+
+.borderDangerHuge:hover {
+  border-color: var(--color-danger-border-hover);
+}
+
+.borderDangerHuge:active {
+  border-color: var(--color-danger-border-active);
+}
+
+.borderDangerHuge:disabled {
+  border-color: var(--color-danger-border-disabled);
+}
+
+.borderDangerLarge {
+  border: var(--border-danger-large) var(--color-danger-border);
+}
+
+.borderDangerLarge:hover {
+  border-color: var(--color-danger-border-hover);
+}
+
+.borderDangerLarge:active {
+  border-color: var(--color-danger-border-active);
+}
+
+.borderDangerLarge:disabled {
+  border-color: var(--color-danger-border-disabled);
+}
+
+.borderDangerMedium {
+  border: var(--border-danger-medium) var(--color-danger-border);
+}
+
+.borderDangerMedium:hover {
+  border-color: var(--color-danger-border-hover);
+}
+
+.borderDangerMedium:active {
+  border-color: var(--color-danger-border-active);
+}
+
+.borderDangerMedium:disabled {
+  border-color: var(--color-danger-border-disabled);
+}
+
+.borderDangerSmall {
+  border: var(--border-danger-small) var(--color-danger-border);
+}
+
+.borderDangerSmall:hover {
+  border-color: var(--color-danger-border-hover);
+}
+
+.borderDangerSmall:active {
+  border-color: var(--color-danger-border-active);
+}
+
+.borderDangerSmall:disabled {
+  border-color: var(--color-danger-border-disabled);
+}
+
+.borderDangerTiny {
+  border: var(--border-danger-tiny) var(--color-danger-border);
+}
+
+.borderDangerTiny:hover {
+  border-color: var(--color-danger-border-hover);
+}
+
+.borderDangerTiny:active {
+  border-color: var(--color-danger-border-active);
+}
+
+.borderDangerTiny:disabled {
+  border-color: var(--color-danger-border-disabled);
+}
+
+.borderInverseHuge {
+  border: var(--border-inverse-huge) var(--color-inverse-border);
+}
+
+.borderInverseHuge:hover {
+  border-color: var(--color-inverse-border-hover);
+}
+
+.borderInverseHuge:active {
+  border-color: var(--color-inverse-border-active);
+}
+
+.borderInverseHuge:disabled {
+  border-color: var(--color-inverse-border-disabled);
+}
+
+.borderInverseLarge {
+  border: var(--border-inverse-large) var(--color-inverse-border);
+}
+
+.borderInverseLarge:hover {
+  border-color: var(--color-inverse-border-hover);
+}
+
+.borderInverseLarge:active {
+  border-color: var(--color-inverse-border-active);
+}
+
+.borderInverseLarge:disabled {
+  border-color: var(--color-inverse-border-disabled);
+}
+
+.borderInverseMedium {
+  border: var(--border-inverse-medium) var(--color-inverse-border);
+}
+
+.borderInverseMedium:hover {
+  border-color: var(--color-inverse-border-hover);
+}
+
+.borderInverseMedium:active {
+  border-color: var(--color-inverse-border-active);
+}
+
+.borderInverseMedium:disabled {
+  border-color: var(--color-inverse-border-disabled);
+}
+
+.borderInverseSmall {
+  border: var(--border-inverse-small) var(--color-inverse-border);
+}
+
+.borderInverseSmall:hover {
+  border-color: var(--color-inverse-border-hover);
+}
+
+.borderInverseSmall:active {
+  border-color: var(--color-inverse-border-active);
+}
+
+.borderInverseSmall:disabled {
+  border-color: var(--color-inverse-border-disabled);
+}
+
+.borderInverseTiny {
+  border: var(--border-inverse-tiny) var(--color-inverse-border);
+}
+
+.borderInverseTiny:hover {
+  border-color: var(--color-inverse-border-hover);
+}
+
+.borderInverseTiny:active {
+  border-color: var(--color-inverse-border-active);
+}
+
+.borderInverseTiny:disabled {
+  border-color: var(--color-inverse-border-disabled);
+}
+
+.borderAlternativeHuge {
+  border: var(--border-alternative-huge) var(--color-alternative-border);
+}
+
+.borderAlternativeHuge:hover {
+  border-color: var(--color-alternative-border-hover);
+}
+
+.borderAlternativeHuge:active {
+  border-color: var(--color-alternative-border-active);
+}
+
+.borderAlternativeHuge:disabled {
+  border-color: var(--color-alternative-border-disabled);
+}
+
+.borderAlternativeLarge {
+  border: var(--border-alternative-large) var(--color-alternative-border);
+}
+
+.borderAlternativeLarge:hover {
+  border-color: var(--color-alternative-border-hover);
+}
+
+.borderAlternativeLarge:active {
+  border-color: var(--color-alternative-border-active);
+}
+
+.borderAlternativeLarge:disabled {
+  border-color: var(--color-alternative-border-disabled);
+}
+
+.borderAlternativeMedium {
+  border: var(--border-alternative-medium) var(--color-alternative-border);
+}
+
+.borderAlternativeMedium:hover {
+  border-color: var(--color-alternative-border-hover);
+}
+
+.borderAlternativeMedium:active {
+  border-color: var(--color-alternative-border-active);
+}
+
+.borderAlternativeMedium:disabled {
+  border-color: var(--color-alternative-border-disabled);
+}
+
+.borderAlternativeSmall {
+  border: var(--border-alternative-small) var(--color-alternative-border);
+}
+
+.borderAlternativeSmall:hover {
+  border-color: var(--color-alternative-border-hover);
+}
+
+.borderAlternativeSmall:active {
+  border-color: var(--color-alternative-border-active);
+}
+
+.borderAlternativeSmall:disabled {
+  border-color: var(--color-alternative-border-disabled);
+}
+
+.borderAlternativeTiny {
+  border: var(--border-alternative-tiny) var(--color-alternative-border);
+}
+
+.borderAlternativeTiny:hover {
+  border-color: var(--color-alternative-border-hover);
+}
+
+.borderAlternativeTiny:active {
+  border-color: var(--color-alternative-border-active);
+}
+
+.borderAlternativeTiny:disabled {
+  border-color: var(--color-alternative-border-disabled);
+}
+
+.borderSecondaryHuge {
+  border: var(--border-secondary-huge) var(--color-secondary-border);
+}
+
+.borderSecondaryHuge:hover {
+  border-color: var(--color-secondary-border-hover);
+}
+
+.borderSecondaryHuge:active {
+  border-color: var(--color-secondary-border-active);
+}
+
+.borderSecondaryHuge:disabled {
+  border-color: var(--color-secondary-border-disabled);
+}
+
+.borderSecondaryLarge {
+  border: var(--border-secondary-large) var(--color-secondary-border);
+}
+
+.borderSecondaryLarge:hover {
+  border-color: var(--color-secondary-border-hover);
+}
+
+.borderSecondaryLarge:active {
+  border-color: var(--color-secondary-border-active);
+}
+
+.borderSecondaryLarge:disabled {
+  border-color: var(--color-secondary-border-disabled);
+}
+
+.borderSecondaryMedium {
+  border: var(--border-secondary-medium) var(--color-secondary-border);
+}
+
+.borderSecondaryMedium:hover {
+  border-color: var(--color-secondary-border-hover);
+}
+
+.borderSecondaryMedium:active {
+  border-color: var(--color-secondary-border-active);
+}
+
+.borderSecondaryMedium:disabled {
+  border-color: var(--color-secondary-border-disabled);
+}
+
+.borderSecondarySmall {
+  border: var(--border-secondary-small) var(--color-secondary-border);
+}
+
+.borderSecondarySmall:hover {
+  border-color: var(--color-secondary-border-hover);
+}
+
+.borderSecondarySmall:active {
+  border-color: var(--color-secondary-border-active);
+}
+
+.borderSecondarySmall:disabled {
+  border-color: var(--color-secondary-border-disabled);
+}
+
+.borderSecondaryTiny {
+  border: var(--border-secondary-tiny) var(--color-secondary-border);
+}
+
+.borderSecondaryTiny:hover {
+  border-color: var(--color-secondary-border-hover);
+}
+
+.borderSecondaryTiny:active {
+  border-color: var(--color-secondary-border-active);
+}
+
+.borderSecondaryTiny:disabled {
+  border-color: var(--color-secondary-border-disabled);
+}
+
+.borderPrimaryHuge {
+  border: var(--border-primary-huge) var(--color-primary-border);
+}
+
+.borderPrimaryHuge:hover {
+  border-color: var(--color-primary-border-hover);
+}
+
+.borderPrimaryHuge:active {
+  border-color: var(--color-primary-border-active);
+}
+
+.borderPrimaryHuge:disabled {
+  border-color: var(--color-primary-border-disabled);
+}
+
+.borderPrimaryLarge {
+  border: var(--border-primary-large) var(--color-primary-border);
+}
+
+.borderPrimaryLarge:hover {
+  border-color: var(--color-primary-border-hover);
+}
+
+.borderPrimaryLarge:active {
+  border-color: var(--color-primary-border-active);
+}
+
+.borderPrimaryLarge:disabled {
+  border-color: var(--color-primary-border-disabled);
+}
+
+.borderPrimaryMedium {
+  border: var(--border-primary-medium) var(--color-primary-border);
+}
+
+.borderPrimaryMedium:hover {
+  border-color: var(--color-primary-border-hover);
+}
+
+.borderPrimaryMedium:active {
+  border-color: var(--color-primary-border-active);
+}
+
+.borderPrimaryMedium:disabled {
+  border-color: var(--color-primary-border-disabled);
+}
+
+.borderPrimarySmall {
+  border: var(--border-primary-small) var(--color-primary-border);
+}
+
+.borderPrimarySmall:hover {
+  border-color: var(--color-primary-border-hover);
+}
+
+.borderPrimarySmall:active {
+  border-color: var(--color-primary-border-active);
+}
+
+.borderPrimarySmall:disabled {
+  border-color: var(--color-primary-border-disabled);
+}
+
+.borderPrimaryTiny {
+  border: var(--border-primary-tiny) var(--color-primary-border);
+}
+
+.borderPrimaryTiny:hover {
+  border-color: var(--color-primary-border-hover);
+}
+
+.borderPrimaryTiny:active {
+  border-color: var(--color-primary-border-active);
+}
+
+.borderPrimaryTiny:disabled {
+  border-color: var(--color-primary-border-disabled);
+}

@@ -1,3 +1,7 @@
 .dButton {
-  /*TODO: default styles*/
+  cursor: pointer;
+}
+
+.dButton:disabled {
+  cursor: not-allowed;
 }

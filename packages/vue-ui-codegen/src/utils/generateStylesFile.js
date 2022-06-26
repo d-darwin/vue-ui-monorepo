@@ -39,9 +39,10 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var prepareCssClassName_1 = require("../utils/prepareCssClassName");
 var writeFile_1 = require("../utils/writeFile");
+var getNakedName_1 = require("./getNakedName");
 // TODO: descr
 // TODO: try to reduce args
-function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGenerator) {
+function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGenerator, colorVariantList) {
     return __awaiter(this, void 0, void 0, function () {
         var cssClassStringList_1, tokenVariantNameList;
         return __generator(this, function (_a) {
@@ -56,7 +57,15 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGen
                     tokenVariantNameList === null || tokenVariantNameList === void 0 ? void 0 : tokenVariantNameList.forEach(function (tokenVariantName) {
                         var className = (0, prepareCssClassName_1["default"])(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
                         var customPropertyName = "--".concat(designTokenConfig.NAME, "-").concat(tokenVariantName);
-                        cssClassStringList_1.push(cssClassGenerator(className, customPropertyName));
+                        if (colorVariantList === null || colorVariantList === void 0 ? void 0 : colorVariantList.length) {
+                            var colorVariantName = (0, getNakedName_1["default"])(customPropertyName, colorVariantList).extractedWord;
+                            var colorCustomPropertyName = "--".concat(config.TOKENS.COLOR_SCHEME.NAME, "-").concat(colorVariantName, "-").concat(designTokenConfig.NAME);
+                            cssClassStringList_1.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName));
+                            return;
+                        }
+                        else {
+                            cssClassStringList_1.push(cssClassGenerator(className, customPropertyName));
+                        }
                     });
                     return [4 /*yield*/, (0, writeFile_1["default"])(cssClassStringList_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
                 case 1:

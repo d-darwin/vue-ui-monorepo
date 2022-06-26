@@ -39,7 +39,8 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var prepareConstantString_1 = require("../utils/prepareConstantString");
 var writeFile_1 = require("./writeFile");
-function default_1(designTokens, designTokenConfig, tokenNameFilter) {
+// TODO: descr
+function default_1(designTokens, designTokenConfig, tokenNameFilter, tokenNameTransformer) {
     return __awaiter(this, void 0, void 0, function () {
         var constantStringList_1, tokenVariantNameList;
         return __generator(this, function (_a) {
@@ -48,9 +49,13 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter) {
                     if (!designTokens) return [3 /*break*/, 2];
                     constantStringList_1 = [];
                     constantStringList_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, " = {"));
-                    tokenVariantNameList = tokenNameFilter
-                        ? tokenNameFilter(Object.keys(designTokens))
-                        : Object.keys(designTokens);
+                    tokenVariantNameList = Object.keys(designTokens);
+                    if (tokenNameFilter) {
+                        tokenVariantNameList = tokenNameFilter(tokenVariantNameList);
+                    }
+                    if (tokenNameTransformer) {
+                        tokenVariantNameList = tokenNameTransformer(tokenVariantNameList);
+                    }
                     tokenVariantNameList.forEach(function (tokenVariantName) {
                         constantStringList_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
                     });

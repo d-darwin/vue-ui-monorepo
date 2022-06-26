@@ -3,6 +3,7 @@ export default function (
   className: string,
   customPropertyName: string
 ): string {
+  // TODO: move \n to the caller
   return `\n.${className} {
   color: var(${customPropertyName});
   background-color: var(${customPropertyName}-background);

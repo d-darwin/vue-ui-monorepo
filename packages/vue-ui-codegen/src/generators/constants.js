@@ -39,8 +39,10 @@ exports.__esModule = true;
 var config = require("@darwin-studio/vue-ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateConstantsFile_1 = require("../utils/generateConstantsFile");
+var getNakedName_1 = require("../utils/getNakedName");
+var size_1 = require("../../dist/constants/size");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig, roundingTokenConfig, transitionTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -57,16 +59,38 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
-                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); }); })];
+                    function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
+                    ); }, 
+                    // TODO: combine filter and transformer ???
+                    null)];
             case 4:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;
-                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[fontTokenConfig.NAME], fontTokenConfig, null)];
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[fontTokenConfig.NAME], fontTokenConfig, null, null)];
             case 5:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
-                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null)];
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, null)];
             case 6:
+                _b.sent();
+                paddingTokenConfig = config.TOKENS.PADDING;
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig, null, function (designTokenNames) { return designTokenNames.reduce(function (acc, tokenName) {
+                        var nakedVariantName = (0, getNakedName_1["default"])(tokenName, Object.values(size_1.SIZE)).nakedVariantName;
+                        if (!acc.find(function (item) { return item === nakedVariantName; })) {
+                            acc.push(nakedVariantName);
+                        }
+                        return acc;
+                    }, []); } // TODO: move to config ??? add util ???
+                    )];
+            case 7:
+                _b.sent();
+                roundingTokenConfig = config.TOKENS.ROUNDING;
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, null)];
+            case 8:
+                _b.sent();
+                transitionTokenConfig = config.TOKENS.TRANSITION;
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, null)];
+            case 9:
                 _b.sent();
                 return [2 /*return*/];
         }

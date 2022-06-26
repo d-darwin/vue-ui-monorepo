@@ -7,14 +7,23 @@
   "TYPE_FILE_EXT": ".ts",
   "STYLES_FILE_EXT": ".css",
   "TOKENS": {
-    "SIZE": {
-      "NAME": "size",
-      "CONSTANT_NAME": "SIZE",
-      "CONSTANT_FILE_PATH": "/constants/size",
-      "TYPE_NAME": "Size",
-      "TYPE_FILE_PATH": "/types/size",
-      "CSS_CLASS_PREFIX": "size",
-      "CSS_FILE_PATH": "/styles/size"
+    "BORDER": {
+      "NAME": "border",
+      "CONSTANT_NAME": "BORDER",
+      "CONSTANT_FILE_PATH": "/constants/border",
+      "TYPE_NAME": "Border",
+      "TYPE_FILE_PATH": "/types/border",
+      "CSS_CLASS_PREFIX": "border",
+      "CSS_FILE_PATH": "/styles/border"
+    },
+    "COLOR_SCHEME": {
+      "NAME": "color",
+      "CONSTANT_NAME": "COLOR_SCHEME",
+      "CONSTANT_FILE_PATH": "/constants/color-scheme",
+      "TYPE_NAME": "ColorScheme",
+      "TYPE_FILE_PATH": "/types/color-scheme",
+      "CSS_CLASS_PREFIX": "colorScheme",
+      "CSS_FILE_PATH": "/styles/color-scheme"
     },
     "FONT": {
       "NAME": "font",
@@ -25,14 +34,50 @@
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_PATH": "/styles/font"
     },
-    "COLOR_SCHEME": {
-      "NAME": "color",
-      "CONSTANT_NAME": "COLOR_SCHEME",
-      "CONSTANT_FILE_PATH": "/constants/color-scheme",
-      "TYPE_NAME": "ColorScheme",
-      "TYPE_FILE_PATH": "/types/color-scheme",
-      "CSS_CLASS_PREFIX": "colorScheme",
-      "CSS_FILE_PATH": "/styles/color-scheme"
+    "OUTLINE": {
+      "NAME": "outline",
+      "CONSTANT_NAME": "OUTLINE",
+      "CONSTANT_FILE_PATH": "/constants/outline",
+      "TYPE_NAME": "Outline",
+      "TYPE_FILE_PATH": "/types/outline",
+      "CSS_CLASS_PREFIX": "outline",
+      "CSS_FILE_PATH": "/styles/outline"
+    },
+    "PADDING": {
+      "NAME": "spacing",
+      "CONSTANT_NAME": "PADDING",
+      "CONSTANT_FILE_PATH": "/constants/padding",
+      "TYPE_NAME": "Padding",
+      "TYPE_FILE_PATH": "/types/padding",
+      "CSS_CLASS_PREFIX": "padding",
+      "CSS_FILE_PATH": "/styles/padding"
+    },
+    "ROUNDING": {
+      "NAME": "radius",
+      "CONSTANT_NAME": "ROUNDING",
+      "CONSTANT_FILE_PATH": "/constants/rounding",
+      "TYPE_NAME": "Rounding",
+      "TYPE_FILE_PATH": "/types/rounding",
+      "CSS_CLASS_PREFIX": "rounding",
+      "CSS_FILE_PATH": "/styles/rounding"
+    },
+    "SIZE": {
+      "NAME": "size",
+      "CONSTANT_NAME": "SIZE",
+      "CONSTANT_FILE_PATH": "/constants/size",
+      "TYPE_NAME": "Size",
+      "TYPE_FILE_PATH": "/types/size",
+      "CSS_CLASS_PREFIX": "size",
+      "CSS_FILE_PATH": "/styles/size"
+    },
+    "TRANSITION": {
+      "NAME": "motion",
+      "CONSTANT_NAME": "TRANSITION",
+      "CONSTANT_FILE_PATH": "/constants/transition",
+      "TYPE_NAME": "Transition",
+      "TYPE_FILE_PATH": "/types/transition",
+      "CSS_CLASS_PREFIX": "transition",
+      "CSS_FILE_PATH": "/styles/transition"
     }
   }
 }

@@ -8,6 +8,7 @@ exports.LOG_TYPE = {
     ERROR: "error",
     WARN: "warn"
 };
+// TODO: descr
 function default_1(message, type) {
     if (type === void 0) { type = exports.LOG_TYPE.INFO; }
     switch (type) {
