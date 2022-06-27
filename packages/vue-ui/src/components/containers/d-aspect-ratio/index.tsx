@@ -1,4 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
+import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
@@ -10,15 +11,27 @@ export default defineComponent({
   props: {
     /**
      * Aspect ratio of the picture.
-     * Expected format: 'height:width'.
+     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
      */
     aspectRatio: {
-      type: String as PropType<string>,
-      default: "1:1", // TODO: choose default value
+      type: [String, Number] as PropType<Text>,
+      default: "1",
       validator: (val: string): boolean => {
-        // TODO: add formats - 1 \ 2, 2 / 3, 0.66
-        const [height, width] = val.split(":");
-        return Boolean(parseInt(height) && parseInt(width));
+        if (!Number.isNaN(val)) {
+          return Boolean(val);
+        }
+
+        let [width, height] = val.split("/");
+        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
+          return true;
+        }
+
+        [width, height] = val.split(":");
+        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
+          return true;
+        }
+
+        return false;
       },
     },
     /**
@@ -48,9 +61,11 @@ export default defineComponent({
       return paddingBottom;
     },
 
-    style(): Record<string, string | null> {
-      if (CSS.supports("aspect-ratio: auto")) {
-        return { "aspect-ratio": this.formatAspectRatio(this.aspectRatio) };
+    style(): Record<string, string | number | null> {
+      if (CSS?.supports("aspect-ratio: auto")) {
+        return {
+          "aspect-ratio": this.formatAspectRatio(String(this.aspectRatio)),
+        };
       }
 
       return { "padding-bottom": this.paddingBottom };
@@ -58,8 +73,28 @@ export default defineComponent({
   },
 
   methods: {
-    formatAspectRatio(rawAspectRatio: string): string {
-      return "100 / 66"; // TODO
+    formatAspectRatio(rawAspectRatio: string): string | number {
+      if (!Number.isNaN(rawAspectRatio)) {
+        return rawAspectRatio || 1;
+      }
+
+      let width = 1;
+      let height = 1;
+      if (rawAspectRatio.includes("/")) {
+        const [rawWidth, rawHeight] = rawAspectRatio.split("/");
+        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
+          width = parseInt(rawWidth?.trim());
+          height = parseInt(rawHeight?.trim());
+        }
+      } else if (rawAspectRatio.includes(":")) {
+        const [rawWidth, rawHeight] = rawAspectRatio.split(":");
+        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
+          width = parseInt(rawWidth?.trim());
+          height = parseInt(rawHeight?.trim());
+        }
+      }
+
+      return `${width} / ${height}`;
     },
   },
 
