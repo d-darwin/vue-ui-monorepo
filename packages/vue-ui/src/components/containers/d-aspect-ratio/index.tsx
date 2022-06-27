@@ -1,6 +1,7 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@/constants/tag-name";
+import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
+import styles from "./index.module.css";
 
 // TODO: description
 export default defineComponent({
@@ -13,12 +14,19 @@ export default defineComponent({
      */
     aspectRatio: {
       type: String as PropType<string>,
-      default: "",
+      default: "1:1", // TODO: choose default value
       validator: (val: string): boolean => {
         // TODO: add formats - 1 \ 2, 2 / 3, 0.66
         const [height, width] = val.split(":");
         return Boolean(parseInt(height) && parseInt(width));
       },
+    },
+    /**
+     * TODO: Add description
+     */
+    html: {
+      // TODO: warning
+      type: String,
     },
     // TODO: description
     tag: {
@@ -39,9 +47,39 @@ export default defineComponent({
 
       return paddingBottom;
     },
+
+    style(): Record<string, string | null> {
+      if (CSS.supports("aspect-ratio: auto")) {
+        return { "aspect-ratio": this.formatAspectRatio(this.aspectRatio) };
+      }
+
+      return { "padding-bottom": this.paddingBottom };
+    },
+  },
+
+  methods: {
+    formatAspectRatio(rawAspectRatio: string): string {
+      return "100 / 66"; // TODO
+    },
   },
 
   render(): VNode {
-    return <div>DAspectRatio</div>;
+    const Tag = this.tag;
+
+    if (this.html) {
+      return (
+        <Tag
+          class={styles.dAspectRatio}
+          style={this.style}
+          v-html={this.html}
+        />
+      );
+    }
+
+    return (
+      <Tag class={styles.dAspectRatio} style={this.style}>
+        {this.$slots.default?.()}
+      </Tag>
+    );
   },
 });
