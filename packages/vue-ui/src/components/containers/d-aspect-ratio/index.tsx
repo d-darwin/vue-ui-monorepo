@@ -16,17 +16,19 @@ export default defineComponent({
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       default: "1",
-      validator: (val: string): boolean => {
-        if (!Number.isNaN(val)) {
+      // TODO: do we need this extra calculations ??
+      validator: (val: string | number): boolean => {
+        if (!isNaN(Number(val))) {
           return Boolean(val);
         }
 
-        let [width, height] = val.split("/");
+        const stringVal = String(val);
+        let [width, height] = stringVal.split("/");
         if (parseInt(width?.trim()) && parseInt(height?.trim())) {
           return true;
         }
 
-        [width, height] = val.split(":");
+        [width, height] = stringVal.split(":");
         if (parseInt(width?.trim()) && parseInt(height?.trim())) {
           return true;
         }
@@ -49,14 +51,46 @@ export default defineComponent({
   },
 
   computed: {
+    widthHeight(): { width: number; height: number } {
+      let width = 1;
+      let height = 1;
+      const aspectRatio = String(this.aspectRatio);
+      // TODO: simplify
+      if (aspectRatio.includes("/")) {
+        const [rawWidth, rawHeight] = aspectRatio.split("/");
+        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
+          width = parseInt(rawWidth?.trim());
+          height = parseInt(rawHeight?.trim());
+        }
+      } else if (aspectRatio.includes(":")) {
+        const [rawWidth, rawHeight] = aspectRatio.split(":");
+        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
+          width = parseInt(rawWidth?.trim());
+          height = parseInt(rawHeight?.trim());
+        }
+      }
+
+      return { width, height };
+    },
+
+    formattedAspectRatio(): string {
+      if (!isNaN(Number(this.aspectRatio))) {
+        return String(this.aspectRatio || 1);
+      }
+
+      const { width, height } = this.widthHeight;
+
+      return `${width} / ${height}`;
+    },
+
     paddingBottom(): string | null {
       let paddingBottom = null;
-
-      const widthHeight = this.aspectRatio.toString().split(":"); // TODO: different formats
-      if (widthHeight[0] && widthHeight[1]) {
-        paddingBottom =
-          (100 * parseInt(widthHeight[0])) / parseInt(widthHeight[1]) + "%";
+      if (!isNaN(Number(this.aspectRatio))) {
+        return `${100 / Number(this.aspectRatio || 1)}%`;
       }
+
+      const { width, height } = this.widthHeight;
+      paddingBottom = `${(100 * height) / width}%`;
 
       return paddingBottom;
     },
@@ -64,37 +98,11 @@ export default defineComponent({
     style(): Record<string, string | number | null> {
       if (CSS?.supports("aspect-ratio: auto")) {
         return {
-          "aspect-ratio": this.formatAspectRatio(String(this.aspectRatio)),
+          "aspect-ratio": this.formattedAspectRatio,
         };
       }
 
       return { "padding-bottom": this.paddingBottom };
-    },
-  },
-
-  methods: {
-    formatAspectRatio(rawAspectRatio: string): string | number {
-      if (!Number.isNaN(rawAspectRatio)) {
-        return rawAspectRatio || 1;
-      }
-
-      let width = 1;
-      let height = 1;
-      if (rawAspectRatio.includes("/")) {
-        const [rawWidth, rawHeight] = rawAspectRatio.split("/");
-        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
-          width = parseInt(rawWidth?.trim());
-          height = parseInt(rawHeight?.trim());
-        }
-      } else if (rawAspectRatio.includes(":")) {
-        const [rawWidth, rawHeight] = rawAspectRatio.split(":");
-        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
-          width = parseInt(rawWidth?.trim());
-          height = parseInt(rawHeight?.trim());
-        }
-      }
-
-      return `${width} / ${height}`;
     },
   },
 
