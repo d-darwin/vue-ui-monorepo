@@ -1,13 +1,13 @@
 {
   "name": "@darwin-studio/vue-ui-codegen",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "scripts": {
     "build": "node index.js",
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
   "dependencies": {
-    "@darwin-studio/vue-ui-style-dictionary": "^0.12.0",
+    "@darwin-studio/vue-ui-style-dictionary": "^0.12.1",
     "camel-case": "^4.1.2"
   },
   "devDependencies": {
