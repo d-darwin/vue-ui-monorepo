@@ -43,7 +43,9 @@ export default defineComponent({
       // TODO: warning
       type: String,
     },
-    // TODO: description
+    /**
+     * TODO: Add description
+     */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
@@ -51,7 +53,7 @@ export default defineComponent({
   },
 
   computed: {
-    widthHeight(): { width: number; height: number } {
+    size(): { width: number; height: number } {
       let width = 1;
       let height = 1;
       const aspectRatio = String(this.aspectRatio);
@@ -78,7 +80,7 @@ export default defineComponent({
         return String(this.aspectRatio || 1);
       }
 
-      const { width, height } = this.widthHeight;
+      const { width, height } = this.size;
 
       return `${width} / ${height}`;
     },
@@ -89,14 +91,18 @@ export default defineComponent({
         return `${100 / Number(this.aspectRatio || 1)}%`;
       }
 
-      const { width, height } = this.widthHeight;
+      const { width, height } = this.size;
       paddingBottom = `${(100 * height) / width}%`;
 
       return paddingBottom;
     },
 
+    hasAspectRationNativeSupport(): boolean {
+      return CSS?.supports("aspect-ratio: auto") || false;
+    },
+
     style(): Record<string, string | number | null> {
-      if (CSS?.supports("aspect-ratio: auto")) {
+      if (this.hasAspectRationNativeSupport) {
         return {
           "aspect-ratio": this.formattedAspectRatio,
         };
@@ -109,19 +115,41 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    if (this.hasAspectRationNativeSupport) {
+      if (this.html) {
+        return (
+          <Tag
+            class={styles.dAspectRatio}
+            style={this.style}
+            v-html={this.html}
+          />
+        );
+      }
+
+      return (
+        <Tag class={styles.dAspectRatio} style={this.style}>
+          {this.$slots.default?.()}
+        </Tag>
+      );
+    }
+
     if (this.html) {
       return (
-        <Tag
-          class={styles.dAspectRatio}
-          style={this.style}
-          v-html={this.html}
-        />
+        <Tag class={styles.dAspectRatio}>
+          <div
+            class={styles.dAspectRatioInner}
+            style={this.style}
+            v-html={this.html}
+          />
+        </Tag>
       );
     }
 
     return (
-      <Tag class={styles.dAspectRatio} style={this.style}>
-        {this.$slots.default?.()}
+      <Tag class={styles.dAspectRatio}>
+        <div class={styles.dAspectRatioInner} style={this.style}>
+          {this.$slots.default?.()}
+        </div>
       </Tag>
     );
   },

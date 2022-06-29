@@ -1,5 +1,5 @@
 @supports not (aspect-ratio: auto) {
-  .dAspectRatio {
+  .dAspectRatioInner {
     position: relative;
     display: block;
     width: 100%;
@@ -7,7 +7,7 @@
   }
 
    /*TODO: avoid using <any> selector*/
-  .dAspectRatio > * {
+  .dAspectRatioInner > * {
      position: absolute;
      left: 0;
      top: 0;
