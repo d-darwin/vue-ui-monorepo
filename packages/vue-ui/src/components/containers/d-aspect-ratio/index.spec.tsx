@@ -41,9 +41,9 @@ describe("DTypography", () => {
     expect(aspectRatioValidator("2 ; 1")).toBe(false);
   });
 
-  it("Formatted aspect-ratio of 0.66 is '0.66'", async () => {
-    await wrapper.setProps({ aspectRatio: 0.66 });
-    expect(wrapper.vm.formattedAspectRatio).toBe("0.66");
+  it("Formatted aspect-ratio of 0.33 is '0.33'", async () => {
+    await wrapper.setProps({ aspectRatio: 0.33 });
+    expect(wrapper.vm.formattedAspectRatio).toBe("0.33");
   });
 
   it("Formatted aspect-ratio of '3 /5' is '3 / 5'", async () => {
@@ -61,11 +61,51 @@ describe("DTypography", () => {
     expect(wrapper.vm.formattedAspectRatio).toBe("1 / 1");
   });
 
-  // TODO: tag
+  it("Padding-bottom for 0.8 is '125%'", async () => {
+    await wrapper.setProps({ aspectRatio: 0.8 });
+    expect(wrapper.vm.paddingBottom).toBe("125%");
+  });
+
+  it("Padding-bottom for '3 /5' is '166.66666666666666%'", async () => {
+    await wrapper.setProps({ aspectRatio: "3 /5" });
+    expect(wrapper.vm.paddingBottom).toBe("166.66666666666666%");
+  });
+
+  it("Padding-bottom for '4: 1' is '25%'", async () => {
+    await wrapper.setProps({ aspectRatio: "4: 1" });
+    expect(wrapper.vm.paddingBottom).toBe("25%");
+  });
+
+  it("Padding-bottom for 'wrong-string' is '100%'", async () => {
+    await wrapper.setProps({ aspectRatio: "wrong-string" });
+    expect(wrapper.vm.paddingBottom).toBe("100%");
+  });
+
+  it("Generates aspect-ratio style if it is supported", async () => {
+    // NB: by default it supported, see jest.globals.js
+    await wrapper.setProps({ aspectRatio: 0.5 });
+    expect(JSON.stringify(wrapper.vm.style)).toBe(
+      JSON.stringify({ "aspect-ratio": "0.5" })
+    );
+  });
+
+  it("Generates padding-bottom style if aspect-ration is NOT supported", async () => {
+    // TODO: try to do this in a more soft way
+    Object.defineProperty(wrapper.vm, "hasAspectRationNativeSupport", {
+      writable: true,
+      value: false,
+    });
+    await wrapper.setProps({ aspectRatio: 0.8 });
+    expect(JSON.stringify(wrapper.vm.style)).toBe(
+      JSON.stringify({ "padding-bottom": "125%" })
+    );
+  });
+
+  // TODO: return with or without additional div depending on branch
+
   it("Renders props.tag when passed", async () => {
     const tag = "picture";
     await wrapper.setProps({ tag });
     expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
-  // TODO: padding branch ???
 });
