@@ -41,6 +41,26 @@ describe("DTypography", () => {
     expect(aspectRatioValidator("2 ; 1")).toBe(false);
   });
 
+  it("Formatted aspect-ratio of 0.66 is '0.66'", async () => {
+    await wrapper.setProps({ aspectRatio: 0.66 });
+    expect(wrapper.vm.formattedAspectRatio).toBe("0.66");
+  });
+
+  it("Formatted aspect-ratio of '3 /5' is '3 / 5'", async () => {
+    await wrapper.setProps({ aspectRatio: "3 /5" });
+    expect(wrapper.vm.formattedAspectRatio).toBe("3 / 5");
+  });
+
+  it("Formatted aspect-ratio of '4: 1' is '4 / 1'", async () => {
+    await wrapper.setProps({ aspectRatio: "4: 1" });
+    expect(wrapper.vm.formattedAspectRatio).toBe("4 / 1");
+  });
+
+  it("Formatted aspect-ratio of 'wrong-string' is '1 / 1'", async () => {
+    await wrapper.setProps({ aspectRatio: "wrong-string" });
+    expect(wrapper.vm.formattedAspectRatio).toBe("1 / 1");
+  });
+
   // TODO: tag
   it("Renders props.tag when passed", async () => {
     const tag = "picture";
