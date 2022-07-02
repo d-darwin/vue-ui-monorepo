@@ -1,0 +1,17 @@
+@supports not (aspect-ratio: auto) {
+  .dAspectRatioInner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+  }
+
+   /*TODO: avoid using <any> selector*/
+  .dAspectRatioInner > * {
+     position: absolute;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+   }
+}
