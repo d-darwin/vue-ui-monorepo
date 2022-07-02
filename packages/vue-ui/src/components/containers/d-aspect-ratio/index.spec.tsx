@@ -90,7 +90,7 @@ describe("DTypography", () => {
   });
 
   it("Generates padding-bottom style if aspect-ratio is NOT supported", async () => {
-    // TODO: try to do this in a more soft way
+    // TODO: try to do this in a more accurate way
     Object.defineProperty(wrapper.vm, "hasAspectRationNativeSupport", {
       writable: true,
       value: false,
@@ -101,7 +101,6 @@ describe("DTypography", () => {
     );
   });
 
-  // TODO: return with or without additional div depending on branch
   it("Renders additional inner div if aspect-ratio is NOT supported", () => {
     const innerElement = wrapper.find(".dAspectRatioInner");
     expect(innerElement).toBeTruthy();
