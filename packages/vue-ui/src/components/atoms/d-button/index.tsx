@@ -31,6 +31,8 @@ import styles from "./index.module.css";
 export default defineComponent({
   name: "DButton",
 
+  emits: ["click"],
+
   props: {
     /**
      * TODO: Add description

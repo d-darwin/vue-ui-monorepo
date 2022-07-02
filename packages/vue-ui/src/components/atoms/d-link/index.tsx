@@ -19,6 +19,7 @@ import styles from "./index.module.css";
 export default defineComponent({
   name: "DLink",
 
+  emits: ["click"],
   // TODO: add props factory
   props: {
     /**
