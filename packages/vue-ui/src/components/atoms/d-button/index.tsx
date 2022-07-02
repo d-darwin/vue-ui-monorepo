@@ -31,7 +31,7 @@ import styles from "./index.module.css";
 export default defineComponent({
   name: "DButton",
 
-  emits: ["click"],
+  // emits: ["click"],
 
   props: {
     /**

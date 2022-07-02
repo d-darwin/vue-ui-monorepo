@@ -7,7 +7,7 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
 
 // TODO: description

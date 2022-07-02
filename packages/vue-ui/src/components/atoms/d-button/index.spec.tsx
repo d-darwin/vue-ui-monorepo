@@ -22,7 +22,7 @@ describe("DButton", () => {
 
   propHtmlCase(wrapper);
 
-  slotDefaultCase(wrapper);
+  slotDefaultCase(DButton);
 
   baseClassCase(wrapper, "dButton");
 

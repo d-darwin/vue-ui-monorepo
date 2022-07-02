@@ -18,7 +18,7 @@ describe("DTypography", () => {
 
   propHtmlCase(wrapper);
 
-  slotDefaultCase(wrapper);
+  slotDefaultCase(DTypography);
 
   baseClassCase(wrapper, "dTypography");
 

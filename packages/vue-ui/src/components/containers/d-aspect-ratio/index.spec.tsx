@@ -11,7 +11,7 @@ describe("DTypography", () => {
 
   propHtmlCase(wrapper);
 
-  slotDefaultCase(wrapper);
+  slotDefaultCase(DAspectRatio);
 
   baseClassCase(wrapper, "dAspectRatio");
 

@@ -19,7 +19,7 @@ describe("DLink", () => {
 
   propHtmlCase(wrapper);
 
-  slotDefaultCase(wrapper);
+  slotDefaultCase(DLink);
 
   baseClassCase(wrapper, "dLink");
 

@@ -1,11 +1,15 @@
 import { defineComponent, PropType, VNode } from "vue";
-import { Source } from "@/components/atoms/d-picture/types";
-import { Text } from "@/types/text";
+import type { Text } from "@/types/text";
+import { Source } from "./types";
+import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
+import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"; // TODO: fix relative path
 
 export default defineComponent({
   name: "DPicture",
 
   emits: ["loaded"],
+
+  components: { DAspectRatio },
 
   props: {
     /**
@@ -24,7 +28,6 @@ export default defineComponent({
      */
     source: {
       type: [Array, String] as PropType<Source>,
-      default: () => [],
       // TODO: validator
     },
     /**
@@ -33,14 +36,13 @@ export default defineComponent({
      */
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
-      default: "1",
+      validator: aspectRationValidator,
     },
     /**
      * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they aren't presented.
      */
     caption: {
       type: String,
-      default: "",
     },
   },
 

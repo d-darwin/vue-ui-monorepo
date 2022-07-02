@@ -1,7 +1,8 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import styles from "./index.module.css";
 
 // TODO: description
@@ -17,24 +18,7 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
       default: "1",
       // TODO: do we need this extra calculations ??
-      validator: (val: string | number): boolean => {
-        if (!isNaN(Number(val))) {
-          return Boolean(val);
-        }
-
-        const stringVal = String(val);
-        let [width, height] = stringVal.split("/");
-        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-          return true;
-        }
-
-        [width, height] = stringVal.split(":");
-        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-          return true;
-        }
-
-        return false;
-      },
+      validator: aspectRationValidator,
     },
     /**
      * TODO: Add description
