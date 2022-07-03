@@ -4,10 +4,11 @@ import type { TagName } from "@/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import styles from "./index.module.css";
+import config from "./config";
 
 // TODO: description
 export default defineComponent({
-  name: "DAspectRatio",
+  name: config.name,
 
   props: {
     /**
@@ -99,11 +100,12 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    // TODO: simplify
     if (this.hasAspectRationNativeSupport) {
       if (this.html) {
         return (
           <Tag
-            class={styles.dAspectRatio}
+            class={styles[config.className]}
             style={this.style}
             v-html={this.html}
           />
@@ -111,7 +113,7 @@ export default defineComponent({
       }
 
       return (
-        <Tag class={styles.dAspectRatio} style={this.style}>
+        <Tag class={styles[config.className]} style={this.style}>
           {this.$slots.default?.()}
         </Tag>
       );
@@ -119,9 +121,9 @@ export default defineComponent({
 
     if (this.html) {
       return (
-        <Tag class={styles.dAspectRatio}>
+        <Tag class={styles[config.className]}>
           <div
-            class={styles.dAspectRatioInner}
+            class={styles[config.innerClassName]}
             style={this.style}
             v-html={this.html}
           />
@@ -130,8 +132,8 @@ export default defineComponent({
     }
 
     return (
-      <Tag class={styles.dAspectRatio}>
-        <div class={styles.dAspectRatioInner} style={this.style}>
+      <Tag class={styles[config.className]}>
+        <div class={styles[config.innerClassName]} style={this.style}>
           {this.$slots.default?.()}
         </div>
       </Tag>

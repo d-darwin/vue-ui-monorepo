@@ -6,7 +6,7 @@ import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
-import config from "@darwin-studio/vue-ui-codegen/config.json";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
@@ -14,9 +14,12 @@ import {
   propHtmlCase,
   slotDefaultCase,
 } from "@/utils/test-case-factories";
+import config from "./config";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
+
+  baseClassCase(wrapper, config.className);
 
   propContentCase(wrapper);
 
@@ -24,15 +27,13 @@ describe("DButton", () => {
 
   slotDefaultCase(DButton);
 
-  baseClassCase(wrapper, "dButton");
-
   // TODO: classes are not rendered in jest ???
   it("Renders border class name", async () => {
     const size = SIZE.TINY; // TODO: const names maybe different - Object.values and Math.rand()
     const colorScheme = COLOR_SCHEME.DANGER; // TODO: const names maybe different - Object.values and Math.rand()
     await wrapper.setProps({ size, colorScheme }); // TODO: why it doesn't work with composition api ???
     const className = prepareCssClassName(
-      config.TOKENS.BORDER.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
       `${colorScheme}-${size}`
     );
     expect(wrapper.classes()).toContain(className);
@@ -42,7 +43,7 @@ describe("DButton", () => {
     const colorScheme = COLOR_SCHEME.INVERSE;
     await wrapper.setProps({ colorScheme });
     const className = prepareCssClassName(
-      config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
       colorScheme
     );
     expect(wrapper.classes()).toContain(className);
@@ -52,7 +53,7 @@ describe("DButton", () => {
     const size = SIZE.SMALL;
     await wrapper.setProps({ size });
     const className = prepareCssClassName(
-      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
     expect(wrapper.classes()).toContain(className);
@@ -63,7 +64,7 @@ describe("DButton", () => {
     const colorScheme = COLOR_SCHEME.SECONDARY;
     await wrapper.setProps({ size, colorScheme });
     const className = prepareCssClassName(
-      config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
       `${colorScheme}-${size}`
     );
     expect(wrapper.classes()).toContain(className);
@@ -75,7 +76,7 @@ describe("DButton", () => {
     const padding = PADDING.EQUAL;
     await wrapper.setProps({ size, padding });
     const className = prepareCssClassName(
-      config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
       `${padding}-${size}`
     );
     expect(wrapper.classes()).toContain(className);
@@ -86,7 +87,7 @@ describe("DButton", () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
     const className = prepareCssClassName(
-      config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
     expect(wrapper.classes()).toContain(className);
@@ -97,7 +98,7 @@ describe("DButton", () => {
     const padding = PADDING.NONE;
     await wrapper.setProps({ padding });
     const className = prepareCssClassName(
-      config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
       padding
     );
     expect(wrapper.classes()).toContain(className);
@@ -107,7 +108,7 @@ describe("DButton", () => {
     const rounding = ROUNDING.FULL;
     await wrapper.setProps({ rounding });
     const className = prepareCssClassName(
-      config.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
       rounding
     );
     expect(wrapper.classes()).toContain(className);
@@ -117,7 +118,7 @@ describe("DButton", () => {
     const size = SIZE.HUGE;
     await wrapper.setProps({ size });
     const className = prepareCssClassName(
-      config.TOKENS.SIZE.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
     expect(wrapper.classes()).toContain(className);
@@ -127,7 +128,7 @@ describe("DButton", () => {
     const transition = TRANSITION.AVERAGE;
     await wrapper.setProps({ transition });
     const className = prepareCssClassName(
-      config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
       transition
     );
     expect(wrapper.classes()).toContain(className);

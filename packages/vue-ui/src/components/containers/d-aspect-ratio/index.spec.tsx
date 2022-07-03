@@ -5,6 +5,7 @@ import {
   propHtmlCase,
   slotDefaultCase,
 } from "@/utils/test-case-factories";
+import config from "./config";
 
 describe("DTypography", () => {
   // NB: by jest.config all CSS properties are supported, see jest.globals.js
@@ -12,11 +13,11 @@ describe("DTypography", () => {
   window.CSS.supports = () => false;
   const wrapperWithoutCSSSupport = shallowMount(DAspectRatio);
 
+  baseClassCase(wrapperWithFullCSSSupport, config.className);
+
   propHtmlCase(wrapperWithFullCSSSupport);
 
   slotDefaultCase(DAspectRatio);
-
-  baseClassCase(wrapperWithFullCSSSupport, "dAspectRatio");
 
   const aspectRatioValidator = DAspectRatio.props.aspectRatio.validator;
 
@@ -44,13 +45,6 @@ describe("DTypography", () => {
     expect(aspectRatioValidator("2 ; 1")).toBe(false);
   });
 
-  it("Formatted aspect-ratio of 0 is 1", async () => {
-    await wrapperWithFullCSSSupport.setProps({
-      aspectRatio: 0,
-    });
-    expect(wrapperWithFullCSSSupport.vm.formattedAspectRatio).toBe(1);
-  });
-
   it("Formatted aspect-ratio of 0.33 is '0.33'", async () => {
     await wrapperWithFullCSSSupport.setProps({ aspectRatio: 0.33 });
     expect(wrapperWithFullCSSSupport.vm.formattedAspectRatio).toBe("0.33");
@@ -73,28 +67,40 @@ describe("DTypography", () => {
     expect(wrapperWithFullCSSSupport.vm.formattedAspectRatio).toBe("1 / 1");
   });
 
+  it("Formatted aspect-ratio of 0 is 1", async () => {
+    await wrapperWithFullCSSSupport.setProps({
+      aspectRatio: 0,
+    });
+    expect(wrapperWithFullCSSSupport.vm.formattedAspectRatio).toBe("1");
+  });
+
   it("Padding-bottom for 0.8 is '125%'", async () => {
-    await wrapperWithFullCSSSupport.setProps({ aspectRatio: 0.8 });
-    expect(wrapperWithFullCSSSupport.vm.paddingBottom).toBe("125%");
+    await wrapperWithoutCSSSupport.setProps({ aspectRatio: 0.8 });
+    expect(wrapperWithoutCSSSupport.vm.paddingBottom).toBe("125%");
   });
 
   it("Padding-bottom for '3 /5' is '166.66666666666666%'", async () => {
-    await wrapperWithFullCSSSupport.setProps({ aspectRatio: "3 /5" });
-    expect(wrapperWithFullCSSSupport.vm.paddingBottom).toBe(
+    await wrapperWithoutCSSSupport.setProps({ aspectRatio: "3 /5" });
+    expect(wrapperWithoutCSSSupport.vm.paddingBottom).toBe(
       "166.66666666666666%"
     );
   });
 
   it("Padding-bottom for '4: 1' is '25%'", async () => {
-    await wrapperWithFullCSSSupport.setProps({ aspectRatio: "4: 1" });
-    expect(wrapperWithFullCSSSupport.vm.paddingBottom).toBe("25%");
+    await wrapperWithoutCSSSupport.setProps({ aspectRatio: "4: 1" });
+    expect(wrapperWithoutCSSSupport.vm.paddingBottom).toBe("25%");
+  });
+
+  it("Padding-bottom for 0 is '100%'", async () => {
+    await wrapperWithoutCSSSupport.setProps({ aspectRatio: 0 });
+    expect(wrapperWithoutCSSSupport.vm.paddingBottom).toBe("100%");
   });
 
   it("Padding-bottom for 'wrong-string' is '100%'", async () => {
-    await wrapperWithFullCSSSupport.setProps({
+    await wrapperWithoutCSSSupport.setProps({
       aspectRatio: "wrong-string",
     });
-    expect(wrapperWithFullCSSSupport.vm.paddingBottom).toBe("100%");
+    expect(wrapperWithoutCSSSupport.vm.paddingBottom).toBe("100%");
   });
 
   it("Generates aspect-ratio style if it is supported", async () => {
@@ -112,7 +118,9 @@ describe("DTypography", () => {
   });
 
   it("Renders additional inner div if aspect-ratio is NOT supported", () => {
-    const innerElement = wrapperWithFullCSSSupport.find(".dAspectRatioInner");
+    const innerElement = wrapperWithFullCSSSupport.find(
+      `.${config.innerClassName}`
+    );
     expect(innerElement).toBeTruthy();
   });
 

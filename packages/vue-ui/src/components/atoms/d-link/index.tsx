@@ -9,17 +9,17 @@ import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import config from "@darwin-studio/vue-ui-codegen/config.json";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
+import config from "./config";
 
 /**
  * TODO: Add description
  */
 export default defineComponent({
-  name: "DLink",
+  name: config.name,
 
-  // emits: ["click"],
   // TODO: add props factory
   props: {
     /**
@@ -68,21 +68,21 @@ export default defineComponent({
     classes(): string[] {
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
-        config.TOKENS.FONT.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.font
       );
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
-        config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
         `primary-medium` // TODO: not flexible at all
       );
       const transitionClassName = prepareCssClassName(
-        config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
       );
 
       const classes = [
-        styles.dLink,
+        styles[config.className],
         fontStyles[fontClassName],
         outlineStyles[outlineClassName],
         sizeStyles[fontClassName],

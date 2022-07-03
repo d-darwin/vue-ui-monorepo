@@ -3,7 +3,7 @@ import DLink from "@/components/atoms/d-link";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
-import config from "@darwin-studio/vue-ui-codegen/config.json";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
@@ -11,9 +11,12 @@ import {
   propHtmlCase,
   slotDefaultCase,
 } from "@/utils/test-case-factories";
+import config from "./config";
 
 describe("DLink", () => {
   const wrapper = shallowMount(DLink);
+
+  baseClassCase(wrapper, config.className);
 
   propContentCase(wrapper);
 
@@ -21,13 +24,11 @@ describe("DLink", () => {
 
   slotDefaultCase(DLink);
 
-  baseClassCase(wrapper, "dLink");
-
   it("Renders font class name", async () => {
     const font = FONT.SMALL;
     await wrapper.setProps({ font });
     const className = prepareCssClassName(
-      config.TOKENS.FONT.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       font
     );
     expect(wrapper.classes()).toContain(className);
@@ -35,7 +36,7 @@ describe("DLink", () => {
 
   it("Renders outline class name", async () => {
     const className = prepareCssClassName(
-      config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
       `primary-medium`
     );
     expect(wrapper.classes()).toContain(className);
@@ -45,7 +46,7 @@ describe("DLink", () => {
     const transition = TRANSITION.AVERAGE;
     await wrapper.setProps({ transition });
     const className = prepareCssClassName(
-      config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+      codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
       transition
     );
     expect(wrapper.classes()).toContain(className);

@@ -2,12 +2,12 @@ import { defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import { Source } from "./types";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"; // TODO: fix relative path
+import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import config from "./config"; // TODO: fix relative path
+import dAspectRatioConfig from "./config"; // TODO: fix relative path
 
 export default defineComponent({
-  name: "DPicture",
-
-  emits: ["loaded"],
+  name: config.name,
 
   components: { DAspectRatio },
 
@@ -52,7 +52,33 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    tag() {
+      return this.aspectRatio ? dAspectRatioConfig.name : config.defaultTag;
+    },
+
+    alt(): string | null {
+      return (this.$attrs.alt as string) || this.caption || null;
+    },
+
+    tagProps(): Record<string, Text | null> {
+      return this.aspectRatio
+        ? {
+            aspectRatio: this.aspectRatio,
+            tag: config.defaultTag,
+            alt: this.alt,
+            class: config.className,
+          }
+        : {
+            alt: this.alt,
+            class: config.className,
+          };
+    },
+  },
+
   render(): VNode {
-    return <div>DPicture</div>;
+    const Tag = this.tag;
+
+    return <Tag {...this.tagProps}>DPicture</Tag>;
   },
 });
