@@ -1,10 +1,11 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
-import { Source } from "./types";
+import { DensityPictureSource, Source } from "./types";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+// import dAspectRatioConfig from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/config"; // TODO: fix relative path
+import styles from "./index.module.css";
 import config from "./config"; // TODO: fix relative path
-import dAspectRatioConfig from "./config"; // TODO: fix relative path
 
 export default defineComponent({
   name: config.name,
@@ -54,7 +55,7 @@ export default defineComponent({
 
   computed: {
     tag() {
-      return this.aspectRatio ? dAspectRatioConfig.name : config.defaultTag;
+      return this.aspectRatio ? DAspectRatio : config.defaultTag;
     },
 
     alt(): string | null {
@@ -67,18 +68,107 @@ export default defineComponent({
             aspectRatio: this.aspectRatio,
             tag: config.defaultTag,
             alt: this.alt,
-            class: config.className,
+            // title ???
+            class: styles[config.className],
           }
         : {
             alt: this.alt,
-            class: config.className,
+            // title ???
+            class: styles[config.className],
           };
+    },
+
+    // TODO: return type, max-width, refac
+    preparedItems() {
+      const outPicture = JSON.parse(JSON.stringify(this.source));
+      if (Array.isArray(outPicture)) {
+        // Resort Array by min_width (higher is above)
+        outPicture.sort(function (a, b) {
+          return b.min_width - a.min_width;
+        });
+        // If srcset is array of images prepare srcset string
+        outPicture.forEach(function (item, k) {
+          if (Array.isArray(item.srcset)) {
+            let srcset = "";
+            item.srcset.forEach(function (
+              srcObj: DensityPictureSource,
+              i: number
+            ) {
+              srcset +=
+                (i === 0 ? "" : ", ") + srcObj.src + " " + srcObj.density;
+            });
+            if (srcset) {
+              outPicture[k].srcset = srcset;
+            }
+          }
+        });
+      } else if (typeof outPicture === "string") {
+        return [{ min_width: 0, src: outPicture }];
+      } else {
+        // fallback
+        return this.source;
+      }
+      return outPicture;
     },
   },
 
-  render(): VNode {
+  methods: {
+    // TODO
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    constructMediaQuery(item): string | undefined {
+      if (item.min_width && item.max_width) {
+        return `(min-width: ${item.min_width}px) and (max-width: ${item.max_width}px)`;
+      } else if (item.min_width) {
+        return `(min-width: ${item.min_width}px)`;
+      } else if (item.max_width) {
+        return `(max-width: ${item.max_width}px)`;
+      }
+      return undefined;
+    },
+  },
+
+  render(): VNode | null {
+    // TODO: is it right decision?
+    if (!this.source) return null;
+
     const Tag = this.tag;
 
-    return <Tag {...this.tagProps}>DPicture</Tag>;
+    return (
+      <Tag {...this.tagProps}>
+        {
+          // TODO
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.preparedItems?.map((item, index) => (
+            <source
+              key={index} // TODO
+              media={this.constructMediaQuery(item)}
+              srcset={item.srcset}
+              data-src={item.src}
+            />
+          ))
+        }
+
+        <img
+          srcset={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0].srcset
+          }
+          src={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0].src
+          }
+          // style="imgStyle"
+          // loading="lazy"
+          // class="img"
+          // @load="loadedHandler"
+        />
+      </Tag>
+    );
   },
 });
