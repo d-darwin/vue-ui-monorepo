@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
@@ -70,7 +70,7 @@ export default defineComponent({
       return `${width} / ${height}`;
     },
 
-    paddingBottom(): string | null {
+    paddingBottom(): string {
       let paddingBottom = null;
       if (!isNaN(Number(this.aspectRatio))) {
         return `${100 / Number(this.aspectRatio || 1)}%`;
@@ -86,7 +86,7 @@ export default defineComponent({
       return CSS?.supports("aspect-ratio: auto") || false;
     },
 
-    style(): Record<string, string | number | null> {
+    style(): CSSProperties {
       if (this.hasAspectRationNativeSupport) {
         return {
           "aspect-ratio": this.formattedAspectRatio,

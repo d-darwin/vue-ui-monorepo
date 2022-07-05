@@ -1,12 +1,11 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { CSSProperties, defineComponent, PropType, VNode } from "vue";
+import { ObjectFitProperty } from "csstype";
 import type { Text } from "@/types/text";
 import { DensityPictureSource, Source } from "./types";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
-// import dAspectRatioConfig from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/config"; // TODO: fix relative path
 import styles from "./index.module.css";
-import config from "./config"; // TODO: fix relative path
-
+import config from "./config";
 export default defineComponent({
   name: config.name,
 
@@ -38,6 +37,13 @@ export default defineComponent({
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       validator: aspectRationValidator,
+    },
+    objectFit: {
+      type: String as PropType<ObjectFitProperty>,
+      default: "cover",
+    },
+    imageClass: {
+      type: String,
     },
     /**
      * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they aren't presented.
@@ -110,6 +116,14 @@ export default defineComponent({
       }
       return outPicture;
     },
+
+    imageStyle(): CSSProperties | undefined {
+      if (this.objectFit) {
+        return { "object-fit": this.objectFit };
+      }
+
+      return undefined;
+    },
   },
 
   methods: {
@@ -166,7 +180,8 @@ export default defineComponent({
           }
           alt={this.alt || ""}
           // loading="lazy"
-          class="img"
+          class={[styles[config.imageClassName], this.imageClass]}
+          style={this.imageStyle}
           // style="imgStyle"
           // @load="loadedHandler"
         />

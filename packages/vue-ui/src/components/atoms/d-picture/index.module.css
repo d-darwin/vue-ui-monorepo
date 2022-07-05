@@ -1,32 +1,13 @@
-@supports (aspect-ratio: auto) {
-  .dPicture {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+.dPicture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-@supports not (aspect-ratio: auto) {
-  .dPicture {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    height: 100%;
-    width: 100%;
-  }
-
-  .picture {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    overflow: hidden;
-    z-index: 10;
-  }
-
-  .img {
-    object-fit: cover;
-  }
+.image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
+
