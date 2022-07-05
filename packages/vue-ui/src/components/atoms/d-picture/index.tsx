@@ -135,6 +135,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
+      // TODO: work good with padding-bottom hack but not with native aspect-ratio
       <Tag {...this.tagProps}>
         {
           // TODO
@@ -163,9 +164,10 @@ export default defineComponent({
             // @ts-ignore
             this.preparedItems[0].src
           }
-          // style="imgStyle"
+          alt={this.alt || ""}
           // loading="lazy"
-          // class="img"
+          class="img"
+          // style="imgStyle"
           // @load="loadedHandler"
         />
       </Tag>
