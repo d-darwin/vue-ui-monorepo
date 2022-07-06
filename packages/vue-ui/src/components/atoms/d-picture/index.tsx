@@ -6,6 +6,13 @@ import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
+
+declare module "@vue/runtime-dom" {
+  interface ImgHTMLAttributes extends HTMLAttributes {
+    loading?: "lazy" | "eager" | "auto";
+  }
+}
+
 export default defineComponent({
   name: config.name,
 
@@ -179,10 +186,9 @@ export default defineComponent({
             this.preparedItems[0].src
           }
           alt={this.alt || ""}
-          // loading="lazy"
+          loading="lazy"
           class={[styles[config.imageClassName], this.imageClass]}
           style={this.imageStyle}
-          // style="imgStyle"
           // @load="loadedHandler"
         />
       </Tag>
