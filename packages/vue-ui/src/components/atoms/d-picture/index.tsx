@@ -58,6 +58,8 @@ export default defineComponent({
     caption: {
       type: String,
     },
+    // TODO: captionFont ???
+    // TODO: captionClass + tokens gaps/spacing
     // TODO: description
     loading: {
       type: String as PropType<Loading>,
@@ -85,19 +87,23 @@ export default defineComponent({
       return (this.$attrs.alt as string) || this.caption || "";
     },
 
-    tagProps(): Record<string, Text | null> {
+    tagProps(): Record<string, Text | Text[] | null> {
+      const classes = this.caption
+        ? [styles[config.pictureClassName], styles[config.className]]
+        : styles[config.className];
+
       return this.aspectRatio
         ? {
             aspectRatio: this.aspectRatio,
             tag: config.defaultTag,
             alt: this.alt,
             // title ???
-            class: styles[config.className],
+            class: classes,
           }
         : {
             alt: this.alt,
             // title ???
-            class: styles[config.className],
+            class: classes,
           };
     },
 
@@ -159,7 +165,6 @@ export default defineComponent({
     },
 
     loadedHandler(event: Event): void {
-      console.log(event);
       this.isLoaded = true;
       this.$emit("load", event);
       this.whenLoad?.(event);
@@ -172,8 +177,7 @@ export default defineComponent({
 
     const Tag = this.tag;
 
-    return (
-      // TODO: work good with padding-bottom hack but not with native aspect-ratio
+    const picture = (
       <Tag {...this.tagProps}>
         {
           // TODO
@@ -210,5 +214,16 @@ export default defineComponent({
         />
       </Tag>
     );
+
+    if (this.caption) {
+      return (
+        <figure class={styles[config.className]}>
+          {picture}
+          <figcaption>{this.caption}</figcaption>
+        </figure>
+      );
+    }
+
+    return picture;
   },
 });
