@@ -11,3 +11,11 @@ export interface PictureSource {
 }
 
 export type Source = PictureSource[] | PictureSource | string;
+
+export const LOADING = {
+  LAZY: "lazy",
+  EAGER: "eager",
+  AUTO: "auto",
+} as const;
+
+export type Loading = typeof LOADING[keyof typeof LOADING];

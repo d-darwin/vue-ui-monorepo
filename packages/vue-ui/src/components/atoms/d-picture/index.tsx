@@ -1,7 +1,7 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import { ObjectFitProperty } from "csstype";
 import type { Text } from "@/types/text";
-import { DensityPictureSource, Source } from "./types";
+import { DensityPictureSource, Source, Loading, LOADING } from "./types"; // TODO: move LOADING to ./constants ???
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
@@ -9,7 +9,7 @@ import config from "./config";
 
 declare module "@vue/runtime-dom" {
   interface ImgHTMLAttributes extends HTMLAttributes {
-    loading?: "lazy" | "eager" | "auto";
+    loading?: Loading;
   }
 }
 
@@ -58,21 +58,31 @@ export default defineComponent({
     caption: {
       type: String,
     },
+    // TODO: description
+    loading: {
+      type: String as PropType<Loading>,
+      default: LOADING.LAZY,
+    },
+    // TODO: description
+    whenLoad: {
+      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+    },
   },
 
   data() {
     return {
-      isLoaded: false,
+      isLoaded: false, // TODO: do we really need this state
     };
   },
 
   computed: {
-    tag() {
+    // TODO: type
+    tag(): typeof DAspectRatio | typeof config.defaultTag {
       return this.aspectRatio ? DAspectRatio : config.defaultTag;
     },
 
-    alt(): string | null {
-      return (this.$attrs.alt as string) || this.caption || null;
+    alt(): string {
+      return (this.$attrs.alt as string) || this.caption || "";
     },
 
     tagProps(): Record<string, Text | null> {
@@ -147,6 +157,13 @@ export default defineComponent({
       }
       return undefined;
     },
+
+    loadedHandler(event: Event): void {
+      console.log(event);
+      this.isLoaded = true;
+      this.$emit("load", event);
+      this.whenLoad?.(event);
+    },
   },
 
   render(): VNode | null {
@@ -185,11 +202,11 @@ export default defineComponent({
             // @ts-ignore
             this.preparedItems[0].src
           }
-          alt={this.alt || ""}
-          loading="lazy"
+          alt={this.alt}
+          loading={this.loading}
           class={[styles[config.imageClassName], this.imageClass]}
           style={this.imageStyle}
-          // @load="loadedHandler"
+          onLoad={this.loadedHandler}
         />
       </Tag>
     );
