@@ -1,7 +1,7 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
-import { ObjectFitProperty } from "csstype";
 import type { Text } from "@/types/text";
-import { DensityPictureSource, Source, Loading, LOADING } from "./types"; // TODO: move LOADING to ./constants ???
+import { DensityPictureSource, Source, Loading, ObjectFit } from "./types";
+import { LOADING, OBJECT_FIT } from "./constants";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
@@ -45,10 +45,12 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
       validator: aspectRationValidator,
     },
+    // TODO: description
     objectFit: {
-      type: String as PropType<ObjectFitProperty>,
-      default: "cover",
+      type: String as PropType<ObjectFit>,
+      default: OBJECT_FIT.COVER,
     },
+    // TODO: description
     imageClass: {
       type: String,
     },
@@ -58,6 +60,7 @@ export default defineComponent({
     caption: {
       type: String,
     },
+    // TODO: separate figure component with caption, loader and no-image placeholder???
     // TODO: captionFont ???
     // TODO: captionClass + tokens gaps/spacing
     // TODO: description

@@ -1,3 +1,5 @@
+import { LOADING, OBJECT_FIT } from "./constants";
+
 export interface DensityPictureSource {
   density: number;
   src: string;
@@ -12,10 +14,6 @@ export interface PictureSource {
 
 export type Source = PictureSource[] | PictureSource | string;
 
-export const LOADING = {
-  LAZY: "lazy",
-  EAGER: "eager",
-  AUTO: "auto",
-} as const;
-
 export type Loading = typeof LOADING[keyof typeof LOADING];
+
+export type ObjectFit = typeof OBJECT_FIT[keyof typeof OBJECT_FIT];
