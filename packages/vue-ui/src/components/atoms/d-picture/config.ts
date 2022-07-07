@@ -2,6 +2,7 @@ export default {
   name: "DPicture",
   className: "dPicture",
   pictureClassName: "picture",
+  pictureTag: "picture",
   imageClassName: "image",
-  defaultTag: "picture",
+  imageTag: "img",
 };

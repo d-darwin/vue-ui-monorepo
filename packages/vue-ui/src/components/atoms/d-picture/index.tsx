@@ -7,12 +7,6 @@ import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspe
 import styles from "./index.module.css";
 import config from "./config";
 
-declare module "@vue/runtime-dom" {
-  interface ImgHTMLAttributes extends HTMLAttributes {
-    loading?: Loading;
-  }
-}
-
 export default defineComponent({
   name: config.name,
 
@@ -82,8 +76,8 @@ export default defineComponent({
 
   computed: {
     // TODO: type
-    tag(): typeof DAspectRatio | typeof config.defaultTag {
-      return this.aspectRatio ? DAspectRatio : config.defaultTag;
+    tag(): typeof DAspectRatio | typeof config.pictureTag {
+      return this.aspectRatio ? DAspectRatio : config.pictureTag;
     },
 
     alt(): string {
@@ -98,14 +92,10 @@ export default defineComponent({
       return this.aspectRatio
         ? {
             aspectRatio: this.aspectRatio,
-            tag: config.defaultTag,
-            alt: this.alt,
-            // title ???
+            tag: config.pictureTag,
             class: classes,
           }
         : {
-            alt: this.alt,
-            // title ???
             class: classes,
           };
     },
@@ -180,6 +170,8 @@ export default defineComponent({
 
     const Tag = this.tag;
 
+    // TODO: just <img> branch !!!
+
     const picture = (
       <Tag {...this.tagProps}>
         {
@@ -230,3 +222,9 @@ export default defineComponent({
     return picture;
   },
 });
+
+declare module "@vue/runtime-dom" {
+  interface ImgHTMLAttributes extends HTMLAttributes {
+    loading?: Loading;
+  }
+}
