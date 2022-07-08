@@ -13,6 +13,7 @@ export default defineComponent({
   components: { DAspectRatio },
 
   props: {
+    // TODO: think about the structure
     /**
      * An image asset or an array of such assets.
      * If empty, the component renders default <b>DIconImage</b>.<br>
