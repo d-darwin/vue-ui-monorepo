@@ -95,6 +95,21 @@ describe("DPicture", () => {
     expect(imgEl.classes()).toContain(imageClass);
   });
 
-  // TODO: preparedItems structure checks !!!
-  // TODO: constructMediaQuery structure checks !!!
+  // TODO: case source -> str, aspectRatio -> X, caption -> X
+  // TODO: case source -> str, aspectRatio -> str, caption -> X
+  // TODO: case source -> str, aspectRatio -> X, caption -> str
+  // TODO: case source -> str, aspectRatio -> str, caption -> str
+
+  // TODO: case source -> obj, aspectRatio -> X, caption -> X
+  // TODO: case source -> obj, aspectRatio -> str, caption -> X
+  // TODO: case source -> obj, aspectRatio -> X, caption -> str
+  // TODO: case source -> obj, aspectRatio -> str, caption -> str
+
+  // TODO: case source -> arr, aspectRatio -> X, caption -> X
+  // TODO: case source -> arr, aspectRatio -> str, caption -> X
+  // TODO: case source -> arr, aspectRatio -> X, caption -> str
+  // TODO: case source -> arr, aspectRatio -> str, caption -> str
+
+  // TODO: preparedItems (rename?) structure checks !!!
+  // TODO: constructMediaQuery (rename?) structure checks !!!
 });

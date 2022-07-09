@@ -165,9 +165,10 @@ export default defineComponent({
 
     renderImage(): VNode | null {
       const hasContainer = Boolean(this.aspectRatio || this.caption);
+      // TODO: move to getter
       const imgVNode = (
         <img
-          src={this.source as string} // TODO: avoid casting
+          src={this.source as string} // TODO: implement case when source is an object
           alt={this.alt}
           loading={this.loading}
           style={this.imageStyle}
@@ -180,6 +181,7 @@ export default defineComponent({
         />
       );
 
+      /* hasn't container */
       if (!hasContainer) {
         return imgVNode;
       }
@@ -220,10 +222,98 @@ export default defineComponent({
     },
 
     // TODO: render picture
+    renderPicture(): VNode | null {
+      const hasContainer = Boolean(this.aspectRatio || this.caption);
+      // TODO
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const sourceVNodeList = this.preparedItems?.map((item, index) => (
+        <source
+          key={index} // TODO
+          media={this.constructMediaQuery(item)}
+          srcset={item.srcset}
+          // TODO: type
+        />
+      ));
+
+      // TODO: move to getter
+      const imgVNode = (
+        <img
+          src={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0].src
+          }
+          srcset={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0].srcset
+          }
+          alt={this.alt}
+          loading={this.loading}
+          style={this.imageStyle}
+          class={[styles[config.imageClassName], this.imageClass]}
+          onLoad={this.loadedHandler}
+        />
+      );
+
+      const pictureVNode = (
+        /*TODO: use config for the tag ???*/
+        <picture class={styles[config.className]}>
+          {sourceVNodeList}
+          {imgVNode}
+        </picture>
+      );
+
+      /* container is the picture itself */
+      if (!hasContainer) {
+        return pictureVNode;
+      }
+
+      /* has aspectRation container */
+      if (this.aspectRatio && !this.caption) {
+        return (
+          <DAspectRatio
+            aspectRatio={this.aspectRatio}
+            tag="picture"
+            class={styles[config.className]}
+          >
+            {sourceVNodeList}
+            {imgVNode}
+          </DAspectRatio>
+        );
+      }
+
+      /* has figure container with figcaption */
+      if (!this.aspectRatio && this.caption) {
+        return (
+          <figure class={styles[config.className]}>
+            {pictureVNode}
+            <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+          </figure>
+        );
+      }
+
+      /* has aspect ratio container with figcaption */
+      return (
+        <DAspectRatio
+          aspectRatio={this.aspectRatio}
+          tag="figure" // TODO: config ???
+          class={styles[config.className]}
+        >
+          {pictureVNode}
+          <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+        </DAspectRatio>
+      );
+    },
+
+    // TODO: render figure ???
   },
 
   methods: {
-    // TODO
+    // TODO, rename, media, type
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     constructMediaQuery(item): string | undefined {
@@ -245,74 +335,15 @@ export default defineComponent({
   },
 
   render(): VNode | null {
-    // TODO: is it right decision?
-    if (!this.sourceType) return null;
-    // TODO: switch
-    if (this.sourceType === SOURCE_TYPE.ARRAY) {
-      return <div>TODO: SOURCE_TYPE.ARRAY</div>;
+    switch (this.sourceType) {
+      case SOURCE_TYPE.ARRAY:
+        return this.renderPicture;
+      case SOURCE_TYPE.OBJECT:
+      case SOURCE_TYPE.STRING:
+        return this.renderImage;
+      default:
+        return null;
     }
-
-    if (this.sourceType === SOURCE_TYPE.OBJECT) {
-      return <div>TODO: SOURCE_TYPE.OBJECT</div>;
-    }
-
-    if (this.sourceType === SOURCE_TYPE.STRING) {
-      return this.renderImage;
-    }
-
-    const Tag = this.tag;
-
-    // TODO: just <img> branch !!!
-
-    const picture = (
-      <Tag {...this.tagProps}>
-        {
-          // TODO
-          typeof this.source === "object" &&
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems?.map((item, index) => (
-              <source
-                key={index} // TODO
-                media={this.constructMediaQuery(item)}
-                srcset={item.srcset}
-                // TODO: type
-              />
-            ))
-        }
-
-        <img
-          src={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0].src
-          }
-          srcset={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0].srcset
-          }
-          alt={this.alt}
-          loading={this.loading}
-          style={this.imageStyle}
-          class={[styles[config.imageClassName], this.imageClass]}
-          onLoad={this.loadedHandler}
-        />
-      </Tag>
-    );
-
-    if (this.caption) {
-      return (
-        <figure class={styles[config.className]}>
-          {picture}
-          <figcaption>{this.caption}</figcaption>
-        </figure>
-      );
-    }
-
-    return picture;
   },
 });
 
