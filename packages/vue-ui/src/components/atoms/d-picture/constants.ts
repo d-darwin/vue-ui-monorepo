@@ -1,3 +1,10 @@
+// TODO: naming
+export const SOURCE_TYPE = {
+  ARRAY: "array",
+  OBJECT: "object",
+  STRING: "string",
+} as const;
+
 export const LOADING = {
   LAZY: "lazy",
   EAGER: "eager",

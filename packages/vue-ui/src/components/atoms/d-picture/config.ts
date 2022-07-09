@@ -2,7 +2,7 @@ export default {
   name: "DPicture",
   className: "dPicture",
   pictureClassName: "picture",
-  pictureTag: "picture",
-  imageClassName: "image",
-  imageTag: "img",
+  // TODO: remove ?? pictureTag: "picture",
+  imageClassName: "innerImage", // TODO: naming
+  // TODO: remove ?? imageTag: "img",
 };

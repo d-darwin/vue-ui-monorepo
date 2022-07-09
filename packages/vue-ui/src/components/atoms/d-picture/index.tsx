@@ -1,7 +1,13 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
-import { DensityPictureSource, Source, Loading, ObjectFit } from "./types";
-import { LOADING, OBJECT_FIT } from "./constants";
+import {
+  DensityPictureSource,
+  Source,
+  Loading,
+  ObjectFit,
+  SourceType,
+} from "./types";
+import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
@@ -21,7 +27,7 @@ export default defineComponent({
      * * '/image_src_string' or<br>
      * * [<br>
      *    { min_width: 320, src: 'img_src_string_xs' },<br>
-     *    { min_width: 480, srcset: [<br>
+     *    { max_width: 1280, srcset: [<br>
      *      { density: '1x', src: 'img_src_string_sm_1x' },<br>
      *      { density: '2x', src: 'img_src_string_sm_2x' }<br>
      *      ]<br>
@@ -29,7 +35,7 @@ export default defineComponent({
      *  ].
      */
     source: {
-      type: [Array, String] as PropType<Source>,
+      type: [Array, Object, String] as PropType<Source>,
       // TODO: validator
     },
     /**
@@ -76,13 +82,28 @@ export default defineComponent({
   },
 
   computed: {
-    // TODO: type
-    tag(): typeof DAspectRatio | typeof config.pictureTag {
-      return this.aspectRatio ? DAspectRatio : config.pictureTag;
+    sourceType(): SourceType | null {
+      if (Array.isArray(this.source)) {
+        return SOURCE_TYPE.ARRAY;
+      }
+      if (typeof this.source === "object") {
+        return SOURCE_TYPE.STRING;
+      }
+      if (typeof this.source === "string") {
+        return SOURCE_TYPE.STRING;
+      }
+
+      return null;
     },
 
+    // TODO: type
+    tag(): typeof DAspectRatio | "picture" {
+      return this.aspectRatio ? DAspectRatio : "picture";
+    },
+
+    // TODO: introduce prop ???
     alt(): string {
-      return (this.$attrs.alt as string) || this.caption || "";
+      return String(this.$attrs?.alt) || this.caption || "";
     },
 
     tagProps(): Record<string, Text | Text[] | null> {
@@ -93,7 +114,7 @@ export default defineComponent({
       return this.aspectRatio
         ? {
             aspectRatio: this.aspectRatio,
-            tag: config.pictureTag,
+            tag: "picture",
             class: classes,
           }
         : {
@@ -141,6 +162,64 @@ export default defineComponent({
 
       return undefined;
     },
+
+    renderImage(): VNode | null {
+      const hasContainer = Boolean(this.aspectRatio || this.caption);
+      const imgVNode = (
+        <img
+          src={this.source as string} // TODO: avoid casting
+          alt={this.alt}
+          loading={this.loading}
+          style={this.imageStyle}
+          class={
+            hasContainer
+              ? [styles[config.imageClassName], this.imageClass]
+              : styles[config.className]
+          }
+          onLoad={this.loadedHandler}
+        />
+      );
+
+      if (!hasContainer) {
+        return imgVNode;
+      }
+
+      /* has aspectRation container */
+      if (this.aspectRatio && !this.caption) {
+        return (
+          <DAspectRatio
+            aspectRatio={this.aspectRatio}
+            class={styles[config.className]}
+          >
+            {imgVNode}
+          </DAspectRatio>
+        );
+      }
+
+      /* has figure container with figcaption */
+      if (!this.aspectRatio && this.caption) {
+        return (
+          <figure class={styles[config.className]}>
+            {imgVNode}
+            <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+          </figure>
+        );
+      }
+
+      /* has aspect ratio container with figcaption */
+      return (
+        <DAspectRatio
+          aspectRatio={this.aspectRatio}
+          tag="figure" // TODO: config ???
+          class={styles[config.className]}
+        >
+          {imgVNode}
+          <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+        </DAspectRatio>
+      );
+    },
+
+    // TODO: render picture
   },
 
   methods: {
@@ -167,7 +246,19 @@ export default defineComponent({
 
   render(): VNode | null {
     // TODO: is it right decision?
-    if (!this.source) return null;
+    if (!this.sourceType) return null;
+    // TODO: switch
+    if (this.sourceType === SOURCE_TYPE.ARRAY) {
+      return <div>TODO: SOURCE_TYPE.ARRAY</div>;
+    }
+
+    if (this.sourceType === SOURCE_TYPE.OBJECT) {
+      return <div>TODO: SOURCE_TYPE.OBJECT</div>;
+    }
+
+    if (this.sourceType === SOURCE_TYPE.STRING) {
+      return this.renderImage;
+    }
 
     const Tag = this.tag;
 
@@ -177,35 +268,36 @@ export default defineComponent({
       <Tag {...this.tagProps}>
         {
           // TODO
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.preparedItems?.map((item, index) => (
-            <source
-              key={index} // TODO
-              media={this.constructMediaQuery(item)}
-              srcset={item.srcset}
-              data-src={item.src}
-            />
-          ))
+          typeof this.source === "object" &&
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems?.map((item, index) => (
+              <source
+                key={index} // TODO
+                media={this.constructMediaQuery(item)}
+                srcset={item.srcset}
+                // TODO: type
+              />
+            ))
         }
 
         <img
-          srcset={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0].srcset
-          }
           src={
             // TODO
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this.preparedItems[0].src
           }
+          srcset={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0].srcset
+          }
           alt={this.alt}
           loading={this.loading}
-          class={[styles[config.imageClassName], this.imageClass]}
           style={this.imageStyle}
+          class={[styles[config.imageClassName], this.imageClass]}
           onLoad={this.loadedHandler}
         />
       </Tag>
