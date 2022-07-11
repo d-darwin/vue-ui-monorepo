@@ -1,6 +1,7 @@
 import { mount } from "@vue/test-utils";
 import DPicture from "@/components/atoms/d-picture";
 import DAspectRatio from "@/components/containers/d-aspect-ratio";
+import dAspectRatioConfig from "@/components/containers/d-aspect-ratio/config";
 import { baseClassCase } from "@/utils/test-case-factories";
 import config from "./config";
 import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
@@ -13,7 +14,7 @@ describe("DPicture", () => {
     expect(wrapper.html()).toBeFalsy();
   });
 
-  it("Should render as <img> if props.source is a string", async () => {
+  it("Should render as <img /> if props.source is a string and no props.aspectRatio or props.caption", async () => {
     const source = "/some-image-path.png";
     await wrapper.setProps({ source });
     expect(wrapper.element.tagName).toEqual("IMG");
@@ -35,9 +36,66 @@ describe("DPicture", () => {
     expect(whenLoad).toHaveBeenCalledTimes(1);
   });
 
+  it("Should render as DAspectRatio container if props.source, props.aspectRatio are passed and no props.caption", async () => {
+    const aspectRatio = "3/2";
+    await wrapper.setProps({ aspectRatio });
+    expect(wrapper.classes()).toContain(dAspectRatioConfig.className);
+  });
+
+  it("Should render as <figure> if props.caption is passed", async () => {
+    const caption = "some caption";
+    await wrapper.setProps({ caption });
+    expect(wrapper.element.tagName).toEqual("FIGURE");
+  });
+
+  it("Should render <figcaption> if props.caption is passed", async () => {
+    const caption = "some caption";
+    await wrapper.setProps({ caption });
+    const figcaptionEl = wrapper.find("figcaption");
+    expect(figcaptionEl).toBeTruthy();
+  });
+
+  it("<figcaption> should contain props.caption if it passed", async () => {
+    const caption = "some caption";
+    await wrapper.setProps({ caption });
+    const figcaptionEl = wrapper.find("figcaption");
+    expect(figcaptionEl.text()).toEqual(caption);
+  });
+
+  it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
+    const aspectRatio = "3/2";
+    await wrapper.setProps({ aspectRatio });
+    expect(wrapper.classes()).toContain(dAspectRatioConfig.className);
+  });
+
+  // TODO: case source -> obj, aspectRatio -> X, caption -> X
+  it("Should render as <img /> if props.source is an object", async () => {
+    const source = { min_width: 320, src: "./img_src_string_xs.png" };
+    await wrapper.setProps({
+      source,
+      aspectRatio: undefined,
+      caption: undefined,
+    });
+    expect(wrapper.element.tagName).toEqual("IMG");
+  });
+  // TODO: img with srcset and sizes ???
+
+  // TODO: case source -> obj, aspectRatio -> str, caption -> X
+  // TODO: case source -> obj, aspectRatio -> X, caption -> str
+  // TODO: case source -> obj, aspectRatio -> str, caption -> str
+
+  // TODO: case source -> arr, aspectRatio -> X, caption -> X
+  // TODO: case source -> arr, aspectRatio -> str, caption -> X
+  // TODO: case source -> arr, aspectRatio -> X, caption -> str
+  // TODO: case source -> arr, aspectRatio -> str, caption -> str
+
   it("Should render as <picture> if props.source is an array", async () => {
     const source = [{ min_width: 320, src: "./img_src_string_xs.png" }];
-    await wrapper.setProps({ source });
+    await wrapper.setProps({
+      source,
+      aspectRatio: undefined,
+      caption: undefined,
+    });
     expect(wrapper.element.tagName).toEqual("PICTURE");
   });
 
@@ -68,48 +126,12 @@ describe("DPicture", () => {
     expect(imgEl.attributes()?.style).toEqual(`object-fit: ${objectFit};`);
   });
 
-  it("Should render as <figure> if props.caption is passed", async () => {
-    const caption = "some caption";
-    await wrapper.setProps({ caption });
-    expect(wrapper.element.tagName).toEqual("FIGURE");
-  });
-
-  it("Should render <figcaption> if props.caption is passed", async () => {
-    const caption = "some caption";
-    await wrapper.setProps({ caption });
-    const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl).toBeTruthy();
-  });
-
-  it("<figcaption> should contain props.caption if it passed", async () => {
-    const caption = "some caption";
-    await wrapper.setProps({ caption });
-    const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl.text()).toEqual(caption);
-  });
-
   it("Should render img's class if props.imageClass is passed", async () => {
     const imageClass = "someExternalImageClass";
     await wrapper.setProps({ imageClass });
     const imgEl = wrapper.find("img");
     expect(imgEl.classes()).toContain(imageClass);
   });
-
-  // TODO: case source -> str, aspectRatio -> X, caption -> X
-  // TODO: case source -> str, aspectRatio -> str, caption -> X
-  // TODO: case source -> str, aspectRatio -> X, caption -> str
-  // TODO: case source -> str, aspectRatio -> str, caption -> str
-
-  // TODO: case source -> obj, aspectRatio -> X, caption -> X
-  // TODO: case source -> obj, aspectRatio -> str, caption -> X
-  // TODO: case source -> obj, aspectRatio -> X, caption -> str
-  // TODO: case source -> obj, aspectRatio -> str, caption -> str
-
-  // TODO: case source -> arr, aspectRatio -> X, caption -> X
-  // TODO: case source -> arr, aspectRatio -> str, caption -> X
-  // TODO: case source -> arr, aspectRatio -> X, caption -> str
-  // TODO: case source -> arr, aspectRatio -> str, caption -> str
-
   // TODO: preparedItems (rename?) structure checks !!!
   // TODO: constructMediaQuery (rename?) structure checks !!!
 });

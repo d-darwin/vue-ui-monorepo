@@ -86,8 +86,8 @@ export default defineComponent({
       if (Array.isArray(this.source)) {
         return SOURCE_TYPE.ARRAY;
       }
-      if (typeof this.source === "object") {
-        return SOURCE_TYPE.STRING;
+      if (typeof this.source === "object" && this.source !== null) {
+        return SOURCE_TYPE.OBJECT;
       }
       if (typeof this.source === "string") {
         return SOURCE_TYPE.STRING;
@@ -101,9 +101,9 @@ export default defineComponent({
       return this.aspectRatio ? DAspectRatio : "picture";
     },
 
-    // TODO: introduce prop ???
+    // TODO: introduce prop to avoid casting ???
     alt(): string {
-      return String(this.$attrs?.alt) || this.caption || "";
+      return (this.$attrs?.alt as string) || this.caption || "";
     },
 
     tagProps(): Record<string, Text | Text[] | null> {
@@ -124,13 +124,19 @@ export default defineComponent({
 
     // TODO: return type, max-width, refac
     preparedItems() {
-      const outPicture = JSON.parse(JSON.stringify(this.source));
-      if (Array.isArray(outPicture)) {
+      const outPicture = JSON.parse(JSON.stringify(this.source)); // TODO: is there more elegant way to deep copy???
+      // TODO: switch/case ???
+      if (this.sourceType === SOURCE_TYPE.ARRAY) {
         // Resort Array by min_width (higher is above)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // TODO: min/max width ???
         outPicture.sort(function (a, b) {
           return b.min_width - a.min_width;
         });
         // If srcset is array of images prepare srcset string
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         outPicture.forEach(function (item, k) {
           if (Array.isArray(item.srcset)) {
             let srcset = "";
@@ -146,12 +152,25 @@ export default defineComponent({
             }
           }
         });
-      } else if (typeof outPicture === "string") {
+      } else if (this.sourceType === SOURCE_TYPE.OBJECT) {
+        // TODO: reuse
+        if (Array.isArray(outPicture.srcset)) {
+          let srcset = "";
+          outPicture.srcset.forEach(function (
+            srcObj: DensityPictureSource,
+            i: number
+          ) {
+            srcset += (i === 0 ? "" : ", ") + srcObj.src + " " + srcObj.density;
+          });
+          if (srcset) {
+            outPicture.srcset = srcset;
+          }
+        }
+        return [outPicture];
+      } else if (this.sourceType === SOURCE_TYPE.STRING) {
         return [{ min_width: 0, src: outPicture }];
-      } else {
-        // fallback
-        return this.source;
       }
+
       return outPicture;
     },
 
@@ -168,7 +187,18 @@ export default defineComponent({
       // TODO: move to getter
       const imgVNode = (
         <img
-          src={this.source as string} // TODO: implement case when source is an object
+          src={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0]?.src
+          }
+          srcset={
+            // TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.preparedItems[0]?.srcset
+          }
           alt={this.alt}
           loading={this.loading}
           style={this.imageStyle}
@@ -243,13 +273,13 @@ export default defineComponent({
             // TODO
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.preparedItems[0].src
+            this.preparedItems[0]?.src
           }
           srcset={
             // TODO
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.preparedItems[0].srcset
+            this.preparedItems[0]?.srcset
           }
           alt={this.alt}
           loading={this.loading}
