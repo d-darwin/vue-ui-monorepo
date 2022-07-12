@@ -1,6 +1,6 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
-import {
+import type {
   DensityPictureSource,
   Source,
   Loading,
@@ -27,10 +27,10 @@ export default defineComponent({
      * Expected formats:<br>
      * * '/image_src_string' or<br>
      * * [<br>
-     *    { min_width: 320, src: 'img_src_string_xs' },<br>
+     *    { min_width: 320, src: 'img_src_string_xs', type: '???' },<br>
      *    { max_width: 1280, srcset: [<br>
-     *      { density: '1x', src: 'img_src_string_sm_1x' },<br>
-     *      { density: '2x', src: 'img_src_string_sm_2x' }<br>
+     *      { density: '1x', src: 'img_src_string_sm_1x', type: '???' },<br>
+     *      { density: '2x', src: 'img_src_string_sm_2x', type: '???' }<br>
      *      ]<br>
      *    }<br>
      *  ].
@@ -266,7 +266,7 @@ export default defineComponent({
           key={index} // TODO
           media={this.constructMediaQuery(item)}
           srcset={item.srcset}
-          // TODO: type
+          type={item.type}
         />
       ));
 
