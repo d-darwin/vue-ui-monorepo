@@ -13,6 +13,7 @@ import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspe
 import styles from "./index.module.css";
 import config from "./config";
 
+// TODO: rename Picture -> Responsive image ???
 export default defineComponent({
   name: config.name,
 
@@ -34,6 +35,8 @@ export default defineComponent({
      *    }<br>
      *  ].
      */
+    // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
+    // https://developer.mozilla.org/ru/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B
     source: {
       type: [Array, Object, String] as PropType<Source>,
       // TODO: validator
@@ -166,6 +169,7 @@ export default defineComponent({
             outPicture.srcset = srcset;
           }
         }
+        // TODO: src fallback
         return [outPicture];
       } else if (this.sourceType === SOURCE_TYPE.STRING) {
         return [{ min_width: 0, src: outPicture }];
