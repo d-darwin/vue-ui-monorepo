@@ -99,30 +99,9 @@ export default defineComponent({
       return null;
     },
 
-    // TODO: type
-    tag(): typeof DAspectRatio | "picture" {
-      return this.aspectRatio ? DAspectRatio : "picture";
-    },
-
     // TODO: introduce prop to avoid casting ???
     alt(): string {
       return (this.$attrs?.alt as string) || this.caption || "";
-    },
-
-    tagProps(): Record<string, Text | Text[] | null> {
-      const classes = this.caption
-        ? [styles[config.pictureClassName], styles[config.className]]
-        : styles[config.className];
-
-      return this.aspectRatio
-        ? {
-            aspectRatio: this.aspectRatio,
-            tag: "picture",
-            class: classes,
-          }
-        : {
-            class: classes,
-          };
     },
 
     // TODO: return type, max-width, refac
@@ -266,6 +245,7 @@ export default defineComponent({
           key={index} // TODO
           media={this.constructMediaQuery(item)}
           srcset={item.srcset}
+          src={item.src}
           type={item.type}
         />
       ));
@@ -351,6 +331,10 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     constructMediaQuery(item): string | undefined {
+      if (item.media) {
+        return item.media;
+      }
+
       if (item.min_width && item.max_width) {
         return `(min-width: ${item.min_width}px) and (max-width: ${item.max_width}px)`;
       } else if (item.min_width) {
@@ -358,6 +342,7 @@ export default defineComponent({
       } else if (item.max_width) {
         return `(max-width: ${item.max_width}px)`;
       }
+
       return undefined;
     },
 

@@ -4,6 +4,7 @@ import DAspectRatio from "@/components/containers/d-aspect-ratio";
 import { baseClassCase } from "@/utils/test-case-factories";
 import config from "./config";
 import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
+import { find } from "@vue/test-utils/dist/utils/find";
 
 // TODO: case descriptions
 // TODO: combine dependent cases (figure + figcaption + caption)
@@ -41,7 +42,7 @@ describe("DPicture", () => {
   it("Should render as DAspectRatio container if props.source, props.aspectRatio are passed and no props.caption", async () => {
     const aspectRatio = "3/2";
     await wrapper.setProps({ aspectRatio });
-    expect(wrapper.findComponent(DAspectRatio)).toBeTruthy();
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
   it("Should render as <figure> if props.caption is passed", async () => {
@@ -67,7 +68,7 @@ describe("DPicture", () => {
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
     const aspectRatio = "3/2";
     await wrapper.setProps({ aspectRatio });
-    expect(wrapper.findComponent(DAspectRatio)).toBeTruthy();
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
   it("Should render as <img /> with src attr if props.source is an object with src", async () => {
@@ -96,8 +97,6 @@ describe("DPicture", () => {
     expect(wrapper.element.tagName).toEqual("IMG");
   });
 
-*/
-
   // TODO: what if { srcset: [{ src: '', min/max_media_width: 999, src_width: 999 }]}
 
   it("Should render as DAspectRatio container if props.source is an object, props.aspectRatio and props.caption are passed", async () => {
@@ -107,7 +106,7 @@ describe("DPicture", () => {
       aspectRatio: "1:1",
       caption: undefined,
     });
-    expect(wrapper.findComponent(DAspectRatio)).toBeTruthy();
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
   it("Should render as <figure> container if props.source is an object, props.caption is passed and props.aspectRatio is not", async () => {
@@ -122,7 +121,7 @@ describe("DPicture", () => {
 
   // TODO: case source -> obj, aspectRatio -> str, caption -> str
 
-  it("Should render as DAspectRatio with container figcaption tag if props.source is an object, props.caption and props.aspectRatio are passed ", async () => {
+  it("Should render as DAspectRatio as figure container figcaption tag if props.source is an object, props.caption and props.aspectRatio are passed ", async () => {
     const source = { src: "./img_src_string_xs.png" };
     const caption = "some caption";
     await wrapper.setProps({
@@ -130,36 +129,87 @@ describe("DPicture", () => {
       caption,
       aspectRatio: 0.5,
     });
-    expect(wrapper.findComponent(DAspectRatio)).toBeTruthy();
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
     expect(figcaptionEl).toBeTruthy();
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
-  // TODO: case source -> arr, aspectRatio -> X, caption -> X
-  // TODO: case source -> arr, aspectRatio -> str, caption -> X
-  // TODO: case source -> arr, aspectRatio -> X, caption -> str
-  // TODO: case source -> arr, aspectRatio -> str, caption -> str
-
-  // TODO: img with srcset min and max with ???
-  // TODO: img with srcset types ???
-
-  /*    it("Should render as <picture> if props.source is an array", async () => {
-    const source = [{ min_width: 320, src: "./img_src_string_xs.png" }];
+  it("Should render as <picture> with <sources>'s if props.source is an array", async () => {
+    const source = [
+      { min_width: 640, src: "./img_src_string_md.png" },
+      { min_width: 320, src: "./img_src_string_xs.png" },
+    ];
     await wrapper.setProps({
       source,
       aspectRatio: undefined,
       caption: undefined,
     });
+
     expect(wrapper.element.tagName).toEqual("PICTURE");
+    expect(wrapper.find("img")).toBeTruthy();
+
+    const sourceElList = wrapper.findAll("source");
+    expect(sourceElList.length).toEqual(2);
+    expect(sourceElList[0].attributes()?.src).toBe(source[0].src);
+    expect(sourceElList[0].attributes()?.media).toBe(
+      `(min-width: ${source[0].min_width}px)`
+    );
   });
 
-it("Should use DAspectRation component if aspectRatio is passed", async () => {
+  it("Should use DAspectRatio component as picture tag if aspectRatio is passed and props.source is an array", async () => {
+    const source = [
+      { min_width: 640, src: "./img_src_string_md.png" },
+      { min_width: 320, src: "./img_src_string_xs.png" },
+    ];
     const aspectRatio = "3/2";
-    await wrapper.setProps({ aspectRatio });
-    expect(wrapper.vm.tag).toBe(DAspectRatio);
+    await wrapper.setProps({ source, aspectRatio });
+
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
+    expect(wrapper.element.tagName).toEqual("PICTURE");
   });
+*/
+
+  // case source -> arr, aspectRatio -> X, caption -> str
+  it("Should render picture tag with figure wrapper and figcaption if props.source is an array and props.caption is passed", async () => {
+    const source = [
+      { min_width: 640, src: "./img_src_string_md.png" },
+      { min_width: 320, src: "./img_src_string_xs.png" },
+    ];
+    const caption = "some caption";
+    await wrapper.setProps({
+      source,
+      caption,
+      aspectRatio: undefined,
+    });
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeFalsy();
+    expect(wrapper.element.tagName).toEqual("FIGURE");
+    const figcaptionEl = wrapper.find("figcaption");
+    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.text()).toEqual(caption);
+  });
+
+  // case source -> arr, aspectRatio -> str, caption -> str
+  it("Should use DAspectRatio component as figure container and figcaption if props.source is an array and props.caption is passed", async () => {
+    const source = [
+      { min_width: 640, src: "./img_src_string_md.png" },
+      { min_width: 320, src: "./img_src_string_xs.png" },
+    ];
+    const caption = "some caption";
+    await wrapper.setProps({
+      source,
+      caption,
+      aspectRatio: 3,
+    });
+    expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
+    expect(wrapper.element.tagName).toEqual("FIGURE");
+    const figcaptionEl = wrapper.find("figcaption");
+    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.text()).toEqual(caption);
+  });
+
+  /*
 
   it("Should render img's loading attr if props.loading is passed", async () => {
     const loading = LOADING.EAGER;
@@ -188,6 +238,9 @@ it("Should use DAspectRation component if aspectRatio is passed", async () => {
     const imgEl = wrapper.find("img");
     expect(imgEl.classes()).toContain(imageClass);
   });*/
-  // TODO: preparedItems (rename?) structure checks !!!
-  // TODO: constructMediaQuery (rename?) structure checks !!!
+
+  // TODO: preparedItems (rename?) structure checks - src|srcset !!!
+  // TODO: img with srcset min and max with - constructMediaQuery (rename?) ???
+  // TODO: img with srcset media ???
+  // TODO: img with srcset types ???
 });
