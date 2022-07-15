@@ -162,38 +162,32 @@ export default defineComponent({
       return { "object-fit": this.objectFit };
     },
 
-    renderImage(): VNode | null {
-      const hasContainer = Boolean(this.aspectRatio || this.caption);
-      // TODO: move to getter
-      const imgVNode = (
+    imgVNode(): VNode {
+      return (
         <img
-          src={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0]?.src
-          }
-          srcset={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0]?.srcset
-          }
+          src={this.preparedItems?.[0]?.src}
+          srcset={this.preparedItems?.[0]?.srcset}
           alt={this.alt}
           loading={this.loading}
           style={this.imageStyle}
           class={
-            hasContainer
+            this.hasContainer || this.sourceType === SOURCE_TYPE.OBJECT
               ? [styles[config.innerImageClassName], this.imageClass]
               : [styles[config.className], this.imageClass]
           }
           onLoad={this.loadedHandler}
         />
       );
+    },
 
+    hasContainer(): boolean {
+      return Boolean(this.aspectRatio || this.caption);
+    },
+
+    renderImage(): VNode | null {
       /* hasn't container */
-      if (!hasContainer) {
-        return imgVNode;
+      if (!this.hasContainer) {
+        return this.imgVNode;
       }
 
       /* has aspectRation container */
@@ -203,7 +197,7 @@ export default defineComponent({
             aspectRatio={this.aspectRatio}
             class={styles[config.className]}
           >
-            {imgVNode}
+            {this.imgVNode}
           </DAspectRatio>
         );
       }
@@ -212,7 +206,7 @@ export default defineComponent({
       if (!this.aspectRatio && this.caption) {
         return (
           <figure class={styles[config.className]}>
-            {imgVNode}
+            {this.imgVNode}
             <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
           </figure>
         );
@@ -225,7 +219,7 @@ export default defineComponent({
           tag="figure" // TODO: config ???
           class={styles[config.className]}
         >
-          {imgVNode}
+          {this.imgVNode}
           <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
         </DAspectRatio>
       );
@@ -233,7 +227,6 @@ export default defineComponent({
 
     // TODO: render picture
     renderPicture(): VNode | null {
-      const hasContainer = Boolean(this.aspectRatio || this.caption);
       // TODO
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -247,39 +240,16 @@ export default defineComponent({
         />
       ));
 
-      // TODO: move to getter
-      const imgVNode = (
-        <img
-          src={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0]?.src // TODO: which one should i use first/last/special ???
-          }
-          srcset={
-            // TODO
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.preparedItems[0]?.srcset // TODO: which one should i use first/last/special ???
-          }
-          alt={this.alt}
-          loading={this.loading}
-          style={this.imageStyle}
-          class={[styles[config.innerImageClassName], this.imageClass]}
-          onLoad={this.loadedHandler}
-        />
-      );
-
       const pictureVNode = (
         /*TODO: use config for the tag ???*/
         <picture class={styles[config.className]}>
           {sourceVNodeList}
-          {imgVNode}
+          {this.imgVNode}
         </picture>
       );
 
       /* container is the picture itself */
-      if (!hasContainer) {
+      if (!this.hasContainer) {
         return pictureVNode;
       }
 
@@ -292,7 +262,7 @@ export default defineComponent({
             class={styles[config.className]}
           >
             {sourceVNodeList}
-            {imgVNode}
+            {this.imgVNode}
           </DAspectRatio>
         );
       }

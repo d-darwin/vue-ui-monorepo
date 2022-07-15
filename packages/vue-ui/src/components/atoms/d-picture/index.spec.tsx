@@ -104,7 +104,6 @@ describe("DPicture", () => {
       aspectRatio: undefined,
       caption: undefined,
     });
-    console.log(wrapper.html());
     expect(wrapper.element.tagName).toEqual("IMG");
   });
 
