@@ -3,6 +3,6 @@ export default {
   className: "dPicture",
   pictureClassName: "picture",
   // TODO: remove ?? pictureTag: "picture",
-  imageClassName: "innerImage", // TODO: naming
+  innerImageClassName: "innerImage", // TODO: naming
   // TODO: remove ?? imageTag: "img",
 };

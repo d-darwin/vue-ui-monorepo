@@ -134,6 +134,7 @@ export default defineComponent({
             }
           }
         });
+        // TODO: src fallback + test case
       } else if (this.sourceType === SOURCE_TYPE.OBJECT) {
         // TODO: reuse
         if (Array.isArray(outPicture.srcset)) {
@@ -148,7 +149,7 @@ export default defineComponent({
             outPicture.srcset = srcset;
           }
         }
-        // TODO: src fallback
+        // TODO: src fallback + test case
         return [outPicture];
       } else if (this.sourceType === SOURCE_TYPE.STRING) {
         return [{ min_width: 0, src: outPicture }];
@@ -157,12 +158,8 @@ export default defineComponent({
       return outPicture;
     },
 
-    imageStyle(): CSSProperties | undefined {
-      if (this.objectFit) {
-        return { "object-fit": this.objectFit };
-      }
-
-      return undefined;
+    imageStyle(): CSSProperties {
+      return { "object-fit": this.objectFit };
     },
 
     renderImage(): VNode | null {
@@ -187,8 +184,8 @@ export default defineComponent({
           style={this.imageStyle}
           class={
             hasContainer
-              ? [styles[config.imageClassName], this.imageClass]
-              : styles[config.className]
+              ? [styles[config.innerImageClassName], this.imageClass]
+              : [styles[config.className], this.imageClass]
           }
           onLoad={this.loadedHandler}
         />
@@ -257,18 +254,18 @@ export default defineComponent({
             // TODO
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.preparedItems[0]?.src
+            this.preparedItems[0]?.src // TODO: which one should i use first/last/special ???
           }
           srcset={
             // TODO
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.preparedItems[0]?.srcset
+            this.preparedItems[0]?.srcset // TODO: which one should i use first/last/special ???
           }
           alt={this.alt}
           loading={this.loading}
           style={this.imageStyle}
-          class={[styles[config.imageClassName], this.imageClass]}
+          class={[styles[config.innerImageClassName], this.imageClass]}
           onLoad={this.loadedHandler}
         />
       );
@@ -327,7 +324,7 @@ export default defineComponent({
   },
 
   methods: {
-    // TODO, rename, media, type
+    // TODO: typing
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     constructMediaQuery(item): string | undefined {
