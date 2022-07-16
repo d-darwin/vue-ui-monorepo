@@ -1,5 +1,5 @@
 import { Story } from "@storybook/vue3";
-import DPicture from "@darwin-studio/vue-ui/src/components/atoms/d-picture";
+import DPicture from "../../../vue-ui/src/components/atoms/d-responsive-image";
 import "./d-picture.css";
 
 export default {

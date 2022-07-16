@@ -20,7 +20,7 @@ import config from "./config";
 import { prepareSource } from "./utils";
 import { PictureSource } from "./types";
 
-// TODO: rename Picture -> Responsive image ???
+// TODO: separate figure component with caption, loader and no-image placeholder???
 export default defineComponent({
   name: config.name,
 
@@ -51,7 +51,7 @@ export default defineComponent({
     // https://developer.mozilla.org/ru/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B
     source: {
       type: [Array, Object, String] as PropType<Source>,
-      // TODO: validator
+      // TODO: validator or it is not efficient???
     },
     /**
      * Aspect ratio of the picture.
@@ -85,8 +85,7 @@ export default defineComponent({
     captionClass: {
       type: String,
     },
-    // TODO: captionClass + tokens gaps/spacing
-    // TODO: separate figure component with caption, loader and no-image placeholder???
+    // TODO: caption gaps/spacing
     // TODO: description
     loading: {
       type: String as PropType<Loading>,
@@ -142,11 +141,11 @@ export default defineComponent({
         <img
           src={src}
           srcset={srcset}
-          alt={(this.$attrs?.alt as string) || this.caption || ""}
+          alt={(this.$attrs?.alt as string) || this.caption || ""} // TODO: add props.alt ???
           loading={this.loading}
           style={{ "object-fit": this.objectFit }}
           class={classes}
-          onLoad={this.loadedHandler} // TODO: why warning?
+          onLoad={this.loadedHandler}
         />
       );
     },
@@ -212,12 +211,9 @@ export default defineComponent({
 
     // TODO: simplify
     renderPicture(): VNode | null {
-      // TODO
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const sourceVNodeList = this.preparedSourceList?.map((item, index) => (
         <source
-          key={index} // TODO
+          key={JSON.stringify(item)} // TODO: use something more efficient
           media={item.media}
           srcset={item.srcset}
           src={item.src}
@@ -226,7 +222,6 @@ export default defineComponent({
       ));
 
       const pictureVNode = (
-        /*TODO: use config for the tag ???*/
         <picture class={styles[config.className]}>
           {sourceVNodeList}
           {this.imgVNode}
@@ -266,7 +261,7 @@ export default defineComponent({
       return (
         <DAspectRatio
           aspectRatio={this.aspectRatio}
-          tag="figure" // TODO: config ???
+          tag="figure"
           class={styles[config.className]}
         >
           {pictureVNode}

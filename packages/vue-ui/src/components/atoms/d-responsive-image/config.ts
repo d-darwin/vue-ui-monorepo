@@ -1,6 +1,6 @@
 export default {
-  name: "DPicture",
-  className: "dPicture",
+  name: "DResponsiveImage",
+  className: "dResponsiveImage",
   pictureClassName: "picture",
   innerImageClassName: "innerImage",
 };

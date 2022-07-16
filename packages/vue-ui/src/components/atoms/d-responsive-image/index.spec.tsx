@@ -1,16 +1,19 @@
 import { mount } from "@vue/test-utils";
-import DPicture from "@/components/atoms/d-picture";
+import DResponsiveImage from "@/components/atoms/d-responsive-image";
 import DAspectRatio from "@/components/containers/d-aspect-ratio";
 import { baseClassCase } from "@/utils/test-case-factories";
 import config from "./config";
-import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
+import {
+  LOADING,
+  OBJECT_FIT,
+} from "@/components/atoms/d-responsive-image/constants";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, default export ???
 
 // TODO: case descriptions
-describe("DPicture", () => {
-  const wrapper = mount(DPicture);
+describe("DResponsiveImage", () => {
+  const wrapper = mount(DResponsiveImage);
 
   // TODO: is it right behaviour???
   it("Shouldn't render if there is no props.source", () => {
@@ -261,7 +264,7 @@ describe("DPicture", () => {
       { max_width: 320, src: "./img_src_string_xs.png" },
       { min_width: 320, max_width: 640, src: "./img_src_string_xs.png" },
       {
-        media: "(min-width: 320px) and (max-width: 640px)",
+        media: "(min-width: 640px) and (max-width: 1240px)",
         src: "./img_src_string_xs.png",
       },
     ];
@@ -274,7 +277,7 @@ describe("DPicture", () => {
       "(min-width: 320px) and (max-width: 640px)"
     );
     expect(sourceElList[3].attributes()?.media).toBe(
-      "(min-width: 320px) and (max-width: 640px)"
+      "(min-width: 640px) and (max-width: 1240px)"
     );
   });
 
