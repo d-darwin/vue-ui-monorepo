@@ -171,7 +171,7 @@ describe("DPicture", () => {
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
-  it("Should render as <picture> with <sources>'s if props.source is an array", async () => {
+  it("Should render as picture with sources if props.source is an array", async () => {
     const source = [
       { min_width: 640, src: "./img_src_string_md.png" },
       { min_width: 320, src: "./img_src_string_xs.png" },

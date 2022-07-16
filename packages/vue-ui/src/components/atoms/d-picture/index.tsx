@@ -181,7 +181,7 @@ export default defineComponent({
 
     imgVNode(): VNode {
       const classes =
-        this.hasContainer || this.sourceType === SOURCE_TYPE.OBJECT
+        this.hasContainer || this.sourceType === SOURCE_TYPE.ARRAY
           ? [styles[config.innerImageClassName], this.imageClass]
           : [styles[config.className], this.imageClass];
 
