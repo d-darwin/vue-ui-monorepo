@@ -20,7 +20,8 @@ import config from "./config";
 import { prepareSource } from "./utils";
 import { PictureSource } from "./types";
 
-// TODO: separate figure component with caption, loader and no-image placeholder???
+// TODO: separate figure component with caption, loader and no-image placeholder ???
+// TODO: is it a molecule, not atom ???
 export default defineComponent({
   name: config.name,
 
@@ -211,7 +212,7 @@ export default defineComponent({
 
     // TODO: simplify
     renderPicture(): VNode | null {
-      const sourceVNodeList = this.preparedSourceList?.map((item, index) => (
+      const sourceVNodeList = this.preparedSourceList?.map((item) => (
         <source
           key={JSON.stringify(item)} // TODO: use something more efficient
           media={item.media}
