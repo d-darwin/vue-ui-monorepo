@@ -18,7 +18,8 @@ import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
-import { constructMediaQuery } from "./utils";
+import { constructMediaQuery, prepareDensitySrcset } from "./utils";
+import { PictureSource } from "./types";
 
 // TODO: rename Picture -> Responsive image ???
 export default defineComponent({
@@ -113,70 +114,35 @@ export default defineComponent({
       return null;
     },
 
-    // TODO: refac
     preparedSourceList(): PreparedSource[] {
-      // TODO: rename
-      const outPicture = JSON.parse(JSON.stringify(this.source)); // TODO: is there more elegant way to deep copy???
-      // TODO: switch/case ???
-      if (this.sourceType === SOURCE_TYPE.ARRAY) {
-        // Resort Array by min_width (higher is above)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        // TODO: min/max/medium ???
-        /*outPicture.sort(function (a, b) {
-          return b.min_width - a.min_width;
-        });*/
-        // If srcset is array of images prepare srcset string
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        outPicture.forEach(function (item, k) {
-          if (Array.isArray(item.srcset)) {
-            let srcset = "";
-            item.srcset.forEach(function (
-              srcObj: DensityPictureSource,
-              i: number
-            ) {
-              srcset +=
-                (i === 0 ? "" : ", ") + srcObj.src + " " + srcObj.density;
-            });
-            if (srcset) {
-              outPicture[k].srcset = srcset;
-            }
-          }
-
-          if (item.min_width || item.max_width || item.media) {
-            outPicture[k].media = constructMediaQuery(item);
-          }
-        });
-        // TODO: src fallback + test case
-        return outPicture;
-      } else if (this.sourceType === SOURCE_TYPE.OBJECT) {
-        // TODO: reuse
-        if (Array.isArray(outPicture.srcset)) {
-          let srcset = "";
-          outPicture.srcset.forEach(function (
-            srcObj: DensityPictureSource,
-            i: number
-          ) {
-            srcset += (i === 0 ? "" : ", ") + srcObj.src + " " + srcObj.density;
+      switch (this.sourceType) {
+        case SOURCE_TYPE.ARRAY:
+          // TODO: min/max/medium sort order ???
+          return (this.source as PictureSource[]).map((pictureSource) => {
+            return {
+              src: pictureSource.src || "", // TODO: fallback if no src but there is srcset
+              type: pictureSource.type,
+              media: constructMediaQuery(pictureSource),
+              srcset: prepareDensitySrcset(pictureSource.srcset),
+            };
           });
 
-          if (srcset) {
-            outPicture.srcset = srcset;
-          }
-        }
+        case SOURCE_TYPE.OBJECT:
+          return [
+            {
+              src: (this.source as PictureSource).src || "", // TODO: fallback if no src but there is srcset
+              type: (this.source as PictureSource).type,
+              media: constructMediaQuery(this.source as PictureSource),
+              srcset: prepareDensitySrcset(
+                (this.source as PictureSource).srcset
+              ),
+            },
+          ];
 
-        if (outPicture.min_width || outPicture.max_width || outPicture.media) {
-          outPicture.media = constructMediaQuery(outPicture);
-        }
-        // TODO: src fallback + test case
-        return [outPicture];
-      } else if (this.sourceType === SOURCE_TYPE.STRING) {
-        return [{ src: outPicture }];
+        case SOURCE_TYPE.STRING:
+        default:
+          return [{ src: this.source as string }];
       }
-
-      // TODO: what for ???
-      return outPicture;
     },
 
     imgVNode(): VNode {

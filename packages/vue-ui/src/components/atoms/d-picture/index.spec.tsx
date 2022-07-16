@@ -6,8 +6,7 @@ import config from "./config";
 import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
-import { constructMediaQuery } from "@/components/atoms/d-picture/utils"; // TODO: shorter path, default export ???
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, default export ???
 
 // TODO: case descriptions
 describe("DPicture", () => {
@@ -279,8 +278,12 @@ describe("DPicture", () => {
     );
   });
 
-  it("constructMediaQuery shouldn return nothing if item hasn't min_width, max_width or media", async () => {
-    expect(constructMediaQuery({})).toBeFalsy();
+  it("Sources shouldn't contain media attr if item hasn't min_width, max_width or media", async () => {
+    const source = [{ src: "./img_src_string_md.png" }];
+    await wrapper.setProps({ source });
+
+    const sourceElList = wrapper.findAll("source");
+    expect(sourceElList[0].attributes()?.media).toBeFalsy();
   });
 
   it("Should render source media attr with density mark if source with srcset is passed", async () => {
