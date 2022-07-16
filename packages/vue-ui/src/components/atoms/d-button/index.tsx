@@ -21,15 +21,16 @@ import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.c
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
-import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
+import config from "./config";
 
 /**
  * TODO: Add description
  */
 export default defineComponent({
-  name: "DButton",
+  name: config.name,
 
   props: {
     /**
@@ -101,46 +102,46 @@ export default defineComponent({
     classes(): string[] {
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
-        config.TOKENS.BORDER.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
         `${this.colorScheme}-${this.size}`
       );
       const colorSchemeClassName = prepareCssClassName(
-        config.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
       );
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
-        config.TOKENS.FONT.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.size
       );
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
-        config.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
         `${this.colorScheme}-${this.size}`
       );
       const paddingClassName = prepareCssClassName(
-        config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
       );
       const paddingSizeClassName = prepareCssClassName(
-        config.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         `${this.padding}-${this.size}`
       );
       const roundingClassName = prepareCssClassName(
-        config.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
         this.rounding
       );
       const sizeClassName = prepareCssClassName(
-        config.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
       const transitionClassName = prepareCssClassName(
-        config.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
       );
 
       const classes = [
-        styles.dButton,
+        styles[config.className],
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
         fontStyles[fontClassName],

@@ -1,12 +1,14 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import styles from "./index.module.css";
+import config from "./config";
 
 // TODO: description
 export default defineComponent({
-  name: "DAspectRatio",
+  name: config.name,
 
   props: {
     /**
@@ -17,24 +19,7 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
       default: "1",
       // TODO: do we need this extra calculations ??
-      validator: (val: string | number): boolean => {
-        if (!isNaN(Number(val))) {
-          return Boolean(val);
-        }
-
-        const stringVal = String(val);
-        let [width, height] = stringVal.split("/");
-        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-          return true;
-        }
-
-        [width, height] = stringVal.split(":");
-        if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-          return true;
-        }
-
-        return false;
-      },
+      validator: aspectRationValidator,
     },
     /**
      * TODO: Add description
@@ -85,7 +70,7 @@ export default defineComponent({
       return `${width} / ${height}`;
     },
 
-    paddingBottom(): string | null {
+    paddingBottom(): string {
       let paddingBottom = null;
       if (!isNaN(Number(this.aspectRatio))) {
         return `${100 / Number(this.aspectRatio || 1)}%`;
@@ -101,7 +86,7 @@ export default defineComponent({
       return CSS?.supports("aspect-ratio: auto") || false;
     },
 
-    style(): Record<string, string | number | null> {
+    style(): CSSProperties {
       if (this.hasAspectRationNativeSupport) {
         return {
           "aspect-ratio": this.formattedAspectRatio,
@@ -115,11 +100,12 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    // TODO: simplify
     if (this.hasAspectRationNativeSupport) {
       if (this.html) {
         return (
           <Tag
-            class={styles.dAspectRatio}
+            class={styles[config.className]}
             style={this.style}
             v-html={this.html}
           />
@@ -127,7 +113,7 @@ export default defineComponent({
       }
 
       return (
-        <Tag class={styles.dAspectRatio} style={this.style}>
+        <Tag class={styles[config.className]} style={this.style}>
           {this.$slots.default?.()}
         </Tag>
       );
@@ -135,9 +121,9 @@ export default defineComponent({
 
     if (this.html) {
       return (
-        <Tag class={styles.dAspectRatio}>
+        <Tag class={styles[config.className]}>
           <div
-            class={styles.dAspectRatioInner}
+            class={styles[config.innerClassName]}
             style={this.style}
             v-html={this.html}
           />
@@ -146,8 +132,8 @@ export default defineComponent({
     }
 
     return (
-      <Tag class={styles.dAspectRatio}>
-        <div class={styles.dAspectRatioInner} style={this.style}>
+      <Tag class={styles[config.className]}>
+        <div class={styles[config.innerClassName]} style={this.style}>
           {this.$slots.default?.()}
         </div>
       </Tag>

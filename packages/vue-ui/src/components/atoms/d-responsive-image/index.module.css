@@ -1,0 +1,14 @@
+.dResponsiveImage {}
+
+.picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.innerImage {
+  height: 100%;
+  width: 100%;
+}
+

@@ -1,5 +1,7 @@
 import { shallowMount, VueWrapper } from "@vue/test-utils";
-import DLink from "@/components/atoms/d-link";
+import { defineComponent } from "vue";
+
+// TODO: description
 
 export function propContentCase(wrapper: VueWrapper) {
   return it("Renders props.content", async () => {
@@ -17,10 +19,10 @@ export function propHtmlCase(wrapper: VueWrapper) {
   });
 }
 
-export function slotDefaultCase(wrapper: VueWrapper) {
+export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
   return it("Renders $slots.default", async () => {
     const slotContent = "<div>Some <b>slot</b> content</div>";
-    const wrapper = shallowMount(DLink, {
+    const wrapper = shallowMount(component, {
       slots: {
         default: slotContent,
       },

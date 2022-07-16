@@ -4,15 +4,16 @@ import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // 
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
-import config from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "../../../constants/tag-name"; // TODO: fix relative path
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
+import config from "./config";
 
 // TODO: description
 export default defineComponent({
-  name: "DTypography",
+  name: config.name,
 
   props: {
     // TODO: description
@@ -40,10 +41,10 @@ export default defineComponent({
   computed: {
     classes(): string[] {
       const fontClassName = prepareCssClassName(
-        config.TOKENS.FONT.CSS_CLASS_PREFIX,
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.font
       );
-      return [styles.dTypography, fontStyles[fontClassName]];
+      return [styles[config.className], fontStyles[fontClassName]];
     },
   },
 
