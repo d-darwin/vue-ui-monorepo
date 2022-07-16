@@ -4,9 +4,11 @@ import DAspectRatio from "@/components/containers/d-aspect-ratio";
 import { baseClassCase } from "@/utils/test-case-factories";
 import config from "./config";
 import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, default export ???
 
 // TODO: case descriptions
-// TODO: combine dependent cases (figure + figcaption + caption)
 describe("DPicture", () => {
   const wrapper = mount(DPicture);
 
@@ -71,24 +73,30 @@ describe("DPicture", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
-  it("Should render as <figure> if props.caption is passed", async () => {
+  it("Should render as figure with figcaption if props.caption is passed", async () => {
     const caption = "some caption";
     await wrapper.setProps({ caption });
     expect(wrapper.element.tagName).toEqual("FIGURE");
-  });
-
-  it("Should render <figcaption> if props.caption is passed", async () => {
-    const caption = "some caption";
-    await wrapper.setProps({ caption });
     const figcaptionEl = wrapper.find("figcaption");
     expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.text()).toEqual(caption);
   });
 
-  it("<figcaption> should contain props.caption if it passed", async () => {
+  it("Should render figcaption classes if props.caption is passed", async () => {
     const caption = "some caption";
-    await wrapper.setProps({ caption });
+    const captionClass = "someCaptionClass";
+    const captionFont = FONT.HUGE;
+    await wrapper.setProps({ caption, captionFont, captionClass });
+
+    const fontClassName = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      captionFont
+    );
+
     const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl.text()).toEqual(caption);
+    const figcaptionElClasses = figcaptionEl.classes();
+    expect(figcaptionElClasses).toContain(fontClassName);
+    expect(figcaptionElClasses).toContain(captionClass);
   });
 
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
@@ -134,7 +142,7 @@ describe("DPicture", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
-  it("Should render as <figure> container if props.source is an object, props.caption is passed and props.aspectRatio is not", async () => {
+  it("Should render as figure container if props.source is an object, props.caption is passed and props.aspectRatio is not", async () => {
     const source = { src: "./img_src_string_xs.png" };
     await wrapper.setProps({
       source,
