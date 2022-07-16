@@ -6,7 +6,8 @@ import config from "./config";
 import { LOADING, OBJECT_FIT } from "@/components/atoms/d-picture/constants";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, default export ???
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { constructMediaQuery } from "@/components/atoms/d-picture/utils"; // TODO: shorter path, default export ???
 
 // TODO: case descriptions
 describe("DPicture", () => {
@@ -162,6 +163,7 @@ describe("DPicture", () => {
       caption,
       aspectRatio: 0.5,
     });
+    // TODO: move to the test-case-factories
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
@@ -278,7 +280,7 @@ describe("DPicture", () => {
   });
 
   it("constructMediaQuery shouldn return nothing if item hasn't min_width, max_width or media", async () => {
-    expect(wrapper.vm.constructMediaQuery({})).toBeFalsy();
+    expect(constructMediaQuery({})).toBeFalsy();
   });
 
   it("Should render source media attr with density mark if source with srcset is passed", async () => {

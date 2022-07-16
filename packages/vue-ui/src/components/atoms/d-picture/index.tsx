@@ -1,22 +1,24 @@
-import { CSSProperties, defineComponent, PropType, VNode } from "vue";
+import { defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import type {
   DensityPictureSource,
   Source,
+  SourceType,
+  PreparedSource,
   Loading,
   ObjectFit,
-  SourceType,
 } from "./types";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { constructMediaQuery } from "./utils";
 
 // TODO: rename Picture -> Responsive image ???
 export default defineComponent({
@@ -31,11 +33,16 @@ export default defineComponent({
      * If empty, the component renders default <b>DIconImage</b>.<br>
      * Expected formats:<br>
      * * '/image_src_string' or<br>
+     * * { srcset: [<br>
+     *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
+     *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
+     *      ]<br>
+     *   }<br> or<br>
      * * [<br>
-     *    { min_width: 320, src: 'img_src_string_xs', type: '???' },<br>
+     *    { min_width: 320, src: 'img_src_string_xs', type: 'image/jpeg' },<br>
      *    { max_width: 1280, srcset: [<br>
-     *      { density: '1x', src: 'img_src_string_sm_1x', type: '???' },<br>
-     *      { density: '2x', src: 'img_src_string_sm_2x', type: '???' }<br>
+     *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
+     *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
      *      ]<br>
      *    }<br>
      *  ].
@@ -91,12 +98,6 @@ export default defineComponent({
     },
   },
 
-  data() {
-    return {
-      isLoaded: false, // TODO: do we really need this state
-    };
-  },
-
   computed: {
     sourceType(): SourceType | null {
       if (Array.isArray(this.source)) {
@@ -112,23 +113,19 @@ export default defineComponent({
       return null;
     },
 
-    // TODO: introduce prop to avoid casting ???
-    alt(): string {
-      return (this.$attrs?.alt as string) || this.caption || "";
-    },
-
-    // TODO: return type, max-width, refac
-    preparedItems() {
+    // TODO: refac
+    preparedSourceList(): PreparedSource[] {
+      // TODO: rename
       const outPicture = JSON.parse(JSON.stringify(this.source)); // TODO: is there more elegant way to deep copy???
       // TODO: switch/case ???
       if (this.sourceType === SOURCE_TYPE.ARRAY) {
         // Resort Array by min_width (higher is above)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        // TODO: min/max width ???
-        outPicture.sort(function (a, b) {
+        // TODO: min/max/medium ???
+        /*outPicture.sort(function (a, b) {
           return b.min_width - a.min_width;
-        });
+        });*/
         // If srcset is array of images prepare srcset string
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -146,8 +143,13 @@ export default defineComponent({
               outPicture[k].srcset = srcset;
             }
           }
+
+          if (item.min_width || item.max_width || item.media) {
+            outPicture[k].media = constructMediaQuery(item);
+          }
         });
         // TODO: src fallback + test case
+        return outPicture;
       } else if (this.sourceType === SOURCE_TYPE.OBJECT) {
         // TODO: reuse
         if (Array.isArray(outPicture.srcset)) {
@@ -158,36 +160,39 @@ export default defineComponent({
           ) {
             srcset += (i === 0 ? "" : ", ") + srcObj.src + " " + srcObj.density;
           });
+
           if (srcset) {
             outPicture.srcset = srcset;
           }
         }
+
+        if (outPicture.min_width || outPicture.max_width || outPicture.media) {
+          outPicture.media = constructMediaQuery(outPicture);
+        }
         // TODO: src fallback + test case
         return [outPicture];
       } else if (this.sourceType === SOURCE_TYPE.STRING) {
-        return [{ min_width: 0, src: outPicture }];
+        return [{ src: outPicture }];
       }
 
+      // TODO: what for ???
       return outPicture;
     },
 
-    imageStyle(): CSSProperties {
-      return { "object-fit": this.objectFit };
-    },
-
     imgVNode(): VNode {
+      const classes =
+        this.hasContainer || this.sourceType === SOURCE_TYPE.OBJECT
+          ? [styles[config.innerImageClassName], this.imageClass]
+          : [styles[config.className], this.imageClass];
+
       return (
         <img
-          src={this.preparedItems?.[0]?.src} // TODO: use first/last/special
-          srcset={this.preparedItems?.[0]?.srcset} // TODO: use first/last/special
-          alt={this.alt}
+          src={this.preparedSourceList?.[0]?.src} // TODO: use first/last/special
+          srcset={this.preparedSourceList?.[0]?.srcset} // TODO: use first/last/special
+          alt={(this.$attrs?.alt as string) || this.caption || ""}
           loading={this.loading}
-          style={this.imageStyle}
-          class={
-            this.hasContainer || this.sourceType === SOURCE_TYPE.OBJECT
-              ? [styles[config.innerImageClassName], this.imageClass]
-              : [styles[config.className], this.imageClass]
-          }
+          style={{ "object-fit": this.objectFit }}
+          class={classes}
           onLoad={this.loadedHandler}
         />
       );
@@ -210,6 +215,7 @@ export default defineComponent({
       return Boolean(this.aspectRatio || this.caption);
     },
 
+    // TODO: simplify
     renderImage(): VNode | null {
       /* hasn't container */
       if (!this.hasContainer) {
@@ -242,7 +248,7 @@ export default defineComponent({
       return (
         <DAspectRatio
           aspectRatio={this.aspectRatio}
-          tag="figure" // TODO: config ???
+          tag="figure"
           class={styles[config.className]}
         >
           {this.imgVNode}
@@ -251,15 +257,15 @@ export default defineComponent({
       );
     },
 
-    // TODO: render picture
+    // TODO: simplify
     renderPicture(): VNode | null {
       // TODO
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const sourceVNodeList = this.preparedItems?.map((item, index) => (
+      const sourceVNodeList = this.preparedSourceList?.map((item, index) => (
         <source
           key={index} // TODO
-          media={this.constructMediaQuery(item)}
+          media={item.media}
           srcset={item.srcset}
           src={item.src}
           type={item.type}
@@ -315,32 +321,10 @@ export default defineComponent({
         </DAspectRatio>
       );
     },
-
-    // TODO: render figure ???
   },
 
   methods: {
-    // TODO: typing
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    constructMediaQuery(item): string | undefined {
-      if (item.media) {
-        return item.media;
-      }
-
-      if (item.min_width && item.max_width) {
-        return `(min-width: ${item.min_width}px) and (max-width: ${item.max_width}px)`;
-      } else if (item.min_width) {
-        return `(min-width: ${item.min_width}px)`;
-      } else if (item.max_width) {
-        return `(max-width: ${item.max_width}px)`;
-      }
-
-      return undefined;
-    },
-
     loadedHandler(event: Event): void {
-      this.isLoaded = true;
       this.$emit("load", event);
       this.whenLoad?.(event);
     },
