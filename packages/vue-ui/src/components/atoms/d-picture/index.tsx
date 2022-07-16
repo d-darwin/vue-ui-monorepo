@@ -7,11 +7,16 @@ import type {
   ObjectFit,
   SourceType,
 } from "./types";
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
 import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
 // TODO: rename Picture -> Responsive image ???
 export default defineComponent({
@@ -64,9 +69,17 @@ export default defineComponent({
     caption: {
       type: String,
     },
-    // TODO: separate figure component with caption, loader and no-image placeholder???
-    // TODO: captionFont ???
+    // TODO: description
+    captionFont: {
+      type: String as PropType<Font>,
+      default: FONT.SMALL, // TODO: flexible default
+    },
+    // TODO: description
+    captionClass: {
+      type: String,
+    },
     // TODO: captionClass + tokens gaps/spacing
+    // TODO: separate figure component with caption, loader and no-image placeholder???
     // TODO: description
     loading: {
       type: String as PropType<Loading>,
@@ -165,8 +178,8 @@ export default defineComponent({
     imgVNode(): VNode {
       return (
         <img
-          src={this.preparedItems?.[0]?.src}
-          srcset={this.preparedItems?.[0]?.srcset}
+          src={this.preparedItems?.[0]?.src} // TODO: use first/last/special
+          srcset={this.preparedItems?.[0]?.srcset} // TODO: use first/last/special
           alt={this.alt}
           loading={this.loading}
           style={this.imageStyle}
@@ -177,6 +190,19 @@ export default defineComponent({
           }
           onLoad={this.loadedHandler}
         />
+      );
+    },
+
+    figcaptionVNode(): VNode {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.captionFont
+      );
+
+      return (
+        <figcaption class={[this.captionClass, fontStyles[fontClassName]]}>
+          {this.caption}
+        </figcaption>
       );
     },
 
@@ -207,7 +233,7 @@ export default defineComponent({
         return (
           <figure class={styles[config.className]}>
             {this.imgVNode}
-            <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+            {this.figcaptionVNode}
           </figure>
         );
       }
@@ -220,7 +246,7 @@ export default defineComponent({
           class={styles[config.className]}
         >
           {this.imgVNode}
-          <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+          {this.figcaptionVNode}
         </DAspectRatio>
       );
     },
@@ -272,7 +298,7 @@ export default defineComponent({
         return (
           <figure class={styles[config.className]}>
             {pictureVNode}
-            <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+            {this.figcaptionVNode}
           </figure>
         );
       }
@@ -285,7 +311,7 @@ export default defineComponent({
           class={styles[config.className]}
         >
           {pictureVNode}
-          <figcaption>{this.caption}</figcaption> {/*TODO: figcaptionClass*/}
+          {this.figcaptionVNode}
         </DAspectRatio>
       );
     },
