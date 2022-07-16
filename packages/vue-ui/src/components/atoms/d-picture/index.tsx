@@ -1,7 +1,6 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Text } from "@/types/text";
 import type {
-  DensityPictureSource,
   Source,
   SourceType,
   PreparedSource,
@@ -18,7 +17,7 @@ import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration
 import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
-import { constructMediaQuery, prepareDensitySrcset } from "./utils";
+import { prepareSource } from "./utils";
 import { PictureSource } from "./types";
 
 // TODO: rename Picture -> Responsive image ???
@@ -117,27 +116,13 @@ export default defineComponent({
     preparedSourceList(): PreparedSource[] {
       switch (this.sourceType) {
         case SOURCE_TYPE.ARRAY:
-          // TODO: min/max/medium sort order ???
+          // TODO: min/max/medium sort order, is it make sense ???
           return (this.source as PictureSource[]).map((pictureSource) => {
-            return {
-              src: pictureSource.src || "", // TODO: fallback if no src but there is srcset
-              type: pictureSource.type,
-              media: constructMediaQuery(pictureSource),
-              srcset: prepareDensitySrcset(pictureSource.srcset),
-            };
+            return prepareSource(pictureSource);
           });
 
         case SOURCE_TYPE.OBJECT:
-          return [
-            {
-              src: (this.source as PictureSource).src || "", // TODO: fallback if no src but there is srcset
-              type: (this.source as PictureSource).type,
-              media: constructMediaQuery(this.source as PictureSource),
-              srcset: prepareDensitySrcset(
-                (this.source as PictureSource).srcset
-              ),
-            },
-          ];
+          return [prepareSource(this.source as PictureSource)];
 
         case SOURCE_TYPE.STRING:
         default:
@@ -146,6 +131,8 @@ export default defineComponent({
     },
 
     imgVNode(): VNode {
+      const src = this.preparedSourceList[0].src; // TODO: use first/last/special element from the array ???
+      const srcset = this.preparedSourceList[0].srcset;
       const classes =
         this.hasContainer || this.sourceType === SOURCE_TYPE.ARRAY
           ? [styles[config.innerImageClassName], this.imageClass]
@@ -153,13 +140,13 @@ export default defineComponent({
 
       return (
         <img
-          src={this.preparedSourceList?.[0]?.src} // TODO: use first/last/special
-          srcset={this.preparedSourceList?.[0]?.srcset} // TODO: use first/last/special
+          src={src}
+          srcset={srcset}
           alt={(this.$attrs?.alt as string) || this.caption || ""}
           loading={this.loading}
           style={{ "object-fit": this.objectFit }}
           class={classes}
-          onLoad={this.loadedHandler}
+          onLoad={this.loadedHandler} // TODO: why warning?
         />
       );
     },

@@ -1,7 +1,11 @@
-// TODO: descr, move to the common utils?
-import { DensityPictureSource } from "@/components/atoms/d-picture/types";
+import {
+  DensityPictureSource,
+  PictureSource,
+  PreparedSource,
+} from "@/components/atoms/d-picture/types";
 
-export function constructMediaQuery(item: {
+// TODO: descr, move to the common utils?
+function constructMediaQuery(item: {
   min_width?: number;
   max_width?: number;
   media?: string;
@@ -22,7 +26,7 @@ export function constructMediaQuery(item: {
 }
 
 // TODO: descr
-export function prepareDensitySrcset(
+function prepareDensitySrcset(
   densityPictureSourceList?: DensityPictureSource[]
 ): string | undefined {
   return densityPictureSourceList?.reduce((srcset, densityPictureSource) => {
@@ -33,4 +37,13 @@ export function prepareDensitySrcset(
       densityPictureSource.density;
     return srcset;
   }, "");
+}
+
+export function prepareSource(source: PictureSource): PreparedSource {
+  return {
+    src: source.src || "", // TODO: fallback if no src but there is srcset
+    type: source.type,
+    media: constructMediaQuery(source),
+    srcset: prepareDensitySrcset(source.srcset),
+  };
 }
