@@ -3,10 +3,10 @@ import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
-import useControlId from "@/compositions/control-id";
 
 // TODO: mask,
 export default defineComponent({
@@ -99,9 +99,7 @@ export default defineComponent({
   },
 
   render(): VNode {
-    // TODO: value
     // TODO: label
-    // TODO: id
     // TODO: size
     // TODO: rounding
     // TODO: error (via Tooltip ???)

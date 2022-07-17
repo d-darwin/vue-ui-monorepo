@@ -6,6 +6,8 @@ export default {
   component: DInput,
   args: {
     value: "some value",
+    label: "Some label",
+    id: "custom-id",
   },
 };
 

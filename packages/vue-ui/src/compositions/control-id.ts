@@ -12,10 +12,10 @@ import type { Text } from "@/types/text";
 export default function useControlId(props: { id?: Text }): {
   controlId: Ref<string>;
 } {
-  const controlId = ref(String(props.id) || uuid());
+  const controlId = ref(String(props.id || uuid()));
 
   watchEffect(() => {
-    controlId.value = String(props.id) || uuid();
+    controlId.value = String(props.id || uuid());
   });
 
   return { controlId };
