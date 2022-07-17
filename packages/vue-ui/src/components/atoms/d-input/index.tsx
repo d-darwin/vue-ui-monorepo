@@ -25,6 +25,9 @@ export default defineComponent({
     label: {
       type: [String, Number] as PropType<Text>,
     },
+    // TODO: labelClass
+    // TODO: labelFont
+    // TODO: labelHtml / labelSlot???
     /**
      * Defines <i>id</i> attr of the <b>input</b> tag.<br>
      */
@@ -66,16 +69,21 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    whenUpdate: {
-      type: Function as PropType<(event?: InputEvent) => void | Promise<void>>,
+    whenChange: {
+      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+    },
+    /**
+     * TODO: Add description
+     */
+    whenInput: {
+      type: Function as PropType<(event?: Event) => void | Promise<void>>,
     },
     /**
      * TODO: Add description
      */
     whenSubmit: {
-      type: Function as PropType<
-        (event?: KeyboardEvent) => void | Promise<void>
-      >,
+      // TODO: Add value ???
+      type: Function as PropType<() => void | Promise<void>>,
     },
   },
 
@@ -85,16 +93,23 @@ export default defineComponent({
   },
 
   methods: {
-    // TODO
-    updateValueHandler(event: InputEvent) {
-      this.$emit("update:value", event);
-      this.whenUpdate?.(event);
+    changeHandler(event: Event) {
+      this.$emit("change:value", event);
+      this.whenChange?.(event);
     },
 
-    // TODO
-    submitHandler(event: KeyboardEvent) {
-      this.$emit("submit", event);
-      this.whenSubmit?.(event);
+    inputHandler(event: Event) {
+      this.$emit("input:value", event);
+      this.whenInput?.(event);
+
+      // TODO: if Enter key -> this.submitHandler
+    },
+
+    keyupHandler(event: KeyboardEvent) {
+      if (event.key === "Enter") {
+        this.$emit("submit");
+        this.whenSubmit?.();
+      }
     },
   },
 
@@ -110,6 +125,9 @@ export default defineComponent({
         id={this.controlId}
         value={this.value}
         class={styles[config.className]}
+        onChange={this.changeHandler}
+        onInput={this.inputHandler}
+        onKeyup={this.keyupHandler}
       />
     );
   },

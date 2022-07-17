@@ -21,7 +21,7 @@ export function propHtmlCase(wrapper: VueWrapper) {
 
 export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
   return it("Renders $slots.default", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>";
+    const slotContent = "<div>Some <b>slot</b> content</div>"; // TODO: should be HTML Element, not string
     const wrapper = shallowMount(component, {
       slots: {
         default: slotContent,
