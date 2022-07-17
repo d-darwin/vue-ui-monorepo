@@ -15,10 +15,12 @@
     "@darwin-studio/vue-ui-codegen": "^0.14.0",
     "@darwin-studio/vue-ui-style-dictionary": "^0.14.0",
     "core-js": "^3.22.0",
+    "uuid": "^8.3.2",
     "vue": "^3.2.33"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "@vue/cli-plugin-babel": "~5.0.4",

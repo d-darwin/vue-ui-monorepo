@@ -6,6 +6,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TOD
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
+import useControlId from "@/compositions/control-id";
 
 // TODO: mask,
 export default defineComponent({
@@ -78,6 +79,11 @@ export default defineComponent({
     },
   },
 
+  setup(props) {
+    const { controlId } = useControlId(props);
+    return { controlId };
+  },
+
   methods: {
     // TODO
     updateValueHandler(event: InputEvent) {
@@ -93,6 +99,20 @@ export default defineComponent({
   },
 
   render(): VNode {
-    return <div class={styles[config.className]}>{this.value}</div>;
+    // TODO: value
+    // TODO: label
+    // TODO: id
+    // TODO: size
+    // TODO: rounding
+    // TODO: error (via Tooltip ???)
+    // TODO: events on*, when*
+    // TODO: slots (befor / after)
+    return (
+      <input
+        id={this.controlId}
+        value={this.value}
+        class={styles[config.className]}
+      />
+    );
   },
 });
