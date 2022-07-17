@@ -8,7 +8,7 @@ import DInput from "@/components/atoms/d-input";
 import config from "./config";
 import { baseClassCase } from "@/utils/test-case-factories";
 
-describe("DButton", () => {
+describe("DInput", () => {
   const wrapper = shallowMount(DInput);
 
   baseClassCase(wrapper, config.className);
@@ -125,7 +125,7 @@ describe("DButton", () => {
     expect(wrapper.emitted("change")).toBeTruthy();
   });
 
-  // TODO: check for enent's taget.value
+  // TODO: check for event's target.value
 
   it("Shouldn't emit onChange event if is disable", async () => {
     const wrapper = shallowMount(DInput, {
