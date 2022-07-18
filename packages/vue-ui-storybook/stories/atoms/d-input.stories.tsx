@@ -7,6 +7,8 @@ export default {
   args: {
     value: "some value",
     label: "Some label",
+    placeholder: "Some placeholder",
+    disabled: false,
     id: "custom-id",
   },
 };

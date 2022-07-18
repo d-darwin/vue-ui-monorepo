@@ -29,12 +29,24 @@ export default defineComponent({
     // TODO: labelFont
     // TODO: labelHtml / labelSlot???
     /**
+     * TODO: Add description
+     */
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * TODO: Add description
+     */
+    placeholder: {
+      type: String,
+    },
+    // TODO: min / max / ... other common input attrs ???
+    /**
      * Defines <i>id</i> attr of the <b>input</b> tag.<br>
      */
     id: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: disabled ???
     /**
      * TODO: Add description
      */
@@ -124,6 +136,8 @@ export default defineComponent({
       <input
         id={this.controlId}
         value={this.value}
+        placeholder={this.placeholder}
+        disabled={this.disabled}
         class={styles[config.className]}
         onChange={this.changeHandler}
         onInput={this.inputHandler}
