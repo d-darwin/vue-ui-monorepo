@@ -3,12 +3,19 @@ import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
 
-// TODO: mask,
+// TODO: mask, number, password
 export default defineComponent({
   name: config.name,
 
@@ -58,6 +65,11 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
+    // TODO: rename transitionType ???
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
     /**
      * TODO: Add description
      */
@@ -102,8 +114,32 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { controlId } = useControlId(props);
-    return { controlId };
+    // TODO: const { controlId } = useControlId(props);
+    return useControlId(props);
+  },
+
+  computed: {
+    classes(): string[] {
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return [
+        styles[config.className],
+        roundingStyles[roundingClassName],
+        sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
+      ];
+    },
   },
 
   methods: {
@@ -115,27 +151,20 @@ export default defineComponent({
     inputHandler(event: Event) {
       this.$emit("input:value", event);
       this.whenInput?.(event);
-
-      // TODO: if Enter key -> this.submitHandler
     },
 
     keyupHandler(event: KeyboardEvent) {
       if (event.key === "Enter") {
-        this.$emit("submit");
+        this.$emit("submit"); // TODO: submit:value ???
         this.whenSubmit?.();
       }
     },
   },
 
   render(): VNode {
-    // TODO: label
-    // TODO: size
-    // TODO: rounding
-    // TODO: error (via Tooltip ???)
-    // TODO: events on*, when*
-    // TODO: slots (befor / after)
     return (
-      <div class={styles[config.className]}>
+      <div class={this.classes}>
+        {/*TODO: move to the getter ?*/}
         {this.label && (
           <label for={this.controlId} class={styles[config.labelClassName]}>
             {this.label}
@@ -147,8 +176,8 @@ export default defineComponent({
           placeholder={this.placeholder}
           disabled={this.disabled}
           class={styles[config.inputClassName]}
-          onChange={this.changeHandler}
-          onInput={this.inputHandler}
+          onChange={this.changeHandler} // TODO: why warning ???
+          onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
         />
       </div>
