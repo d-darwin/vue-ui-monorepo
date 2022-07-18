@@ -1,1 +1,15 @@
-.dInput {}
+.dInput {
+  width: fit-content;
+}
+
+.label {
+  display: block;
+}
+
+.inputContainer {
+
+}
+
+.input {}
+
+.error {}

@@ -140,6 +140,37 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
     },
+
+    hasSlot(): boolean {
+      return Boolean(this.$slots.before || this.$slots.after);
+    },
+
+    renderInput(): VNode {
+      const inputVNode = (
+        <input
+          id={this.label || this.id ? this.controlId : undefined}
+          value={this.value}
+          placeholder={this.placeholder}
+          disabled={this.disabled}
+          class={styles[config.inputClassName]}
+          onChange={this.changeHandler} // TODO: why warning ???
+          onInput={this.inputHandler} // TODO: why warning ???
+          onKeyup={this.keyupHandler}
+        />
+      );
+
+      if (this.hasSlot) {
+        return (
+          <div class={styles[config.inputContainerClassName]}>
+            {this.$slots.before?.()}
+            {inputVNode}
+            {this.$slots.after?.()}
+          </div>
+        );
+      }
+
+      return inputVNode;
+    },
   },
 
   methods: {
@@ -170,18 +201,7 @@ export default defineComponent({
             {this.label}
           </label>
         )}
-        {this.$slots.before?.()}
-        <input
-          id={this.label || this.id ? this.controlId : undefined}
-          value={this.value}
-          placeholder={this.placeholder}
-          disabled={this.disabled}
-          class={styles[config.inputClassName]}
-          onChange={this.changeHandler} // TODO: why warning ???
-          onInput={this.inputHandler} // TODO: why warning ???
-          onKeyup={this.keyupHandler}
-        />
-        {this.$slots.after?.()}
+        {this.renderInput}
         {/*TODO: move to the getter ?*/}
         {/*TODO: should it be a tooltip to avoid layout shift ?*/}
         {this.error && (
