@@ -170,6 +170,7 @@ export default defineComponent({
             {this.label}
           </label>
         )}
+        {this.$slots.before?.()}
         <input
           id={this.label || this.id ? this.controlId : undefined}
           value={this.value}
@@ -180,6 +181,12 @@ export default defineComponent({
           onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
         />
+        {this.$slots.after?.()}
+        {/*TODO: move to the getter ?*/}
+        {/*TODO: should it be a tooltip to avoid layout shift ?*/}
+        {this.error && (
+          <div class={styles[config.errorClassName]}>{this.error}</div>
+        )}
       </div>
     );
   },

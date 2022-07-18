@@ -231,20 +231,21 @@ describe("DInput", () => {
 
   it("Should should render before slot", () => {
     const slotBeforeClass = "slotBefore";
-    const slotBefore = <div class={slotBeforeClass}>before slot content</div>;
-    shallowMount(DInput, {
+    const slotBefore = `<div class=${slotBeforeClass}>before slot content</div>`;
+    const wrapper = shallowMount(DInput, {
       slots: {
         before: slotBefore,
       },
     });
+    console.log(wrapper.html());
     const slotBeforeEl = wrapper.find(`.${slotBeforeClass}`);
     expect(slotBeforeEl.exists()).toBeTruthy();
   });
 
   it("Should should render after slot", () => {
     const slotAfterClass = "slotAfter";
-    const slotAfter = <div class={slotAfterClass}>after slot content</div>;
-    shallowMount(DInput, {
+    const slotAfter = `<div class=${slotAfterClass}>after slot content</div>`;
+    const wrapper = shallowMount(DInput, {
       slots: {
         after: slotAfter,
       },

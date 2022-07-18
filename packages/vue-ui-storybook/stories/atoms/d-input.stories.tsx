@@ -30,6 +30,7 @@ export default {
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
     id: "custom-id",
+    error: "Some error string",
   },
 };
 
@@ -41,3 +42,29 @@ const Template: Story = (args) => ({
   template: `<DInput v-bind="args" />`,
 });
 export const Default = Template.bind({});
+
+const SlotBeforeTemplate: Story = (args) => ({
+  components: { DInput },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DInput v-bind="args" >
+      <template v-slot:before><b>...</b></template>
+    </DInput>
+  `,
+});
+export const SlotBefore = SlotBeforeTemplate.bind({});
+
+const SlotAfterTemplate: Story = (args) => ({
+  components: { DInput },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DInput v-bind="args" >
+      <template v-slot:after><b>...</b></template>
+    </DInput>
+  `,
+});
+export const SlotAfter = SlotAfterTemplate.bind({});
