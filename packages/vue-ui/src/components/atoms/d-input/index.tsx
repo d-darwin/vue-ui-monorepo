@@ -19,6 +19,7 @@ export default defineComponent({
     value: {
       type: [String, Number] as PropType<Text>,
     },
+    // TODO: inputClass
     /**
      * Defines content of the <b>label</b> tag.
      */
@@ -31,6 +32,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // - or add one props.inputAttrs
     disabled: {
       type: Boolean,
     },
@@ -133,16 +135,23 @@ export default defineComponent({
     // TODO: events on*, when*
     // TODO: slots (befor / after)
     return (
-      <input
-        id={this.controlId}
-        value={this.value}
-        placeholder={this.placeholder}
-        disabled={this.disabled}
-        class={styles[config.className]}
-        onChange={this.changeHandler}
-        onInput={this.inputHandler}
-        onKeyup={this.keyupHandler}
-      />
+      <div class={styles[config.className]}>
+        {this.label && (
+          <label for={this.controlId} class={styles[config.labelClassName]}>
+            {this.label}
+          </label>
+        )}
+        <input
+          id={this.label || this.id ? this.controlId : undefined}
+          value={this.value}
+          placeholder={this.placeholder}
+          disabled={this.disabled}
+          class={styles[config.inputClassName]}
+          onChange={this.changeHandler}
+          onInput={this.inputHandler}
+          onKeyup={this.keyupHandler}
+        />
+      </div>
     );
   },
 });
