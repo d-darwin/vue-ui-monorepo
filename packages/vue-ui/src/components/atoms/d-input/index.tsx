@@ -11,10 +11,11 @@ import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transiti
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import type { TagName } from "@/types/tag-name";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
-
 // TODO: mask, number, password
 export default defineComponent({
   name: config.name,
@@ -91,6 +92,13 @@ export default defineComponent({
      */
     error: {
       type: String,
+    },
+    /**
+     * TODO: Add description
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
      * TODO: Add description
@@ -214,13 +222,14 @@ export default defineComponent({
   },
 
   render(): VNode {
-    // TODO: tag + test
+    const Tag = this.tag;
+
     return (
-      <div class={this.classes}>
+      <Tag class={this.classes}>
         {this.renderLabel}
         {this.renderInput}
         {this.renderError}
-      </div>
+      </Tag>
     );
   },
 });

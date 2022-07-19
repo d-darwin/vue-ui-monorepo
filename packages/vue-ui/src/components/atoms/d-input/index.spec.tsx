@@ -254,6 +254,12 @@ describe("DInput", () => {
     expect(slotAfterEl.exists()).toBeTruthy();
   });
 
+  it("Renders as element passed in props.tag", async () => {
+    const tag = "section";
+    await wrapper.setProps({ tag });
+    expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
+  });
+
   // TODO: prevent default ???
 
   // TODO: min/max width ???
