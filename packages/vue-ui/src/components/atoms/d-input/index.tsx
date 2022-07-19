@@ -1,10 +1,16 @@
 import { defineComponent, PropType, VNode } from "vue";
+import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import borderStyles from "@darwin-studio/vue-ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -16,7 +22,9 @@ import type { TagName } from "@/types/tag-name";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
-// TODO: mask, number, password
+
+// TODO: mask, number, password ???
+// TODO: what about inverse color scheme ???
 export default defineComponent({
   name: config.name,
 
@@ -60,7 +68,14 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: color scheme ???
+    // TODO: rename paddingType ???
+    padding: {
+      type: String as PropType<Padding>,
+      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * TODO: Add description
+     */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
@@ -71,14 +86,6 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    /**
-     * TODO: Add description
-     */
-    // TODO: rename paddingType ???
-    /* padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    }, */
     /**
      * TODO: Add description
      */
@@ -127,7 +134,31 @@ export default defineComponent({
   },
 
   computed: {
-    classes(): string[] {
+    inputClasses(): string[] {
+      const colorScheme = "secondary";
+      // TODO: border and size and colorScheme separately ???
+      const borderClassName = prepareCssClassName(
+        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
+        `${colorScheme}-${this.size}` // TODO: don't use hardcoded values
+      );
+      // TODO: font and size separately
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.size
+      );
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${colorScheme}-${this.size}` // TODO: don't use hardcoded values
+      );
+      const paddingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        this.padding
+      );
+      const paddingSizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        `${this.padding}-${this.size}`
+      );
       const roundingClassName = prepareCssClassName(
         codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
         this.rounding
@@ -142,15 +173,16 @@ export default defineComponent({
       );
 
       return [
-        styles[config.className],
+        styles[config.inputClassName],
+        borderStyles[borderClassName],
+        fontStyles[fontClassName],
+        outlineStyles[outlineClassName],
+        paddingStyles[paddingSizeClassName],
+        paddingStyles[paddingClassName],
         roundingStyles[roundingClassName],
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
       ];
-    },
-
-    hasSlot(): boolean {
-      return Boolean(this.$slots.before || this.$slots.after);
     },
 
     renderLabel(): VNode | null {
@@ -165,6 +197,10 @@ export default defineComponent({
       return null;
     },
 
+    hasSlot(): boolean {
+      return Boolean(this.$slots.before || this.$slots.after);
+    },
+
     renderInput(): VNode {
       const inputVNode = (
         <input
@@ -172,7 +208,7 @@ export default defineComponent({
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled}
-          class={styles[config.inputClassName]}
+          class={this.inputClasses}
           onChange={this.changeHandler} // TODO: why warning ???
           onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
@@ -205,12 +241,12 @@ export default defineComponent({
   methods: {
     changeHandler(event: Event) {
       this.$emit("change:value", event);
-      this.whenChange?.(event);
+      this.whenChange?.(event); // TODO: pass plain value ???
     },
 
     inputHandler(event: Event) {
       this.$emit("input:value", event);
-      this.whenInput?.(event);
+      this.whenInput?.(event); // TODO: pass plain value ???
     },
 
     keyupHandler(event: KeyboardEvent) {
@@ -225,7 +261,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag class={this.classes}>
+      <Tag class={styles[config.className]}>
         {this.renderLabel}
         {this.renderInput}
         {this.renderError}

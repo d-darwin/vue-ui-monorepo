@@ -1,5 +1,6 @@
 .dInput {
   width: fit-content;
+  /* TODO: min-width: var(--control-min-width);*/
 }
 
 .label {
@@ -10,6 +11,25 @@
 
 }
 
-.input {}
+.input {
+  /*TODO: border: none;*/
+}
+
+.input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  /*TODO: color: var(--color-text-aux);*/
+  opacity: 1; /* Firefox */
+}
+
+.input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  /*TODO: color: var(--color-text-aux);*/
+}
+
+.input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  /*TODO: color: var(--color-text-aux);*/
+}
+
 
 .error {}
