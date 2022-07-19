@@ -145,6 +145,18 @@ export default defineComponent({
       return Boolean(this.$slots.before || this.$slots.after);
     },
 
+    renderLabel(): VNode | null {
+      if (this.label) {
+        return (
+          <label for={this.controlId} class={styles[config.labelClassName]}>
+            {this.label}
+          </label>
+        );
+      }
+
+      return null;
+    },
+
     renderInput(): VNode {
       const inputVNode = (
         <input
@@ -171,6 +183,15 @@ export default defineComponent({
 
       return inputVNode;
     },
+
+    renderError(): VNode | null {
+      if (this.error) {
+        /*TODO: should it be a tooltip to avoid layout shift ?*/
+        return <div class={styles[config.errorClassName]}>{this.error}</div>;
+      }
+
+      return null;
+    },
   },
 
   methods: {
@@ -193,20 +214,12 @@ export default defineComponent({
   },
 
   render(): VNode {
+    // TODO: tag + test
     return (
       <div class={this.classes}>
-        {/*TODO: move to the getter ?*/}
-        {this.label && (
-          <label for={this.controlId} class={styles[config.labelClassName]}>
-            {this.label}
-          </label>
-        )}
+        {this.renderLabel}
         {this.renderInput}
-        {/*TODO: move to the getter ?*/}
-        {/*TODO: should it be a tooltip to avoid layout shift ?*/}
-        {this.error && (
-          <div class={styles[config.errorClassName]}>{this.error}</div>
-        )}
+        {this.renderError}
       </div>
     );
   },
