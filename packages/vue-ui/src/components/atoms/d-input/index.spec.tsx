@@ -31,7 +31,6 @@ describe("DInput", () => {
   it("Shouldn't render label element if props.label isn't passed", async () => {
     await wrapper.setProps({ label: undefined });
     const labelEl = wrapper.find("label");
-    console.log("labelEl", labelEl);
     expect(labelEl.exists()).toBeFalsy();
   });
 

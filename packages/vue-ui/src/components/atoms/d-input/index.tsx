@@ -1,4 +1,6 @@
 import { defineComponent, PropType, VNode } from "vue";
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
@@ -42,12 +44,15 @@ export default defineComponent({
     label: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: labelClass
-    // TODO: labelFont
-    // TODO: labelHtml / labelSlot???
     /**
      * TODO: Add description
      */
+    labelFont: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
+    },
+    // TODO: labelClass
+    // TODO: labelHtml / labelSlot???
     // - or add one props.inputAttrs
     disabled: {
       type: Boolean,
@@ -100,6 +105,14 @@ export default defineComponent({
     error: {
       type: String,
     },
+    /**
+     * TODO: Add description
+     */
+    errorFont: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
+    },
+    // TODO: errorClass
     /**
      * TODO: Add description
      */
@@ -186,9 +199,17 @@ export default defineComponent({
     },
 
     renderLabel(): VNode | null {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.labelFont
+      );
+
       if (this.label) {
         return (
-          <label for={this.controlId} class={styles[config.labelClassName]}>
+          <label
+            for={this.controlId}
+            class={[styles[config.labelClassName], fontStyles[fontClassName]]}
+          >
             {this.label}
           </label>
         );
@@ -229,9 +250,20 @@ export default defineComponent({
     },
 
     renderError(): VNode | null {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.errorFont
+      );
+
       if (this.error) {
         /*TODO: should it be a tooltip to avoid layout shift ?*/
-        return <div class={styles[config.errorClassName]}>{this.error}</div>;
+        return (
+          <div
+            class={[styles[config.errorClassName], fontStyles[fontClassName]]}
+          >
+            {this.error}
+          </div>
+        );
       }
 
       return null;

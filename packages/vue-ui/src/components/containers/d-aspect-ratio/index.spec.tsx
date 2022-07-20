@@ -121,7 +121,7 @@ describe("DTypography", () => {
     const innerElement = wrapperWithFullCSSSupport.find(
       `.${config.innerClassName}`
     );
-    expect(innerElement).toBeTruthy();
+    expect(innerElement.exists()).toBeTruthy();
   });
 
   it("Renders props.html if aspect-ratio is NOT supported", async () => {

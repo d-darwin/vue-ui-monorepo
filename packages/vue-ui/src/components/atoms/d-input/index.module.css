@@ -4,6 +4,8 @@
 }
 
 .label {
+  /*TODO*/
+  margin-bottom: 2px;
   display: block;
 }
 
@@ -31,5 +33,9 @@
   /*TODO: color: var(--color-text-aux);*/
 }
 
-
-.error {}
+.error {
+  /*TODO*/
+  margin-top: 2px;
+  /*TODO*/
+  color: var(--color-danger-background);
+}
