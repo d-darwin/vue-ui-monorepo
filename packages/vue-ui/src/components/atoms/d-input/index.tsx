@@ -227,6 +227,7 @@ export default defineComponent({
     },
 
     // TODO: how to do it in a more elegant way
+    // TODO: tests
     inputStyles(): Record<string, string> {
       const styles: Record<string, string> = {};
       if (this.$slots.before) {

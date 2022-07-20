@@ -68,7 +68,7 @@ describe("DInput", () => {
     expect(inputEl.attributes()?.id).toBeFalsy();
   });
 
-  // TODO: Should renders border class name ???
+  // TODO: Should renders border class name, other class names ???
 
   // TODO: utils/test-case-factories
   it("Should renders props.rounding to rounding class", async () => {
@@ -78,7 +78,8 @@ describe("DInput", () => {
       codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
       rounding
     );
-    expect(wrapper.classes()).toContain(className);
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
   });
 
   // TODO: utils/test-case-factories ???
@@ -89,7 +90,8 @@ describe("DInput", () => {
       codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
     );
-    expect(wrapper.classes()).toContain(className);
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
   });
 
   // TODO: utils/test-case-factories ???
@@ -100,7 +102,8 @@ describe("DInput", () => {
       codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
       transition
     );
-    expect(wrapper.classes()).toContain(className);
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
   });
 
   // TODO: error (via Tooltip ???)
@@ -227,6 +230,8 @@ describe("DInput", () => {
     await inputEl.trigger("keyup", { key: "Enter" });
     expect(whenSubmit).toHaveBeenCalledTimes(0);
   });
+
+  // TODO: slot container class tests
 
   it("Should should render before slot", () => {
     const slotBeforeClass = "slotBefore";
