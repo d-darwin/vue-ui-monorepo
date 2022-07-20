@@ -99,6 +99,13 @@ export default defineComponent({
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
+    // TODO: inputFont ???
+    /**
+     * TODO: Add description
+     */
+    inputClass: {
+      type: String,
+    },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
      */
@@ -147,7 +154,27 @@ export default defineComponent({
   },
 
   computed: {
-    inputClasses(): string[] {
+    renderLabel(): VNode | null {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.labelFont
+      );
+
+      if (this.label) {
+        return (
+          <label
+            for={this.controlId}
+            class={[styles[config.labelClassName], fontStyles[fontClassName]]}
+          >
+            {this.label}
+          </label>
+        );
+      }
+
+      return null;
+    },
+
+    inputClasses(): (string | undefined)[] {
       const colorScheme = "secondary";
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
@@ -195,27 +222,25 @@ export default defineComponent({
         roundingStyles[roundingClassName],
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
+        this.inputClass,
       ];
     },
 
-    renderLabel(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont
-      );
-
-      if (this.label) {
-        return (
-          <label
-            for={this.controlId}
-            class={[styles[config.labelClassName], fontStyles[fontClassName]]}
-          >
-            {this.label}
-          </label>
-        );
+    // TODO: how to do it in a more elegant way
+    inputStyles(): Record<string, string> {
+      const styles: Record<string, string> = {};
+      if (this.$slots.before) {
+        styles[
+          "padding-left"
+        ] = `var(--${codegenConfig.TOKENS.SIZE.NAME}-${this.size})`;
+      }
+      if (this.$slots.after) {
+        styles[
+          "padding-right"
+        ] = `var(--${codegenConfig.TOKENS.SIZE.NAME}-${this.size})`;
       }
 
-      return null;
+      return styles;
     },
 
     hasSlot(): boolean {
@@ -230,6 +255,7 @@ export default defineComponent({
           placeholder={this.placeholder}
           disabled={this.disabled}
           class={this.inputClasses}
+          style={this.inputStyles}
           onChange={this.changeHandler} // TODO: why warning ???
           onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
@@ -237,11 +263,24 @@ export default defineComponent({
       );
 
       if (this.hasSlot) {
+        const sizeClassName = prepareCssClassName(
+          codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+          this.size
+        );
+
         return (
           <div class={styles[config.inputContainerClassName]}>
-            {this.$slots.before?.()}
+            {this.$slots.before && (
+              <div class={[config.beforeContainerClass, sizeClassName]}>
+                {this.$slots.before?.()}
+              </div>
+            )}
             {inputVNode}
-            {this.$slots.after?.()}
+            {this.$slots.after && (
+              <div class={[config.afterContainerClass, sizeClassName]}>
+                {this.$slots.after?.()}
+              </div>
+            )}
           </div>
         );
       }
