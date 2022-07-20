@@ -241,7 +241,6 @@ describe("DInput", () => {
         before: slotBefore,
       },
     });
-    console.log(wrapper.html());
     const slotBeforeEl = wrapper.find(`.${slotBeforeClass}`);
     expect(slotBeforeEl.exists()).toBeTruthy();
   });
