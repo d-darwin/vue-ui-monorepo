@@ -20,6 +20,11 @@ describe("DInput", () => {
     expect(inputEl.element?.value).toBe(value);
   });
 
+  it("Input element classes should contain props.inputClass if passed", async () => {
+    // TODO
+    expect(true).toBeFalsy();
+  });
+
   it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
@@ -34,10 +39,17 @@ describe("DInput", () => {
     expect(labelEl.exists()).toBeFalsy();
   });
 
-  // TODO: labelClass
-  // TODO: labelFont
-  // TODO: labelHtml
+  it("Label element classes should contain props.labelClass if passed", async () => {
+    // TODO
+    expect(true).toBeFalsy();
+  });
 
+  it("Should render props.labelFont to font class", async () => {
+    // TODO
+    expect(true).toBeFalsy();
+  });
+
+  // TODO: labelHtml
   // TODO: labelSlot???
 
   it("Should render passed props.id as input id and label for attr", async () => {
@@ -115,10 +127,17 @@ describe("DInput", () => {
     expect(errorEl.text()).toBe(error);
   });
 
-  // TODO: errorClass
-  // TODO: errorFont
-  // TODO: errorHtml
+  it("Error element classes should contain props.errorClass if passed", async () => {
+    // TODO
+    expect(true).toBeFalsy();
+  });
 
+  it("Should render props.errorFont to font class", async () => {
+    // TODO
+    expect(true).toBeFalsy();
+  });
+
+  // TODO: errorHtml
   // TODO: errorSlot???
 
   it("Should emit onChange event", async () => {
@@ -126,9 +145,8 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("change");
     expect(wrapper.emitted("change")).toBeTruthy();
+    // TODO: check for event's payload
   });
-
-  // TODO: check for event's target.value
 
   it("Shouldn't emit onChange event if is disable", async () => {
     const wrapper = shallowMount(DInput, {
@@ -147,6 +165,7 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("change");
     expect(whenChange).toHaveBeenCalled();
+    // TODO: check for event's payload
   });
 
   it("Shouldn't call passed props.whenChange if is disabled", async () => {
@@ -164,6 +183,7 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("input");
     expect(wrapper.emitted("input")).toBeTruthy();
+    // TODO: check for event's payload
   });
 
   it("Shouldn't emit onInput event if is disable", async () => {
@@ -183,6 +203,7 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("input");
     expect(whenInput).toHaveBeenCalled();
+    // TODO: check for event's payload
   });
 
   it("Shouldn't call passed props.whenInput if is disabled", async () => {
@@ -200,6 +221,7 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("keyup", { key: "Enter" });
     expect(wrapper.emitted("submit")).toBeTruthy();
+    // TODO: check for event's payload
   });
 
   it("Shouldn't emit onSubmit event if is disable", async () => {
@@ -219,6 +241,7 @@ describe("DInput", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("keyup", { key: "Enter" });
     expect(whenSubmit).toHaveBeenCalled();
+    // TODO: check for event's payload
   });
 
   it("Shouldn't call passed props.whenSubmit if is disabled", async () => {

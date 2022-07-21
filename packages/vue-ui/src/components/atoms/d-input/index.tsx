@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -40,12 +40,14 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     inputFont: {
       type: String as PropType<Font>,
     },
     /**
      * TODO: Add description
      */
+    // TODO: test case
     inputClass: {
       type: String,
     },
@@ -58,6 +60,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     labelFont: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
@@ -65,6 +68,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     labelClass: {
       type: String,
     },
@@ -124,6 +128,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     errorFont: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
@@ -131,6 +136,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     errorClass: {
       type: String,
     },
@@ -145,25 +151,23 @@ export default defineComponent({
      * TODO: Add description
      */
     whenChange: {
-      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+      type: Function as PropType<(value: string) => void | Promise<void>>,
     },
     /**
      * TODO: Add description
      */
     whenInput: {
-      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+      type: Function as PropType<(value: string) => void | Promise<void>>,
     },
     /**
      * TODO: Add description
      */
     whenSubmit: {
-      // TODO: Add value ???
-      type: Function as PropType<() => void | Promise<void>>,
+      type: Function as PropType<(value: string) => void | Promise<void>>,
     },
   },
 
   setup(props) {
-    // TODO: const { controlId } = useControlId(props);
     return useControlId(props);
   },
 
@@ -193,11 +197,12 @@ export default defineComponent({
     },
 
     inputClasses(): (string | undefined)[] {
-      const colorScheme = "secondary";
+      const colorScheme = "secondary"; // TODO: don't use hardcoded values
+
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
         codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${colorScheme}-${this.size}` // TODO: don't use hardcoded values
+        `${colorScheme}-${this.size}`
       );
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
@@ -207,7 +212,7 @@ export default defineComponent({
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
         codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${colorScheme}-${this.size}` // TODO: don't use hardcoded values
+        `${colorScheme}-${this.size}`
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
@@ -246,13 +251,15 @@ export default defineComponent({
 
     // TODO: how to do it in a more elegant way
     // TODO: tests
-    inputStyles(): Record<string, string> {
-      const styles: Record<string, string> = {};
+    inputStyles(): CSSProperties {
+      const styles: CSSProperties = {};
+
       if (this.$slots.before) {
         styles[
           "padding-left"
         ] = `var(--${codegenConfig.TOKENS.SIZE.NAME}-${this.size})`;
       }
+
       if (this.$slots.after) {
         styles[
           "padding-right"
@@ -274,7 +281,7 @@ export default defineComponent({
           placeholder={this.placeholder}
           disabled={this.disabled}
           class={this.inputClasses}
-          style={this.inputStyles}
+          style={this.inputStyles} // TODO: why warning ???
           onChange={this.changeHandler} // TODO: why warning ???
           onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
@@ -334,19 +341,31 @@ export default defineComponent({
 
   methods: {
     changeHandler(event: Event) {
-      this.$emit("change:value", event);
-      this.whenChange?.(event); // TODO: pass plain value ???
+      const value = (event.target as HTMLInputElement).value;
+      /**
+       * Value of the <b>input</b> tag changed. Contains new <i>value</i>.<br>
+       * Use @change:value="fn" to catch this event.
+       *
+       * @event update:value
+       * @type {value: String}
+       */
+      this.$emit("change:value", value);
+      this.whenChange?.(value);
     },
 
     inputHandler(event: Event) {
-      this.$emit("input:value", event);
-      this.whenInput?.(event); // TODO: pass plain value ???
+      const value = (event.target as HTMLInputElement).value;
+      // TODO: descr like in the changeHandler ???
+      this.$emit("input:value", value);
+      this.whenInput?.(value);
     },
 
     keyupHandler(event: KeyboardEvent) {
       if (event.key === "Enter") {
-        this.$emit("submit"); // TODO: submit:value ???
-        this.whenSubmit?.();
+        const value = (event.target as HTMLInputElement).value;
+        // TODO: descr like in the changeHandler ???
+        this.$emit("submit:value", value);
+        this.whenSubmit?.(value);
       }
     },
   },

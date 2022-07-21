@@ -41,6 +41,10 @@
   right: 0;
 }
 
+.input:disabled {
+  cursor: not-allowed;
+}
+
 .input::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   /*TODO: color: var(--color-text-aux);*/
