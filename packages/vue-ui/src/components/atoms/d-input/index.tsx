@@ -37,7 +37,18 @@ export default defineComponent({
     value: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: inputClass
+    /**
+     * TODO: Add description
+     */
+    inputFont: {
+      type: String as PropType<Font>,
+    },
+    /**
+     * TODO: Add description
+     */
+    inputClass: {
+      type: String,
+    },
     /**
      * Defines content of the <b>label</b> tag.
      */
@@ -98,13 +109,6 @@ export default defineComponent({
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    // TODO: inputFont ???
-    /**
-     * TODO: Add description
-     */
-    inputClass: {
-      type: String,
     },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
@@ -184,7 +188,7 @@ export default defineComponent({
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
+        this.inputFont || this.size
       );
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
@@ -336,6 +340,7 @@ export default defineComponent({
       <Tag class={styles[config.className]}>
         {this.renderLabel}
         {this.renderInput}
+        {/*TODO: transition*/}
         {this.renderError}
       </Tag>
     );
