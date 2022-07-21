@@ -62,7 +62,12 @@ export default defineComponent({
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
     },
-    // TODO: labelClass
+    /**
+     * TODO: Add description
+     */
+    labelClass: {
+      type: String,
+    },
     // TODO: labelHtml / labelSlot???
     // - or add one props.inputAttrs
     disabled: {
@@ -123,7 +128,12 @@ export default defineComponent({
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
     },
-    // TODO: errorClass
+    /**
+     * TODO: Add description
+     */
+    errorClass: {
+      type: String,
+    },
     /**
      * TODO: Add description
      */
@@ -168,7 +178,11 @@ export default defineComponent({
         return (
           <label
             for={this.controlId}
-            class={[styles[config.labelClassName], fontStyles[fontClassName]]}
+            class={[
+              styles[config.labelClassName],
+              fontStyles[fontClassName],
+              this.labelClass,
+            ]}
           >
             {this.label}
           </label>
@@ -303,7 +317,11 @@ export default defineComponent({
         /*TODO: should it be a tooltip to avoid layout shift ?*/
         return (
           <div
-            class={[styles[config.errorClassName], fontStyles[fontClassName]]}
+            class={[
+              styles[config.errorClassName],
+              fontStyles[fontClassName],
+              this.errorClass,
+            ]}
           >
             {this.error}
           </div>
