@@ -133,7 +133,6 @@ describe("DInput", () => {
     expect(inputEl.classes()).toContain(className);
   });
 
-  // TODO:
   it("Should render props.padding to input padding classes", async () => {
     const padding = PADDING.EQUAL;
     const paddingClassName = prepareCssClassName(
@@ -369,8 +368,6 @@ describe("DInput", () => {
     await wrapper.setProps({ tag });
     expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
-
-  // TODO: prevent default ???
 
   // TODO: min/max width ???
 });
