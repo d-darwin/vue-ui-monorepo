@@ -1,4 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
@@ -21,8 +22,10 @@ describe("DInput", () => {
   });
 
   it("Input element classes should contain props.inputClass if passed", async () => {
-    // TODO
-    expect(true).toBeFalsy();
+    const inputClass = "someCustomInputClass";
+    await wrapper.setProps({ inputClass });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(inputClass);
   });
 
   it("Should render label element with props.label content if passed", async () => {
@@ -40,13 +43,21 @@ describe("DInput", () => {
   });
 
   it("Label element classes should contain props.labelClass if passed", async () => {
-    // TODO
-    expect(true).toBeFalsy();
+    const labelClass = "someCustomLabelClass";
+    await wrapper.setProps({ label: "Some label", labelClass });
+    const labelEl = wrapper.find("label");
+    expect(labelEl.classes()).toContain(labelClass);
   });
 
   it("Should render props.labelFont to font class", async () => {
-    // TODO
-    expect(true).toBeFalsy();
+    const labelFont = FONT.HUGE;
+    await wrapper.setProps({ label: "Some label", labelFont });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      labelFont
+    );
+    const labelEl = wrapper.find("label");
+    expect(labelEl.classes()).toContain(className);
   });
 
   // TODO: labelHtml
@@ -128,24 +139,33 @@ describe("DInput", () => {
   });
 
   it("Error element classes should contain props.errorClass if passed", async () => {
-    // TODO
-    expect(true).toBeFalsy();
+    const errorClass = "someCustomErrorClass";
+    await wrapper.setProps({ error: "Some error", errorClass });
+    const errorEl = wrapper.find(`.${config.errorClassName}`);
+    expect(errorEl.classes()).toContain(errorClass);
   });
 
   it("Should render props.errorFont to font class", async () => {
-    // TODO
-    expect(true).toBeFalsy();
+    const errorFont = FONT.HUGE;
+    await wrapper.setProps({ error: "Some error", errorFont });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      errorFont
+    );
+    const errorEl = wrapper.find(`.${config.errorClassName}`);
+    expect(errorEl.classes()).toContain(className);
   });
 
   // TODO: errorHtml
   // TODO: errorSlot???
 
-  it("Should emit onChange event", async () => {
+  it("Should emit onChange event with value payload", async () => {
     const wrapper = shallowMount(DInput);
     const inputEl = wrapper.find("input");
-    await inputEl.trigger("change");
-    expect(wrapper.emitted("change")).toBeTruthy();
-    // TODO: check for event's payload
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
+    expect(wrapper.emitted("change")?.[0]).toStrictEqual([newValue]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([newValue]);
   });
 
   it("Shouldn't emit onChange event if is disable", async () => {
@@ -163,9 +183,9 @@ describe("DInput", () => {
       props: { whenChange, disabled: false },
     });
     const inputEl = wrapper.find("input");
-    await inputEl.trigger("change");
-    expect(whenChange).toHaveBeenCalled();
-    // TODO: check for event's payload
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
+    expect(whenChange).toHaveBeenCalledWith(newValue);
   });
 
   it("Shouldn't call passed props.whenChange if is disabled", async () => {
@@ -181,9 +201,9 @@ describe("DInput", () => {
   it("Should emit onInput event", async () => {
     const wrapper = shallowMount(DInput);
     const inputEl = wrapper.find("input");
-    await inputEl.trigger("input");
-    expect(wrapper.emitted("input")).toBeTruthy();
-    // TODO: check for event's payload
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
+    expect(wrapper.emitted("input")?.[0]).toStrictEqual([newValue]);
   });
 
   it("Shouldn't emit onInput event if is disable", async () => {
@@ -201,9 +221,9 @@ describe("DInput", () => {
       props: { whenInput, disabled: false },
     });
     const inputEl = wrapper.find("input");
-    await inputEl.trigger("input");
-    expect(whenInput).toHaveBeenCalled();
-    // TODO: check for event's payload
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
+    expect(whenInput).toHaveBeenCalledWith(newValue);
   });
 
   it("Shouldn't call passed props.whenInput if is disabled", async () => {
@@ -219,9 +239,10 @@ describe("DInput", () => {
   it("Should emit onSubmit event", async () => {
     const wrapper = shallowMount(DInput);
     const inputEl = wrapper.find("input");
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
     await inputEl.trigger("keyup", { key: "Enter" });
-    expect(wrapper.emitted("submit")).toBeTruthy();
-    // TODO: check for event's payload
+    expect(wrapper.emitted("submit")?.[0]).toStrictEqual([newValue]);
   });
 
   it("Shouldn't emit onSubmit event if is disable", async () => {
@@ -239,9 +260,10 @@ describe("DInput", () => {
       props: { whenSubmit, disabled: false },
     });
     const inputEl = wrapper.find("input");
+    const newValue = "new value";
+    await inputEl.setValue(newValue);
     await inputEl.trigger("keyup", { key: "Enter" });
-    expect(whenSubmit).toHaveBeenCalled();
-    // TODO: check for event's payload
+    expect(whenSubmit).toHaveBeenCalledWith(newValue);
   });
 
   it("Shouldn't call passed props.whenSubmit if is disabled", async () => {
@@ -254,8 +276,6 @@ describe("DInput", () => {
     expect(whenSubmit).toHaveBeenCalledTimes(0);
   });
 
-  // TODO: slot container class tests
-
   it("Should should render before slot", () => {
     const slotBeforeClass = "slotBefore";
     const slotBefore = `<div class=${slotBeforeClass}>before slot content</div>`;
@@ -264,6 +284,10 @@ describe("DInput", () => {
         before: slotBefore,
       },
     });
+    const slotBeforeContainerEl = wrapper.find(
+      `.${config.beforeContainerClass}`
+    );
+    expect(slotBeforeContainerEl.exists()).toBeTruthy();
     const slotBeforeEl = wrapper.find(`.${slotBeforeClass}`);
     expect(slotBeforeEl.exists()).toBeTruthy();
   });
@@ -276,6 +300,8 @@ describe("DInput", () => {
         after: slotAfter,
       },
     });
+    const slotAfterContainerEl = wrapper.find(`.${config.afterContainerClass}`);
+    expect(slotAfterContainerEl.exists()).toBeTruthy();
     const slotAfterEl = wrapper.find(`.${slotAfterClass}`);
     expect(slotAfterEl.exists()).toBeTruthy();
   });

@@ -344,19 +344,20 @@ export default defineComponent({
       const value = (event.target as HTMLInputElement).value;
       /**
        * Value of the <b>input</b> tag changed. Contains new <i>value</i>.<br>
-       * Use @change:value="fn" to catch this event.
        *
-       * @event update:value
+       * @event change
        * @type {value: String}
        */
-      this.$emit("change:value", value);
+      this.$emit("change", value);
+      this.$emit("update:value", value); // for v-model
       this.whenChange?.(value);
     },
 
     inputHandler(event: Event) {
       const value = (event.target as HTMLInputElement).value;
       // TODO: descr like in the changeHandler ???
-      this.$emit("input:value", value);
+      this.$emit("input", value);
+      // TODO: do we need here this.$emit("update:value", value); // for v-model
       this.whenInput?.(value);
     },
 
@@ -364,7 +365,7 @@ export default defineComponent({
       if (event.key === "Enter") {
         const value = (event.target as HTMLInputElement).value;
         // TODO: descr like in the changeHandler ???
-        this.$emit("submit:value", value);
+        this.$emit("submit", value);
         this.whenSubmit?.(value);
       }
     },
