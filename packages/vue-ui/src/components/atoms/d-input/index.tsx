@@ -25,6 +25,8 @@ import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
 
+export const BASE_COLOR_SCHEME = "secondary"; // TODO: don't use hardcoded values
+
 // TODO: mask, number, password ???
 // TODO: what about inverse color scheme ???
 export default defineComponent({
@@ -197,12 +199,10 @@ export default defineComponent({
     },
 
     inputClasses(): (string | undefined)[] {
-      const colorScheme = "secondary"; // TODO: don't use hardcoded values
-
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
         codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${colorScheme}-${this.size}`
+        `${BASE_COLOR_SCHEME}-${this.size}`
       );
       // TODO: font and size separately
       const fontClassName = prepareCssClassName(
@@ -212,7 +212,7 @@ export default defineComponent({
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
         codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${colorScheme}-${this.size}`
+        `${BASE_COLOR_SCHEME}-${this.size}`
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,

@@ -1,11 +1,12 @@
 import { shallowMount } from "@vue/test-utils";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import DInput from "@/components/atoms/d-input";
+import DInput, { BASE_COLOR_SCHEME } from "@/components/atoms/d-input";
 import config from "./config";
 import { baseClassCase } from "@/utils/test-case-factories";
 
@@ -91,10 +92,67 @@ describe("DInput", () => {
     expect(inputEl.attributes()?.id).toBeFalsy();
   });
 
-  // TODO: Should renders border class name, other class names ???
+  it("Input element should contain color scheme and size dependent border class name", async () => {
+    const size = SIZE.TINY;
+    await wrapper.setProps({ size });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
+      `${BASE_COLOR_SCHEME}-${size}`
+    );
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
+  });
+
+  it("Should render props.inputFont or props.size to input font class ", async () => {
+    const size = SIZE.SMALL;
+    let className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      size
+    );
+    await wrapper.setProps({ size });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
+
+    const inputFont = FONT.LARGE;
+    className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      inputFont
+    );
+    await wrapper.setProps({ inputFont });
+    expect(inputEl.classes()).toContain(className);
+  });
+
+  it("Input element should contain color scheme and size dependent outline class name", async () => {
+    const size = SIZE.LARGE;
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+      `${BASE_COLOR_SCHEME}-${size}`
+    );
+    await wrapper.setProps({ size });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(className);
+  });
+
+  // TODO:
+  it("Should render props.padding to input padding classes", async () => {
+    const padding = PADDING.EQUAL;
+    const paddingClassName = prepareCssClassName(
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      padding
+    );
+    const size = SIZE.MEDIUM;
+    const paddingSizeClassName = prepareCssClassName(
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      `${padding}-${size}`
+    );
+    await wrapper.setProps({ padding, size });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(paddingClassName);
+    expect(inputEl.classes()).toContain(paddingSizeClassName);
+  });
 
   // TODO: utils/test-case-factories
-  it("Should renders props.rounding to rounding class", async () => {
+  it("Should render props.rounding to input rounding class", async () => {
     const rounding = ROUNDING.FULL;
     await wrapper.setProps({ rounding });
     const className = prepareCssClassName(
@@ -106,7 +164,7 @@ describe("DInput", () => {
   });
 
   // TODO: utils/test-case-factories ???
-  it("Should render props.size to size class", async () => {
+  it("Should render props.size to input size class", async () => {
     const size = SIZE.HUGE;
     await wrapper.setProps({ size });
     const className = prepareCssClassName(
@@ -118,7 +176,7 @@ describe("DInput", () => {
   });
 
   // TODO: utils/test-case-factories ???
-  it("Renders props.transition to transition class", async () => {
+  it("Renders props.transition to input transition class", async () => {
     const transition = TRANSITION.AVERAGE;
     await wrapper.setProps({ transition });
     const className = prepareCssClassName(
