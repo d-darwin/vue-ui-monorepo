@@ -2,9 +2,9 @@
 exports.__esModule = true;
 exports.SIZE = void 0;
 exports.SIZE = {
-    TINY: "tiny",
-    SMALL: "small",
-    MEDIUM: "medium",
+    HUGE: "huge",
     LARGE: "large",
-    HUGE: "huge"
+    MEDIUM: "medium",
+    SMALL: "small",
+    TINY: "tiny"
 };

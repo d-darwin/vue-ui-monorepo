@@ -60,10 +60,11 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
                     function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
-                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(function (ignoredSubstring) {
+                            return designTokenName.includes(ignoredSubstring);
+                        });
                         return !designTokenName.includes('-') && !isIgnored;
-                    } // TODO: more flexible filter
-                    ); }, 
+                    }); }, 
                     // TODO: combine filter and transformer ???
                     null)];
             case 4:
@@ -73,7 +74,12 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 5:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
-                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, null, null)];
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
+                        var isIgnored = (sizeTokenConfig.IGNORE || []).some(function (ignoredSubstring) {
+                            return designTokenName.includes(ignoredSubstring);
+                        });
+                        return !designTokenName.includes('-') && !isIgnored;
+                    }); }, null)];
             case 6:
                 _b.sent();
                 paddingTokenConfig = config.TOKENS.PADDING;
