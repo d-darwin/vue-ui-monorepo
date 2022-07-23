@@ -1,4 +1,10 @@
-import { CSSProperties, defineComponent, PropType, VNode } from "vue";
+import {
+  CSSProperties,
+  defineComponent,
+  InputHTMLAttributes,
+  PropType,
+  VNode,
+} from "vue";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -31,7 +37,6 @@ import config from "./config";
 export const BASE_COLOR_SCHEME = "secondary"; // TODO: don't use hardcoded values
 
 // TODO: mask ???
-// TODO: other input attrs ???
 // TODO: what about inverse color scheme ???
 export default defineComponent({
   name: config.name,
@@ -68,6 +73,10 @@ export default defineComponent({
     inputSize: {
       type: Number,
       default: 1,
+    },
+    // TODO: test case
+    inputAttrs: {
+      type: Object as PropType<InputHTMLAttributes>,
     },
     /**
      * Defines content of the <b>label</b> tag.
@@ -296,6 +305,7 @@ export default defineComponent({
           disabled={this.disabled}
           type={this.type}
           size={this.inputSize} // TODO: why warning ???
+          {...this.inputAttrs}
           class={this.inputClasses}
           style={this.inputStyles} // TODO: why warning ???
           onChange={this.changeHandler} // TODO: why warning ???
