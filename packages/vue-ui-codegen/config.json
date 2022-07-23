@@ -38,6 +38,7 @@
     "MIN_CONTROL_WIDTH": {
       "NAME": "size",
       "CSS_CLASS_PREFIX": "size",
+      "CSS_CLASS_SUFFIX": "min-control-width",
       "CSS_FILE_PATH": "/styles/min-control-width"
     },
     "OUTLINE": {

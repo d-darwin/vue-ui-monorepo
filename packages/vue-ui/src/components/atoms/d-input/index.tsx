@@ -11,6 +11,7 @@ import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transi
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import borderStyles from "@darwin-studio/vue-ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min-control-width.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -22,12 +23,15 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import type { TagName } from "@/types/tag-name";
 import type { Text } from "@/types/text";
+import type { InputTypes } from "./types";
+import { INPUT_TYPE } from "./constants";
 import styles from "./index.module.css";
 import config from "./config";
 
 export const BASE_COLOR_SCHEME = "secondary"; // TODO: don't use hardcoded values
 
-// TODO: mask, number, password ???
+// TODO: mask ???
+// TODO: other input attrs ???
 // TODO: what about inverse color scheme ???
 export default defineComponent({
   name: config.name,
@@ -39,19 +43,31 @@ export default defineComponent({
     value: {
       type: [String, Number] as PropType<Text>,
     },
+    // TODO: descr, -> inputType
+    // TODO: test case
+    type: {
+      type: String as PropType<InputTypes>,
+      default: INPUT_TYPE.TEXT,
+    },
     /**
      * TODO: Add description
      */
-    // TODO: test case
     inputFont: {
       type: String as PropType<Font>,
     },
     /**
      * TODO: Add description
      */
-    // TODO: test case
     inputClass: {
       type: String,
+    },
+    /**
+     * TODO: Add description
+     */
+    // TODO: test case
+    inputSize: {
+      type: Number,
+      default: 1,
     },
     /**
      * Defines content of the <b>label</b> tag.
@@ -62,7 +78,6 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
     labelFont: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
@@ -70,7 +85,6 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
     labelClass: {
       type: String,
     },
@@ -82,6 +96,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: test case
     placeholder: {
       type: String,
     },
@@ -130,7 +145,6 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
     errorFont: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
@@ -138,13 +152,13 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
     errorClass: {
       type: String,
     },
     /**
      * TODO: Add description
      */
+    // TODO: test case
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
@@ -374,8 +388,18 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    const minControlWidthClassName = prepareCssClassName(
+      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
+      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
+    );
+
     return (
-      <Tag class={styles[config.className]}>
+      <Tag
+        class={[
+          styles[config.className],
+          minControlWidthStyles[minControlWidthClassName],
+        ]}
+      >
         {this.renderLabel}
         {this.renderInput}
         {/*TODO: transition*/}
