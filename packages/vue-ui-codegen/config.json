@@ -35,6 +35,12 @@
       "CSS_CLASS_PREFIX": "font",
       "CSS_FILE_PATH": "/styles/font"
     },
+    "MIN_CONTROL_WIDTH": {
+      "NAME": "size",
+      "CSS_CLASS_PREFIX": "size",
+      "CSS_CLASS_SUFFIX": "min-control-width",
+      "CSS_FILE_PATH": "/styles/min-control-width"
+    },
     "OUTLINE": {
       "NAME": "outline",
       "CONSTANT_NAME": "OUTLINE",
@@ -69,7 +75,8 @@
       "TYPE_NAME": "Size",
       "TYPE_FILE_PATH": "/types/size",
       "CSS_CLASS_PREFIX": "size",
-      "CSS_FILE_PATH": "/styles/size"
+      "CSS_FILE_PATH": "/styles/size",
+      "IGNORE": ["min-control-width"]
     },
     "TRANSITION": {
       "NAME": "motion",

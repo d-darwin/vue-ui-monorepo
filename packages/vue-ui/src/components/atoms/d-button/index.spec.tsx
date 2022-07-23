@@ -27,7 +27,7 @@ describe("DButton", () => {
 
   slotDefaultCase(DButton);
 
-  // TODO: classes are not rendered in jest ???
+  // TODO: classes via setup() are not rendered in jest ???
   it("Renders border class name", async () => {
     const size = SIZE.TINY; // TODO: const names maybe different - Object.values and Math.rand()
     const colorScheme = COLOR_SCHEME.DANGER; // TODO: const names maybe different - Object.values and Math.rand()
@@ -104,7 +104,8 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  it("Renders props.rounding to rounding class", async () => {
+  // TODO: utils/test-case-factories
+  it("Should renders props.rounding to rounding class", async () => {
     const rounding = ROUNDING.FULL;
     await wrapper.setProps({ rounding });
     const className = prepareCssClassName(
@@ -114,7 +115,8 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  it("Renders props.size to size class", async () => {
+  // TODO: utils/test-case-factories
+  it("Should render props.size to size class", async () => {
     const size = SIZE.HUGE;
     await wrapper.setProps({ size });
     const className = prepareCssClassName(
@@ -124,6 +126,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
+  // TODO: utils/test-case-factories
   it("Renders props.transition to transition class", async () => {
     const transition = TRANSITION.AVERAGE;
     await wrapper.setProps({ transition });
@@ -166,7 +169,7 @@ describe("DButton", () => {
   it("Calls props.whenClick when clicked", async () => {
     const whenClick = jest.fn();
     await wrapper.setProps({ whenClick, disabled: false });
-    await wrapper.trigger("click");
+    await wrapper.trigger("click"); // TODO: shouldn't we find button element ???
     expect(whenClick).toHaveBeenCalledTimes(1);
   });
 
@@ -174,7 +177,7 @@ describe("DButton", () => {
     await wrapper.setProps({ disabled: true });
     const whenClick = jest.fn();
     await wrapper.setProps({ whenClick });
-    await wrapper.trigger("click");
+    await wrapper.trigger("click"); // TODO: shouldn't we find button element ???
     expect(whenClick).toHaveBeenCalledTimes(0);
   });
 

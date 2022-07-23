@@ -118,10 +118,10 @@ describe("DTypography", () => {
   });
 
   it("Renders additional inner div if aspect-ratio is NOT supported", () => {
-    const innerElement = wrapperWithFullCSSSupport.find(
+    const innerElement = wrapperWithoutCSSSupport.find(
       `.${config.innerClassName}`
     );
-    expect(innerElement).toBeTruthy();
+    expect(innerElement.exists()).toBeTruthy();
   });
 
   it("Renders props.html if aspect-ratio is NOT supported", async () => {

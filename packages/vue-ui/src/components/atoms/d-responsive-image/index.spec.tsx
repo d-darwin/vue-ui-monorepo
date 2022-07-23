@@ -81,7 +81,7 @@ describe("DResponsiveImage", () => {
     await wrapper.setProps({ caption });
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.exists()).toBeTruthy();
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
@@ -169,7 +169,7 @@ describe("DResponsiveImage", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.exists()).toBeTruthy();
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
@@ -222,7 +222,7 @@ describe("DResponsiveImage", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeFalsy();
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.exists()).toBeTruthy();
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
@@ -242,7 +242,7 @@ describe("DResponsiveImage", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
     expect(wrapper.element.tagName).toEqual("FIGURE");
     const figcaptionEl = wrapper.find("figcaption");
-    expect(figcaptionEl).toBeTruthy();
+    expect(figcaptionEl.exists()).toBeTruthy();
     expect(figcaptionEl.text()).toEqual(caption);
   });
 

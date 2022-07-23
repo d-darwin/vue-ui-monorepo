@@ -85,6 +85,7 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
+    // TODO: button \ link \ vue-route attributes ???
     // TODO: to \ href
     whenClick: {
       type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
@@ -193,6 +194,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    // TODO: reduce
     if (this.html) {
       return (
         <Tag

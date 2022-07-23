@@ -8,6 +8,9 @@ var capitalizeFirstLetter_1 = require("./capitalizeFirstLetter");
  * @param tokenVariantName
  */
 function default_1(tokenTypeName, tokenVariantName) {
+    if (!tokenTypeName || !tokenVariantName) {
+        return '';
+    }
     return "".concat(tokenTypeName).concat((0, capitalizeFirstLetter_1["default"])((0, camel_case_1.camelCase)(tokenVariantName)));
 }
 exports["default"] = default_1;
