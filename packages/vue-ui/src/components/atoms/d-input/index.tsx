@@ -294,6 +294,8 @@ export default defineComponent({
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled}
+          type={this.type}
+          size={this.inputSize} // TODO: why warning ???
           class={this.inputClasses}
           style={this.inputStyles} // TODO: why warning ???
           onChange={this.changeHandler} // TODO: why warning ???
