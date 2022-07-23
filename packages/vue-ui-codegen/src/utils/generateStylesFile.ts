@@ -4,11 +4,14 @@ import writeFile from "../utils/writeFile";
 import type { ConfigKey, DesignTokens } from "../types";
 import getNakedName from "./getNakedName";
 
+type PartialRecord<K extends keyof any, T> = {
+  [P in K]?: T;
+};
 // TODO: descr
 // TODO: try to reduce args
 export default async function (
   designTokens: DesignTokens,
-  designTokenConfig: Record<ConfigKey, string>,
+  designTokenConfig: PartialRecord<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
   cssClassGenerator: (className: string, customPropertyName: string, colorClassPropertyName?: string) => string,
   colorVariantList?: string[],

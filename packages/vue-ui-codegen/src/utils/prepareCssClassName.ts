@@ -6,6 +6,10 @@ import capitalizeFirstLetter from "./capitalizeFirstLetter";
  * @param tokenTypeName
  * @param tokenVariantName
  */
-export default function(tokenTypeName: string, tokenVariantName: string): string {
+export default function(tokenTypeName?: string, tokenVariantName?: string): string {
+  if (!tokenTypeName || !tokenVariantName) {
+    return '';
+  }
+
   return `${tokenTypeName}${capitalizeFirstLetter(camelCase(tokenVariantName))}`;
 }
