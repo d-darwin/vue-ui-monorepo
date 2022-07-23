@@ -26,7 +26,9 @@ export default async () => {
     // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
       designTokenName => {
-        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(ignoredSubstring => {
+          return designTokenName.includes(ignoredSubstring);
+        })
         return !designTokenName.includes('-') && !isIgnored
       } // TODO: more flexible filter
     ),
