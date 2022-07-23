@@ -9,6 +9,7 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import DInput, { BASE_COLOR_SCHEME } from "@/components/atoms/d-input";
 import config from "./config";
 import { baseClassCase } from "@/utils/test-case-factories";
+import { INPUT_TYPE } from "@/components/atoms/d-input/constants";
 
 describe("DInput", () => {
   const wrapper = shallowMount(DInput);
@@ -27,6 +28,44 @@ describe("DInput", () => {
     await wrapper.setProps({ inputClass });
     const inputEl = wrapper.find("input");
     expect(inputEl.classes()).toContain(inputClass);
+  });
+
+  it("Should render props.placeholder to the input element placeholder attr", async () => {
+    const placeholder = "Some placeholder";
+    await wrapper.setProps({ placeholder });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.attributes().placeholder).toBe(placeholder);
+  });
+
+  it("Should render props.inputType to the input element type attr", async () => {
+    const inputType = INPUT_TYPE.PASSWORD;
+    await wrapper.setProps({ inputType });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.attributes().type).toBe(inputType);
+  });
+
+  it("Should render props.inputSize to the input element size attr", async () => {
+    const inputSize = 5;
+    await wrapper.setProps({ inputSize });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.attributes().size).toBe(String(inputSize));
+  });
+
+  it("Should render props.inputAttrs to the input element attributes", async () => {
+    const inputAttrs = { readonly: true };
+    await wrapper.setProps({ inputAttrs });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.attributes().readonly).toBe("");
+  });
+
+  it("Should render props.size to the container minControlWidth class", async () => {
+    const size = SIZE.LARGE;
+    await wrapper.setProps({ size });
+    const minControlWidthClassName = prepareCssClassName(
+      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
+      `${size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
+    );
+    expect(wrapper.classes()).toContain(minControlWidthClassName);
   });
 
   it("Should render label element with props.label content if passed", async () => {
@@ -368,6 +407,4 @@ describe("DInput", () => {
     await wrapper.setProps({ tag });
     expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
-
-  // TODO: min/max width ???
 });

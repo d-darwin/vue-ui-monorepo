@@ -48,17 +48,29 @@ export default defineComponent({
     value: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: descr, -> inputType
-    // TODO: test case
-    type: {
+    /**
+     * TODO: Add description
+     */
+    placeholder: {
+      type: String,
+    },
+    /**
+     * Defines <i>id</i> attr of the <b>input</b> tag.<br>
+     */
+    id: {
+      type: [String, Number] as PropType<Text>,
+    },
+    // TODO: Add description
+    inputType: {
       type: String as PropType<InputTypes>,
       default: INPUT_TYPE.TEXT,
     },
     /**
      * TODO: Add description
      */
-    inputFont: {
-      type: String as PropType<Font>,
+    inputSize: {
+      type: Number,
+      default: 1,
     },
     /**
      * TODO: Add description
@@ -69,12 +81,12 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
-    inputSize: {
-      type: Number,
-      default: 1,
+    inputFont: {
+      type: String as PropType<Font>,
     },
-    // TODO: test case
+    /**
+     * TODO: Add description
+     */
     inputAttrs: {
       type: Object as PropType<InputHTMLAttributes>,
     },
@@ -101,20 +113,6 @@ export default defineComponent({
     // - or add one props.inputAttrs
     disabled: {
       type: Boolean,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: test case
-    placeholder: {
-      type: String,
-    },
-    // TODO: min / max / ... other common input attrs ???
-    /**
-     * Defines <i>id</i> attr of the <b>input</b> tag.<br>
-     */
-    id: {
-      type: [String, Number] as PropType<Text>,
     },
     /**
      * TODO: Add description
@@ -167,7 +165,6 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: test case
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
@@ -303,7 +300,7 @@ export default defineComponent({
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled}
-          type={this.type}
+          type={this.inputType}
           size={this.inputSize} // TODO: why warning ???
           {...this.inputAttrs}
           class={this.inputClasses}
