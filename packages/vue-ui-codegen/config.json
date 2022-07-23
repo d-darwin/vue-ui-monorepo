@@ -9,10 +9,6 @@
   "TOKENS": {
     "BORDER": {
       "NAME": "border",
-      "CONSTANT_NAME": "BORDER",
-      "CONSTANT_FILE_PATH": "/constants/border",
-      "TYPE_NAME": "Border",
-      "TYPE_FILE_PATH": "/types/border",
       "CSS_CLASS_PREFIX": "border",
       "CSS_FILE_PATH": "/styles/border"
     },
@@ -43,10 +39,6 @@
     },
     "OUTLINE": {
       "NAME": "outline",
-      "CONSTANT_NAME": "OUTLINE",
-      "CONSTANT_FILE_PATH": "/constants/outline",
-      "TYPE_NAME": "Outline",
-      "TYPE_FILE_PATH": "/types/outline",
       "CSS_CLASS_PREFIX": "outline",
       "CSS_FILE_PATH": "/styles/outline"
     },
