@@ -100,8 +100,23 @@ describe("DInput", () => {
     expect(labelEl.classes()).toContain(className);
   });
 
-  // TODO: labelHtml
-  // TODO: labelSlot???
+  it("Should render prop.labelHtml to the label v-html", async () => {
+    const labelHtml = "<div>some label html</div>";
+    await wrapper.setProps({ labelHtml });
+    const labelEl = wrapper.find("label");
+    expect(labelEl.html()).toMatch(labelHtml);
+  });
+
+  it("Should render $slots.label instead of label content", async () => {
+    const labelSlot = "<div>Some <b>slot</b> content</div>"; // TODO: should be HTML Element, not string
+    const wrapper = shallowMount(DInput, {
+      slots: {
+        label: labelSlot,
+      },
+    });
+    const labelEl = wrapper.find("label");
+    expect(labelEl.html()).toMatch(labelSlot);
+  });
 
   it("Should render passed props.id as input id and label for attr", async () => {
     const id = "some-external-id";
@@ -252,8 +267,23 @@ describe("DInput", () => {
     expect(errorEl.classes()).toContain(className);
   });
 
-  // TODO: errorHtml
-  // TODO: errorSlot???
+  it("Should render prop.errorHtml to the error v-html", async () => {
+    const errorHtml = "<div>some label html</div>";
+    await wrapper.setProps({ errorHtml });
+    const errorEl = wrapper.find(`.${config.errorClassName}`);
+    expect(errorEl.html()).toMatch(errorHtml);
+  });
+
+  it("Should render $slots.error instead of error content", async () => {
+    const errorSlot = "<div>Some <b>slot</b> content</div>"; // TODO: should be HTML Element, not string
+    const wrapper = shallowMount(DInput, {
+      slots: {
+        error: errorSlot,
+      },
+    });
+    const errorEl = wrapper.find(`.${config.errorClassName}`);
+    expect(errorEl.html()).toMatch(errorSlot);
+  });
 
   it("Should emit onChange event with value payload", async () => {
     const wrapper = shallowMount(DInput);

@@ -208,10 +208,10 @@ export default defineComponent({
         this.labelFont
       );
 
-      // TODO: labelSlot
+      // TODO: labelSlot, test case
 
       if (this.label) {
-        // TODO: reduce
+        // TODO: reduce, test case
         if (this.labelHtml) {
           return (
             <label
