@@ -4,6 +4,7 @@ import generateStylesFile from "../utils/generateStylesFile";
 import generateBorderCssClasses from "../utils/generateBorderCssClasses";
 import generateColorSchemeCssClasses from "../utils/generateColorSchemeCssClasses";
 import generateFontCssClass from "../utils/generateFontCssClass";
+import generateMinControlWidthCssClass from "../utils/generateMinControlWidthCssClass";
 import generateOutlineCssClass from "../utils/generateOutlineCssClass";
 import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateRoundingCssClass from "../utils/generateRoundingCssClass";
@@ -42,9 +43,11 @@ export default async () => {
     // TODO: move to config ???
     (designTokenNames: string[]) => designTokenNames.filter(
       designTokenName => {
-        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+        const isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(ignoredSubstring => {
+          return designTokenName.includes(ignoredSubstring);
+        })
         return !designTokenName.includes('-') && !isIgnored
-      } // TODO: more flexible filter
+      }
     ),
     generateColorSchemeCssClasses, // TODO: move to config ???
   )
@@ -55,6 +58,14 @@ export default async () => {
     fontTokenConfig,
     null, // TODO: move to config ???
     generateFontCssClass, // TODO: move to config ???
+  )
+
+  const minControlWidthConfig = config.TOKENS.MIN_CONTROL_WIDTH;
+  await generateStylesFile(
+    designTokens[minControlWidthConfig.NAME],
+    minControlWidthConfig,
+    null,
+    generateMinControlWidthCssClass,
   )
 
   const outlineTokenConfig = config.TOKENS.OUTLINE;

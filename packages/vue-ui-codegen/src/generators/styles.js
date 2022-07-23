@@ -42,6 +42,7 @@ var generateStylesFile_1 = require("../utils/generateStylesFile");
 var generateBorderCssClasses_1 = require("../utils/generateBorderCssClasses");
 var generateColorSchemeCssClasses_1 = require("../utils/generateColorSchemeCssClasses");
 var generateFontCssClass_1 = require("../utils/generateFontCssClass");
+var generateMinControlWidthCssClass_1 = require("../utils/generateMinControlWidthCssClass");
 var generateOutlineCssClass_1 = require("../utils/generateOutlineCssClass");
 var generatePaddingCssClass_1 = require("../utils/generatePaddingCssClass");
 var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
@@ -49,7 +50,7 @@ var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 var color_scheme_1 = require("../../dist/constants/color-scheme");
 var generateTransitionCssClass_1 = require("../utils/generateTransitionCssClass");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -76,10 +77,11 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
                     function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
-                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).includes(designTokenName);
+                        var isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(function (ignoredSubstring) {
+                            return designTokenName.includes(ignoredSubstring);
+                        });
                         return !designTokenName.includes('-') && !isIgnored;
-                    } // TODO: more flexible filter
-                    ); }, generateColorSchemeCssClasses_1["default"])];
+                    }); }, generateColorSchemeCssClasses_1["default"])];
             case 5:
                 _b.sent();
                 fontTokenConfig = config.TOKENS.FONT;
@@ -87,32 +89,36 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                     generateFontCssClass_1["default"])];
             case 6:
                 _b.sent();
+                minControlWidthConfig = config.TOKENS.MIN_CONTROL_WIDTH;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[minControlWidthConfig.NAME], minControlWidthConfig, null, generateMinControlWidthCssClass_1["default"])];
+            case 7:
+                _b.sent();
                 outlineTokenConfig = config.TOKENS.OUTLINE;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[outlineTokenConfig.NAME], outlineTokenConfig, null, // TODO: move to config ???
                     generateOutlineCssClass_1["default"], // TODO: move to config ???
                     Object.values(color_scheme_1.COLOR_SCHEME))];
-            case 7:
+            case 8:
                 _b.sent();
                 paddingTokenConfig = config.TOKENS.PADDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[paddingTokenConfig.NAME], paddingTokenConfig, null, // TODO: move to config ???
                     generatePaddingCssClass_1["default"])];
-            case 8:
+            case 9:
                 _b.sent();
                 roundingTokenConfig = config.TOKENS.ROUNDING;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, // TODO: move to config ???
                     generateRoundingCssClass_1["default"])];
-            case 9:
+            case 10:
                 _b.sent();
                 sizeTokenConfig = config.TOKENS.SIZE;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[sizeTokenConfig.NAME], sizeTokenConfig, function (designTokenNames) { return designTokenNames.filter(function (designTokenName) { return !designTokenName.includes('-'); } // TODO: more flexible filter
                     ); }, // TODO: move to config ???
                     generateSizeCssClass_1["default"])];
-            case 10:
+            case 11:
                 _b.sent();
                 transitionTokenConfig = config.TOKENS.TRANSITION;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, // TODO: move to config ???
                     generateTransitionCssClass_1["default"])];
-            case 11:
+            case 12:
                 _b.sent();
                 return [2 /*return*/];
         }
