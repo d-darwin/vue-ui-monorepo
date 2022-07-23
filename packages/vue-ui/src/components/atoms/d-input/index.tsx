@@ -156,7 +156,13 @@ export default defineComponent({
     error: {
       type: String,
     },
-    // TODO: errorHtml / errorSlot???
+    /**
+     * TODO: Add description
+     */
+    errorHtml: {
+      // TODO: warning
+      type: String,
+    },
     /**
      * TODO: Add description
      */
@@ -208,24 +214,7 @@ export default defineComponent({
         this.labelFont
       );
 
-      // TODO: labelSlot, test case
-
-      if (this.label) {
-        // TODO: reduce, test case
-        if (this.labelHtml) {
-          return (
-            <label
-              for={this.controlId}
-              class={[
-                styles[config.labelClassName],
-                fontStyles[fontClassName],
-                this.labelClass,
-              ]}
-              v-html={this.labelHtml}
-            />
-          );
-        }
-
+      if (this.label || this.$slots.label) {
         return (
           <label
             for={this.controlId}
@@ -235,8 +224,23 @@ export default defineComponent({
               this.labelClass,
             ]}
           >
-            {this.label}
+            {this.$slots.label?.() || this.label}
           </label>
+        );
+      }
+
+      // TODO: reduce
+      if (this.labelHtml) {
+        return (
+          <label
+            for={this.controlId}
+            class={[
+              styles[config.labelClassName],
+              fontStyles[fontClassName],
+              this.labelClass,
+            ]}
+            v-html={this.labelHtml}
+          />
         );
       }
 
@@ -369,7 +373,7 @@ export default defineComponent({
         this.errorFont
       );
 
-      if (this.error) {
+      if (this.error || this.$slots.error) {
         /*TODO: should it be a tooltip to avoid layout shift ?*/
         return (
           <div
@@ -379,8 +383,22 @@ export default defineComponent({
               this.errorClass,
             ]}
           >
-            {this.error}
+            {this.$slots.error?.() || this.error}
           </div>
+        );
+      }
+
+      // TODO: reduce
+      if (this.errorHtml) {
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              fontStyles[fontClassName],
+              this.errorClass,
+            ]}
+            v-html={this.errorHtml}
+          />
         );
       }
 

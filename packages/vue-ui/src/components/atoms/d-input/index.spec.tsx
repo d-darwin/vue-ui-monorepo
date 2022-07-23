@@ -102,7 +102,7 @@ describe("DInput", () => {
 
   it("Should render prop.labelHtml to the label v-html", async () => {
     const labelHtml = "<div>some label html</div>";
-    await wrapper.setProps({ labelHtml });
+    await wrapper.setProps({ labelHtml, label: undefined });
     const labelEl = wrapper.find("label");
     expect(labelEl.html()).toMatch(labelHtml);
   });
@@ -269,7 +269,7 @@ describe("DInput", () => {
 
   it("Should render prop.errorHtml to the error v-html", async () => {
     const errorHtml = "<div>some label html</div>";
-    await wrapper.setProps({ errorHtml });
+    await wrapper.setProps({ errorHtml, error: undefined });
     const errorEl = wrapper.find(`.${config.errorClassName}`);
     expect(errorEl.html()).toMatch(errorHtml);
   });
