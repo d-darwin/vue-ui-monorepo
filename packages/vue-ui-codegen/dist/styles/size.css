@@ -1,18 +1,8 @@
 @import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
 
-.sizeTiny {
-  min-height: var(--size-tiny);
-  min-width: var(--size-tiny);
-}
-
-.sizeSmall {
-  min-height: var(--size-small);
-  min-width: var(--size-small);
-}
-
-.sizeMedium {
-  min-height: var(--size-medium);
-  min-width: var(--size-medium);
+.sizeHuge {
+  min-height: var(--size-huge);
+  min-width: var(--size-huge);
 }
 
 .sizeLarge {
@@ -20,7 +10,17 @@
   min-width: var(--size-large);
 }
 
-.sizeHuge {
-  min-height: var(--size-huge);
-  min-width: var(--size-huge);
+.sizeMedium {
+  min-height: var(--size-medium);
+  min-width: var(--size-medium);
+}
+
+.sizeSmall {
+  min-height: var(--size-small);
+  min-width: var(--size-small);
+}
+
+.sizeTiny {
+  min-height: var(--size-tiny);
+  min-width: var(--size-tiny);
 }

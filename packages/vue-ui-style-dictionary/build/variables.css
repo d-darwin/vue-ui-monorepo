@@ -1,14 +1,19 @@
 /**
  * Do not edit directly
- * Generated on Sun, 26 Jun 2022 13:23:11 GMT
+ * Generated on Sat, 23 Jul 2022 10:28:25 GMT
  */
 
 :root {
-  --size-tiny: 20px;
-  --size-small: 28px;
-  --size-medium: 38px;
-  --size-large: 48px;
+  --size-huge-min-control-width: 162px;
+  --size-large-min-control-width: 140px;
+  --size-medium-min-control-width: 112px;
+  --size-small-min-control-width: 92px;
+  --size-tiny-min-control-width: 72px;
   --size-huge: 64px;
+  --size-large: 48px;
+  --size-medium: 38px;
+  --size-small: 28px;
+  --size-tiny: 20px;
   --spacing-equal-tiny: 4px;
   --spacing-equal-small: 4px;
   --spacing-equal-medium: 8px;

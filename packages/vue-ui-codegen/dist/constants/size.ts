@@ -1,7 +1,9 @@
 export const SIZE = {
-  TINY: "tiny",
-  SMALL: "small",
-  MEDIUM: "medium",
-  LARGE: "large",
+  // SMALL_MIN-CONTROL-WIDTH: "small-min-control-width",
+  // TINY_MIN-CONTROL-WIDTH: "tiny-min-control-width",
   HUGE: "huge",
+  LARGE: "large",
+  MEDIUM: "medium",
+  SMALL: "small",
+  TINY: "tiny",
 } as const;
