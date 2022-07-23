@@ -99,6 +99,14 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    labelHtml: {
+      // TODO: warning
+      type: String,
+    },
+    // TODO: labelSlot???
+    /**
+     * TODO: Add description
+     */
     labelFont: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
@@ -109,8 +117,7 @@ export default defineComponent({
     labelClass: {
       type: String,
     },
-    // TODO: labelHtml / labelSlot???
-    // - or add one props.inputAttrs
+    // TODO: - or add one props.inputAttrs
     disabled: {
       type: Boolean,
     },
@@ -149,6 +156,7 @@ export default defineComponent({
     error: {
       type: String,
     },
+    // TODO: errorHtml / errorSlot???
     /**
      * TODO: Add description
      */
@@ -200,7 +208,24 @@ export default defineComponent({
         this.labelFont
       );
 
+      // TODO: labelSlot
+
       if (this.label) {
+        // TODO: reduce
+        if (this.labelHtml) {
+          return (
+            <label
+              for={this.controlId}
+              class={[
+                styles[config.labelClassName],
+                fontStyles[fontClassName],
+                this.labelClass,
+              ]}
+              v-html={this.labelHtml}
+            />
+          );
+        }
+
         return (
           <label
             for={this.controlId}
@@ -337,6 +362,7 @@ export default defineComponent({
       return inputVNode;
     },
 
+    // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,

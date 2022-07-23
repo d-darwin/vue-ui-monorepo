@@ -194,6 +194,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    // TODO: reduce
     if (this.html) {
       return (
         <Tag
