@@ -1,6 +1,8 @@
 import { Story } from "@storybook/vue3";
 import DInput from "@darwin-studio/vue-ui/src/components/atoms/d-input";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { INPUT_TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-input/constants";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
@@ -9,6 +11,22 @@ export default {
   title: "atoms/DInput",
   component: DInput,
   argTypes: {
+    inputType: {
+      control: { type: "select" },
+      options: Object.values(INPUT_TYPE),
+    },
+    inputFont: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
+    labelFont: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
+    padding: {
+      control: { type: "select" },
+      options: Object.values(PADDING),
+    },
     rounding: {
       control: { type: "select" },
       options: Object.values(ROUNDING),
@@ -17,27 +35,40 @@ export default {
       control: { type: "select" },
       options: Object.values(SIZE),
     },
-    inputFont: {
-      control: { type: "select" },
-      options: ["", ...Object.values(FONT)],
-    },
     transition: {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
+    errorFont: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
   },
   args: {
     value: "some value",
-    label: "Some label",
     placeholder: "Some placeholder",
+    id: "custom-id",
+    inputType: INPUT_TYPE.TEXT,
+    inputSize: 1,
+    inputClass: "someCustomInputClass",
+    inputFont: undefined, // TODO: don't hardcode values
+    inputAttrs: { autofocus: true },
+    label: "Some label",
+    labelHtml: "<b>Some <i>label</i> html</b>",
+    labelFont: undefined,
+    labelClass: "someCustomLabelClass",
     disabled: false,
+    padding: PADDING.DEFAULT,
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
-    inputFont: "", // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    id: "custom-id",
     error: "Some error string",
+    errorHtml: "<b>Some <i>error</i> html</b>",
+    errorFont: undefined,
+    errorClass: "someCustomErrorClass",
+    tag: "div",
   },
+  // TODO: Actions
 };
 
 const Template: Story = (args) => ({
@@ -74,3 +105,29 @@ const SlotAfterTemplate: Story = (args) => ({
   `,
 });
 export const SlotAfter = SlotAfterTemplate.bind({});
+
+const SlotLabelTemplate: Story = (args) => ({
+  components: { DInput },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DInput v-bind="args" >
+      <template v-slot:label><b>Label slot</b></template>
+    </DInput>
+  `,
+});
+export const SlotLabel = SlotLabelTemplate.bind({});
+
+const SlotErrorTemplate: Story = (args) => ({
+  components: { DInput },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DInput v-bind="args" >
+      <template v-slot:error><b>Error slot</b></template>
+    </DInput>
+  `,
+});
+export const SlotError = SlotErrorTemplate.bind({});

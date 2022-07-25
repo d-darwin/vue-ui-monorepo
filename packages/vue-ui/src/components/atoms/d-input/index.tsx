@@ -68,6 +68,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: doesnt work properly (((
     inputSize: {
       type: Number,
       default: 1,
@@ -132,6 +133,14 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: rename roundingType ???
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * TODO: Add description
+     */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
@@ -141,14 +150,6 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: rename roundingType ???
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.

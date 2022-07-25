@@ -44,6 +44,7 @@ export default {
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
   },
+  // TODO: Actions
 };
 
 const Template: Story = (args) => ({
