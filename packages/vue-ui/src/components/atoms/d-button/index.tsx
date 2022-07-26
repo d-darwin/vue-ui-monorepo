@@ -90,6 +90,7 @@ export default defineComponent({
     whenClick: {
       type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
+    // TODO: do we really need it ???
     preventDefault: {
       type: Boolean,
     },

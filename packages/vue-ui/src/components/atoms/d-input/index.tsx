@@ -100,6 +100,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: enableLabelHtml instead ???
     labelHtml: {
       // TODO: warning
       type: String,
@@ -118,6 +119,9 @@ export default defineComponent({
     labelClass: {
       type: String,
     },
+    /**
+     * TODO: Add description
+     */
     // TODO: - or add one props.inputAttrs
     disabled: {
       type: Boolean,
@@ -155,11 +159,12 @@ export default defineComponent({
      * If not empty renders as an error string below the <b>input</b> tag.
      */
     error: {
-      type: String,
+      type: [String, Number] as PropType<Text>,
     },
     /**
      * TODO: Add description
      */
+    // TODO: enableErrorHtml instead ???
     errorHtml: {
       // TODO: warning
       type: String,
