@@ -5,6 +5,7 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TO
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
@@ -21,6 +22,12 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     // TODO: value ???
+    /**
+     * TODO: Add description
+     */
+    checked: {
+      type: Boolean,
+    },
     /**
      * TODO: Add description
      */
@@ -54,15 +61,10 @@ export default defineComponent({
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
     // TODO: errorClass
     // TODO: enableHtml :arrow_up:
-    whenChange: {
-      type: Function as PropType<
-        (value: boolean | Text) => void | Promise<void>
-      >,
+    error: {
+      type: [String, Number] as PropType<Text>,
     },
     // TODO: do we really need it ???
     preventDefault: {
@@ -75,9 +77,55 @@ export default defineComponent({
     disabled: {
       type: Boolean,
     },
+    whenChange: {
+      type: Function as PropType<(value: boolean) => void | Promise<void>>,
+    },
+  },
+
+  setup(props) {
+    return useControlId(props);
+  },
+
+  computed: {
+    renderInput(): VNode {
+      return (
+        <input
+          type="checkbox"
+          id={this.controlId}
+          class={config.inputClassName}
+          onChange={this.changeHandler}
+        />
+      );
+    },
+
+    renderLabel(): VNode | null {
+      if (!this.label) {
+        return null;
+      }
+
+      return (
+        <label for={this.controlId} class={config.labelClassName}>
+          {this.label}
+        </label>
+      );
+    },
+  },
+
+  methods: {
+    changeHandler(event: Event): void {
+      const checked = (event.target as HTMLInputElement).checked;
+      this.$emit("change", checked);
+      this.$emit("update:checked", checked); // for v-model
+      this.whenChange?.(checked);
+    },
   },
 
   render(): VNode {
-    return <div class={styles[config.className]}>DInput</div>;
+    return (
+      <div class={styles[config.className]}>
+        {this.renderInput}
+        {this.renderLabel}
+      </div>
+    );
   },
 });
