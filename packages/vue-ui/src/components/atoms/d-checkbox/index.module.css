@@ -1,1 +1,4 @@
-.dCheckbox {}
+.dCheckbox {
+  display: flex;
+  width: fit-content;
+}

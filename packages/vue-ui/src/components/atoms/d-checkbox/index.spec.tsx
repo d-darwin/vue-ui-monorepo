@@ -1,10 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
-import DInput from "@/components/atoms/d-input";
-import config from "@/components/atoms/d-input/config";
+import DCheckbox from "@/components/atoms/d-checkbox";
+import config from "@/components/atoms/d-checkbox/config";
 import { baseClassCase } from "@/utils/test-case-factories";
 
-describe("DInput", () => {
-  const wrapper = shallowMount(DInput);
+describe("DCheckbox", () => {
+  const wrapper = shallowMount(DCheckbox);
 
   baseClassCase(wrapper, config.className);
 

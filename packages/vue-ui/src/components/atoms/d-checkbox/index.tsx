@@ -5,8 +5,13 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TO
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min-control-width.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
+import type { TagName } from "@/types/tag-name";
 import styles from "./index.module.css";
 import config from "./config";
 
@@ -77,6 +82,13 @@ export default defineComponent({
     disabled: {
       type: Boolean,
     },
+    /**
+     * TODO: Add description
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
+    },
     whenChange: {
       type: Function as PropType<(value: boolean) => void | Promise<void>>,
     },
@@ -91,6 +103,7 @@ export default defineComponent({
       return (
         <input
           type="checkbox"
+          checked={this.checked}
           id={this.controlId}
           class={config.inputClassName}
           onChange={this.changeHandler}
@@ -121,11 +134,23 @@ export default defineComponent({
   },
 
   render(): VNode {
+    const Tag = this.tag;
+
+    const minControlWidthClassName = prepareCssClassName(
+      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
+      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
+    );
+
     return (
-      <div class={styles[config.className]}>
+      <Tag
+        class={[
+          styles[config.className],
+          minControlWidthStyles[minControlWidthClassName],
+        ]}
+      >
         {this.renderInput}
         {this.renderLabel}
-      </div>
+      </Tag>
     );
   },
 });
