@@ -8,7 +8,15 @@ describe("DCheckbox", () => {
 
   baseClassCase(wrapper, config.className);
 
-  it("Should render as input element with type checkbox", () => {
+  it("Should render input element with checkbox type", () => {
+    expect(false).toBeTruthy();
+  });
+
+  it("Should render label element with props.label content", () => {
+    expect(false).toBeTruthy();
+  });
+
+  it("Should render label element with props.label content", () => {
     expect(false).toBeTruthy();
   });
 });

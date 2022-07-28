@@ -26,7 +26,12 @@ export default defineComponent({
     label: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: value ???
+    /**
+     * TODO: Add description
+     */
+    value: {
+      type: [String, Number] as PropType<Text>,
+    },
     /**
      * TODO: Add description
      */
@@ -40,6 +45,7 @@ export default defineComponent({
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
+    // TODO: rounding
     /**
      * TODO: Add description
      */
@@ -90,7 +96,9 @@ export default defineComponent({
       default: TAG_NAME_DEFAULTS.DIV,
     },
     whenChange: {
-      type: Function as PropType<(value: boolean) => void | Promise<void>>,
+      type: Function as PropType<
+        (checked?: boolean, value?: Text) => void | Promise<void>
+      >,
     },
   },
 
@@ -104,9 +112,11 @@ export default defineComponent({
         <input
           type="checkbox"
           checked={this.checked}
+          value={this.value}
           id={this.controlId}
           class={config.inputClassName}
           onChange={this.changeHandler}
+          // TODO: onInput
         />
       );
     },
@@ -127,9 +137,12 @@ export default defineComponent({
   methods: {
     changeHandler(event: Event): void {
       const checked = (event.target as HTMLInputElement).checked;
-      this.$emit("change", checked);
-      this.$emit("update:checked", checked); // for v-model
-      this.whenChange?.(checked);
+      const value = (event.target as HTMLInputElement).value;
+
+      this.$emit("change", checked, value);
+      this.$emit("update:checked", checked);
+      this.$emit("update:value", checked ? value : undefined);
+      this.whenChange?.(checked, value);
     },
   },
 
