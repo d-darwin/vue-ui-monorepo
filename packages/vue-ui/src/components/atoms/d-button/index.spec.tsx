@@ -4,7 +4,6 @@ import DButton from "@/components/atoms/d-button";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
@@ -12,6 +11,7 @@ import {
   baseClassCase,
   propContentCase,
   propHtmlCase,
+  roundingClassCase,
   slotDefaultCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
@@ -27,6 +27,7 @@ describe("DButton", () => {
 
   slotDefaultCase(DButton);
 
+  // TODO: utils/test-case-factories
   // TODO: classes via setup() are not rendered in jest ???
   it("Renders border class name", async () => {
     const size = SIZE.TINY; // TODO: const names maybe different - Object.values and Math.rand()
@@ -39,6 +40,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
+  // TODO: utils/test-case-factories
   it("Renders props.colorScheme to color scheme class", async () => {
     const colorScheme = COLOR_SCHEME.INVERSE;
     await wrapper.setProps({ colorScheme });
@@ -49,6 +51,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
+  // TODO: utils/test-case-factories
   it("Renders font class name", async () => {
     const size = SIZE.SMALL;
     await wrapper.setProps({ size });
@@ -59,6 +62,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
+  // TODO: utils/test-case-factories
   it("Renders outline class name", async () => {
     const size = SIZE.LARGE;
     const colorScheme = COLOR_SCHEME.SECONDARY;
@@ -70,6 +74,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
+  // TODO: utils/test-case-factories
   // TODO: what if there is no such padding option ??
   it("Renders size depending padding class name", async () => {
     const size = SIZE.LARGE;
@@ -82,17 +87,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  // TODO: what if there is no such padding option ??
-  it("Renders size independent padding class name", async () => {
-    const padding = PADDING.NONE;
-    await wrapper.setProps({ padding });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-      padding
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
-
+  // TODO: utils/test-case-factories
   // TODO: what if there is no such padding option ??
   it("Renders size independent padding class name", async () => {
     const padding = PADDING.NONE;
@@ -105,15 +100,18 @@ describe("DButton", () => {
   });
 
   // TODO: utils/test-case-factories
-  it("Should renders props.rounding to rounding class", async () => {
-    const rounding = ROUNDING.FULL;
-    await wrapper.setProps({ rounding });
+  // TODO: what if there is no such padding option ??
+  it("Renders size independent padding class name", async () => {
+    const padding = PADDING.NONE;
+    await wrapper.setProps({ padding });
     const className = prepareCssClassName(
-      codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-      rounding
+      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+      padding
     );
     expect(wrapper.classes()).toContain(className);
   });
+
+  roundingClassCase(wrapper, wrapper);
 
   // TODO: utils/test-case-factories
   it("Should render props.size to size class", async () => {
