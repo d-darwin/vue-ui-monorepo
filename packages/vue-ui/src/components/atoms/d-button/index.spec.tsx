@@ -1,18 +1,21 @@
 import { shallowMount } from "@vue/test-utils";
 import DButton from "@/components/atoms/d-button";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
+  borderClassCase,
+  fontSizeClassCase,
+  outlineClassCase,
+  paddingClassesCase,
   propContentCase,
   propHtmlCase,
   roundingClassCase,
+  sizeClassCase,
   slotDefaultCase,
+  transitionClassCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -27,18 +30,7 @@ describe("DButton", () => {
 
   slotDefaultCase(DButton);
 
-  // TODO: utils/test-case-factories
-  // TODO: classes via setup() are not rendered in jest ???
-  it("Renders border class name", async () => {
-    const size = SIZE.TINY; // TODO: const names maybe different - Object.values and Math.rand()
-    const colorScheme = COLOR_SCHEME.DANGER; // TODO: const names maybe different - Object.values and Math.rand()
-    await wrapper.setProps({ size, colorScheme }); // TODO: why it doesn't work with composition api ???
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-      `${colorScheme}-${size}`
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
+  borderClassCase(wrapper, wrapper, COLOR_SCHEME.DANGER);
 
   // TODO: utils/test-case-factories
   it("Renders props.colorScheme to color scheme class", async () => {
@@ -51,99 +43,25 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  // TODO: utils/test-case-factories
-  it("Renders font class name", async () => {
-    const size = SIZE.SMALL;
-    await wrapper.setProps({ size });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-      size
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
+  fontSizeClassCase(wrapper, wrapper);
 
-  // TODO: utils/test-case-factories
-  it("Renders outline class name", async () => {
-    const size = SIZE.LARGE;
-    const colorScheme = COLOR_SCHEME.SECONDARY;
-    await wrapper.setProps({ size, colorScheme });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-      `${colorScheme}-${size}`
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
+  outlineClassCase(wrapper, wrapper, COLOR_SCHEME.SECONDARY);
 
-  // TODO: utils/test-case-factories
-  // TODO: what if there is no such padding option ??
-  it("Renders size depending padding class name", async () => {
-    const size = SIZE.LARGE;
-    const padding = PADDING.EQUAL;
-    await wrapper.setProps({ size, padding });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-      `${padding}-${size}`
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
-
-  // TODO: utils/test-case-factories
-  // TODO: what if there is no such padding option ??
-  it("Renders size independent padding class name", async () => {
-    const padding = PADDING.NONE;
-    await wrapper.setProps({ padding });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-      padding
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
-
-  // TODO: utils/test-case-factories
-  // TODO: what if there is no such padding option ??
-  it("Renders size independent padding class name", async () => {
-    const padding = PADDING.NONE;
-    await wrapper.setProps({ padding });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-      padding
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
+  paddingClassesCase(wrapper, wrapper);
 
   roundingClassCase(wrapper, wrapper);
 
-  // TODO: utils/test-case-factories
-  it("Should render props.size to size class", async () => {
-    const size = SIZE.HUGE;
-    await wrapper.setProps({ size });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-      size
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
+  sizeClassCase(wrapper, wrapper);
+
+  transitionClassCase(wrapper, wrapper);
 
   // TODO: utils/test-case-factories
-  it("Renders props.transition to transition class", async () => {
-    const transition = TRANSITION.AVERAGE;
-    await wrapper.setProps({ transition });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-      transition
-    );
-    expect(wrapper.classes()).toContain(className);
-  });
-
-  it("Renders as 'button' html tag by default", () => {
-    expect(wrapper.element.tagName).toEqual("BUTTON");
-  });
-
   it("Renders as 'a' html tag if 'href' is passed", async () => {
     await wrapper.setProps({ href: "http://some.href" }); // TODO: add href validator to the component
     expect(wrapper.element.tagName).toEqual("A");
   });
 
+  // TODO: utils/test-case-factories
   it("Renders as 'router-link' component if 'to' is passed", async () => {
     await wrapper.setProps({
       to: { path: "/some-relative-path" },
