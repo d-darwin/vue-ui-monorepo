@@ -27,6 +27,7 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import { INPUT_TYPE } from "@/components/atoms/d-input/constants";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 
 describe("DInput", () => {
   const wrapper = shallowMount(DInput);
@@ -101,7 +102,12 @@ describe("DInput", () => {
 
   fontSizeClassCase(wrapper, wrapper.find("input"));
 
-  outlineClassCase(wrapper, wrapper.find("input"), BASE_COLOR_SCHEME);
+  outlineClassCase(
+    wrapper,
+    wrapper.find("input"),
+    BASE_COLOR_SCHEME,
+    SIZE.LARGE
+  );
 
   paddingClassesCase(wrapper, wrapper.find("input"));
 
