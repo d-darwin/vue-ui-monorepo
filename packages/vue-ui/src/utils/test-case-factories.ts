@@ -6,6 +6,7 @@ import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme";
+import { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
@@ -193,6 +194,25 @@ export function borderClassCase(
   });
 }
 
+export function colorSchemeClassCase(
+  wrapper: VueWrapper,
+  targetWrapper: VueWrapper | DOMWrapper<HTMLElement>,
+  colorScheme: ColorScheme
+) {
+  const targetName =
+    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
+    targetWrapper.element.tagName;
+
+  return it(`Renders props.colorScheme to the ${targetName}'s color scheme class`, async () => {
+    await wrapper.setProps({ colorScheme });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+      colorScheme
+    );
+    expect(targetWrapper.classes()).toContain(className);
+  });
+}
+
 export function fontSizeClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
@@ -215,14 +235,14 @@ export function fontSizeClassCase(
 export function outlineClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>,
-  colorScheme: ColorScheme
+  colorScheme: ColorScheme,
+  size: Size
 ) {
   const targetName =
     (targetWrapper as VueWrapper)?.vm?.$options?.name ||
     targetWrapper.element.tagName;
 
   return it(`${targetName} should contain color scheme and size dependent outline class name`, async () => {
-    const size = SIZE.LARGE;
     const className = prepareCssClassName(
       codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
       `${colorScheme}-${size}`
@@ -312,6 +332,69 @@ export function transitionClassCase(
       transition
     );
     expect(targetWrapper.classes()).toContain(className);
+  });
+}
+
+export function routerLinkComponentCase(wrapper: VueWrapper) {
+  return it("Renders as 'router-link' component if 'to' is passed", async () => {
+    await wrapper.setProps({
+      to: { path: "/some-relative-path" },
+      href: undefined,
+    }); // TODO: add to validator to the component
+    expect(wrapper.element.tagName).toEqual("ROUTER-LINK");
+  });
+}
+
+export function dontEmitClickEventCase(wrapper: VueWrapper) {
+  return it("Doesn't emit click event when clicked if disabled", async () => {
+    await wrapper.setProps({ disabled: true });
+    await wrapper.trigger("click");
+    expect(wrapper.emitted("click")).toBeFalsy();
+  });
+}
+
+export function emitClickEventCase(wrapper: VueWrapper) {
+  return it("Emits click event when clicked", async () => {
+    await wrapper.setProps({ to: null, href: null, disabled: false });
+    await wrapper.trigger("click");
+    expect(wrapper.emitted("click")).toBeTruthy();
+  });
+}
+
+export function dontCallWhenClickCase(wrapper: VueWrapper) {
+  return it("Doesn't call props.whenClick when clicked if disabled", async () => {
+    await wrapper.setProps({ disabled: true });
+    const whenClick = jest.fn();
+    await wrapper.setProps({ whenClick });
+    await wrapper.trigger("click"); // TODO: shouldn't we find button element ???
+    expect(whenClick).toHaveBeenCalledTimes(0);
+  });
+}
+
+export function callWhenClickCase(wrapper: VueWrapper) {
+  return it("Calls props.whenClick when clicked", async () => {
+    const whenClick = jest.fn();
+    await wrapper.setProps({ whenClick, disabled: false });
+    await wrapper.trigger("click");
+    expect(whenClick).toHaveBeenCalledTimes(1);
+  });
+}
+
+export function preventDefaultCase(wrapper: VueWrapper) {
+  return it("Calls $event.preventDefault if prop.eventDefault is passed", async () => {
+    const event = { preventDefault: jest.fn() } as unknown as MouseEvent;
+    await wrapper.setProps({ disabled: false, preventDefault: true });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    await wrapper.vm?.clickHandler(event); // TODO
+    expect(event.preventDefault).toBeCalled();
+  });
+}
+
+export function disabledClassCase(wrapper: VueWrapper) {
+  return it("Renders __disabled class if prop.disabled is passed", async () => {
+    await wrapper.setProps({ disabled: true });
+    expect(wrapper.classes()).toContain("__disabled");
   });
 }
 
