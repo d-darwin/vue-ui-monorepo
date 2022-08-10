@@ -4,6 +4,7 @@ import {
   baseClassCase,
   propHtmlCase,
   slotDefaultCase,
+  tagCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -130,11 +131,5 @@ describe("DTypography", () => {
     expect(wrapperWithoutCSSSupport.html()).toMatch(html);
   });
 
-  it("Renders props.tag when passed", async () => {
-    const tag = "picture";
-    await wrapperWithFullCSSSupport.setProps({ tag });
-    expect(wrapperWithFullCSSSupport.element.tagName).toEqual(
-      tag.toLocaleUpperCase()
-    );
-  });
+  tagCase(wrapperWithFullCSSSupport);
 });

@@ -30,7 +30,7 @@ export function propHtmlCase(wrapper: VueWrapper) {
 
 export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
   return it("Renders $slots.default", async () => {
-    const slotContent = "<div>Some <b>slot</b> content</div>"; // TODO: should be HTML Element, not string
+    const slotContent = `<div>Some <b>slot</b> content</div>`; // TODO: should be HTML Element, not string
     const wrapper = shallowMount(component, {
       slots: {
         default: slotContent,
@@ -52,6 +52,15 @@ export function inputValueCase(wrapper: VueWrapper) {
     await wrapper.setProps({ value });
     const inputEl = wrapper.find("input");
     expect(inputEl.element?.value).toBe(value);
+  });
+}
+
+export function inputClassCase(wrapper: VueWrapper) {
+  return it("Input element classes should contain props.inputClass if passed", async () => {
+    const inputClass = "someCustomInputClass";
+    await wrapper.setProps({ inputClass });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.classes()).toContain(inputClass);
   });
 }
 
@@ -118,7 +127,7 @@ export function labelFontCase(wrapper: VueWrapper) {
 
 export function labelHtmlCase(wrapper: VueWrapper) {
   return it("Should render prop.labelHtml to the label v-html", async () => {
-    const labelHtml = "<div>some label html</div>";
+    const labelHtml = `<div>some label html</div>`;
     await wrapper.setProps({ labelHtml, label: undefined });
     const labelEl = wrapper.find("label");
     expect(labelEl.html()).toMatch(labelHtml);
@@ -127,7 +136,7 @@ export function labelHtmlCase(wrapper: VueWrapper) {
 
 export function labelSlotCase(component: ReturnType<typeof defineComponent>) {
   return it("Should render $slots.label instead of label content", async () => {
-    const labelSlot = "<div>Some <b>slot</b> content</div>"; // TODO: should be HTML Element, not string
+    const labelSlot = `<div>Some <b>slot</b> content</div>`; // TODO: should be HTML Element, not string
     const wrapper = shallowMount(component, {
       slots: {
         label: labelSlot,
@@ -398,7 +407,70 @@ export function disabledClassCase(wrapper: VueWrapper) {
   });
 }
 
-/*
-export function labelClassCase(wrapper: VueWrapper) {
-  return
-}*/
+export function errorStringCase(wrapper: VueWrapper, errorClassName: string) {
+  // TODO: error array ???
+  // TODO: error via Tooltip ???
+  return it("Should render error string if props.error is passed", async () => {
+    const error = "Some error string";
+    await wrapper.setProps({ error });
+    const errorEl = wrapper.find(`.${errorClassName}`);
+    expect(errorEl.exists()).toBeTruthy();
+    expect(errorEl.text()).toBe(error);
+  });
+}
+
+export function errorClassCase(wrapper: VueWrapper, errorClassName: string) {
+  return it("Error element classes should contain props.errorClass if passed", async () => {
+    const errorClass = "someCustomErrorClass";
+    await wrapper.setProps({ error: "Some error", errorClass });
+    const errorEl = wrapper.find(`.${errorClassName}`);
+    expect(errorEl.classes()).toContain(errorClass);
+  });
+}
+
+export function errorFontCase(wrapper: VueWrapper, errorClassName: string) {
+  return it("Should render props.errorFont to the error font class", async () => {
+    const errorFont = FONT.HUGE;
+    await wrapper.setProps({ error: "Some error", errorFont });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      errorFont
+    );
+    const errorEl = wrapper.find(`.${errorClassName}`);
+    expect(errorEl.classes()).toContain(className);
+  });
+}
+
+export function errorHtmlCase(wrapper: VueWrapper, errorClassName: string) {
+  // TODO: enableErrorHtml instead ???
+  return it("Should render prop.errorHtml to the error's v-html", async () => {
+    const errorHtml = `<div>some label html</div>`;
+    await wrapper.setProps({ errorHtml, error: undefined });
+    const errorEl = wrapper.find(`.${errorClassName}`);
+    expect(errorEl.html()).toMatch(errorHtml);
+  });
+}
+
+export function errorSlotCase(
+  component: ReturnType<typeof defineComponent>,
+  errorClassName: string
+) {
+  return it("Should render $slots.error instead of error content", async () => {
+    const errorSlot = `<div>Some <b>error</b> content</div>`; // TODO: should be HTML Element, not string
+    const wrapper = shallowMount(component, {
+      slots: {
+        error: errorSlot,
+      },
+    });
+    const errorEl = wrapper.find(`.${errorClassName}`);
+    expect(errorEl.html()).toMatch(errorSlot);
+  });
+}
+
+export function tagCase(wrapper: VueWrapper) {
+  return it("Should render as element passed in props.tag", async () => {
+    const tag = "section";
+    await wrapper.setProps({ tag });
+    expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
+  });
+}
