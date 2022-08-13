@@ -2,3 +2,13 @@
   display: flex;
   width: fit-content;
 }
+
+.input,
+.label {
+  cursor: pointer;
+}
+
+.input:disabled,
+.input:disabled ~ .label {
+  cursor: pointer;
+}

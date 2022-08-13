@@ -72,7 +72,7 @@ describe("DCheckbox", () => {
 
   //  sizeClassCase(wrapper, wrapper.find("input"));
   //
-  //   transitionClassCase(wrapper, wrapper.find("input"));
+  //  transitionClassCase(wrapper, wrapper.find("input"));
 
   errorStringCase(wrapper, config.errorClassName);
 
@@ -84,7 +84,8 @@ describe("DCheckbox", () => {
 
   errorSlotCase(DCheckbox, config.errorClassName);
 
-  // TODO: on\when handlers, more ???
+  // TODO: on\when handlers - factories
+  // TODO: more ???
 
   tagCase(wrapper);
 });

@@ -114,6 +114,7 @@ export default defineComponent({
           checked={this.checked}
           value={this.value}
           id={this.controlId}
+          disabled={this.disabled}
           class={config.inputClassName}
           onChange={this.changeHandler}
           // TODO: onInput
