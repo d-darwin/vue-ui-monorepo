@@ -1,4 +1,4 @@
-import { defineComponent, VNode, PropType } from "vue";
+import { defineComponent, VNode, PropType, InputHTMLAttributes } from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -67,6 +67,18 @@ export default defineComponent({
     id: {
       type: [String, Number] as PropType<Text>,
     },
+    /**
+     * TODO: Add description
+     */
+    inputClass: {
+      type: String,
+    },
+    /**
+     * TODO: Add description
+     */
+    inputAttrs: {
+      type: Object as PropType<InputHTMLAttributes>,
+    },
     // TODO: labelClass
     // TODO: enableHtml :arrow_down:
     /**
@@ -115,7 +127,8 @@ export default defineComponent({
           value={this.value}
           id={this.controlId}
           disabled={this.disabled}
-          class={styles[config.inputClassName]}
+          {...this.inputAttrs}
+          class={[styles[config.inputClassName], this.inputClass]}
           onChange={this.changeHandler}
           // TODO: onInput
         />
