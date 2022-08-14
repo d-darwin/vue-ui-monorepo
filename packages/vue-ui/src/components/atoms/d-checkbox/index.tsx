@@ -169,6 +169,12 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    iconContainerClass: {
+      type: String,
+    },
+    /**
+     * TODO: Add description
+     */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
@@ -214,7 +220,7 @@ export default defineComponent({
         this.transition
       );
 
-      const iconContainerStyles = [
+      const iconContainerClasses = [
         styles[config.iconContainerClassName],
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
@@ -224,7 +230,10 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
       if (this.disabled) {
-        iconContainerStyles.push(colorSchemeStyles.__disabled);
+        iconContainerClasses.push(colorSchemeStyles.__disabled);
+      }
+      if (this.iconContainerClass) {
+        iconContainerClasses.push(this.iconContainerClass);
       }
 
       // TODO: try not to use backdrop at all
@@ -235,7 +244,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
           ]}
         />,
-        <div class={iconContainerStyles}>
+        <div class={iconContainerClasses}>
           <div
             class={{
               [styles[config.iconClassName]]: true,

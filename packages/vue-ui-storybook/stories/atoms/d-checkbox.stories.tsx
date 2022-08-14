@@ -36,6 +36,7 @@ export default {
     },
   },
   args: {
+    checked: true,
     value: "some value",
     id: "custom-id",
     inputClass: "someCustomInputClass",
