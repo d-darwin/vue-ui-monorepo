@@ -10,5 +10,5 @@
 
 .input:disabled,
 .input:disabled ~ .label {
-  cursor: pointer;
+  cursor: not-allowed;
 }

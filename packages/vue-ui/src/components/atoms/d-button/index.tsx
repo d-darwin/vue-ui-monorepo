@@ -200,6 +200,7 @@ export default defineComponent({
       return (
         <Tag
           class={this.classes}
+          disabled={this.disabled}
           onClick={this.clickHandler}
           v-html={this.html}
         />

@@ -8,7 +8,7 @@ import {
   borderClassCase,
   callWhenClickCase,
   colorSchemeClassCase,
-  disabledClassCase,
+  disabledControlCase,
   dontCallWhenClickCase,
   dontEmitClickEventCase,
   emitClickEventCase,
@@ -71,7 +71,7 @@ describe("DButton", () => {
 
   preventDefaultCase(wrapper);
 
-  disabledClassCase(wrapper);
+  disabledControlCase(wrapper, wrapper);
 
   // TODO: check disabled attr
   /*it("Renders :disabled attr if prop.disabled is passed and tag is Button", async () => {

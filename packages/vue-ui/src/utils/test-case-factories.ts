@@ -12,6 +12,15 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
 // TODO: description
 
+function getTargetName(
+  targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
+): string {
+  return (
+    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
+    targetWrapper.element.tagName
+  );
+}
+
 export function propContentCase(wrapper: VueWrapper) {
   return it("Renders props.content", async () => {
     const text = "Some text content";
@@ -188,9 +197,7 @@ export function borderClassCase(
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>,
   colorScheme: ColorScheme
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`${targetName} element should contain color scheme and size dependent border class name`, async () => {
     const size = SIZE.TINY;
@@ -208,9 +215,7 @@ export function colorSchemeClassCase(
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>,
   colorScheme: ColorScheme
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Renders props.colorScheme to the ${targetName}'s color scheme class`, async () => {
     await wrapper.setProps({ colorScheme });
@@ -226,9 +231,7 @@ export function fontSizeClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Should render props.size to ${targetName} font class`, async () => {
     const size = SIZE.SMALL;
@@ -247,9 +250,7 @@ export function outlineClassCase(
   colorScheme: ColorScheme,
   size: Size
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`${targetName} should contain color scheme and size dependent outline class name`, async () => {
     const className = prepareCssClassName(
@@ -266,9 +267,7 @@ export function paddingClassesCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Should render props.padding to ${targetName} padding classes`, async () => {
     const padding = PADDING.EQUAL;
@@ -291,9 +290,7 @@ export function roundingClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Should render props.rounding to ${targetName} rounding class`, async () => {
     const rounding = ROUNDING.FULL;
@@ -310,9 +307,7 @@ export function sizeClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Should render props.size to ${targetName} size class`, async () => {
     const size = SIZE.HUGE;
@@ -329,9 +324,7 @@ export function transitionClassCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
 ) {
-  const targetName =
-    (targetWrapper as VueWrapper)?.vm?.$options?.name ||
-    targetWrapper.element.tagName;
+  const targetName = getTargetName(targetWrapper);
 
   return it(`Should render props.transition to ${targetName} transition class`, async () => {
     const transition = TRANSITION.AVERAGE;
@@ -400,9 +393,15 @@ export function preventDefaultCase(wrapper: VueWrapper) {
   });
 }
 
-export function disabledClassCase(wrapper: VueWrapper) {
-  return it("Renders __disabled class if prop.disabled is passed", async () => {
+export function disabledControlCase(
+  wrapper: VueWrapper,
+  targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
+) {
+  const targetName = getTargetName(targetWrapper);
+
+  return it(`${targetName} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
     await wrapper.setProps({ disabled: true });
+    expect(targetWrapper.attributes()?.disabled).toBe("");
     expect(wrapper.classes()).toContain("__disabled");
   });
 }

@@ -9,7 +9,7 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import {
   baseClassCase,
   callWhenClickCase,
-  disabledClassCase,
+  disabledControlCase,
   dontCallWhenClickCase,
   dontEmitClickEventCase,
   emitClickEventCase,
@@ -64,5 +64,5 @@ describe("DLink", () => {
 
   preventDefaultCase(wrapper);
 
-  disabledClassCase(wrapper);
+  disabledControlCase(wrapper);
 });
