@@ -48,7 +48,7 @@ export default {
     colorScheme: COLOR_SCHEME.SECONDARY, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.TINY, // TODO: don't hardcode values
-    transition: TRANSITION.SLOW, // TODO: don't hardcode values
+    transition: TRANSITION.FAST, // TODO: don't hardcode values
     error: "Some error string",
     errorHtml: "<b>Some <i>error</i> html</b>",
     errorFont: undefined,

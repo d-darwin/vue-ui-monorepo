@@ -7,8 +7,7 @@
   cursor: pointer;
 }
 
-.input:disabled,
-.label:disabled {
+.label.__disabled {
   cursor: not-allowed;
 }
 
@@ -22,8 +21,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  color: var(--color-text); /*TODO: color-text-inverse*/
+  color: var(--color-text); /*TODO: color-text-inverse, color-text-disabled*/
 }
+
 .iconContainer {
   margin-right: 8px; /*TODO: avoid hardcode*/
   box-sizing: border-box;

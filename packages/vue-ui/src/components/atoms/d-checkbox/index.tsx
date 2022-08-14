@@ -214,6 +214,19 @@ export default defineComponent({
         this.transition
       );
 
+      const iconContainerStyles = [
+        styles[config.iconContainerClassName],
+        borderStyles[borderClassName],
+        colorSchemeStyles[colorSchemeClassName],
+        paddingStyles[paddingSizeClassName],
+        roundingStyles[roundingClassName],
+        sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
+      ];
+      if (this.disabled) {
+        iconContainerStyles.push(colorSchemeStyles.__disabled);
+      }
+
       // TODO: try not to use backdrop at all
       return [
         <div
@@ -222,17 +235,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
           ]}
         />,
-        <div
-          class={[
-            styles[config.iconContainerClassName],
-            borderStyles[borderClassName],
-            colorSchemeStyles[colorSchemeClassName],
-            paddingStyles[paddingSizeClassName],
-            roundingStyles[roundingClassName],
-            sizeStyles[sizeClassName],
-            transitionStyles[transitionClassName],
-          ]}
-        >
+        <div class={iconContainerStyles}>
           <div
             class={{
               [styles[config.iconClassName]]: true,
@@ -284,15 +287,17 @@ export default defineComponent({
         this.labelFont || this.size
       );
 
+      const labelClasses = [
+        styles[config.labelClassName],
+        fontStyles[fontClassName],
+        this.labelClass,
+      ];
+      if (this.disabled) {
+        labelClasses.push(styles.__disabled);
+      }
+
       return (
-        <label
-          for={this.controlId}
-          class={[
-            styles[config.labelClassName],
-            fontStyles[fontClassName],
-            this.labelClass,
-          ]}
-        >
+        <label for={this.controlId} class={labelClasses}>
           {this.renderInput}
           {this.renderIcon}
           <span class={styles[config.labelInnerClassName]}>
