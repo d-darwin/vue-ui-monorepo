@@ -13,7 +13,6 @@
 
 .input {
   margin: 0;
-  top:0;
   position: absolute;
 }
 
@@ -43,6 +42,7 @@
 
 .icon {
   position: absolute;
+  font-weight: bold;
 }
 
 .icon.__hidden {
@@ -51,7 +51,7 @@
 
 .error {
   /*TODO: avoid hardcode*/
-  margin-top: 2px;
+  margin-top: 4px;
   /*TODO: avoid hardcode*/
   color: var(--color-danger-background);
 }
