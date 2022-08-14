@@ -48,6 +48,22 @@ describe("DCheckbox", () => {
 
   // TODO: default/custom icons
 
+  it("Should should render icon slot instead of default icon", () => {
+    const slotIconClass = "slotAfter";
+    const slotIcon = `<div class=${slotIconClass}>icon slot content</div>`;
+    const wrapper = shallowMount(DCheckbox, {
+      slots: {
+        icon: slotIcon,
+      },
+    });
+    const slotIconContainerEl = wrapper.find(
+      `.${config.iconContainerClassName}`
+    );
+    expect(slotIconContainerEl.exists()).toBeTruthy();
+    const slotIconEl = wrapper.find(`.${slotIconClass}`);
+    expect(slotIconEl.exists()).toBeTruthy();
+  });
+
   labelPresenceCase(wrapper, `.${config.labelInnerClassName}`);
 
   labelClassCase(wrapper);

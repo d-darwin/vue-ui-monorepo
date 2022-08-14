@@ -245,15 +245,19 @@ export default defineComponent({
           ]}
         />,
         <div class={iconContainerClasses}>
-          <div
-            class={{
-              [styles[config.iconClassName]]: true,
-              [transitionStyles[transitionClassName]]: true,
-              [styles.__hidden]: !this.innerChecked,
-            }}
-          >
-            {config.checkMark}
-          </div>
+          {!this.$slots?.icon ? (
+            <div
+              class={{
+                [styles[config.iconClassName]]: true,
+                [transitionStyles[transitionClassName]]: true,
+                [styles.__hidden]: !this.innerChecked,
+              }}
+            >
+              {config.checkMark}
+            </div>
+          ) : (
+            this.$slots.icon?.()
+          )}
         </div>,
       ];
     },

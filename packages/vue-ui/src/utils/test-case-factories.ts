@@ -101,11 +101,7 @@ export function labelPresenceCase(
   return it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
-
     const labelEl = wrapper.find(labelSelector);
-    console.log(wrapper.html());
-    console.log(labelEl.html());
-
     expect(labelEl.exists()).toBeTruthy();
     expect(labelEl.text()).toBe(label);
   });
