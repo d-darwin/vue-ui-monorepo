@@ -73,7 +73,7 @@ describe("DInput", () => {
 
   inputAttrsCase(wrapper);
 
-  labelPresenceCase(wrapper, wrapper.find("label"));
+  labelPresenceCase(wrapper);
 
   labelAbsenceCase(wrapper);
 

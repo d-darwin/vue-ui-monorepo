@@ -96,14 +96,18 @@ export function minControlWidthCase(wrapper: VueWrapper) {
 
 export function labelPresenceCase(
   wrapper: VueWrapper,
-  targetWrapper: VueWrapper | DOMWrapper<HTMLElement>
+  labelSelector = "label"
 ) {
   return it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
 
-    expect(targetWrapper.exists()).toBeTruthy();
-    expect(targetWrapper.text()).toBe(label);
+    const labelEl = wrapper.find(labelSelector);
+    console.log(wrapper.html());
+    console.log(labelEl.html());
+
+    expect(labelEl.exists()).toBeTruthy();
+    expect(labelEl.text()).toBe(label);
   });
 }
 

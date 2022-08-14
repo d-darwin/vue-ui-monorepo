@@ -280,6 +280,27 @@ export default defineComponent({
       );
     },
 
+    renderLabelContent(): VNode | null {
+      if (this.$slots.label?.() || this.label) {
+        return (
+          <div class={styles[config.labelInnerClassName]}>
+            {this.$slots.label?.() || this.label}
+          </div>
+        );
+      }
+
+      if (this.labelHtml) {
+        return (
+          <div
+            class={styles[config.labelInnerClassName]}
+            v-html={this.labelHtml}
+          />
+        );
+      }
+
+      return null;
+    },
+
     // TODO: make composition / util ???
     renderLabel(): VNode {
       const fontClassName = prepareCssClassName(
@@ -300,11 +321,7 @@ export default defineComponent({
         <label for={this.controlId} class={labelClasses}>
           {this.renderInput}
           {this.renderIcon}
-          <span class={styles[config.labelInnerClassName]}>
-            {this.$slots.label?.() || this.label || (
-              <template v-html={this.labelHtml} />
-            )}
-          </span>
+          {this.renderLabelContent}
         </label>
       );
     },

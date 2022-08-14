@@ -48,7 +48,7 @@ describe("DCheckbox", () => {
 
   // TODO: default/custom icons
 
-  labelPresenceCase(wrapper, wrapper.find(`.${config.labelInnerClassName}`));
+  labelPresenceCase(wrapper, `.${config.labelInnerClassName}`);
 
   labelClassCase(wrapper);
 
@@ -88,6 +88,7 @@ describe("DCheckbox", () => {
   errorSlotCase(DCheckbox, config.errorClassName);
 
   // TODO: on\when handlers - factories
+  // TODO: disabled
   // TODO: more ???
 
   tagCase(wrapper);
