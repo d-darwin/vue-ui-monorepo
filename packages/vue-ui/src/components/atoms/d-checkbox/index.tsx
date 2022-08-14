@@ -31,7 +31,7 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
-import { BASE_COLOR_SCHEME } from "./constants";
+import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import styles from "./index.module.css";
 import config from "./config";
 
@@ -45,6 +45,7 @@ export default defineComponent({
      */
     value: {
       type: [String, Number] as PropType<Text>,
+      default: DEFAULT_VALUE,
     },
     /**
      * TODO: Add description
@@ -184,6 +185,9 @@ export default defineComponent({
         (checked?: boolean, value?: Text) => void | Promise<void>
       >,
     },
+    whenInput: {
+      type: Function as PropType<(value?: Text) => void | Promise<void>>,
+    },
   },
 
   setup(props) {
@@ -288,7 +292,7 @@ export default defineComponent({
             this.inputClass,
           ]}
           onChange={this.changeHandler}
-          // TODO: onInput ???
+          onInput={this.inputHandler}
         />
       );
     },
@@ -391,6 +395,15 @@ export default defineComponent({
       this.whenChange?.(checked, checked ? value : undefined);
 
       this.innerChecked = checked;
+    },
+
+    inputHandler(event: Event): void {
+      const checked = (event.target as HTMLInputElement).checked;
+      const value = (event.target as HTMLInputElement).value;
+
+      this.$emit("input", checked ? value : undefined);
+      this.$emit("update:value", checked ? value : undefined);
+      this.whenInput?.(checked ? value : undefined);
     },
   },
 
