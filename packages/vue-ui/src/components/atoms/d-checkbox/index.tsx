@@ -115,7 +115,7 @@ export default defineComponent({
           value={this.value}
           id={this.controlId}
           disabled={this.disabled}
-          class={config.inputClassName}
+          class={styles[config.inputClassName]}
           onChange={this.changeHandler}
           // TODO: onInput
         />
@@ -128,7 +128,7 @@ export default defineComponent({
       }
 
       return (
-        <label for={this.controlId} class={config.labelClassName}>
+        <label for={this.controlId} class={styles[config.labelClassName]}>
           {this.label}
         </label>
       );
