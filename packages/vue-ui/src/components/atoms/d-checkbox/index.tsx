@@ -1,15 +1,30 @@
-import { defineComponent, VNode, PropType, InputHTMLAttributes } from "vue";
+import {
+  defineComponent,
+  VNode,
+  PropType,
+  InputHTMLAttributes,
+  ref,
+} from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+// import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
+import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
+import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-// import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-// import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import borderStyles from "@darwin-studio/vue-ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min-control-width.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
@@ -42,22 +57,29 @@ export default defineComponent({
      */
     colorScheme: {
       type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
+      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rounding
+    /**
+     * TODO: Add description
+     */
+    // TODO: rename roundingType ???
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
     /**
      * TODO: Add description
      */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
     },
     // TODO: rename transitionType ???
-    /*transition: {
+    transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },*/
+    },
     // TODO: rounding ???
     /**
      * Defines <i>id</i> attr of the <b>input</b> tag.<br>
@@ -98,7 +120,7 @@ export default defineComponent({
      */
     labelFont: {
       type: String as PropType<Font>,
-      default: FONT.MEDIUM,
+      // default: FONT.MEDIUM,
     },
     /**
      * TODO: Add description
@@ -136,7 +158,7 @@ export default defineComponent({
      */
     errorFont: {
       type: String as PropType<Font>,
-      default: FONT.MEDIUM,
+      // default: FONT.MEDIUM,
     },
     /**
      * TODO: Add description
@@ -159,15 +181,80 @@ export default defineComponent({
   },
 
   setup(props) {
-    return useControlId(props);
+    const innerChecked = ref(props.checked);
+    const { controlId } = useControlId(props);
+    return { innerChecked, controlId };
   },
 
   computed: {
+    renderIcon(): VNode[] {
+      // TODO: border and size and colorScheme separately ???
+      const borderClassName = prepareCssClassName(
+        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
+        `${BASE_COLOR_SCHEME}-${this.size}`
+      );
+      const colorSchemeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        this.colorScheme
+      );
+      const paddingSizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        `${PADDING.EQUAL}-${this.size}` //TODO: avoid hardcode
+      );
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      // TODO: try not to use backdrop at all
+      return [
+        <div
+          class={[
+            styles[config.iconContainerBackdropClassName],
+            sizeStyles[sizeClassName],
+          ]}
+        />,
+        <div
+          class={[
+            styles[config.iconContainerClassName],
+            borderStyles[borderClassName],
+            colorSchemeStyles[colorSchemeClassName],
+            paddingStyles[paddingSizeClassName],
+            roundingStyles[roundingClassName],
+            sizeStyles[sizeClassName],
+            transitionStyles[transitionClassName],
+          ]}
+        >
+          <div
+            class={{
+              [styles[config.iconClassName]]: true,
+              [transitionStyles[transitionClassName]]: true,
+              [styles.__hidden]: !this.innerChecked,
+            }}
+          >
+            {config.checkMark}
+          </div>
+        </div>,
+      ];
+    },
+
     renderInput(): VNode {
       // TODO: outline and size and colorScheme separately ???
       const outlineClassName = prepareCssClassName(
         codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
         `${BASE_COLOR_SCHEME}-${this.size}`
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
       );
 
       return (
@@ -181,6 +268,7 @@ export default defineComponent({
           class={[
             styles[config.inputClassName],
             outlineStyles[outlineClassName],
+            sizeStyles[sizeClassName],
             this.inputClass,
           ]}
           onChange={this.changeHandler}
@@ -190,43 +278,30 @@ export default defineComponent({
     },
 
     // TODO: make composition / util ???
-    renderLabel(): VNode | null {
+    renderLabel(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont
+        this.labelFont || this.size
       );
 
-      if (this.label || this.$slots.label) {
-        return (
-          <label
-            for={this.controlId}
-            class={[
-              styles[config.labelClassName],
-              fontStyles[fontClassName],
-              this.labelClass,
-            ]}
-          >
-            {this.$slots.label?.() || this.label}
-          </label>
-        );
-      }
-
-      // TODO: reduce
-      if (this.labelHtml) {
-        return (
-          <label
-            for={this.controlId}
-            class={[
-              styles[config.labelClassName],
-              fontStyles[fontClassName],
-              this.labelClass,
-            ]}
-            v-html={this.labelHtml}
-          />
-        );
-      }
-
-      return null;
+      return (
+        <label
+          for={this.controlId}
+          class={[
+            styles[config.labelClassName],
+            fontStyles[fontClassName],
+            this.labelClass,
+          ]}
+        >
+          {this.renderInput}
+          {this.renderIcon}
+          <span class={styles[config.labelInnerClassName]}>
+            {this.$slots.label?.() || this.label || (
+              <template v-html={this.labelHtml} />
+            )}
+          </span>
+        </label>
+      );
     },
 
     // TODO: make composition / util ???
@@ -234,7 +309,7 @@ export default defineComponent({
     renderError(): VNode | null {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.errorFont
+        this.errorFont || this.size
       );
 
       if (this.error || this.$slots.error) {
@@ -279,6 +354,8 @@ export default defineComponent({
       this.$emit("update:checked", checked);
       this.$emit("update:value", checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
+
+      this.innerChecked = checked;
     },
   },
 
@@ -297,7 +374,6 @@ export default defineComponent({
           minControlWidthStyles[minControlWidthClassName],
         ]}
       >
-        {this.renderInput}
         {this.renderLabel}
         {/*TODO: transition*/}
         {this.renderError}

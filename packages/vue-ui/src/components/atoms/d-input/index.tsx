@@ -6,7 +6,7 @@ import {
   VNode,
 } from "vue";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+// import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
@@ -109,7 +109,7 @@ export default defineComponent({
      */
     labelFont: {
       type: String as PropType<Font>,
-      default: FONT.MEDIUM,
+      // default: FONT.MEDIUM,
     },
     /**
      * TODO: Add description
@@ -172,7 +172,7 @@ export default defineComponent({
      */
     errorFont: {
       type: String as PropType<Font>,
-      default: FONT.MEDIUM,
+      // default: FONT.MEDIUM,
     },
     /**
      * TODO: Add description
@@ -215,7 +215,7 @@ export default defineComponent({
     renderLabel(): VNode | null {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont
+        this.labelFont || this.size
       );
 
       if (this.label || this.$slots.label) {
@@ -374,7 +374,7 @@ export default defineComponent({
     renderError(): VNode | null {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.errorFont
+        this.errorFont || this.size
       );
 
       if (this.error || this.$slots.error) {

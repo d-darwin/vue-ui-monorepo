@@ -1,6 +1,4 @@
 .dCheckbox {
-  display: flex;
-  flex-wrap: wrap;
   width: fit-content;
 }
 
@@ -10,12 +8,45 @@
 }
 
 .input:disabled,
-.input:disabled ~ .label {
+.label:disabled {
   cursor: not-allowed;
 }
 
+.input {
+  margin: 0;
+  top:0;
+  position: absolute;
+}
+
 .label {
-  margin-left: 4px; /*TODO: avoid hardcode*/
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--color-text); /*TODO: color-text-inverse*/
+}
+.iconContainer {
+  margin-right: 8px; /*TODO: avoid hardcode*/
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.iconContainerBackdrop {
+  box-sizing: border-box;
+  position: absolute;
+  content: '';
+  /*TODO: make the same as what ???*/
+  background: white;
+}
+
+.icon {
+  position: absolute;
+}
+
+.icon.__hidden {
+  opacity: 0;
 }
 
 .error {
@@ -23,5 +54,4 @@
   margin-top: 2px;
   /*TODO: avoid hardcode*/
   color: var(--color-danger-background);
-  width: 100%;
 }

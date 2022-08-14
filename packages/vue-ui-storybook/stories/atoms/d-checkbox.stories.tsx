@@ -1,6 +1,8 @@
 import { Story } from "@storybook/vue3";
 import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 
@@ -8,6 +10,14 @@ export default {
   title: "atoms/DCheckbox",
   component: DCheckbox,
   argTypes: {
+    colorScheme: {
+      control: { type: "select" },
+      options: Object.values(COLOR_SCHEME),
+    },
+    rounding: {
+      control: { type: "select" },
+      options: Object.values(ROUNDING),
+    },
     labelFont: {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
@@ -35,7 +45,9 @@ export default {
     labelFont: undefined,
     labelClass: "someCustomLabelClass",
     disabled: false,
-    size: SIZE.MEDIUM, // TODO: don't hardcode values
+    colorScheme: COLOR_SCHEME.SECONDARY, // TODO: don't hardcode values
+    rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
+    size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
     error: "Some error string",
     errorHtml: "<b>Some <i>error</i> html</b>",
