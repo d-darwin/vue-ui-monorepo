@@ -409,7 +409,7 @@ export function disabledControlCase(
 export function errorStringCase(wrapper: VueWrapper, errorClassName: string) {
   // TODO: error array ???
   // TODO: error via Tooltip ???
-  return it("Should render error string if props.error is passed", async () => {
+  return it("Should render error string if props.error if passed", async () => {
     const error = "Some error string";
     await wrapper.setProps({ error });
     const errorEl = wrapper.find(`.${errorClassName}`);

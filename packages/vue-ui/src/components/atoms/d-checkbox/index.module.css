@@ -1,5 +1,6 @@
 .dCheckbox {
   display: flex;
+  flex-wrap: wrap;
   width: fit-content;
 }
 
@@ -11,4 +12,16 @@
 .input:disabled,
 .input:disabled ~ .label {
   cursor: not-allowed;
+}
+
+.label {
+  margin-left: 4px; /*TODO: avoid hardcode*/
+}
+
+.error {
+  /*TODO: avoid hardcode*/
+  margin-top: 2px;
+  /*TODO: avoid hardcode*/
+  color: var(--color-danger-background);
+  width: 100%;
 }

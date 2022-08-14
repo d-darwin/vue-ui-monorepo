@@ -1,17 +1,22 @@
 import { defineComponent, VNode, PropType, InputHTMLAttributes } from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+// import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+// import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min-control-width.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@/types/text";
 import type { TagName } from "@/types/tag-name";
+import { BASE_COLOR_SCHEME } from "./constants";
 import styles from "./index.module.css";
 import config from "./config";
 
@@ -20,12 +25,6 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    /**
-     * Defines content of the <b>label</b> tag.
-     */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
     /**
      * TODO: Add description
      */
@@ -55,10 +54,10 @@ export default defineComponent({
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     // TODO: rename transitionType ???
-    transition: {
+    /*transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    },*/
     // TODO: rounding ???
     /**
      * Defines <i>id</i> attr of the <b>input</b> tag.<br>
@@ -79,15 +78,33 @@ export default defineComponent({
     inputAttrs: {
       type: Object as PropType<InputHTMLAttributes>,
     },
-    // TODO: labelClass
-    // TODO: enableHtml :arrow_down:
     /**
-     * If not empty renders as an error string below the <b>input</b> tag.
+     * Defines content of the <b>label</b> tag.
      */
-    // TODO: errorClass
-    // TODO: enableHtml :arrow_up:
-    error: {
+    label: {
       type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * TODO: Add description
+     */
+    // TODO: enableLabelHtml instead ???
+    labelHtml: {
+      // TODO: warning
+      type: String,
+    },
+    // TODO: labelSlot???
+    /**
+     * TODO: Add description
+     */
+    labelFont: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
+    },
+    /**
+     * TODO: Add description
+     */
+    labelClass: {
+      type: String,
     },
     // TODO: do we really need it ???
     preventDefault: {
@@ -99,6 +116,33 @@ export default defineComponent({
     // TODO: - or add one props.inputAttrs
     disabled: {
       type: Boolean,
+    },
+    /**
+     * If not empty renders as an error string below the <b>input</b> tag.
+     */
+    error: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * TODO: Add description
+     */
+    // TODO: enableErrorHtml instead ???
+    errorHtml: {
+      // TODO: warning
+      type: String,
+    },
+    /**
+     * TODO: Add description
+     */
+    errorFont: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM,
+    },
+    /**
+     * TODO: Add description
+     */
+    errorClass: {
+      type: String,
     },
     /**
      * TODO: Add description
@@ -120,31 +164,109 @@ export default defineComponent({
 
   computed: {
     renderInput(): VNode {
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${BASE_COLOR_SCHEME}-${this.size}`
+      );
+
       return (
         <input
           type="checkbox"
+          id={this.label || this.id ? this.controlId : undefined}
           checked={this.checked}
           value={this.value}
-          id={this.controlId}
           disabled={this.disabled}
           {...this.inputAttrs}
-          class={[styles[config.inputClassName], this.inputClass]}
+          class={[
+            styles[config.inputClassName],
+            outlineStyles[outlineClassName],
+            this.inputClass,
+          ]}
           onChange={this.changeHandler}
-          // TODO: onInput
+          // TODO: onInput ???
         />
       );
     },
 
+    // TODO: make composition / util ???
     renderLabel(): VNode | null {
-      if (!this.label) {
-        return null;
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.labelFont
+      );
+
+      if (this.label || this.$slots.label) {
+        return (
+          <label
+            for={this.controlId}
+            class={[
+              styles[config.labelClassName],
+              fontStyles[fontClassName],
+              this.labelClass,
+            ]}
+          >
+            {this.$slots.label?.() || this.label}
+          </label>
+        );
       }
 
-      return (
-        <label for={this.controlId} class={styles[config.labelClassName]}>
-          {this.label}
-        </label>
+      // TODO: reduce
+      if (this.labelHtml) {
+        return (
+          <label
+            for={this.controlId}
+            class={[
+              styles[config.labelClassName],
+              fontStyles[fontClassName],
+              this.labelClass,
+            ]}
+            v-html={this.labelHtml}
+          />
+        );
+      }
+
+      return null;
+    },
+
+    // TODO: make composition / util ???
+    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
+    renderError(): VNode | null {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.errorFont
       );
+
+      if (this.error || this.$slots.error) {
+        /*TODO: should it be a tooltip to avoid layout shift ?*/
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              fontStyles[fontClassName],
+              this.errorClass,
+            ]}
+          >
+            {this.$slots.error?.() || this.error}
+          </div>
+        );
+      }
+
+      // TODO: reduce
+      if (this.errorHtml) {
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              fontStyles[fontClassName],
+              this.errorClass,
+            ]}
+            v-html={this.errorHtml}
+          />
+        );
+      }
+
+      return null;
     },
   },
 
@@ -153,10 +275,10 @@ export default defineComponent({
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
 
-      this.$emit("change", checked, value);
+      this.$emit("change", checked, checked ? value : undefined);
       this.$emit("update:checked", checked);
       this.$emit("update:value", checked ? value : undefined);
-      this.whenChange?.(checked, value);
+      this.whenChange?.(checked, checked ? value : undefined);
     },
   },
 
@@ -177,6 +299,8 @@ export default defineComponent({
       >
         {this.renderInput}
         {this.renderLabel}
+        {/*TODO: transition*/}
+        {this.renderError}
       </Tag>
     );
   },

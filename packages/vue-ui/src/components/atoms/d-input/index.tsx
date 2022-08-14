@@ -30,11 +30,9 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import type { TagName } from "@/types/tag-name";
 import type { Text } from "@/types/text";
 import type { InputTypes } from "./types";
-import { INPUT_TYPE } from "./constants";
+import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import styles from "./index.module.css";
 import config from "./config";
-
-export const BASE_COLOR_SCHEME = "secondary"; // TODO: don't use hardcoded values
 
 // TODO: mask ???
 // TODO: what about inverse color scheme ???

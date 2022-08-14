@@ -1,10 +1,13 @@
 import { shallowMount } from "@vue/test-utils";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { INPUT_TYPE } from "@/components/atoms/d-input/constants";
+import {
+  INPUT_TYPE,
+  BASE_COLOR_SCHEME,
+} from "@/components/atoms/d-input/constants";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import DInput, { BASE_COLOR_SCHEME } from "@/components/atoms/d-input";
+import DInput from "@/components/atoms/d-input";
 import config from "./config";
 import {
   baseClassCase,
