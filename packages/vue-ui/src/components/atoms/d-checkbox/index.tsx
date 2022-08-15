@@ -207,6 +207,10 @@ export default defineComponent({
         codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
       );
+      const paddingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        PADDING.EQUAL
+      );
       const paddingSizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         `${PADDING.EQUAL}-${this.size}` //TODO: avoid hardcode
@@ -228,6 +232,7 @@ export default defineComponent({
         styles[config.iconContainerClassName],
         borderStyles[borderClassName],
         colorSchemeStyles[colorSchemeClassName],
+        paddingStyles[paddingClassName],
         paddingStyles[paddingSizeClassName],
         roundingStyles[roundingClassName],
         sizeStyles[sizeClassName],
