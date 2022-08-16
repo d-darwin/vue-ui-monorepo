@@ -34,7 +34,6 @@ import {
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import styles from "./index.module.css";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import DInput from "@/components/atoms/d-input";
 
 describe("DCheckbox", () => {
   const wrapper = shallowMount(DCheckbox);
@@ -162,19 +161,17 @@ describe("DCheckbox", () => {
 
   errorSlotCase(DCheckbox, config.errorClassName);
 
-  // TODO: case factory ??
   it("Should emit onChange event with checked and value payload", async () => {
     const value = "some value";
     const checked = true;
-    const wrapper = shallowMount(DInput, { props: { value, checked } });
+    const wrapper = shallowMount(DCheckbox, { props: { value, checked } });
     const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
     await inputEl.trigger("change");
-
-    console.log(wrapper.emitted("change")?.[0]);
 
     expect(wrapper.emitted("change")?.[0]).toStrictEqual([
       !checked,
-      // !checked ? value : undefined,
+      !checked ? value : undefined,
     ]);
     expect(wrapper.emitted("update:checked")?.[0]).toStrictEqual([!checked]);
     expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
@@ -182,9 +179,113 @@ describe("DCheckbox", () => {
     ]);
   });
 
-  // TODO: on\whenChange handlers - factories
+  it("Shouldn't emit onChange it props.disabled is passed", async () => {
+    const value = "some value";
+    const checked = true;
+    const disabled = true;
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, disabled },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
 
-  // TODO: on\whenInput handlers - factories
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
+  });
+
+  it("Should call passed props.whenChange", async () => {
+    const value = "some value";
+    const checked = true;
+    const whenChange = jest.fn();
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, whenChange },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+
+    expect(whenChange).toHaveBeenCalledWith(
+      !checked,
+      !checked ? value : undefined
+    );
+  });
+
+  it("Shouldn't call passed props.whenChange if props.disabled passed", async () => {
+    const value = "some value";
+    const checked = true;
+    const disabled = true;
+    const whenChange = jest.fn();
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, disabled, whenChange },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+
+    expect(whenChange).toHaveBeenCalledTimes(0);
+  });
+
+  it("Should emit onInput event with value payload", async () => {
+    const value = "some value";
+    const checked = true;
+    const wrapper = shallowMount(DCheckbox, { props: { value, checked } });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toStrictEqual([
+      !checked ? value : undefined,
+    ]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
+      !checked ? value : undefined,
+    ]);
+  });
+
+  it("Shouldn't emit onInput it props.disabled is passed", async () => {
+    const value = "some value";
+    const checked = true;
+    const disabled = true;
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, disabled },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
+  });
+
+  it("Should call passed props.whenInput", async () => {
+    const value = "some value";
+    const checked = true;
+    const whenInput = jest.fn();
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, whenInput },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledWith(!checked ? value : undefined);
+  });
+
+  it("Shouldn't call passed props.whenInput if props.disabled passed", async () => {
+    const value = "some value";
+    const checked = true;
+    const disabled = true;
+    const whenInput = jest.fn();
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, disabled, whenInput },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledTimes(0);
+  });
 
   tagCase(wrapper);
 });
