@@ -32,6 +32,11 @@
   position: relative;
 }
 
+.iconContainer > * {
+  position: absolute;
+  transition: inherit;
+}
+
 .iconContainerBackdrop {
   box-sizing: border-box;
   position: absolute;
@@ -41,11 +46,12 @@
 }
 
 .icon {
-  position: absolute;
   font-weight: bold;
+  transition: inherit;
 }
 
-.icon.__hidden {
+.transitionEnterActive,
+.transitionLeaveActive {
   opacity: 0;
 }
 

@@ -54,6 +54,7 @@ export default {
     errorHtml: "<b>Some <i>error</i> html</b>",
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
+    iconContainerClass: "someIconContainerClass",
     tag: "div",
   },
   // TODO: Actions
@@ -67,3 +68,12 @@ const Template: Story = (args) => ({
   template: `<DCheckbox v-bind="args" />`,
 });
 export const Default = Template.bind({});
+
+const SlotIconTemplate: Story = (args) => ({
+  components: { DCheckbox },
+  setup() {
+    return { args };
+  },
+  template: `<DCheckbox v-bind="args"><template v-slot:icon><b>&#11044;</b></template></DCheckbox>`,
+});
+export const SlotIcon = SlotIconTemplate.bind({});

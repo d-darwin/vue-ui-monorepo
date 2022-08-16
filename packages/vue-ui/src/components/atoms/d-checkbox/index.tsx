@@ -4,11 +4,11 @@ import {
   PropType,
   InputHTMLAttributes,
   ref,
+  Transition as Trans,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-// import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -128,10 +128,6 @@ export default defineComponent({
      */
     labelClass: {
       type: String,
-    },
-    // TODO: do we really need it ???
-    preventDefault: {
-      type: Boolean,
     },
     /**
      * TODO: Add description
@@ -254,19 +250,23 @@ export default defineComponent({
           ]}
         />,
         <div class={iconContainerClasses}>
-          {!this.$slots?.icon ? (
-            <div
-              class={{
-                [styles[config.iconClassName]]: true,
-                [transitionStyles[transitionClassName]]: true,
-                [styles.__hidden]: !this.innerChecked,
-              }}
-            >
-              {config.checkMark}
-            </div>
-          ) : (
-            this.$slots.icon?.()
-          )}
+          <Trans
+            enterActiveClass={styles.transitionEnterActive}
+            leaveActiveClass={styles.transitionLeaveActive}
+          >
+            {!this.$slots?.icon && this.innerChecked && (
+              <div
+                class={{
+                  [styles[config.iconClassName]]: true,
+                  [transitionStyles[transitionClassName]]: true,
+                }}
+              >
+                {config.checkMark}
+              </div>
+            )}
+
+            {this.$slots?.icon && this.innerChecked && this.$slots.icon?.()}
+          </Trans>
         </div>,
       ];
     },
