@@ -85,16 +85,17 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: button \ link \ vue-route attributes ???
-    // TODO: to \ href
-    whenClick: {
-      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
-    },
+    // TODO: do we really need it ???
     preventDefault: {
       type: Boolean,
     },
     disabled: {
       type: Boolean,
+    },
+    // TODO: button \ link \ vue-route attributes ???
+    // TODO: to \ href
+    whenClick: {
+      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
   },
 
@@ -180,13 +181,13 @@ export default defineComponent({
   methods: {
     // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault || this.disabled) {
+      if (this.preventDefault) {
         event.preventDefault();
       }
 
       if (!this.disabled) {
         this.whenClick?.(event);
-        this.$emit("click", { event });
+        this.$emit("click", event);
       }
     },
   },
@@ -199,6 +200,7 @@ export default defineComponent({
       return (
         <Tag
           class={this.classes}
+          disabled={this.disabled}
           onClick={this.clickHandler}
           v-html={this.html}
         />

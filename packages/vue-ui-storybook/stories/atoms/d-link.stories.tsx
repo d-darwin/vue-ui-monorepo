@@ -16,14 +16,21 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
+    onClick: {
+      action: "clicked", // TODO: double due to native???
+    },
   },
   args: {
     text: "Some text content",
     html: "",
     href: "/some-link",
     disabled: false,
+    preventDefault: true,
     font: FONT.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
+    whenClick: () => {
+      console.log("clicked");
+    },
   },
 };
 

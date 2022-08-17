@@ -62,8 +62,8 @@
 }
 
 .error {
-  /*TODO*/
+  /*TODO: avoid hardcode*/
   margin-top: 2px;
-  /*TODO*/
+  /*TODO: avoid hardcode*/
   color: var(--color-danger-background);
 }

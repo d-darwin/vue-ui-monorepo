@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-codegen",
-  "version": "0.15.1",
+  "version": "0.15.8",
   "scripts": {
     "build": "node index.js",
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"

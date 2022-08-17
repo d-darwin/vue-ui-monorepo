@@ -31,18 +31,24 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
+    onClick: {
+      action: "clicked", // TODO: double due to native???
+    },
   },
   args: {
     text: "Some text content",
     html: "",
-    href: "/some-link",
+    href: "",
     disabled: false,
-    preventDefault: false,
+    preventDefault: true,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
+    whenClick: () => {
+      console.log("clicked");
+    },
   },
   // TODO: Actions
 };

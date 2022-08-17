@@ -9,6 +9,7 @@ import {
   propContentCase,
   propHtmlCase,
   slotDefaultCase,
+  tagCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -34,9 +35,5 @@ describe("DTypography", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  it("Renders props.tag when passed", async () => {
-    const tag = "address";
-    await wrapper.setProps({ tag });
-    expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
-  });
+  tagCase(wrapper);
 });

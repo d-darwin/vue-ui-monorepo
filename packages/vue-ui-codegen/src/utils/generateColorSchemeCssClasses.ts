@@ -14,7 +14,7 @@ export default function (
   background-color: var(${customPropertyName}-background-hover);
 }
 
-.${className}:active
+.${className}:active,
 .${className}.__active {
   color: var(${customPropertyName}-active);
   background-color: var(${customPropertyName}-background-active);
