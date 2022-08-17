@@ -110,13 +110,13 @@ export default defineComponent({
   methods: {
     // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault || this.disabled) {
+      if (this.preventDefault) {
         event.preventDefault();
       }
 
       if (!this.disabled) {
         this.whenClick?.(event);
-        this.$emit("click", { event });
+        this.$emit("click", event);
       }
     },
   },

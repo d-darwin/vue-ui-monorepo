@@ -43,6 +43,15 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
+    onChange: {
+      action: "changed",
+    },
+    onInput: {
+      action: "inputed",
+    },
+    onSubmit: {
+      action: "submitted",
+    },
   },
   args: {
     value: "some value",
@@ -67,8 +76,16 @@ export default {
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     tag: "div",
+    whenChange: (value: Text | undefined) => {
+      console.log("changed", value);
+    },
+    whenInput: (value: Text | undefined) => {
+      console.log("inputed", value);
+    },
+    whenSubmit: (value: Text | undefined) => {
+      console.log("submitted", value);
+    },
   },
-  // TODO: Actions
 };
 
 const Template: Story = (args) => ({

@@ -34,6 +34,12 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
+    onChange: {
+      action: "changed",
+    },
+    onInput: {
+      action: "inputed",
+    },
   },
   args: {
     checked: true,
@@ -56,8 +62,13 @@ export default {
     errorClass: "someCustomErrorClass",
     iconContainerClass: "someIconContainerClass",
     tag: "div",
+    whenChange: (checked: boolean, value: Text) => {
+      console.log("changed", checked, value);
+    },
+    whenInput: (value: Text | undefined) => {
+      console.log("inputed", value);
+    },
   },
-  // TODO: Actions
 };
 
 const Template: Story = (args) => ({
@@ -74,6 +85,10 @@ const SlotIconTemplate: Story = (args) => ({
   setup() {
     return { args };
   },
-  template: `<DCheckbox v-bind="args"><template v-slot:icon><b>&#11044;</b></template></DCheckbox>`,
+  template: `
+    <DCheckbox v-bind="args">
+      <template v-slot:icon><b>&#11044;</b></template>
+    </DCheckbox>
+  `,
 });
 export const SlotIcon = SlotIconTemplate.bind({});
