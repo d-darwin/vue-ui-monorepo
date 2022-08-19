@@ -1,11 +1,11 @@
 import { Story } from "@storybook/vue3";
 import DResponsiveImage from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import "./d-responsive-image.css";
 import {
   OBJECT_FIT,
   LOADING,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image/constants";
+import styles from "./d-responsive-image.css";
 
 export default {
   title: "atoms/DResponsiveImage",
@@ -48,9 +48,9 @@ export default {
 const Template: Story = (args) => ({
   components: { DResponsiveImage },
   setup() {
-    return { args };
+    return { args, styles };
   },
-  template: `<DResponsiveImage v-bind="args" class="dResponsiveImage" />`,
+  template: `<DResponsiveImage v-bind="args" :class="styles.dResponsiveImage" />`,
 });
 
 export const Default = Template.bind({});
