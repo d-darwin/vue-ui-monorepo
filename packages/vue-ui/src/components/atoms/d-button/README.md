@@ -1,6 +1,4 @@
 TODO: more robust description
 
-The component renders as a <b>button</b>, <b>router-link</b> or <b>a</b> depending on props.  
-Feel free to use any attrs you expect with specific tag,  
-they will be pass to the tag automatically.  
+A clickable component which renders as a <b>button</b> element, <b>router-link</b> component or <b>a</b> component depending on props.  
 May be in various sizes and have different corner roundness.

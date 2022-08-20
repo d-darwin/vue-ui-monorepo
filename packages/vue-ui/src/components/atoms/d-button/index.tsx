@@ -25,6 +25,7 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: 
 import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
+import type { Tag } from "./types";
 
 /**
  * TODO: Add description
@@ -42,9 +43,9 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    html: {
+    enableHtml: {
       // TODO: warning
-      type: String,
+      type: Boolean,
     },
     /**
      * TODO: Add description
@@ -85,15 +86,12 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: do we really need it ???
     preventDefault: {
       type: Boolean,
     },
     disabled: {
       type: Boolean,
     },
-    // TODO: button \ link \ vue-route attributes ???
-    // TODO: to \ href
     whenClick: {
       type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
@@ -162,19 +160,16 @@ export default defineComponent({
       return classes;
     },
 
-    // TODO: move to types
-    tag(): "button" | "a" | "router-link" {
+    tag(): Tag {
       if (this.$attrs["href"]) {
-        // TODO: add external links attrs ???
-        return "a";
+        return config.linkTag;
       }
 
-      // TODO: how to check $router presence
       if (this.$attrs["to"]) {
-        return "router-link";
+        return config.routerLinkTag;
       }
 
-      return "button";
+      return config.buttonTag;
     },
   },
 
@@ -194,27 +189,16 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
+    const bindings = {
+      class: this.classes,
+      disabled: this.disabled,
+      onClick: this.clickHandler,
+    };
 
-    // TODO: reduce
-    if (this.html) {
-      return (
-        <Tag
-          class={this.classes}
-          disabled={this.disabled}
-          onClick={this.clickHandler}
-          v-html={this.html}
-        />
-      );
+    if (!this.enableHtml) {
+      return <Tag {...bindings}>{this.text || this.$slots.default?.()}</Tag>;
     }
 
-    return (
-      <Tag
-        class={this.classes}
-        disabled={this.disabled}
-        onClick={this.clickHandler}
-      >
-        {this.$slots.default?.() || this.text}
-      </Tag>
-    );
+    return <Tag {...bindings} v-html={this.text} />;
   },
 });
