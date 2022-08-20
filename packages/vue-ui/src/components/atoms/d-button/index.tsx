@@ -1,6 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
 // TODO: add import order rule
-// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
 // TODO: add import/index ???
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
@@ -22,41 +21,34 @@ import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // 
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
-import type { Text } from "@/types/text";
-import styles from "./index.module.css";
-import config from "./config";
-import type { Tag } from "./types";
 import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@/types/text";
+import type { Tag } from "./types";
+import config from "./config";
+import styles from "./index.module.css";
 
 /**
- * TODO: Add description
+ * A clickable component which renders as <b>button</b> element, <b>router-link</b> component or <b>a</b> element depending on props.
  */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * TODO: Add description
+     * Plain string or HTML if props.enableHtml is true
      */
-    text: {
+    label: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
-     */
-    enableHtml: {
-      // TODO: warning
-      type: Boolean,
-    },
-    /**
-     * TODO: Add description
+     * Defines appearance of the component
      */
     colorScheme: {
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines size of the component
      */
     // TODO: fontSize and size separately ???
     size: {
@@ -64,36 +56,50 @@ export default defineComponent({
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    // TODO: rename paddingType ???
     padding: {
       type: String as PropType<Padding>,
       default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines corner rounding of the component
      */
-    // TODO: rename roundingType ???
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines transition type of the component
      */
-    // TODO: rename transitionType ???
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * Pass true to prevent default click behaviour
+     */
     preventDefault: {
       type: Boolean,
     },
+    /**
+     * Enables html string rendering passed in props.label.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
 
+    /**
+     * Alternative way to catch click event
+     */
     whenClick: {
       type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
+  },
+
+  emits: {
+    [eventName.click]: null,
   },
 
   computed: {
@@ -180,6 +186,11 @@ export default defineComponent({
 
       if (!this.$attrs.disabled) {
         this.whenClick?.(event);
+        /**
+         * Emits on click with MouseEvent payload
+         *
+         * @event click
+         */
         this.$emit(eventName.click, event);
       }
     },
@@ -193,9 +204,10 @@ export default defineComponent({
     };
 
     if (!this.enableHtml) {
-      return <Tag {...bindings}>{this.text || this.$slots.default?.()}</Tag>;
+      /** @slot Use instead of props.label to fully customize content */
+      return <Tag {...bindings}>{this.$slots.default?.() || this.label}</Tag>;
     }
 
-    return <Tag {...bindings} v-html={this.text} />;
+    return <Tag {...bindings} v-html={this.label} />;
   },
 });
