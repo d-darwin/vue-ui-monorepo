@@ -26,6 +26,7 @@ import type { Text } from "@/types/text";
 import styles from "./index.module.css";
 import config from "./config";
 import type { Tag } from "./types";
+import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
 
 /**
  * TODO: Add description
@@ -89,16 +90,14 @@ export default defineComponent({
     preventDefault: {
       type: Boolean,
     },
-    disabled: {
-      type: Boolean,
-    },
+
     whenClick: {
       type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
   },
 
-  // TODO: move to setup() ???
   computed: {
+    // TODO: make some helper :thinking:
     classes(): string[] {
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
@@ -153,7 +152,7 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
 
-      if (this.disabled) {
+      if (this.$attrs.disabled) {
         classes.push("__disabled");
       }
 
@@ -174,15 +173,14 @@ export default defineComponent({
   },
 
   methods: {
-    // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
       if (this.preventDefault) {
         event.preventDefault();
       }
 
-      if (!this.disabled) {
+      if (!this.$attrs.disabled) {
         this.whenClick?.(event);
-        this.$emit("click", event);
+        this.$emit(eventName.click, event);
       }
     },
   },
@@ -191,7 +189,6 @@ export default defineComponent({
     const Tag = this.tag;
     const bindings = {
       class: this.classes,
-      disabled: this.disabled,
       onClick: this.clickHandler,
     };
 
