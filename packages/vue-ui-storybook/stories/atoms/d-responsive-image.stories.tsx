@@ -1,10 +1,10 @@
 import { Story } from "@storybook/vue3";
 import DResponsiveImage from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import {
   OBJECT_FIT,
   LOADING,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image/constants";
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import styles from "./d-responsive-image.css";
 
 export default {
