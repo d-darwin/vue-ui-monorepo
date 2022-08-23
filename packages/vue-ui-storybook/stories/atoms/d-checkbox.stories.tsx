@@ -35,10 +35,10 @@ export default {
       options: [undefined, ...Object.values(FONT)],
     },
     onChange: {
-      action: "changed",
+      action: "change",
     },
     onInput: {
-      action: "inputed",
+      action: "input",
     },
   },
   args: {
@@ -48,7 +48,6 @@ export default {
     inputClass: "someCustomInputClass",
     inputAttrs: { autofocus: true },
     label: "Some label",
-    labelHtml: "<b>Some <i>label</i> html</b>",
     labelFont: undefined,
     labelClass: "someCustomLabelClass",
     disabled: false,
@@ -57,16 +56,15 @@ export default {
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     error: "Some error string",
-    errorHtml: "<b>Some <i>error</i> html</b>",
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     iconContainerClass: "someIconContainerClass",
     tag: "div",
     whenChange: (checked: boolean, value: Text) => {
-      console.log("changed", checked, value);
+      console.log("change", checked, value);
     },
     whenInput: (value: Text | undefined) => {
-      console.log("inputed", value);
+      console.log("input", value);
     },
   },
 };
@@ -92,3 +90,6 @@ const SlotIconTemplate: Story = (args) => ({
   `,
 });
 export const SlotIcon = SlotIconTemplate.bind({});
+
+// TODO: slotted label | enableHtml???
+// TODO: slotted error | enableHtml???

@@ -110,17 +110,16 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * You can pass own class name to the <b>label</b> element.
      */
     labelClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Defines font of the <b>label</b> element. By default depends on props.size
      */
     labelFont: {
       type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
     },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
@@ -129,32 +128,32 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * You can pass own class name to the <b>error</b> element.
      */
     errorClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Defines font of the <b>error</b> element. By default depends on props.size
      */
     errorFont: {
       type: String as PropType<Font>,
     },
     /**
-     * TODO: Add description
+     * You can pass own class name to the icon container element.
      */
     iconContainerClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Pass true to disable <b>input</b> element.
      */
     // TODO: - or add one props.inputAttrs
     disabled: {
       type: Boolean,
     },
     /**
-     * TODO: Add description
+     * Defines container tag of the component
      */
     tag: {
       type: String as PropType<TagName>,
@@ -256,7 +255,8 @@ export default defineComponent({
                 {config.checkMark}
               </div>
             )}
-
+            {/** @slot Use your own checked mark */}{" "}
+            {/*TODO: why not displayed in storybook*/}
             {this.$slots?.icon && this.innerChecked && this.$slots.icon?.()}
           </Trans>
         </div>,
@@ -307,6 +307,8 @@ export default defineComponent({
 
         return (
           <div class={styles[config.labelInnerClassName]}>
+            {/** @slot Use instead of props.label to fully customize label content */}
+            {/*TODO: why not displayed in storybook*/}
             {this.$slots.label?.() || this.label}
           </div>
         );
@@ -339,7 +341,6 @@ export default defineComponent({
       );
     },
 
-    // TODO: make composition / util ???
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
@@ -357,6 +358,7 @@ export default defineComponent({
           return <div class={classes} v-html={this.error} />;
         }
 
+        /** @slot Use instead of props.label to fully customize error content */ /*TODO: why not displayed in storybook*/
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
@@ -403,7 +405,7 @@ export default defineComponent({
         ]}
       >
         {this.renderLabel}
-        {/*TODO: transition | layout shift ???*/}
+        {/*TODO: add transition | what about layout shift ???*/}
         {this.renderError}
       </Tag>
     );
