@@ -29,74 +29,76 @@ import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import config from "./config";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import styles from "./index.module.css";
-import config from "./config";
 
-// TODO: optional state (only for group)
+/**
+ * Renders <b>input</b> element with <i>type="checkbox"</i> and customizable ✓ icon.
+ */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * TODO: Add description
+     * Defines is the component is checked by default
+     */
+    checked: {
+      type: Boolean,
+    },
+    /**
+     * Defines value of the <b>input</b> element
      */
     value: {
       type: [String, Number] as PropType<Text>,
       default: DEFAULT_VALUE,
     },
     /**
-     * TODO: Add description
-     */
-    checked: {
-      type: Boolean,
-    },
-    /**
-     * TODO: Add description
+     * Defines appearance of the component
      */
     colorScheme: {
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines corner rounding of the icon container element
      */
-    // TODO: rename roundingType ???
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines size of the component
      */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rename transitionType ???
+    /**
+     * Defines transition type of the component
+     */
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rounding ???
     /**
-     * Defines <i>id</i> attr of the <b>input</b> tag.<br>
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
     id: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * You can pass own class name to the <b>input</b> element.
      */
     inputClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * You can pass any attributes to the <b>input</b> element.
      */
     inputAttrs: {
       type: Object as PropType<InputHTMLAttributes>,
@@ -110,31 +112,15 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: enableLabelHtml instead ???
-    labelHtml: {
-      // TODO: warning
-      type: String,
-    },
-    // TODO: labelSlot???
-    /**
-     * TODO: Add description
-     */
-    labelFont: {
-      type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
-     */
     labelClass: {
       type: String,
     },
     /**
      * TODO: Add description
      */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
+    labelFont: {
+      type: String as PropType<Font>,
+      // default: FONT.MEDIUM,
     },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
@@ -145,9 +131,7 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
-    // TODO: enableErrorHtml instead ???
-    errorHtml: {
-      // TODO: warning
+    errorClass: {
       type: String,
     },
     /**
@@ -155,13 +139,6 @@ export default defineComponent({
      */
     errorFont: {
       type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
-     */
-    errorClass: {
-      type: String,
     },
     /**
      * TODO: Add description
@@ -172,10 +149,25 @@ export default defineComponent({
     /**
      * TODO: Add description
      */
+    // TODO: - or add one props.inputAttrs
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * TODO: Add description
+     */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+
     whenChange: {
       type: Function as PropType<
         (checked?: boolean, value?: Text) => void | Promise<void>
@@ -304,6 +296,15 @@ export default defineComponent({
 
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
+        if (this.enableHtml) {
+          return (
+            <div
+              class={styles[config.labelInnerClassName]}
+              v-html={this.label}
+            />
+          );
+        }
+
         return (
           <div class={styles[config.labelInnerClassName]}>
             {this.$slots.label?.() || this.label}
@@ -311,19 +312,9 @@ export default defineComponent({
         );
       }
 
-      if (this.labelHtml) {
-        return (
-          <div
-            class={styles[config.labelInnerClassName]}
-            v-html={this.labelHtml}
-          />
-        );
-      }
-
       return null;
     },
 
-    // TODO: make composition / util ???
     renderLabel(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -351,38 +342,22 @@ export default defineComponent({
     // TODO: make composition / util ???
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.errorFont || this.size
-      );
-
       if (this.error || this.$slots.error) {
-        /*TODO: should it be a tooltip to avoid layout shift ?*/
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.errorFont || this.size
         );
-      }
+        const classes = [
+          styles[config.errorClassName],
+          fontStyles[fontClassName],
+          this.errorClass,
+        ];
 
-      // TODO: reduce
-      if (this.errorHtml) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-            v-html={this.errorHtml}
-          />
-        );
+        if (this.enableHtml) {
+          return <div class={classes} v-html={this.error} />;
+        }
+
+        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
       return null;
@@ -428,7 +403,7 @@ export default defineComponent({
         ]}
       >
         {this.renderLabel}
-        {/*TODO: transition*/}
+        {/*TODO: transition | layout shift ???*/}
         {this.renderError}
       </Tag>
     );

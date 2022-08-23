@@ -22,7 +22,7 @@ import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transiti
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
 import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@/types/text";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.module.css";
@@ -48,14 +48,6 @@ export default defineComponent({
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * Defines size of the component
-     */
-    // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
@@ -70,6 +62,14 @@ export default defineComponent({
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines size of the component
+     */
+    // TODO: fontSize and size separately ???
+    size: {
+      type: String as PropType<Size>,
+      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Defines transition type of the component
      */
     transition: {
@@ -82,6 +82,7 @@ export default defineComponent({
     preventDefault: {
       type: Boolean,
     },
+    // TODO: disabled ???
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
