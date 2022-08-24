@@ -29,6 +29,7 @@ import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
@@ -166,12 +167,17 @@ export default defineComponent({
     enableHtml: {
       type: Boolean,
     },
-
+    /**
+     * Alternative way to catch change event
+     */
     whenChange: {
       type: Function as PropType<
         (checked?: boolean, value?: Text) => void | Promise<void>
       >,
     },
+    /**
+     * Alternative way to catch input event
+     */
     whenInput: {
       type: Function as PropType<(value?: Text) => void | Promise<void>>,
     },
@@ -182,6 +188,13 @@ export default defineComponent({
     const { controlId } = useControlId(props);
     return { innerChecked, controlId };
   },
+
+  emits: [
+    eventName.change,
+    eventName.input,
+    eventName.updateChecked,
+    eventName.updateValue,
+  ],
 
   computed: {
     renderIcon(): VNode[] {
@@ -255,8 +268,7 @@ export default defineComponent({
                 {config.checkMark}
               </div>
             )}
-            {/** @slot Use your own checked mark */}{" "}
-            {/*TODO: why not displayed in storybook*/}
+
             {this.$slots?.icon && this.innerChecked && this.$slots.icon?.()}
           </Trans>
         </div>,
@@ -307,8 +319,6 @@ export default defineComponent({
 
         return (
           <div class={styles[config.labelInnerClassName]}>
-            {/** @slot Use instead of props.label to fully customize label content */}
-            {/*TODO: why not displayed in storybook*/}
             {this.$slots.label?.() || this.label}
           </div>
         );
@@ -358,7 +368,6 @@ export default defineComponent({
           return <div class={classes} v-html={this.error} />;
         }
 
-        /** @slot Use instead of props.label to fully customize error content */ /*TODO: why not displayed in storybook*/
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
@@ -371,9 +380,24 @@ export default defineComponent({
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
 
-      this.$emit("change", checked, checked ? value : undefined);
-      this.$emit("update:checked", checked);
-      this.$emit("update:value", checked ? value : undefined);
+      /**
+       * Emits on click with checked and value payload
+       * @event change
+       * @type {checked: Boolean, value: Text | undefined}
+       */
+      this.$emit(eventName.change, checked, checked ? value : undefined);
+      /**
+       * Emits on click with checked payload
+       * @event update:checked
+       * @type {checked: Boolean}
+       */
+      this.$emit(eventName.updateChecked, checked);
+      /**
+       * Emits on click with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(eventName.updateValue, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
 
       this.innerChecked = checked;
@@ -383,12 +407,32 @@ export default defineComponent({
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
 
-      this.$emit("input", checked ? value : undefined);
-      this.$emit("update:value", checked ? value : undefined);
+      /**
+       * Emits on input with checked payload
+       * @event input
+       * @type {value: Text | undefined}
+       */
+      this.$emit(eventName.input, checked ? value : undefined);
+      /**
+       * Emits on input with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(eventName.updateValue, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
     },
   },
 
+  /*TODO: why vue-docgen cant' detect slots ???*/
+  /** @slot $slots.icon
+   * Use your own checked mark
+   * */
+  /** @slot $slots.label
+   * Use instead of props.label to fully customize label content
+   * */
+  /** @slot $slots.error
+   * Use instead of props.error to fully customize error content
+   * */
   render(): VNode {
     const Tag = this.tag;
 

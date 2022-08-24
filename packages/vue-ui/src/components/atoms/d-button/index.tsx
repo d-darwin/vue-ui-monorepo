@@ -99,9 +99,7 @@ export default defineComponent({
     },
   },
 
-  emits: {
-    [eventName.click]: null,
-  },
+  emits: [eventName.click],
 
   computed: {
     // TODO: make some helper :thinking:
@@ -189,7 +187,6 @@ export default defineComponent({
         this.whenClick?.(event);
         /**
          * Emits on click with MouseEvent payload
-         *
          * @event click
          */
         this.$emit(eventName.click, event);

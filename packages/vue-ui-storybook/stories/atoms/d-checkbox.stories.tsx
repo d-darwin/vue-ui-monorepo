@@ -35,7 +35,7 @@ export default {
       options: [undefined, ...Object.values(FONT)],
     },
     onChange: {
-      action: "change",
+      action: "change", // TODO: why catch twice ???
     },
     onInput: {
       action: "input",
@@ -91,5 +91,28 @@ const SlotIconTemplate: Story = (args) => ({
 });
 export const SlotIcon = SlotIconTemplate.bind({});
 
-// TODO: slotted label | enableHtml???
-// TODO: slotted error | enableHtml???
+const SlotLabelTemplate: Story = (args) => ({
+  components: { DCheckbox },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DCheckbox v-bind="args">
+      <template v-slot:label><b>&#11044;</b></template>
+    </DCheckbox>
+  `,
+});
+export const SlotLabel = SlotLabelTemplate.bind({});
+
+const SlotErrorTemplate: Story = (args) => ({
+  components: { DCheckbox },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DCheckbox v-bind="args">
+      <template v-slot:error><b>&#11044;</b></template>
+    </DCheckbox>
+  `,
+});
+export const SlotError = SlotErrorTemplate.bind({});
