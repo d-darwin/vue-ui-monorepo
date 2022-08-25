@@ -6,7 +6,6 @@ import {
   VNode,
 } from "vue";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-// import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
@@ -36,122 +35,110 @@ import config from "./config";
 
 // TODO: mask ???
 // TODO: what about inverse color scheme ???
+/**
+ * Renders <b>input</b> element with label, error and optional icons</i>
+ */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * Defines value of the <b>value</b> tag.
+     * Defines initial <i>value</i> attr of the <b>input</b> element
      */
     value: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * Defines initial <i>placeholder</i> attr of the <b>input</b> element
      */
     placeholder: {
       type: String,
     },
     /**
-     * Defines <i>id</i> attr of the <b>input</b> tag.<br>
+     * Defines <i>id</i> attr of the <b>input</b> element
      */
     id: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: Add description
-    inputType: {
-      type: String as PropType<InputTypes>,
-      default: INPUT_TYPE.TEXT,
-    },
     /**
-     * TODO: Add description
+     * Defines padding type of the <b>input</b> element
      */
-    // TODO: doesnt work properly (((
-    inputSize: {
-      type: Number,
-      default: 1,
-    },
-    /**
-     * TODO: Add description
-     */
-    inputClass: {
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    inputFont: {
-      type: String as PropType<Font>,
-    },
-    /**
-     * TODO: Add description
-     */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
-    /**
-     * Defines content of the <b>label</b> tag.
-     */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: enableLabelHtml instead ???
-    labelHtml: {
-      // TODO: warning
-      type: String,
-    },
-    // TODO: labelSlot???
-    /**
-     * TODO: Add description
-     */
-    labelFont: {
-      type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
-     */
-    labelClass: {
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: rename paddingType ???
     padding: {
       type: String as PropType<Padding>,
       default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines corner rounding of the <b>input</b> element
      */
-    // TODO: rename roundingType ???
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines size of the component
      */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rename transitionType ???
+    /**
+     * Defines transition type of the component
+     */
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines <i>type</i> attr of the <b>input</b> element
+     */
+    inputType: {
+      type: String as PropType<InputTypes>,
+      default: INPUT_TYPE.TEXT,
+    },
+    // TODO: doesnt work properly (((
+    /**
+     * Defines <i>size</i> attr of the <b>input</b> element.<br>
+     */
+    inputSize: {
+      type: Number,
+      default: 1,
+    },
+    /**
+     * You can pass own class name to the <b>input</b> element.
+     */
+    inputClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>input</b> element. By default depends on props.size
+     */
+    inputFont: {
+      type: String as PropType<Font>,
+    },
+    /**
+     * You can pass any attributes to the <b>input</b> element.
+     */
+    inputAttrs: {
+      type: Object as PropType<InputHTMLAttributes>,
+    },
+    /**
+     * Defines content of the <b>label</b> element.
+     */
+    label: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * You can pass own class name to the <b>label</b> element.
+     */
+    labelClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>label</b> element. By default depends on props.size
+     */
+    labelFont: {
+      type: String as PropType<Font>,
     },
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
@@ -160,47 +147,52 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
-     */
-    // TODO: enableErrorHtml instead ???
-    errorHtml: {
-      // TODO: warning
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    errorFont: {
-      type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
+     * You can pass own class name to the <b>error</b> element.
      */
     errorClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Defines font size of the <b>error</b> element. By default depends on props.size
+     */
+    errorFont: {
+      type: String as PropType<Font>,
+    },
+    /**
+     * Pass true to disable <b>input</b> element.
+     */
+    // TODO: - or add one props.inputAttrs
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
-     * TODO: Add description
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+    /**
+     * Alternative way to catch change event
      */
     whenChange: {
       type: Function as PropType<(value: string) => void | Promise<void>>,
     },
     /**
-     * TODO: Add description
+     * Alternative way to catch input event
      */
     whenInput: {
       type: Function as PropType<(value: string) => void | Promise<void>>,
     },
     /**
-     * TODO: Add description
+     * Alternative way to catch submit event
      */
     whenSubmit: {
       type: Function as PropType<(value: string) => void | Promise<void>>,
@@ -213,39 +205,25 @@ export default defineComponent({
 
   computed: {
     renderLabel(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont || this.size
-      );
-
       if (this.label || this.$slots.label) {
-        return (
-          <label
-            for={this.controlId}
-            class={[
-              styles[config.labelClassName],
-              fontStyles[fontClassName],
-              this.labelClass,
-            ]}
-          >
-            {this.$slots.label?.() || this.label}
-          </label>
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.labelFont || this.size
         );
-      }
+        const bindings = {
+          for: this.controlId,
+          class: [
+            styles[config.labelClassName],
+            fontStyles[fontClassName],
+            this.labelClass,
+          ],
+        };
 
-      // TODO: reduce
-      if (this.labelHtml) {
-        return (
-          <label
-            for={this.controlId}
-            class={[
-              styles[config.labelClassName],
-              fontStyles[fontClassName],
-              this.labelClass,
-            ]}
-            v-html={this.labelHtml}
-          />
-        );
+        if (this.enableHtml) {
+          return <div {...bindings} v-html={this.label} />;
+        }
+
+        return <div {...bindings}>{this.$slots.label?.() || this.label}</div>;
       }
 
       return null;
@@ -371,39 +349,24 @@ export default defineComponent({
     },
 
     // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
+    // TODO: how to avoid layout shift
     renderError(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.errorFont || this.size
-      );
-
       if (this.error || this.$slots.error) {
-        /*TODO: should it be a tooltip to avoid layout shift ?*/
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.errorFont || this.size
         );
-      }
+        const classes = [
+          styles[config.errorClassName],
+          fontStyles[fontClassName],
+          this.errorClass,
+        ];
 
-      // TODO: reduce
-      if (this.errorHtml) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-            v-html={this.errorHtml}
-          />
-        );
+        if (this.enableHtml) {
+          return <div class={classes} v-html={this.error} />;
+        }
+
+        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
       return null;

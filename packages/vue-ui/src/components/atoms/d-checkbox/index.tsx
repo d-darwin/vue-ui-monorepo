@@ -37,7 +37,7 @@ import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import styles from "./index.module.css";
 
 /**
- * Renders <b>input</b> element with <i>type="checkbox"</i> and customizable ✓ icon.
+ * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
  */
 export default defineComponent({
   name: config.name,
@@ -105,7 +105,7 @@ export default defineComponent({
       type: Object as PropType<InputHTMLAttributes>,
     },
     /**
-     * Defines content of the <b>label</b> tag.
+     * Defines content of the <b>label</b> element.
      */
     label: {
       type: [String, Number] as PropType<Text>,
@@ -117,13 +117,13 @@ export default defineComponent({
       type: String,
     },
     /**
-     * Defines font of the <b>label</b> element. By default depends on props.size
+     * Defines font size of the <b>label</b> element. By default depends on props.size
      */
     labelFont: {
       type: String as PropType<Font>,
     },
     /**
-     * If not empty renders as an error string below the <b>input</b> tag.
+     * If not empty renders as an error string below the <b>input</b> element.
      */
     error: {
       type: [String, Number] as PropType<Text>,
@@ -135,7 +135,7 @@ export default defineComponent({
       type: String,
     },
     /**
-     * Defines font of the <b>error</b> element. By default depends on props.size
+     * Defines font size of the <b>error</b> element. By default depends on props.size
      */
     errorFont: {
       type: String as PropType<Font>,
@@ -154,7 +154,7 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * Defines container tag of the component
+     * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
