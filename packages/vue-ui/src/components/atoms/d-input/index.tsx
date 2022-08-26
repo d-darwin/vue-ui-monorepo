@@ -37,7 +37,7 @@ import config from "./config";
 // TODO: mask ???
 // TODO: inverse (dark) color scheme ???
 /**
- * Renders <b>input</b> element with label, error and optional icons</i>
+ * Renders <b>input</b> element with label, error and icons slots.
  */
 export default defineComponent({
   name: config.name,

@@ -44,7 +44,7 @@ export default {
       options: [undefined, ...Object.values(FONT)],
     },
     onChange: {
-      action: "chang",
+      action: "change",
     },
     onInput: {
       action: "input",
@@ -74,8 +74,9 @@ export default {
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     tag: "div",
+    enableHtml: false,
     whenChange: (value: Text | undefined) => {
-      console.log("chang", value);
+      console.log("change", value);
     },
     whenInput: (value: Text | undefined) => {
       console.log("input", value);
