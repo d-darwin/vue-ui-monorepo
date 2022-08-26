@@ -228,10 +228,12 @@ export default defineComponent({
         };
 
         if (this.enableHtml) {
-          return <div {...bindings} v-html={this.label} />;
+          return <label {...bindings} v-html={this.label} />;
         }
 
-        return <div {...bindings}>{this.$slots.label?.() || this.label}</div>;
+        return (
+          <label {...bindings}>{this.$slots.label?.() || this.label}</label>
+        );
       }
 
       return null;
