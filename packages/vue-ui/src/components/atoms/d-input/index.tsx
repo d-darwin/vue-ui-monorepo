@@ -339,13 +339,23 @@ export default defineComponent({
         return (
           <div class={styles[config.inputContainerClassName]}>
             {this.$slots.before && (
-              <div class={[config.beforeContainerClass, sizeClassName]}>
+              <div
+                class={[
+                  styles[config.beforeContainerClass],
+                  sizeStyles[sizeClassName],
+                ]}
+              >
                 {this.$slots.before?.()}
               </div>
             )}
             {inputVNode}
             {this.$slots.after && (
-              <div class={[config.afterContainerClass, sizeClassName]}>
+              <div
+                class={[
+                  styles[config.afterContainerClass],
+                  sizeStyles[sizeClassName],
+                ]}
+              >
                 {this.$slots.after?.()}
               </div>
             )}
