@@ -25,16 +25,17 @@ import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transiti
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import type { TagName } from "@/types/tag-name";
-import type { Text } from "@/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import styles from "./index.module.css";
 import config from "./config";
 
 // TODO: mask ???
-// TODO: what about inverse color scheme ???
+// TODO: inverse (dark) color scheme ???
 /**
  * Renders <b>input</b> element with label, error and optional icons</i>
  */
@@ -203,6 +204,13 @@ export default defineComponent({
     return useControlId(props);
   },
 
+  emits: [
+    EVENT_NAME.CHANGE,
+    EVENT_NAME.INPUT,
+    EVENT_NAME.SUBMIT,
+    EVENT_NAME.UPDATE_VALUE,
+  ],
+
   computed: {
     renderLabel(): VNode | null {
       if (this.label || this.$slots.label) {
@@ -281,7 +289,7 @@ export default defineComponent({
     },
 
     // TODO: how to do it in a more elegant way
-    // TODO: tests
+    // TODO: test cases
     inputStyles(): CSSProperties {
       const styles: CSSProperties = {};
 
@@ -377,29 +385,40 @@ export default defineComponent({
     changeHandler(event: Event) {
       const value = (event.target as HTMLInputElement).value;
       /**
-       * Value of the <b>input</b> tag changed. Contains new <i>value</i>.<br>
-       *
+       * Emits on change with value payload
        * @event change
-       * @type {value: String}
+       * @type {value: Text}
        */
-      this.$emit("change", value);
-      this.$emit("update:value", value); // for v-model
+      this.$emit(EVENT_NAME.CHANGE, value);
+      /**
+       * Emits on change with value payload
+       * @event update:value
+       * @type {value: Text}
+       */
+      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
       this.whenChange?.(value);
     },
 
     inputHandler(event: Event) {
       const value = (event.target as HTMLInputElement).value;
-      // TODO: descr like in the changeHandler ???
-      this.$emit("input", value);
-      // TODO: do we need here this.$emit("update:value", value); // for v-model
+      /**
+       * Emits on input with value payload
+       * @event input
+       * @type {value: Text}
+       */
+      this.$emit(EVENT_NAME.INPUT, value);
       this.whenInput?.(value);
     },
 
     keyupHandler(event: KeyboardEvent) {
       if (event.key === "Enter") {
         const value = (event.target as HTMLInputElement).value;
-        // TODO: descr like in the changeHandler ???
-        this.$emit("submit", value);
+        /**
+         * Emits on Enter keyup with value payload
+         * @event submit
+         * @type {value: Text}
+         */
+        this.$emit(EVENT_NAME.SUBMIT, value);
         this.whenSubmit?.(value);
       }
     },

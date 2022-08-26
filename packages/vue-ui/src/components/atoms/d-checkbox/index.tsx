@@ -29,7 +29,7 @@ import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
@@ -190,10 +190,10 @@ export default defineComponent({
   },
 
   emits: [
-    eventName.change,
-    eventName.input,
-    eventName.updateChecked,
-    eventName.updateValue,
+    EVENT_NAME.CHANGE,
+    EVENT_NAME.INPUT,
+    EVENT_NAME.UPDATE_CHECKED,
+    EVENT_NAME.UPDATE_VALUE,
   ],
 
   computed: {
@@ -385,19 +385,19 @@ export default defineComponent({
        * @event change
        * @type {checked: Boolean, value: Text | undefined}
        */
-      this.$emit(eventName.change, checked, checked ? value : undefined);
+      this.$emit(EVENT_NAME.CHANGE, checked, checked ? value : undefined);
       /**
        * Emits on click with checked payload
        * @event update:checked
        * @type {checked: Boolean}
        */
-      this.$emit(eventName.updateChecked, checked);
+      this.$emit(EVENT_NAME.UPDATE_CHECKED, checked);
       /**
        * Emits on click with value payload
        * @event update:value
        * @type {value: Text | undefined}
        */
-      this.$emit(eventName.updateValue, checked ? value : undefined);
+      this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
 
       this.innerChecked = checked;
@@ -412,13 +412,7 @@ export default defineComponent({
        * @event input
        * @type {value: Text | undefined}
        */
-      this.$emit(eventName.input, checked ? value : undefined);
-      /**
-       * Emits on input with value payload
-       * @event update:value
-       * @type {value: Text | undefined}
-       */
-      this.$emit(eventName.updateValue, checked ? value : undefined);
+      this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
     },
   },

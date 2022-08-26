@@ -21,7 +21,7 @@ import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // 
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: move to common config ???
-import eventName from "@darwin-studio/vue-ui/src/constants/event-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Tag } from "./types";
 import config from "./config";
@@ -99,7 +99,7 @@ export default defineComponent({
     },
   },
 
-  emits: [eventName.click],
+  emits: [EVENT_NAME.CLICK],
 
   computed: {
     // TODO: make some helper :thinking:
@@ -189,7 +189,7 @@ export default defineComponent({
          * Emits on click with MouseEvent payload
          * @event click
          */
-        this.$emit(eventName.click, event);
+        this.$emit(EVENT_NAME.CLICK, event);
       }
     },
   },
