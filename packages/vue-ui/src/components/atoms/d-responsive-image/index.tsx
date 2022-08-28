@@ -1,27 +1,32 @@
 import { defineComponent, PropType, VNode } from "vue";
-import type { Text } from "@/types/text";
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
+import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type {
+  PictureSource,
   Source,
   SourceType,
   PreparedSource,
   Loading,
   ObjectFit,
 } from "./types";
-import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { prepareSource } from "./utils";
 import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
-import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
-import { prepareSource } from "./utils";
-import { PictureSource } from "./types";
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
 // TODO: is it a molecule, not atom ???
+/**
+ * The component renders <b>picture</b> tag according to the Responsive Image Principle.<br>
+ * Supports plain string image asset or an array of image assets for different screen width and pixel density.
+ */
 export default defineComponent({
   name: config.name,
 
@@ -96,7 +101,13 @@ export default defineComponent({
     whenLoad: {
       type: Function as PropType<(event?: Event) => void | Promise<void>>,
     },
+    // TODO: description
+    whenError: {
+      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+    },
   },
+
+  emits: [EVENT_NAME.LOAD, EVENT_NAME.ERROR],
 
   computed: {
     sourceType(): SourceType | null {
@@ -104,7 +115,7 @@ export default defineComponent({
         return SOURCE_TYPE.ARRAY;
       }
       if (typeof this.source === "object" && this.source !== null) {
-        return SOURCE_TYPE.OBJECT;
+        return SOURCE_TYPE.OBJECT; // TODO: test case coverage
       }
       if (typeof this.source === "string") {
         return SOURCE_TYPE.STRING;
@@ -147,6 +158,7 @@ export default defineComponent({
           style={{ "object-fit": this.objectFit }}
           class={classes}
           onLoad={this.loadedHandler}
+          onError={this.errorHandler}
         />
       );
     },
@@ -274,8 +286,13 @@ export default defineComponent({
 
   methods: {
     loadedHandler(event: Event): void {
-      this.$emit("load", event);
+      this.$emit(EVENT_NAME.LOAD, event);
       this.whenLoad?.(event);
+    },
+
+    errorHandler(event: Event): void {
+      this.$emit(EVENT_NAME.ERROR, event);
+      this.whenError?.(event);
     },
   },
 

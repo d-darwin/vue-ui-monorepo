@@ -10,20 +10,6 @@ import styles from "./d-responsive-image.css";
 export default {
   title: "atoms/DResponsiveImage",
   component: DResponsiveImage,
-  args: {
-    source: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png", // TODO: different types -> different stories
-    aspectRatio: "3:2",
-    objectFit: OBJECT_FIT.COVER, // TODO: flexible default value
-    caption: "Some caption",
-    captionFont: FONT.TINY, // TODO: flexible default value
-    imageClass: "someImgClass",
-    captionClass: "someCaptionClass",
-    loading: LOADING.LAZY, // TODO: flexible default value
-    whenLoad: () => {
-      console.log("loaded");
-    },
-    onLoad: { action: "loaded" },
-  },
   argTypes: {
     objectFit: {
       control: { type: "select" },
@@ -37,10 +23,23 @@ export default {
       control: { type: "select" },
       options: Object.values(LOADING),
     },
+    onLoad: { action: "load" },
+    onError: { action: "error" },
   },
-  parameters: {
-    actions: {
-      handles: ["load"],
+  args: {
+    source: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png", // TODO: different types -> different stories
+    aspectRatio: "3:2",
+    objectFit: OBJECT_FIT.COVER, // TODO: flexible default value
+    caption: "Some caption",
+    captionFont: FONT.TINY, // TODO: flexible default value
+    imageClass: "someImgClass",
+    captionClass: "someCaptionClass",
+    loading: LOADING.LAZY, // TODO: flexible default value
+    whenLoad: () => {
+      console.log("load");
+    },
+    whenError: () => {
+      console.log("error");
     },
   },
 };
