@@ -98,6 +98,7 @@ export default defineComponent({
       type: String as PropType<Loading>,
       default: LOADING.LAZY,
     },
+    // TODO: preventDefault ???
     // TODO: caption gaps/spacing
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
@@ -308,16 +309,30 @@ export default defineComponent({
 
   methods: {
     loadedHandler(event: Event): void {
+      /**
+       * Emits on image load with Event payload
+       * @event load
+       * @type {event: Event}
+       */
       this.$emit(EVENT_NAME.LOAD, event);
       this.whenLoad?.(event);
     },
 
     errorHandler(event: Event): void {
+      /**
+       * Emits on image error with Event payload
+       * @event click
+       * @type {event: Event}
+       */
       this.$emit(EVENT_NAME.ERROR, event);
       this.whenError?.(event);
     },
   },
 
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
+   * */
   render(): VNode | null {
     switch (this.sourceType) {
       case SOURCE_TYPE.ARRAY:
