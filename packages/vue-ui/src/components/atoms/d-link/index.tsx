@@ -15,51 +15,58 @@ import styles from "./index.module.css";
 import config from "./config";
 
 /**
- * TODO: Add description
+ * Renders as a <b>router-link</b> or just as an <b>a</b> element depending on props.
  */
 export default defineComponent({
   name: config.name,
 
-  // TODO: add props factory
+  // TODO: add props factory ???
   props: {
     /**
-     * TODO: Add description
+     * Plain string or HTML if props.enableHtml is true
      */
-    text: {
+    label: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * Defines font size of the component. By default, depends on props.size
      */
-    html: {
-      // TODO: warning
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: description
     font: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
     },
     /**
-     * TODO: Add description
+     * Defines transition type of the component
      */
-    // TODO: rename transitionType ???
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: to \ href
-    whenClick: {
-      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
+    /**
+     * Pass true to disable click events.
+     */
+    disabled: {
+      type: Boolean,
     },
+    /**
+     * Pass true to prevent default click behaviour
+     */
     preventDefault: {
       type: Boolean,
     },
-    disabled: {
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
       type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch click event
+     */
+    whenClick: {
+      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
   },
 
@@ -123,21 +130,15 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
+    const bindings = {
+      class: this.classes,
+      onClick: this.clickHandler,
+    };
 
-    if (this.html) {
-      return (
-        <Tag
-          class={this.classes}
-          onClick={this.clickHandler}
-          v-html={this.html}
-        />
-      );
+    if (this.enableHtml) {
+      return <Tag {...bindings} v-html={this.label} />;
     }
 
-    return (
-      <Tag class={this.classes} onClick={this.clickHandler}>
-        {this.$slots.default?.() || this.text}
-      </Tag>
-    );
+    return <Tag {...bindings}>{this.$slots.default?.() || this.label}</Tag>;
   },
 });

@@ -167,6 +167,7 @@ export default defineComponent({
     enableHtml: {
       type: Boolean,
     },
+
     /**
      * Alternative way to catch change event
      */
