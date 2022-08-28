@@ -1,6 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
@@ -22,10 +21,10 @@ import styles from "./index.module.css";
 import config from "./config";
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
-// TODO: is it a molecule, not atom ???
+// TODO: is it a molecule, not an atom ???
 /**
- * The component renders <b>picture</b> tag according to the Responsive Image Principle.<br>
- * Supports plain string image asset or an array of image assets for different screen width and pixel density.
+ * The component renders <b>picture</b> element according to the Responsive Image Principle.<br>
+ * Supports plain image source string, object with srcset and array of image assets for different screen width and pixel density.
  */
 export default defineComponent({
   name: config.name,
@@ -33,75 +32,91 @@ export default defineComponent({
   components: { DAspectRatio },
 
   props: {
-    // TODO: think about the structure
     /**
-     * An image asset or an array of such assets.
-     * If empty, the component renders default <b>DIconImage</b>.<br>
      * Expected formats:<br>
-     * * '/image_src_string' or<br>
+     * * '/image_src_string'<br>
      * * { srcset: [<br>
      *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
      *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
-     *      ]<br>
-     *   }<br> or<br>
+     *   ]}<br>
      * * [<br>
      *    { min_width: 320, src: 'img_src_string_xs', type: 'image/jpeg' },<br>
      *    { max_width: 1280, srcset: [<br>
      *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
      *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
-     *      ]<br>
-     *    }<br>
-     *  ].
+     *    ]}<br>
+     *  ]
      */
-    // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
-    // https://developer.mozilla.org/ru/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B
     source: {
+      // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
       type: [Array, Object, String] as PropType<Source>,
       // TODO: validator or it is not efficient???
     },
     /**
      * Aspect ratio of the picture.
-     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
+     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'
      */
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       validator: aspectRationValidator,
     },
-    // TODO: description
+    /**
+     * Renders to the <i>object-fit</i> attr of the <b>img</b> element
+     */
     objectFit: {
       type: String as PropType<ObjectFit>,
       default: OBJECT_FIT.COVER,
     },
-    // TODO: description
+    /**
+     * You can pass own class name to the <b>img</b> element.
+     */
     imageClass: {
       type: String,
     },
     /**
-     * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they aren't presented.
+     * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they don't present
      */
     caption: {
       type: String,
     },
-    // TODO: description
+    /**
+     * Defines font size of the <b>caption</b> element. By default depends on props.size
+     */
     captionFont: {
       type: String as PropType<Font>,
-      default: FONT.SMALL, // TODO: flexible default
     },
-    // TODO: description
+    /**
+     * You can pass own class name to the <b>caption</b> element.
+     */
     captionClass: {
       type: String,
     },
-    // TODO: caption gaps/spacing
-    // TODO: description
+    /**
+     * Renders to the <i>loading</i> attr of the <b>img</b> element
+     */
     loading: {
       type: String as PropType<Loading>,
       default: LOADING.LAZY,
     },
-    // TODO: description
+    // TODO: caption gaps/spacing
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      // TODO: use, test case
+      type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch load event
+     */
     whenLoad: {
       type: Function as PropType<(event?: Event) => void | Promise<void>>,
     },
-    // TODO: description
+    /**
+     * Alternative way to catch error event
+     */
     whenError: {
       type: Function as PropType<(event?: Event) => void | Promise<void>>,
     },
