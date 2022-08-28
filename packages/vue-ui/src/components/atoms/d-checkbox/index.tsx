@@ -418,14 +418,17 @@ export default defineComponent({
     },
   },
 
-  /*TODO: why vue-docgen cant' detect slots ???*/
-  /** @slot $slots.icon
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot $slots.icon
    * Use your own checked mark
    * */
-  /** @slot $slots.label
+  /**
+   * @slot $slots.label
    * Use instead of props.label to fully customize label content
    * */
-  /** @slot $slots.error
+  /**
+   * @slot $slots.error
    * Use instead of props.error to fully customize error content
    * */
   render(): VNode {

@@ -10,7 +10,9 @@ import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // 
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
-import type { Text } from "@/types/text";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { Tag } from "./types";
 import styles from "./index.module.css";
 import config from "./config";
 
@@ -70,6 +72,8 @@ export default defineComponent({
     },
   },
 
+  emits: [EVENT_NAME.CLICK],
+
   // TODO: move to setup() ???
   computed: {
     classes(): string[] {
@@ -97,48 +101,59 @@ export default defineComponent({
       ];
 
       if (this.disabled) {
-        classes.push("__disabled");
+        classes.push(styles["__disabled"]);
       }
 
       return classes;
     },
 
-    // TODO: move to types
-    tag(): "a" | "router-link" {
-      // TODO: how to check $router presence
+    tag(): Tag {
       if (this.$attrs["to"]) {
-        return "router-link";
+        return config.routerLinkTag;
       }
 
-      return "a";
+      return config.linkTag;
+    },
+
+    bindings(): Record<
+      string,
+      string[] | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      return {
+        class: this.classes,
+        onClick: this.clickHandler,
+      };
     },
   },
 
   methods: {
-    // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
       if (this.preventDefault) {
         event.preventDefault();
       }
 
       if (!this.disabled) {
-        this.whenClick?.(event);
+        /**
+         * Emits on click with MouseEvent payload
+         * @event click
+         * @type {event: MouseEvent}
+         */
         this.$emit("click", event);
+        this.whenClick?.(event);
       }
     },
   },
 
   render(): VNode {
     const Tag = this.tag;
-    const bindings = {
-      class: this.classes,
-      onClick: this.clickHandler,
-    };
 
-    if (this.enableHtml) {
-      return <Tag {...bindings} v-html={this.label} />;
+    if (!this.enableHtml) {
+      /** @slot Use instead of props.label to fully customize content */
+      return (
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
+      );
     }
 
-    return <Tag {...bindings}>{this.$slots.default?.() || this.label}</Tag>;
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

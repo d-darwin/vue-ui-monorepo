@@ -158,7 +158,7 @@ export default defineComponent({
       ];
 
       if (this.$attrs.disabled) {
-        classes.push("__disabled");
+        classes.push(styles["__disabled"]);
       }
 
       return classes;
@@ -175,6 +175,16 @@ export default defineComponent({
 
       return config.buttonTag;
     },
+
+    bindings(): Record<
+      string,
+      string[] | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      return {
+        class: this.classes,
+        onClick: this.clickHandler,
+      };
+    },
   },
 
   methods: {
@@ -184,28 +194,27 @@ export default defineComponent({
       }
 
       if (!this.$attrs.disabled) {
-        this.whenClick?.(event);
         /**
          * Emits on click with MouseEvent payload
          * @event click
+         * @type {event: MouseEvent}
          */
         this.$emit(EVENT_NAME.CLICK, event);
+        this.whenClick?.(event);
       }
     },
   },
 
   render(): VNode {
     const Tag = this.tag;
-    const bindings = {
-      class: this.classes,
-      onClick: this.clickHandler,
-    };
 
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
-      return <Tag {...bindings}>{this.$slots.default?.() || this.label}</Tag>;
+      return (
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
+      );
     }
 
-    return <Tag {...bindings} v-html={this.label} />;
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

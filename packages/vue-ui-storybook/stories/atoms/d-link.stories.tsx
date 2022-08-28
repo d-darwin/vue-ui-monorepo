@@ -17,19 +17,19 @@ export default {
       options: Object.values(TRANSITION),
     },
     onClick: {
-      action: "clicked", // TODO: double due to native???
+      action: "click",
     },
   },
   args: {
-    text: "Some text content",
-    html: "",
+    label: "Some text content",
     href: "/some-link",
-    disabled: false,
-    preventDefault: true,
     font: FONT.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
+    disabled: false,
+    preventDefault: true,
+    enableHtml: false,
     whenClick: () => {
-      console.log("clicked");
+      console.log("click");
     },
   },
 };
@@ -48,6 +48,6 @@ const SlotTemplate: Story = (args) => ({
   setup() {
     return { args };
   },
-  template: `<DLink v-bind="args">Some <a href="#">slot</a> content</DLink>`,
+  template: `<DLink v-bind="args">Some <b>slot</b> content</DLink>`,
 });
 export const SlotDefault = SlotTemplate.bind({});
