@@ -51,15 +51,27 @@ const Template: Story = (args) => ({
   },
   template: `<DResponsiveImage v-bind="args" :class="styles.dResponsiveImage" />`,
 });
-
 export const Default = Template.bind({});
+
+const CaptionSlotTemplate: Story = (args) => ({
+  components: { DResponsiveImage },
+  setup() {
+    return { args, styles };
+  },
+  template: `
+    <DResponsiveImage v-bind="args" :class="styles.dResponsiveImage">
+      <template v-slot:caption><b>Caption slot</b></template>
+    </DResponsiveImage>
+  `,
+});
+export const SlotCaption = CaptionSlotTemplate.bind({});
 
 export const WithImageType = Template.bind({});
 WithImageType.args = {
   source: [
     {
       type: "image/png",
-      src: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png",
+      src: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png", // TODO: local source
     },
   ],
 };
@@ -70,7 +82,7 @@ WithPixelDensity.args = {
     srcset: [
       {
         density: "1x",
-        src: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png",
+        src: "https://www.linkpicture.com/q/Screenshot-2022-01-31-114450.png", // TODO: local source
       },
       {
         density: "2x",

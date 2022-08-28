@@ -183,12 +183,19 @@ export default defineComponent({
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.captionFont
       );
+      const classes = [this.captionClass, fontStyles[fontClassName]];
 
-      return (
-        <figcaption class={[this.captionClass, fontStyles[fontClassName]]}>
-          {this.caption}
-        </figcaption>
-      );
+      if (!this.enableHtml) {
+        return (
+          /*TODO: this.$slots.caption test case*/
+          <figcaption class={classes}>
+            {this.$slots.caption?.() || this.caption}
+          </figcaption>
+        );
+      }
+
+      // TODO: enableHtml test case
+      return <figcaption class={classes} v-html={this.caption} />;
     },
 
     hasContainer(): boolean {
@@ -215,7 +222,7 @@ export default defineComponent({
       }
 
       /* has figure container with figcaption */
-      if (!this.aspectRatio && this.caption) {
+      if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
           <figure class={styles[config.className]}>
             {this.imgVNode}
@@ -276,7 +283,7 @@ export default defineComponent({
       }
 
       /* has figure container with figcaption */
-      if (!this.aspectRatio && this.caption) {
+      if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
           <figure class={styles[config.className]}>
             {pictureVNode}
