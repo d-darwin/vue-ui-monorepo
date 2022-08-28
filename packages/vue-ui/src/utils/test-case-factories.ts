@@ -22,18 +22,18 @@ function getTargetName(
 }
 
 export function propContentCase(wrapper: VueWrapper) {
-  return it("Renders props.content", async () => {
-    const label = "Some text content";
-    await wrapper.setProps({ label });
-    expect(wrapper.text()).toMatch(label);
+  return it("Renders props.html", async () => {
+    const content = "some text content";
+    await wrapper.setProps({ content });
+    expect(wrapper.html()).toMatch(content);
   });
 }
 
-export function propHtmlCase(wrapper: VueWrapper) {
+export function contentHtmlCase(wrapper: VueWrapper) {
   return it("Renders props.html", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
+    const contentHtml = `<div>some <b>html</b> content</div>`;
+    await wrapper.setProps({ content: contentHtml, enableHtml: true });
+    expect(wrapper.html()).toMatch(contentHtml);
   });
 }
 
@@ -94,6 +94,14 @@ export function minControlWidthCase(wrapper: VueWrapper) {
   });
 }
 
+export function propLabelCase(wrapper: VueWrapper) {
+  return it("Renders props.content", async () => {
+    const label = "Some text content";
+    await wrapper.setProps({ label });
+    expect(wrapper.text()).toMatch(label);
+  });
+}
+
 export function labelPresenceCase(
   wrapper: VueWrapper,
   labelSelector = "label"
@@ -101,8 +109,6 @@ export function labelPresenceCase(
   return it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
-
-    console.log(wrapper.html());
 
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeTruthy();
@@ -407,6 +413,7 @@ export function disabledControlCase(
 
   return it(`${targetName} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
     await wrapper.setProps({ disabled: true });
+    console.log(wrapper.html());
     expect(targetWrapper.attributes()?.disabled).toBe("");
     expect(wrapper.classes()).toContain("__disabled");
   });

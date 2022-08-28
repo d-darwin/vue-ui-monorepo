@@ -16,8 +16,8 @@ import {
   outlineClassCase,
   paddingClassesCase,
   preventDefaultCase,
-  propContentCase,
-  propHtmlCase,
+  propLabelCase,
+  contentHtmlCase,
   roundingClassCase,
   routerLinkComponentCase,
   sizeClassCase,
@@ -31,9 +31,9 @@ describe("DButton", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propContentCase(wrapper);
+  propLabelCase(wrapper);
 
-  propHtmlCase(wrapper);
+  contentHtmlCase(wrapper);
 
   slotDefaultCase(DButton);
 
@@ -72,11 +72,4 @@ describe("DButton", () => {
   preventDefaultCase(wrapper);
 
   disabledControlCase(wrapper, wrapper);
-
-  // TODO: check disabled attr
-  /*it("Renders :disabled attr if prop.disabled is passed and tag is Button", async () => {
-    await wrapper.setProps({ href: null, to: null, disabled: true });
-    console.log(wrapper.html());
-    expect(wrapper.attributes()).toContain("disabled");
-  });*/
 });

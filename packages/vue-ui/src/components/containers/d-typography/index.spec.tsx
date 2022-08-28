@@ -7,7 +7,7 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import {
   baseClassCase,
   propContentCase,
-  propHtmlCase,
+  contentHtmlCase,
   slotDefaultCase,
   tagCase,
 } from "@/utils/test-case-factories";
@@ -20,7 +20,7 @@ describe("DTypography", () => {
 
   propContentCase(wrapper);
 
-  propHtmlCase(wrapper);
+  contentHtmlCase(wrapper);
 
   slotDefaultCase(DTypography);
 

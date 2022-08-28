@@ -99,7 +99,7 @@ const SlotLabelTemplate: Story = (args) => ({
   },
   template: `
     <DCheckbox v-bind="args">
-      <template v-slot:label><b>&#11044;</b></template>
+      <template v-slot:label><b>Label slot</b></template>
     </DCheckbox>
   `,
 });
@@ -112,7 +112,7 @@ const SlotErrorTemplate: Story = (args) => ({
   },
   template: `
     <DCheckbox v-bind="args">
-      <template v-slot:error><b>&#11044;</b></template>
+      <template v-slot:error><b>Error slot</b></template>
     </DCheckbox>
   `,
 });

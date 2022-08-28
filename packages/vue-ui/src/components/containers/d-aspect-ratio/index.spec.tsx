@@ -2,7 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import DAspectRatio from "@/components/containers/d-aspect-ratio/index";
 import {
   baseClassCase,
-  propHtmlCase,
+  contentHtmlCase,
   slotDefaultCase,
   tagCase,
 } from "@/utils/test-case-factories";
@@ -16,7 +16,7 @@ describe("DTypography", () => {
 
   baseClassCase(wrapperWithFullCSSSupport, config.className);
 
-  propHtmlCase(wrapperWithFullCSSSupport);
+  contentHtmlCase(wrapperWithFullCSSSupport);
 
   slotDefaultCase(DAspectRatio);
 
