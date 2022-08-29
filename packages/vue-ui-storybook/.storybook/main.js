@@ -21,6 +21,10 @@ module.exports = {
       use: 'vue-docgen-loader',
       enforce: 'post'
     })
+    config.module.rules.push({
+      test: /\.(png|jpg|jpeg|gif|webp)$/i,
+      type: "asset/resource",
+    })
     return config;
   },
 }
