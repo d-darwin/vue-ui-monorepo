@@ -1,4 +1,5 @@
 // TODO: description
+import config from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/config";
 
 const aspectRationValidator = (val: string | number): boolean => {
   if (!isNaN(Number(val))) {
@@ -6,17 +7,10 @@ const aspectRationValidator = (val: string | number): boolean => {
   }
 
   const stringVal = String(val);
-  let [width, height] = stringVal.split("/");
-  if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-    return true;
-  }
-
-  [width, height] = stringVal.split(":");
-  if (parseInt(width?.trim()) && parseInt(height?.trim())) {
-    return true;
-  }
-
-  return false;
+  return config.separatorList.some((separator) => {
+    const [width, height] = stringVal.split(separator);
+    return !!(parseInt(width?.trim()) && parseInt(height?.trim()));
+  });
 };
 
 export default aspectRationValidator;
