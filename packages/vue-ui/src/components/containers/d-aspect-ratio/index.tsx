@@ -85,57 +85,63 @@ export default defineComponent({
       return CSS?.supports("aspect-ratio: auto") || false;
     },
 
-    style(): CSSProperties {
-      if (this.hasAspectRationNativeSupport) {
-        return {
-          "aspect-ratio": this.formattedAspectRatio,
-        };
-      }
+    wrapperStyle(): CSSProperties {
+      return {
+        "aspect-ratio": this.formattedAspectRatio,
+      };
+    },
 
+    innerStyle(): CSSProperties {
       return { "padding-bottom": this.paddingBottom };
     },
-  },
 
-  render(): VNode {
-    const Tag = this.tag;
+    renderNative(): VNode {
+      const Tag = this.tag;
+      const wrapperBindings = {
+        class: styles[config.className],
+        style: this.wrapperStyle,
+      };
 
-    // TODO: simplify
-    if (this.hasAspectRationNativeSupport) {
       if (!this.enableHtml) {
         return (
-          <Tag class={styles[config.className]} style={this.style}>
-            {this.$slots.default?.()}
+          <Tag {...wrapperBindings}>
+            {this.$slots.default?.() || this.content}
+          </Tag>
+        );
+      }
+
+      return <Tag {...wrapperBindings} v-html={this.content} />;
+    },
+
+    renderHack(): VNode {
+      const Tag = this.tag;
+      const innerBindings = {
+        class: styles[config.innerClassName],
+        style: this.innerStyle,
+      };
+      if (!this.enableHtml) {
+        return (
+          <Tag class={styles[config.className]}>
+            <div {...innerBindings}>
+              {this.$slots.default?.() || this.content}
+            </div>
           </Tag>
         );
       }
 
       return (
-        <Tag
-          class={styles[config.className]}
-          style={this.style}
-          v-html={this.content}
-        />
-      );
-    }
-
-    if (!this.enableHtml) {
-      return (
         <Tag class={styles[config.className]}>
-          <div class={styles[config.innerClassName]} style={this.style}>
-            {this.$slots.default?.()}
-          </div>
+          <div {...innerBindings} v-html={this.content} />
         </Tag>
       );
+    },
+  },
+
+  render(): VNode {
+    if (this.hasAspectRationNativeSupport) {
+      return this.renderNative;
     }
 
-    return (
-      <Tag class={styles[config.className]}>
-        <div
-          class={styles[config.innerClassName]}
-          style={this.style}
-          v-html={this.content}
-        />
-      </Tag>
-    );
+    return this.renderHack;
   },
 });
