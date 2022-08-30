@@ -17,6 +17,12 @@ describe("DTypography", () => {
 
   baseClassCase(wrapperWithFullCSSSupport, config.className);
 
+  propContentCase(wrapperWithoutCSSSupport);
+
+  propContentCase(wrapperWithFullCSSSupport);
+
+  contentHtmlCase(wrapperWithoutCSSSupport);
+
   contentHtmlCase(wrapperWithFullCSSSupport);
 
   slotDefaultCase(DAspectRatio);
@@ -125,8 +131,6 @@ describe("DTypography", () => {
     );
     expect(innerElement.exists()).toBeTruthy();
   });
-
-  propContentCase(wrapperWithoutCSSSupport);
 
   tagCase(wrapperWithFullCSSSupport);
 });

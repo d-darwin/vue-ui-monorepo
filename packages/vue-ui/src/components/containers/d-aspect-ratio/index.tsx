@@ -118,6 +118,7 @@ export default defineComponent({
         class: styles[config.innerClassName],
         style: this.innerStyle,
       };
+
       if (!this.enableHtml) {
         return (
           <Tag class={styles[config.className]}>
@@ -128,7 +129,6 @@ export default defineComponent({
         );
       }
 
-      // TODO: test case
       return (
         <Tag class={styles[config.className]}>
           <div {...innerBindings} v-html={this.content} />

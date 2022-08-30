@@ -70,6 +70,20 @@ describe("DResponsiveImage", () => {
     expect(whenLoad).toHaveBeenCalledTimes(1);
   });
 
+  it("Should emit error event on img not loaded", async () => {
+    const imgEl = wrapper.find("img");
+    await imgEl.trigger("error");
+    expect(wrapper.emitted("error")).toBeTruthy();
+  });
+
+  it("Should call props.whenError on img not loaded if passed", async () => {
+    const whenError = jest.fn();
+    await wrapper.setProps({ whenError });
+    const imgEl = wrapper.find("img");
+    await imgEl.trigger("error");
+    expect(whenError).toHaveBeenCalledTimes(1);
+  });
+
   it("Should render as DAspectRatio container if props.source, props.aspectRatio are passed and no props.caption", async () => {
     const aspectRatio = "3/2";
     await wrapper.setProps({ aspectRatio, caption: undefined });
@@ -100,6 +114,14 @@ describe("DResponsiveImage", () => {
     const figcaptionElClasses = figcaptionEl.classes();
     expect(figcaptionElClasses).toContain(fontClassName);
     expect(figcaptionElClasses).toContain(captionClass);
+  });
+
+  it("Should render props.caption as html if props.enableHtml is passed", async () => {
+    const caption = `<b>Dome caption <i>html</i></b>`;
+    await wrapper.setProps({ caption, enableHtml: true });
+    const figcaptionContentEl = wrapper.find("figcaption b");
+    expect(figcaptionContentEl.exists()).toBeTruthy();
+    expect(figcaptionContentEl.html()).toBe(caption);
   });
 
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {

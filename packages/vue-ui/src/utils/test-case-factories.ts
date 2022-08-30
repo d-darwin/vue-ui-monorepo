@@ -413,7 +413,6 @@ export function disabledControlCase(
 
   return it(`${targetName} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
     await wrapper.setProps({ disabled: true });
-    console.log(wrapper.html());
     expect(targetWrapper.attributes()?.disabled).toBe("");
     expect(wrapper.classes()).toContain("__disabled");
   });

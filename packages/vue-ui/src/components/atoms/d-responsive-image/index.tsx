@@ -195,7 +195,6 @@ export default defineComponent({
         );
       }
 
-      // TODO: enableHtml test case
       return <figcaption class={classes} v-html={this.caption} />;
     },
 
