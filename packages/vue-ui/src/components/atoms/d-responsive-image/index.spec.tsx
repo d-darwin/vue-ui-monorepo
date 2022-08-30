@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import DResponsiveImage from "@/components/atoms/d-responsive-image";
 import DAspectRatio from "@/components/containers/d-aspect-ratio";
 import { baseClassCase } from "@/utils/test-case-factories";
@@ -247,11 +247,13 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source type if passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       { min_width: 640, src: "./img_src_string_md.webp", type: "image/webp" },
       { min_width: 320, src: "./img_src_string_xs.avif", type: "image/avif" },
     ];
     await wrapper.setProps({ source });
+    await wrapper.vm.$forceUpdate();
 
     const sourceElList = wrapper.findAll("source");
     expect(sourceElList[0].attributes()?.type).toBe(source[0].type);
@@ -259,6 +261,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source media attr if min_width, max_width or media is passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       { min_width: 640, src: "./img_src_string_md.png" },
       { max_width: 320, src: "./img_src_string_xs.png" },
@@ -282,6 +285,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Sources shouldn't contain media attr if item hasn't min_width, max_width or media", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [{ src: "./img_src_string_md.png" }];
     await wrapper.setProps({ source });
 
@@ -290,6 +294,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source media attr with density mark if source with srcset is passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       {
         min_width: 640,
