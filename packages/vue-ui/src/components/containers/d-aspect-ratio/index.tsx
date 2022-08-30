@@ -40,7 +40,6 @@ export default defineComponent({
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {
-      // TODO: test case
       type: Boolean,
     },
   },
@@ -129,6 +128,7 @@ export default defineComponent({
         );
       }
 
+      // TODO: test case
       return (
         <Tag class={styles[config.className]}>
           <div {...innerBindings} v-html={this.content} />
