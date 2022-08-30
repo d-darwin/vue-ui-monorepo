@@ -10,58 +10,69 @@ import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // 
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
-import type { Text } from "@/types/text";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { Tag } from "./types";
 import styles from "./index.module.css";
 import config from "./config";
 
 /**
- * TODO: Add description
+ * Renders as a <b>router-link</b> or just as an <b>a</b> element depending on props.
  */
 export default defineComponent({
   name: config.name,
 
-  // TODO: add props factory
+  // TODO: add props factory ???
   props: {
     /**
-     * TODO: Add description
+     * Plain string or HTML if props.enableHtml is true
      */
-    text: {
+    label: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * Defines font size of the component. By default, depends on props.size
      */
-    html: {
-      // TODO: warning
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: description
     font: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
     },
     /**
-     * TODO: Add description
+     * Defines transition type of the component
      */
-    // TODO: rename transitionType ???
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: to \ href
-    whenClick: {
-      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
-    },
-    preventDefault: {
-      type: Boolean,
-    },
+    /**
+     * Pass true to disable click events.
+     */
     disabled: {
       type: Boolean,
     },
+    /**
+     * Pass true to prevent default click behaviour
+     */
+    preventDefault: {
+      type: Boolean,
+    },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch click event
+     */
+    whenClick: {
+      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
+    },
   },
+
+  emits: [EVENT_NAME.CLICK],
 
   // TODO: move to setup() ???
   computed: {
@@ -90,33 +101,45 @@ export default defineComponent({
       ];
 
       if (this.disabled) {
-        classes.push("__disabled");
+        classes.push(styles["__disabled"]);
       }
 
       return classes;
     },
 
-    // TODO: move to types
-    tag(): "a" | "router-link" {
-      // TODO: how to check $router presence
+    tag(): Tag {
       if (this.$attrs["to"]) {
-        return "router-link";
+        return config.routerLinkTag;
       }
 
-      return "a";
+      return config.linkTag;
+    },
+
+    bindings(): Record<
+      string,
+      string[] | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      return {
+        class: this.classes,
+        onClick: this.clickHandler,
+      };
     },
   },
 
   methods: {
-    // TODO: move to setup()
     clickHandler(event: MouseEvent): void | Promise<void> {
       if (this.preventDefault) {
         event.preventDefault();
       }
 
       if (!this.disabled) {
-        this.whenClick?.(event);
+        /**
+         * Emits on click with MouseEvent payload
+         * @event click
+         * @type {event: MouseEvent}
+         */
         this.$emit("click", event);
+        this.whenClick?.(event);
       }
     },
   },
@@ -124,20 +147,13 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    if (this.html) {
+    if (!this.enableHtml) {
+      /** @slot Use instead of props.label to fully customize content */
       return (
-        <Tag
-          class={this.classes}
-          onClick={this.clickHandler}
-          v-html={this.html}
-        />
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
       );
     }
 
-    return (
-      <Tag class={this.classes} onClick={this.clickHandler}>
-        {this.$slots.default?.() || this.text}
-      </Tag>
-    );
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

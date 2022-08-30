@@ -5,39 +5,48 @@ import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TO
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import styles from "./index.module.css";
 import config from "./config";
 
-// TODO: description
+/**
+ * The component is intended to render big text content. Use font styles from @darwin-studio/vue-ui-codegen/dist/styles/font.css instead to render short interface copyright texts.
+ */
 export default defineComponent({
   name: config.name,
 
   props: {
-    // TODO: description
-    text: {
+    /**
+     * Plain string or HTML if props.enableHtml is true
+     */
+    content: {
       type: [String, Number] as PropType<Text>,
     },
-    // TODO: description
-    html: {
-      // TODO: warning
-      type: String,
-    },
-    // TODO: description
+    /**
+     * Defines font size of the component. By default, depends on props.size
+     */
     font: {
       type: String as PropType<Font>,
       default: FONT.MEDIUM,
     },
-    // TODO: description
+    /**
+     * Defines container element type of the component
+     */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
   },
 
-  // TODO: move to setup() - tests fails ???
   computed: {
     classes(): string[] {
       const fontClassName = prepareCssClassName(
@@ -51,12 +60,15 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    if (this.html) {
-      return <Tag class={this.classes} v-html={this.html} />;
+    if (!this.enableHtml) {
+      /** @slot Use instead of props.content to fully customize content */
+      return (
+        <Tag class={this.classes}>
+          {this.$slots.default?.() || this.content}
+        </Tag>
+      );
     }
 
-    return (
-      <Tag class={this.classes}>{this.$slots.default?.() || this.text}</Tag>
-    );
+    return <Tag class={this.classes} v-html={this.content} />;
   },
 });

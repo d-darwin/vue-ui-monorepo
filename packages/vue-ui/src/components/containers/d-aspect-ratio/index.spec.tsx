@@ -2,7 +2,8 @@ import { shallowMount } from "@vue/test-utils";
 import DAspectRatio from "@/components/containers/d-aspect-ratio/index";
 import {
   baseClassCase,
-  propHtmlCase,
+  contentHtmlCase,
+  propContentCase,
   slotDefaultCase,
   tagCase,
 } from "@/utils/test-case-factories";
@@ -16,7 +17,13 @@ describe("DTypography", () => {
 
   baseClassCase(wrapperWithFullCSSSupport, config.className);
 
-  propHtmlCase(wrapperWithFullCSSSupport);
+  propContentCase(wrapperWithoutCSSSupport);
+
+  propContentCase(wrapperWithFullCSSSupport);
+
+  contentHtmlCase(wrapperWithoutCSSSupport);
+
+  contentHtmlCase(wrapperWithFullCSSSupport);
 
   slotDefaultCase(DAspectRatio);
 
@@ -106,14 +113,14 @@ describe("DTypography", () => {
 
   it("Generates aspect-ratio style if it is supported", async () => {
     await wrapperWithFullCSSSupport.setProps({ aspectRatio: 0.5 });
-    expect(JSON.stringify(wrapperWithFullCSSSupport.vm.style)).toBe(
+    expect(JSON.stringify(wrapperWithFullCSSSupport.vm.wrapperStyle)).toBe(
       JSON.stringify({ "aspect-ratio": "0.5" })
     );
   });
 
   it("Generates padding-bottom style if aspect-ratio is NOT supported", async () => {
     await wrapperWithoutCSSSupport.setProps({ aspectRatio: 0.8 });
-    expect(JSON.stringify(wrapperWithoutCSSSupport.vm.style)).toBe(
+    expect(JSON.stringify(wrapperWithoutCSSSupport.vm.innerStyle)).toBe(
       JSON.stringify({ "padding-bottom": "125%" })
     );
   });
@@ -123,12 +130,6 @@ describe("DTypography", () => {
       `.${config.innerClassName}`
     );
     expect(innerElement.exists()).toBeTruthy();
-  });
-
-  it("Renders props.html if aspect-ratio is NOT supported", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapperWithoutCSSSupport.setProps({ aspectRatio: 1, html });
-    expect(wrapperWithoutCSSSupport.html()).toMatch(html);
   });
 
   tagCase(wrapperWithFullCSSSupport);

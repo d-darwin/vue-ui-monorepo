@@ -29,158 +29,156 @@ import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import config from "./config";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import styles from "./index.module.css";
-import config from "./config";
 
-// TODO: optional state (only for group)
+/**
+ * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
+ */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * TODO: Add description
+     * Defines is the component is checked by default
+     */
+    checked: {
+      type: Boolean,
+    },
+    /**
+     * Defines value of the <b>input</b> element
      */
     value: {
       type: [String, Number] as PropType<Text>,
       default: DEFAULT_VALUE,
     },
     /**
-     * TODO: Add description
-     */
-    checked: {
-      type: Boolean,
-    },
-    /**
-     * TODO: Add description
+     * Defines appearance of the component
      */
     colorScheme: {
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines corner rounding of the icon container element
      */
-    // TODO: rename roundingType ???
     rounding: {
       type: String as PropType<Rounding>,
       default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO: Add description
+     * Defines size of the component
      */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rename transitionType ???
+    /**
+     * Defines transition type of the component
+     */
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: rounding ???
     /**
-     * Defines <i>id</i> attr of the <b>input</b> tag.<br>
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
     id: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
+     * You can pass own class name to the <b>input</b> element.
      */
     inputClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * You can pass any attributes to the <b>input</b> element.
      */
     inputAttrs: {
       type: Object as PropType<InputHTMLAttributes>,
     },
     /**
-     * Defines content of the <b>label</b> tag.
+     * Defines content of the <b>label</b> element.
      */
     label: {
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * TODO: Add description
-     */
-    // TODO: enableLabelHtml instead ???
-    labelHtml: {
-      // TODO: warning
-      type: String,
-    },
-    // TODO: labelSlot???
-    /**
-     * TODO: Add description
-     */
-    labelFont: {
-      type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
+     * You can pass own class name to the <b>label</b> element.
      */
     labelClass: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Defines font size of the <b>label</b> element. By default depends on props.size
+     */
+    labelFont: {
+      type: String as PropType<Font>,
+    },
+    /**
+     * If not empty renders as an error string below the <b>input</b> element.
+     */
+    error: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * You can pass own class name to the <b>error</b> element.
+     */
+    errorClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>error</b> element. By default depends on props.size
+     */
+    errorFont: {
+      type: String as PropType<Font>,
+    },
+    /**
+     * You can pass own class name to the icon container element.
+     */
+    iconContainerClass: {
+      type: String,
+    },
+    /**
+     * Pass true to disable <b>input</b> element.
      */
     // TODO: - or add one props.inputAttrs
     disabled: {
       type: Boolean,
     },
     /**
-     * If not empty renders as an error string below the <b>input</b> tag.
-     */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
-    /**
-     * TODO: Add description
-     */
-    // TODO: enableErrorHtml instead ???
-    errorHtml: {
-      // TODO: warning
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    errorFont: {
-      type: String as PropType<Font>,
-      // default: FONT.MEDIUM,
-    },
-    /**
-     * TODO: Add description
-     */
-    errorClass: {
-      type: String,
-    },
-    /**
-     * TODO: Add description
-     */
-    iconContainerClass: {
-      type: String,
-    },
-    /**
-     * TODO: Add description
+     * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch change event
+     */
     whenChange: {
       type: Function as PropType<
         (checked?: boolean, value?: Text) => void | Promise<void>
       >,
     },
+    /**
+     * Alternative way to catch input event
+     */
     whenInput: {
       type: Function as PropType<(value?: Text) => void | Promise<void>>,
     },
@@ -191,6 +189,13 @@ export default defineComponent({
     const { controlId } = useControlId(props);
     return { innerChecked, controlId };
   },
+
+  emits: [
+    EVENT_NAME.CHANGE,
+    EVENT_NAME.INPUT,
+    EVENT_NAME.UPDATE_CHECKED,
+    EVENT_NAME.UPDATE_VALUE,
+  ],
 
   computed: {
     renderIcon(): VNode[] {
@@ -304,6 +309,15 @@ export default defineComponent({
 
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
+        if (this.enableHtml) {
+          return (
+            <div
+              class={styles[config.labelInnerClassName]}
+              v-html={this.label}
+            />
+          );
+        }
+
         return (
           <div class={styles[config.labelInnerClassName]}>
             {this.$slots.label?.() || this.label}
@@ -311,19 +325,9 @@ export default defineComponent({
         );
       }
 
-      if (this.labelHtml) {
-        return (
-          <div
-            class={styles[config.labelInnerClassName]}
-            v-html={this.labelHtml}
-          />
-        );
-      }
-
       return null;
     },
 
-    // TODO: make composition / util ???
     renderLabel(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -348,41 +352,24 @@ export default defineComponent({
       );
     },
 
-    // TODO: make composition / util ???
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.errorFont || this.size
-      );
-
       if (this.error || this.$slots.error) {
-        /*TODO: should it be a tooltip to avoid layout shift ?*/
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.errorFont || this.size
         );
-      }
+        const classes = [
+          styles[config.errorClassName],
+          fontStyles[fontClassName],
+          this.errorClass,
+        ];
 
-      // TODO: reduce
-      if (this.errorHtml) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              fontStyles[fontClassName],
-              this.errorClass,
-            ]}
-            v-html={this.errorHtml}
-          />
-        );
+        if (this.enableHtml) {
+          return <div class={classes} v-html={this.error} />;
+        }
+
+        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
       return null;
@@ -394,9 +381,24 @@ export default defineComponent({
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
 
-      this.$emit("change", checked, checked ? value : undefined);
-      this.$emit("update:checked", checked);
-      this.$emit("update:value", checked ? value : undefined);
+      /**
+       * Emits on click with checked and value payload
+       * @event change
+       * @type {checked: Boolean, value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.CHANGE, checked, checked ? value : undefined);
+      /**
+       * Emits on click with checked payload
+       * @event update:checked
+       * @type {checked: Boolean}
+       */
+      this.$emit(EVENT_NAME.UPDATE_CHECKED, checked);
+      /**
+       * Emits on click with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
 
       this.innerChecked = checked;
@@ -406,12 +408,29 @@ export default defineComponent({
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
 
-      this.$emit("input", checked ? value : undefined);
-      this.$emit("update:value", checked ? value : undefined);
+      /**
+       * Emits on input with checked payload
+       * @event input
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
     },
   },
 
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot $slots.icon
+   * Use your own checked mark
+   * */
+  /**
+   * @slot $slots.label
+   * Use instead of props.label to fully customize label content
+   * */
+  /**
+   * @slot $slots.error
+   * Use instead of props.error to fully customize error content
+   * */
   render(): VNode {
     const Tag = this.tag;
 
@@ -428,7 +447,7 @@ export default defineComponent({
         ]}
       >
         {this.renderLabel}
-        {/*TODO: transition*/}
+        {/*TODO: add transition | what about layout shift ???*/}
         {this.renderError}
       </Tag>
     );

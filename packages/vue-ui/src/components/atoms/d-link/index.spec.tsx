@@ -9,14 +9,13 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import {
   baseClassCase,
   callWhenClickCase,
-  disabledControlCase,
   dontCallWhenClickCase,
   dontEmitClickEventCase,
   emitClickEventCase,
   outlineClassCase,
   preventDefaultCase,
-  propContentCase,
-  propHtmlCase,
+  propLabelCase,
+  contentHtmlCase,
   routerLinkComponentCase,
   slotDefaultCase,
   transitionClassCase,
@@ -28,9 +27,9 @@ describe("DLink", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propContentCase(wrapper);
+  propLabelCase(wrapper);
 
-  propHtmlCase(wrapper);
+  contentHtmlCase(wrapper);
 
   slotDefaultCase(DLink);
 
@@ -64,5 +63,8 @@ describe("DLink", () => {
 
   preventDefaultCase(wrapper);
 
-  disabledControlCase(wrapper);
+  it("Renders __disabled class if prop.disabled is passed", async () => {
+    await wrapper.setProps({ disabled: true });
+    expect(wrapper.classes()).toContain("__disabled");
+  });
 });

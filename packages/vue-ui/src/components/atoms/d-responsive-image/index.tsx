@@ -1,102 +1,129 @@
 import { defineComponent, PropType, VNode } from "vue";
-import type { Text } from "@/types/text";
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
+import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type {
+  PictureSource,
   Source,
   SourceType,
   PreparedSource,
   Loading,
   ObjectFit,
 } from "./types";
-import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { prepareSource } from "./utils";
 import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
-import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import styles from "./index.module.css";
 import config from "./config";
-import { prepareSource } from "./utils";
-import { PictureSource } from "./types";
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
-// TODO: is it a molecule, not atom ???
+// TODO: is it a molecule, not an atom ???
+/**
+ * The component renders <b>picture</b> element according to the Responsive Image Principle.<br>
+ * Supports plain image source string, object with srcset and array of image assets for different screen width and pixel density.
+ */
 export default defineComponent({
   name: config.name,
 
   components: { DAspectRatio },
 
   props: {
-    // TODO: think about the structure
     /**
-     * An image asset or an array of such assets.
-     * If empty, the component renders default <b>DIconImage</b>.<br>
      * Expected formats:<br>
-     * * '/image_src_string' or<br>
+     * * '/image_src_string'<br>
      * * { srcset: [<br>
      *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
      *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
-     *      ]<br>
-     *   }<br> or<br>
+     *   ]}<br>
      * * [<br>
      *    { min_width: 320, src: 'img_src_string_xs', type: 'image/jpeg' },<br>
      *    { max_width: 1280, srcset: [<br>
      *      { density: '1x', src: 'img_src_string_sm_1x', type: 'image/jpeg' },<br>
      *      { density: '2x', src: 'img_src_string_sm_2x', type: 'image/jpeg' }<br>
-     *      ]<br>
-     *    }<br>
-     *  ].
+     *    ]}<br>
+     *  ]
      */
-    // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
-    // https://developer.mozilla.org/ru/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B
     source: {
+      // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
       type: [Array, Object, String] as PropType<Source>,
       // TODO: validator or it is not efficient???
     },
     /**
      * Aspect ratio of the picture.
-     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
+     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'
      */
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       validator: aspectRationValidator,
     },
-    // TODO: description
+    /**
+     * Renders to the <i>object-fit</i> attr of the <b>img</b> element
+     */
     objectFit: {
       type: String as PropType<ObjectFit>,
       default: OBJECT_FIT.COVER,
     },
-    // TODO: description
+    /**
+     * You can pass own class name to the <b>img</b> element.
+     */
     imageClass: {
       type: String,
     },
     /**
-     * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they aren't presented.
+     * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they don't present
      */
     caption: {
       type: String,
     },
-    // TODO: description
+    /**
+     * Defines font size of the <b>caption</b> element. By default depends on props.size
+     */
     captionFont: {
       type: String as PropType<Font>,
-      default: FONT.SMALL, // TODO: flexible default
     },
-    // TODO: description
+    /**
+     * You can pass own class name to the <b>caption</b> element.
+     */
     captionClass: {
       type: String,
     },
-    // TODO: caption gaps/spacing
-    // TODO: description
+    /**
+     * Renders to the <i>loading</i> attr of the <b>img</b> element
+     */
     loading: {
       type: String as PropType<Loading>,
       default: LOADING.LAZY,
     },
-    // TODO: description
+    // TODO: preventDefault ???
+    // TODO: caption gaps/spacing
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      // TODO: use, test case
+      type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch load event
+     */
     whenLoad: {
       type: Function as PropType<(event?: Event) => void | Promise<void>>,
     },
+    /**
+     * Alternative way to catch error event
+     */
+    whenError: {
+      type: Function as PropType<(event?: Event) => void | Promise<void>>,
+    },
   },
+
+  emits: [EVENT_NAME.LOAD, EVENT_NAME.ERROR],
 
   computed: {
     sourceType(): SourceType | null {
@@ -104,7 +131,7 @@ export default defineComponent({
         return SOURCE_TYPE.ARRAY;
       }
       if (typeof this.source === "object" && this.source !== null) {
-        return SOURCE_TYPE.OBJECT;
+        return SOURCE_TYPE.OBJECT; // TODO: test case coverage
       }
       if (typeof this.source === "string") {
         return SOURCE_TYPE.STRING;
@@ -147,6 +174,7 @@ export default defineComponent({
           style={{ "object-fit": this.objectFit }}
           class={classes}
           onLoad={this.loadedHandler}
+          onError={this.errorHandler}
         />
       );
     },
@@ -156,12 +184,18 @@ export default defineComponent({
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.captionFont
       );
+      const classes = [this.captionClass, fontStyles[fontClassName]];
 
-      return (
-        <figcaption class={[this.captionClass, fontStyles[fontClassName]]}>
-          {this.caption}
-        </figcaption>
-      );
+      if (!this.enableHtml) {
+        return (
+          /*TODO: this.$slots.caption test case*/
+          <figcaption class={classes}>
+            {this.$slots.caption?.() || this.caption}
+          </figcaption>
+        );
+      }
+
+      return <figcaption class={classes} v-html={this.caption} />;
     },
 
     hasContainer(): boolean {
@@ -188,7 +222,7 @@ export default defineComponent({
       }
 
       /* has figure container with figcaption */
-      if (!this.aspectRatio && this.caption) {
+      if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
           <figure class={styles[config.className]}>
             {this.imgVNode}
@@ -249,7 +283,7 @@ export default defineComponent({
       }
 
       /* has figure container with figcaption */
-      if (!this.aspectRatio && this.caption) {
+      if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
           <figure class={styles[config.className]}>
             {pictureVNode}
@@ -274,11 +308,30 @@ export default defineComponent({
 
   methods: {
     loadedHandler(event: Event): void {
-      this.$emit("load", event);
+      /**
+       * Emits on image load with Event payload
+       * @event load
+       * @type {event: Event}
+       */
+      this.$emit(EVENT_NAME.LOAD, event);
       this.whenLoad?.(event);
+    },
+
+    errorHandler(event: Event): void {
+      /**
+       * Emits on image error with Event payload
+       * @event click
+       * @type {event: Event}
+       */
+      this.$emit(EVENT_NAME.ERROR, event);
+      this.whenError?.(event);
     },
   },
 
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
+   * */
   render(): VNode | null {
     switch (this.sourceType) {
       case SOURCE_TYPE.ARRAY:

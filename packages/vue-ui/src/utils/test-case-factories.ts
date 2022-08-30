@@ -22,18 +22,18 @@ function getTargetName(
 }
 
 export function propContentCase(wrapper: VueWrapper) {
-  return it("Renders props.content", async () => {
-    const text = "Some text content";
-    await wrapper.setProps({ text });
-    expect(wrapper.text()).toMatch(text);
+  return it("Renders props.html", async () => {
+    const content = "some text content";
+    await wrapper.setProps({ content });
+    expect(wrapper.html()).toMatch(content);
   });
 }
 
-export function propHtmlCase(wrapper: VueWrapper) {
+export function contentHtmlCase(wrapper: VueWrapper) {
   return it("Renders props.html", async () => {
-    const html = "Some <b>html</b> content";
-    await wrapper.setProps({ text: "", html });
-    expect(wrapper.html()).toMatch(html);
+    const contentHtml = `<div>some <b>html</b> content</div>`;
+    await wrapper.setProps({ content: contentHtml, enableHtml: true });
+    expect(wrapper.html()).toMatch(contentHtml);
   });
 }
 
@@ -94,6 +94,14 @@ export function minControlWidthCase(wrapper: VueWrapper) {
   });
 }
 
+export function propLabelCase(wrapper: VueWrapper) {
+  return it("Renders props.content", async () => {
+    const label = "Some text content";
+    await wrapper.setProps({ label });
+    expect(wrapper.text()).toMatch(label);
+  });
+}
+
 export function labelPresenceCase(
   wrapper: VueWrapper,
   labelSelector = "label"
@@ -101,6 +109,7 @@ export function labelPresenceCase(
   return it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
+
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeTruthy();
     expect(labelEl.text()).toBe(label);
@@ -140,7 +149,7 @@ export function labelFontCase(wrapper: VueWrapper) {
 export function labelHtmlCase(wrapper: VueWrapper) {
   return it("Should render prop.labelHtml to the label v-html", async () => {
     const labelHtml = `<div>some label html</div>`;
-    await wrapper.setProps({ labelHtml, label: undefined });
+    await wrapper.setProps({ label: labelHtml, enableHtml: true });
     const labelEl = wrapper.find("label");
     expect(labelEl.html()).toMatch(labelHtml);
   });
@@ -444,10 +453,9 @@ export function errorFontCase(wrapper: VueWrapper, errorClassName: string) {
 }
 
 export function errorHtmlCase(wrapper: VueWrapper, errorClassName: string) {
-  // TODO: enableErrorHtml instead ???
   return it("Should render prop.errorHtml to the error's v-html", async () => {
     const errorHtml = `<div>some label html</div>`;
-    await wrapper.setProps({ errorHtml, error: undefined });
+    await wrapper.setProps({ error: errorHtml, enableHtml: true });
     const errorEl = wrapper.find(`.${errorClassName}`);
     expect(errorEl.html()).toMatch(errorHtml);
   });

@@ -32,12 +32,11 @@ export default {
       options: Object.values(TRANSITION),
     },
     onClick: {
-      action: "clicked", // TODO: double due to native???
+      action: "click",
     },
   },
   args: {
-    text: "Some text content",
-    html: "",
+    label: "Some text content",
     href: "",
     disabled: false,
     preventDefault: true,
@@ -47,10 +46,9 @@ export default {
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
     whenClick: () => {
-      console.log("clicked");
+      console.log("click");
     },
   },
-  // TODO: Actions
 };
 
 const Template: Story = (args) => ({
@@ -67,6 +65,13 @@ const SlotTemplate: Story = (args) => ({
   setup() {
     return { args };
   },
-  template: `<DButton v-bind="args">Some <a href="#">slot</a> content</DButton>`,
+  template: `
+    <DButton v-bind="args">
+      <img height="8" width="8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII" />
+    </DButton>
+  `,
 });
 export const SlotDefault = SlotTemplate.bind({});
+SlotDefault.args = {
+  padding: PADDING.EQUAL,
+};

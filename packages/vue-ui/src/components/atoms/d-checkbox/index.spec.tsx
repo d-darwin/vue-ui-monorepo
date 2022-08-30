@@ -36,7 +36,9 @@ import styles from "./index.module.css";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 
 describe("DCheckbox", () => {
-  const wrapper = shallowMount(DCheckbox);
+  const wrapper = shallowMount(DCheckbox, {
+    props: { checked: true },
+  });
 
   baseClassCase(wrapper, config.className);
 
@@ -54,10 +56,10 @@ describe("DCheckbox", () => {
 
   minControlWidthCase(wrapper);
 
-  it(`Should render default icon width ${config.checkMark}`, () => {
-    wrapper.find(`.${config.iconClassName}`);
-    expect(wrapper.exists()).toBeTruthy();
-    expect(wrapper.text()).toBe(config.checkMark);
+  it(`Should render default icon with ${config.checkMark}`, () => {
+    const iconEl = wrapper.find(`.${config.iconClassName}`);
+    expect(iconEl.exists()).toBeTruthy();
+    expect(iconEl.text()).toBe(config.checkMark);
   });
 
   // TODO: make check slot factory
@@ -65,6 +67,9 @@ describe("DCheckbox", () => {
     const slotIconClass = "slotAfter";
     const slotIcon = `<div class=${slotIconClass}>icon slot content</div>`;
     const wrapper = shallowMount(DCheckbox, {
+      props: {
+        checked: true,
+      },
       slots: {
         icon: slotIcon,
       },
@@ -238,9 +243,9 @@ describe("DCheckbox", () => {
     expect(wrapper.emitted("input")?.[0]).toStrictEqual([
       !checked ? value : undefined,
     ]);
-    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
-      !checked ? value : undefined,
-    ]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual(
+      !checked ? value : undefined
+    );
   });
 
   it("Shouldn't emit onInput it props.disabled is passed", async () => {

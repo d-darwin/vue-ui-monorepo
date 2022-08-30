@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import DResponsiveImage from "@/components/atoms/d-responsive-image";
 import DAspectRatio from "@/components/containers/d-aspect-ratio";
 import { baseClassCase } from "@/utils/test-case-factories";
@@ -70,6 +70,20 @@ describe("DResponsiveImage", () => {
     expect(whenLoad).toHaveBeenCalledTimes(1);
   });
 
+  it("Should emit error event on img not loaded", async () => {
+    const imgEl = wrapper.find("img");
+    await imgEl.trigger("error");
+    expect(wrapper.emitted("error")).toBeTruthy();
+  });
+
+  it("Should call props.whenError on img not loaded if passed", async () => {
+    const whenError = jest.fn();
+    await wrapper.setProps({ whenError });
+    const imgEl = wrapper.find("img");
+    await imgEl.trigger("error");
+    expect(whenError).toHaveBeenCalledTimes(1);
+  });
+
   it("Should render as DAspectRatio container if props.source, props.aspectRatio are passed and no props.caption", async () => {
     const aspectRatio = "3/2";
     await wrapper.setProps({ aspectRatio, caption: undefined });
@@ -100,6 +114,14 @@ describe("DResponsiveImage", () => {
     const figcaptionElClasses = figcaptionEl.classes();
     expect(figcaptionElClasses).toContain(fontClassName);
     expect(figcaptionElClasses).toContain(captionClass);
+  });
+
+  it("Should render props.caption as html if props.enableHtml is passed", async () => {
+    const caption = `<b>Dome caption <i>html</i></b>`;
+    await wrapper.setProps({ caption, enableHtml: true });
+    const figcaptionContentEl = wrapper.find("figcaption b");
+    expect(figcaptionContentEl.exists()).toBeTruthy();
+    expect(figcaptionContentEl.html()).toBe(caption);
   });
 
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
@@ -247,11 +269,13 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source type if passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       { min_width: 640, src: "./img_src_string_md.webp", type: "image/webp" },
       { min_width: 320, src: "./img_src_string_xs.avif", type: "image/avif" },
     ];
     await wrapper.setProps({ source });
+    await wrapper.vm.$forceUpdate();
 
     const sourceElList = wrapper.findAll("source");
     expect(sourceElList[0].attributes()?.type).toBe(source[0].type);
@@ -259,6 +283,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source media attr if min_width, max_width or media is passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       { min_width: 640, src: "./img_src_string_md.png" },
       { max_width: 320, src: "./img_src_string_xs.png" },
@@ -282,6 +307,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Sources shouldn't contain media attr if item hasn't min_width, max_width or media", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [{ src: "./img_src_string_md.png" }];
     await wrapper.setProps({ source });
 
@@ -290,6 +316,7 @@ describe("DResponsiveImage", () => {
   });
 
   it("Should render source media attr with density mark if source with srcset is passed", async () => {
+    const wrapper = shallowMount(DResponsiveImage);
     const source = [
       {
         min_width: 640,

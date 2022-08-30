@@ -44,13 +44,13 @@ export default {
       options: [undefined, ...Object.values(FONT)],
     },
     onChange: {
-      action: "changed",
+      action: "change",
     },
     onInput: {
-      action: "inputed",
+      action: "input",
     },
     onSubmit: {
-      action: "submitted",
+      action: "submit",
     },
   },
   args: {
@@ -63,7 +63,6 @@ export default {
     inputFont: undefined, // TODO: don't hardcode values
     inputAttrs: { autofocus: true },
     label: "Some label",
-    labelHtml: "<b>Some <i>label</i> html</b>",
     labelFont: undefined,
     labelClass: "someCustomLabelClass",
     disabled: false,
@@ -72,18 +71,18 @@ export default {
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
     error: "Some error string",
-    errorHtml: "<b>Some <i>error</i> html</b>",
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     tag: "div",
+    enableHtml: false,
     whenChange: (value: Text | undefined) => {
-      console.log("changed", value);
+      console.log("change", value);
     },
     whenInput: (value: Text | undefined) => {
-      console.log("inputed", value);
+      console.log("input", value);
     },
     whenSubmit: (value: Text | undefined) => {
-      console.log("submitted", value);
+      console.log("submit", value);
     },
   },
 };

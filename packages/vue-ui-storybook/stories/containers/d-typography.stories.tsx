@@ -6,17 +6,17 @@ import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 export default {
   title: "containers/DTypography",
   component: DTypography,
-  args: {
-    text: "Some text content",
-    html: "",
-    font: FONT.MEDIUM,
-    tag: "div",
-  },
   argTypes: {
     font: {
       control: { type: "select" },
       options: Object.values(FONT),
     },
+  },
+  args: {
+    content: "Some text content",
+    font: FONT.MEDIUM,
+    tag: "div",
+    enableHtml: false,
   },
 };
 

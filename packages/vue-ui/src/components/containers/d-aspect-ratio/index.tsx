@@ -1,39 +1,46 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import { parseWidthHeight } from "./utils";
 import styles from "./index.module.css";
 import config from "./config";
 
-// TODO: description
+/**
+ * The component uses padding-bottom / zero-height hack to simulate aspect-ratio CSS property if it is not supported.
+ */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * Aspect ratio of the picture.
-     * Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
+     * Aspect ratio of the picture. Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
      */
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       default: "1",
-      // TODO: do we need this extra calculations ??
-      validator: aspectRationValidator,
+      validator: aspectRationValidator, // TODO: do we need this extra calculations ??
     },
     /**
-     * TODO: Add description
+     * Plain string or HTML if props.enableHtml is true
      */
-    html: {
-      // TODO: warning
+    content: {
       type: String,
     },
     /**
-     * TODO: Add description
+     * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
     },
   },
 
@@ -42,20 +49,11 @@ export default defineComponent({
       let width = 1;
       let height = 1;
       const aspectRatio = String(this.aspectRatio);
-      // TODO: simplify
-      if (aspectRatio.includes("/")) {
-        const [rawWidth, rawHeight] = aspectRatio.split("/");
-        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
-          width = parseInt(rawWidth?.trim());
-          height = parseInt(rawHeight?.trim());
-        }
-      } else if (aspectRatio.includes(":")) {
-        const [rawWidth, rawHeight] = aspectRatio.split(":");
-        if (parseInt(rawWidth?.trim()) && parseInt(rawHeight?.trim())) {
-          width = parseInt(rawWidth?.trim());
-          height = parseInt(rawHeight?.trim());
-        }
-      }
+
+      config.separatorList.some((separator) => {
+        [width, height] = parseWidthHeight(this.aspectRatio, separator);
+        return aspectRatio.includes(separator);
+      });
 
       return { width, height };
     },
@@ -86,57 +84,64 @@ export default defineComponent({
       return CSS?.supports("aspect-ratio: auto") || false;
     },
 
-    style(): CSSProperties {
-      if (this.hasAspectRationNativeSupport) {
-        return {
-          "aspect-ratio": this.formattedAspectRatio,
-        };
-      }
+    wrapperStyle(): CSSProperties {
+      return {
+        "aspect-ratio": this.formattedAspectRatio,
+      };
+    },
 
+    innerStyle(): CSSProperties {
       return { "padding-bottom": this.paddingBottom };
     },
-  },
 
-  render(): VNode {
-    const Tag = this.tag;
+    renderNative(): VNode {
+      const Tag = this.tag;
+      const wrapperBindings = {
+        class: styles[config.className],
+        style: this.wrapperStyle,
+      };
 
-    // TODO: simplify
-    if (this.hasAspectRationNativeSupport) {
-      if (this.html) {
+      if (!this.enableHtml) {
         return (
-          <Tag
-            class={styles[config.className]}
-            style={this.style}
-            v-html={this.html}
-          />
+          <Tag {...wrapperBindings}>
+            {this.$slots.default?.() || this.content}
+          </Tag>
+        );
+      }
+
+      return <Tag {...wrapperBindings} v-html={this.content} />;
+    },
+
+    renderHack(): VNode {
+      const Tag = this.tag;
+      const innerBindings = {
+        class: styles[config.innerClassName],
+        style: this.innerStyle,
+      };
+
+      if (!this.enableHtml) {
+        return (
+          <Tag class={styles[config.className]}>
+            <div {...innerBindings}>
+              {this.$slots.default?.() || this.content}
+            </div>
+          </Tag>
         );
       }
 
       return (
-        <Tag class={styles[config.className]} style={this.style}>
-          {this.$slots.default?.()}
-        </Tag>
-      );
-    }
-
-    if (this.html) {
-      return (
         <Tag class={styles[config.className]}>
-          <div
-            class={styles[config.innerClassName]}
-            style={this.style}
-            v-html={this.html}
-          />
+          <div {...innerBindings} v-html={this.content} />
         </Tag>
       );
+    },
+  },
+
+  render(): VNode {
+    if (this.hasAspectRationNativeSupport) {
+      return this.renderNative;
     }
 
-    return (
-      <Tag class={styles[config.className]}>
-        <div class={styles[config.innerClassName]} style={this.style}>
-          {this.$slots.default?.()}
-        </div>
-      </Tag>
-    );
+    return this.renderHack;
   },
 });
