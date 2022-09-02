@@ -7,3 +7,9 @@ declare module "*.css" {
 }
 
 declare module "*.json";
+
+declare namespace NodeJS {
+  interface Process {
+    browser: boolean;
+  }
+}

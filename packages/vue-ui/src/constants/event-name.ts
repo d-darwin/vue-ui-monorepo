@@ -5,6 +5,7 @@ export const EVENT_NAME = {
   SUBMIT: "submit",
   LOAD: "load",
   ERROR: "error",
+  RESIZE: "resize",
   UPDATE_CHECKED: "update:checked",
   UPDATE_VALUE: "update:value",
 };
