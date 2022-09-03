@@ -9,19 +9,19 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DLink: DTooltip },
+  components: { DTooltip: DTooltip },
   setup() {
     return { args };
   },
-  template: `<DLink v-bind="args" />`,
+  template: `<DTooltip v-bind="args" />`,
 });
 export const Default = Template.bind({});
 
 const SlotTemplate: Story = (args) => ({
-  components: { DLink: DTooltip },
+  components: { DTooltip: DTooltip },
   setup() {
     return { args };
   },
-  template: `<DLink v-bind="args">Some <b>slot</b> content</DLink>`,
+  template: `<DTooltip v-bind="args">Some <b>slot</b> content</DTooltip>`,
 });
 export const SlotDefault = SlotTemplate.bind({});
