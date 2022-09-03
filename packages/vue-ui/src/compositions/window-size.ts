@@ -1,6 +1,6 @@
 import { ref, onMounted, onUnmounted, Ref } from "vue";
-import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
+import { EVENT_NAME } from "@/constants/event-name";
+import throttle from "@/utils/throttle";
 
 /**
  * Watches for resize and change windowHeight, windowWidth and deviceWidth

@@ -16,7 +16,9 @@ export default defineComponent({
     content: {
       type: [String, Number] as PropType<Text>,
     },
+    // TODO: target
     // TODO: position
+    // TODO: hasArrow
   },
 
   render(): VNode {
