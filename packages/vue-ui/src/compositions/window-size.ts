@@ -1,6 +1,6 @@
 import { ref, onMounted, onUnmounted, Ref } from "vue";
-import { EVENT_NAME } from "@/constants/event-name";
-import throttle from "@/utils/throttle";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
 
 /**
  * Watches for resize and change windowHeight, windowWidth and deviceWidth
@@ -9,16 +9,15 @@ import throttle from "@/utils/throttle";
  * @returns {{deviceWidth: number, windowHeight: number, windowWidth: string}}
  */
 export default function useWindowSize() {
-  const windowHeight: Ref = ref(null);
-  const windowWidth: Ref = ref(null);
-  const deviceWidth: Ref = ref(null);
+  const windowHeight: Ref = ref(0);
+  const windowWidth: Ref = ref(0);
 
   let throttledOnResize: (() => void) | null = null;
 
   function onResize() {
     if (process.browser) {
-      windowHeight.value = document && document.documentElement.clientHeight;
-      windowWidth.value = document && document.documentElement.clientWidth;
+      windowHeight.value = document?.documentElement?.clientHeight;
+      windowWidth.value = document?.documentElement?.clientWidth;
     }
   }
 
@@ -34,9 +33,9 @@ export default function useWindowSize() {
 
   onUnmounted(() => {
     if (process.browser && throttledOnResize) {
-      window.removeEventListener("resize", throttledOnResize);
+      window.removeEventListener(EVENT_NAME.RESIZE, throttledOnResize);
     }
   });
 
-  return { windowHeight, windowWidth, deviceWidth };
+  return { windowHeight, windowWidth };
 }

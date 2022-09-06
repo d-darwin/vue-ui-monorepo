@@ -6,6 +6,7 @@ export const EVENT_NAME = {
   LOAD: "load",
   ERROR: "error",
   RESIZE: "resize",
+  SCROLL: "scroll",
   UPDATE_CHECKED: "update:checked",
   UPDATE_VALUE: "update:value",
 };

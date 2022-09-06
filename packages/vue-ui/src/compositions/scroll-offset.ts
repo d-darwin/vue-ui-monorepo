@@ -1,19 +1,21 @@
 import { ref, onMounted, onUnmounted } from "vue";
-
-/** utils **/
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
 
 /**
  * Watches on current scroll offset.
- * @returns {{scrollOffset: Ref<UnwrapRef<number>>}}
+ * @param ms
+ * @returns {{scrollOffsetY: Ref<UnwrapRef<number>>, scrollOffsetX: Ref<UnwrapRef<number>>}}
  */
-export default function useScrollOffset() {
+export default function useScrollOffset(ms: number) {
   let throttledOnScroll: (() => void) | null = null;
 
-  const scrollOffset = ref(0);
+  const scrollOffsetY = ref(0);
+  const scrollOffsetX = ref(0);
 
   const onScroll = () => {
-    scrollOffset.value = window && window.scrollY;
+    scrollOffsetY.value = window?.scrollY;
+    scrollOffsetX.value = window?.scrollX;
   };
 
   onMounted(() => {
@@ -21,22 +23,24 @@ export default function useScrollOffset() {
       // get current offset on mounted
       onScroll();
       // hold function pointer to remove event listener when the component will be unmounted
-      throttledOnScroll = throttle(onScroll, 100);
+      throttledOnScroll = throttle(onScroll, ms);
       // watch on offset on scroll
       // use passive mode to notify browser that it can perform default action immediately
-      window.addEventListener("scroll", throttledOnScroll, { passive: true });
+      window.addEventListener(EVENT_NAME.SCROLL, throttledOnScroll, {
+        passive: true,
+      });
     }
   });
 
   onUnmounted(() => {
     if (process.browser && throttledOnScroll) {
       // prevent memory leaks
-      window.removeEventListener("scroll", throttledOnScroll);
+      window.removeEventListener(EVENT_NAME.SCROLL, throttledOnScroll);
     }
   });
 
-  // TODO: move to scrollOffsetY, scrollOffsetX
   return {
-    scrollOffset,
+    scrollOffsetY,
+    scrollOffsetX,
   };
 }
