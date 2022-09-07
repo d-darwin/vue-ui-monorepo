@@ -15,6 +15,7 @@ import { PositionStrict } from "./types";
  * @return {{horizontal: string | null, vertical: string | null}}
  */
 export function parsePosition(position: Position): {
+  //TODO: refactor
   horizontal: PositionHorizontal | null;
   vertical: PositionVertical | null;
 } {
@@ -64,6 +65,7 @@ export function getAdjustedPosition(
   horizontal: PositionHorizontal | null;
   vertical: PositionVertical | null;
 } {
+  //TODO: refactor
   const adjustedPosition: {
     horizontal: PositionHorizontal | null;
     vertical: PositionVertical | null;
@@ -117,6 +119,7 @@ function getAdjustedAxePosition(
   spaceForTooltip: Record<PositionStrict, number>,
   axeDefaultPosition: PositionStrict
 ): PositionStrict | null {
+  //TODO: refactor
   if (axeDefaultPosition) {
     const oppositeAxePosition = POSITION_OPPOSITE[axeDefaultPosition];
 

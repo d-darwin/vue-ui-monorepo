@@ -12,7 +12,7 @@ export default function throttle(func: () => void, ms: number): () => void {
   let savedArgs: [] | null;
   let savedThis: object | null;
 
-  return function wrapper(...args) {
+  return function wrapper(...args: []) {
     if (isThrottled) {
       savedArgs = args;
       // TODO

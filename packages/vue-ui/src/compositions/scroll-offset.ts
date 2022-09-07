@@ -8,6 +8,7 @@ import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
  * @returns {{scrollOffsetY: Ref<UnwrapRef<number>>, scrollOffsetX: Ref<UnwrapRef<number>>}}
  */
 export default function useScrollOffset(ms: number) {
+  //TODO: refactor
   let throttledOnScroll: (() => void) | null = null;
 
   const scrollOffsetY = ref(0);

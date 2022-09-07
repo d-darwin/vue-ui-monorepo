@@ -13,6 +13,7 @@ import type { BoxModel } from "@darwin-studio/vue-ui/src/types/box-model";
    }}
  */
 export default function (element: HTMLElement): BoxModel | null {
+  //TODO: refactor
   let boxModel: BoxModel | null = null;
 
   if (process.browser) {

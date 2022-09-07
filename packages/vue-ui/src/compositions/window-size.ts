@@ -9,6 +9,7 @@ import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
  * @returns {{deviceWidth: number, windowHeight: number, windowWidth: string}}
  */
 export default function useWindowSize(ms: number) {
+  //TODO: refactor
   const windowHeight: Ref = ref(0);
   const windowWidth: Ref = ref(0);
 
