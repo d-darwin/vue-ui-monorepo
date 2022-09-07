@@ -6,4 +6,6 @@ export type PositionHorizontal =
 export type PositionVertical =
   typeof POSITION_VERTICAL[keyof typeof POSITION_VERTICAL];
 
+export type PositionStrict = PositionHorizontal | PositionVertical;
+
 export type Position = typeof POSITION[keyof typeof POSITION];

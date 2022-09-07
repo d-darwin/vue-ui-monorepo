@@ -4,7 +4,7 @@ import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
 
 /**
  * Watches on current scroll offset.
- * @param ms
+ * @param ms throttle duration
  * @returns {{scrollOffsetY: Ref<UnwrapRef<number>>, scrollOffsetX: Ref<UnwrapRef<number>>}}
  */
 export default function useScrollOffset(ms: number) {
