@@ -55,12 +55,12 @@ export function parsePosition(position: Position): {
  * @returns {{vertical: number, horizontal: number}}
  */
 export function getAdjustedPosition(
-  elementContainer: Ref<HTMLElement>,
-  element: Ref<HTMLElement>,
+  elementContainer: Ref<HTMLElement | null>,
+  element: Ref<HTMLElement | null>,
   windowWidth: Ref<number>,
   windowHeight: Ref<number>,
-  defaultHorizontalPosition: PositionHorizontal,
-  defaultVerticalPosition: PositionVertical
+  defaultHorizontalPosition: PositionHorizontal | null,
+  defaultVerticalPosition: PositionVertical | null
 ): {
   horizontal: PositionHorizontal | null;
   vertical: PositionVertical | null;
@@ -117,7 +117,7 @@ export function getAdjustedPosition(
 function getAdjustedAxePosition(
   elementContainerClientSpace: Record<PositionStrict, number>,
   spaceForTooltip: Record<PositionStrict, number>,
-  axeDefaultPosition: PositionStrict
+  axeDefaultPosition: PositionStrict | null
 ): PositionStrict | null {
   //TODO: refactor
   if (axeDefaultPosition) {

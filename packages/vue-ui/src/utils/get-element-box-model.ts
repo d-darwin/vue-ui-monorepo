@@ -12,11 +12,11 @@ import type { BoxModel } from "@darwin-studio/vue-ui/src/types/box-model";
         marginLeft: number
    }}
  */
-export default function (element: HTMLElement): BoxModel | null {
+export default function (element: HTMLElement | null): BoxModel | null {
   //TODO: refactor
   let boxModel: BoxModel | null = null;
 
-  if (process.browser) {
+  if (process.browser && element) {
     const { marginBottom, marginTop, marginLeft, marginRight } =
       window.getComputedStyle(element);
 

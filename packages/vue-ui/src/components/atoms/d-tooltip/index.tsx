@@ -1,9 +1,25 @@
-import { defineComponent, PropType, VNode } from "vue";
+import {
+  PropType,
+  VNode,
+  Ref,
+  defineComponent,
+  ref,
+  onMounted,
+  nextTick,
+  watch,
+} from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
 import styles from "./index.module.css";
 import config from "./config";
 import { Position } from "@/components/atoms/d-tooltip/types";
+import useControlId from "@/compositions/control-id";
+import useScrollOffset from "@/compositions/scroll-offset";
+import useWindowSize from "@/compositions/window-size";
+import {
+  getAdjustedPosition,
+  parsePosition,
+} from "@/components/atoms/d-tooltip/utils";
 
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
@@ -24,7 +40,7 @@ export default defineComponent({
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
     position: {
-      type: String,
+      type: String as PropType<Position>,
       default: POSITION.TOP,
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
@@ -33,7 +49,89 @@ export default defineComponent({
     // TODO: enableHtml
   },
 
+  // TODO: refac
+  setup(props) {
+    const isShown = ref(false);
+
+    // we will be watching on this to adjust tooltip position
+    const { controlId } = useControlId();
+    const { scrollOffsetX, scrollOffsetY } = useScrollOffset(
+      config.throttleDuration
+    );
+    const { windowWidth, windowHeight } = useWindowSize(
+      config.throttleDuration
+    );
+
+    // To manipulate get getBoundingClientRect and adjust tooltip position
+    // It's a bit of magic - use the same refs in the render function and your shout to return it from setup()
+    // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
+    const tooltipContainer: Ref<HTMLElement | null> = ref(null);
+    const tooltip: Ref<HTMLElement | null> = ref(null);
+
+    const {
+      horizontal: defaultHorizontalPosition,
+      vertical: defaultVerticalPosition,
+    } = parsePosition(props.position);
+
+    const horizontalPosition = ref(defaultHorizontalPosition);
+    const verticalPosition = ref(defaultVerticalPosition);
+
+    onMounted(async () => {
+      // We need to wait until children components will be mounted (if there are)
+      await nextTick();
+
+      const adjustedPosition = getAdjustedPosition(
+        tooltipContainer,
+        tooltip,
+        windowWidth,
+        windowHeight,
+        defaultHorizontalPosition,
+        defaultVerticalPosition
+      );
+
+      horizontalPosition.value = adjustedPosition.horizontal;
+      verticalPosition.value = adjustedPosition.vertical;
+    });
+
+    // adjust position when something changes
+    const watchableList = [
+      scrollOffsetX,
+      scrollOffsetY,
+      windowWidth,
+      windowHeight,
+      props,
+    ];
+    watchableList.forEach((watchable) =>
+      watch(watchable, () => {
+        const adjustedPosition = getAdjustedPosition(
+          tooltipContainer,
+          tooltip,
+          windowWidth,
+          windowHeight,
+          defaultHorizontalPosition,
+          defaultVerticalPosition
+        );
+
+        horizontalPosition.value = adjustedPosition.horizontal;
+        verticalPosition.value = adjustedPosition.vertical;
+      })
+    );
+
+    return {
+      controlId,
+      isShown,
+      tooltipContainer,
+      tooltip,
+      horizontalPosition,
+      verticalPosition,
+    };
+  },
+
   render(): VNode {
-    return <div class={styles[config.className]}>TODO</div>;
+    return (
+      <div ref={config.componentRef} class={styles[config.className]}>
+        TODO
+      </div>
+    );
   },
 });
