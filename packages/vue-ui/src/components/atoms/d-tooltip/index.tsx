@@ -10,16 +10,16 @@ import {
 } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
-import styles from "./index.module.css";
-import config from "./config";
-import { Position } from "@/components/atoms/d-tooltip/types";
-import useControlId from "@/compositions/control-id";
-import useScrollOffset from "@/compositions/scroll-offset";
-import useWindowSize from "@/compositions/window-size";
+import type { Position } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/types";
+import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
+import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import {
   getAdjustedPosition,
   parsePosition,
-} from "@/components/atoms/d-tooltip/utils";
+} from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/utils";
+import styles from "./index.module.css";
+import config from "./config";
 
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
@@ -99,7 +99,7 @@ export default defineComponent({
       scrollOffsetY,
       windowWidth,
       windowHeight,
-      props,
+      props, // TODO: more specific ones
     ];
     watchableList.forEach((watchable) =>
       watch(watchable, () => {
@@ -127,10 +127,34 @@ export default defineComponent({
     };
   },
 
+  methods: {
+    updateShown(show = true): void {
+      this.isShown = show;
+
+      /**
+       * Emits current tooltip state on change.
+       *
+       * @event update:show
+       * @type {boolean}
+       */
+      this.$emit("update:show", show);
+    },
+  },
+
   render(): VNode {
     return (
-      <div ref={config.componentRef} class={styles[config.className]}>
-        TODO
+      <div
+        ref={config.componentRef}
+        class={styles[config.className]}
+        onMouseenter={() => this.updateShown()}
+        onFocus={() => this.updateShown()}
+        onMouseleave={() => this.updateShown(false)}
+        onBlur={() => this.updateShown(false)}
+      >
+        <slot aria-describedby={this.controlId} />
+        <div ref={config.tooltipRef}>Tooltip</div>
+        {this.controlId}*{this.isShown}*{this.tooltipContainer}*{this.tooltip}*
+        {this.horizontalPosition}*{this.verticalPosition}*
       </div>
     );
   },
