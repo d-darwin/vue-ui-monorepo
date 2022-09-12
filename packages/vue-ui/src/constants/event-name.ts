@@ -9,4 +9,5 @@ export const EVENT_NAME = {
   SCROLL: "scroll",
   UPDATE_CHECKED: "update:checked",
   UPDATE_VALUE: "update:value",
+  UPDATE_SHOW: "update:show",
 };

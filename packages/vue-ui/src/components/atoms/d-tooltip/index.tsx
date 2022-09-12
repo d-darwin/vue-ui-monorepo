@@ -11,6 +11,10 @@ import {
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
 import type { Position } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/types";
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
@@ -18,8 +22,10 @@ import {
   getAdjustedPosition,
   parsePosition,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/utils";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import styles from "./index.module.css";
 import config from "./config";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
@@ -33,7 +39,7 @@ export default defineComponent({
      * Plain string or HTML if props.enableHtml is true
      */
     content: {
-      type: [String, Number] as PropType<Text>,
+      type: [String, Number] as PropType<Text>, // TODO: VNode ???
     },
     /**
      * Positions on the component.
@@ -47,7 +53,16 @@ export default defineComponent({
     },
     // TODO: hasArrow
     // TODO: enableHtml
+    /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
   },
+
+  emits: [EVENT_NAME.UPDATE_SHOW],
 
   // TODO: refac
   setup(props) {
@@ -127,6 +142,48 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    containerClasses(): string[] {
+      const classes = [styles[config.className]];
+      if (this.horizontalPosition) {
+        classes.push(styles[this.horizontalPosition]);
+      }
+      if (this.verticalPosition) {
+        classes.push(styles[this.verticalPosition]);
+      }
+      return classes;
+    },
+
+    renderTarget(): VNode {
+      return (
+        <div aris-describedby={this.controlId}>
+          {this.$slots.target?.() || "TODO: target"}
+        </div>
+      );
+    },
+
+    renderContent(): VNode {
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return (
+        <div
+          ref={config.tooltipRef}
+          id={this.controlId}
+          aria-hidden={!this.isShown}
+          class={[
+            styles[config.tooltipClassName], // TODO: naming
+            transitionStyles[transitionClassName],
+          ]}
+        >
+          {this.$slots.content?.() || "TODO: content"}
+        </div>
+      );
+    },
+  },
+
   methods: {
     updateShown(show = true): void {
       this.isShown = show;
@@ -137,7 +194,7 @@ export default defineComponent({
        * @event update:show
        * @type {boolean}
        */
-      this.$emit("update:show", show);
+      this.$emit(EVENT_NAME.UPDATE_SHOW, show);
     },
   },
 
@@ -145,16 +202,14 @@ export default defineComponent({
     return (
       <div
         ref={config.componentRef}
-        class={styles[config.className]}
+        class={this.containerClasses}
         onMouseenter={() => this.updateShown()}
         onFocus={() => this.updateShown()}
         onMouseleave={() => this.updateShown(false)}
         onBlur={() => this.updateShown(false)}
       >
-        <slot aria-describedby={this.controlId} />
-        <div ref={config.tooltipRef}>Tooltip</div>
-        {this.controlId}*{this.isShown}*{this.tooltipContainer}*{this.tooltip}*
-        {this.horizontalPosition}*{this.verticalPosition}*
+        {this.renderTarget}
+        {this.renderContent}
       </div>
     );
   },

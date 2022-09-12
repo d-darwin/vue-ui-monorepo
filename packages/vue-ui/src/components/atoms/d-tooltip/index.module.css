@@ -1,0 +1,44 @@
+.dTooltip {
+  position: relative;
+  /*TODO: is it true ?*/
+  cursor: help;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip {
+  /* TODO: @include transition-short;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0);
+  /*TODO: visibility: hidden;*/
+  position: absolute;
+  width: fit-content;
+}
+
+.dTooltip:hover > .tooltip ,
+.dTooltip:focus > .tooltip {
+  opacity: 1;
+  transform: scale(1);
+  /*TODO: visibility: visible;*/
+}
+
+.top > .tooltip {
+  bottom: 100%;
+}
+
+.right > .tooltip {
+  left: 100%;
+}
+
+.bottom > .tooltip {
+  top: 100%;
+}
+
+.left > .tooltip {
+  right: 100%;
+}
