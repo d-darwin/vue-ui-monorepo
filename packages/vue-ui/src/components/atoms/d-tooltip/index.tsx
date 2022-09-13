@@ -60,6 +60,7 @@ export default defineComponent({
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
+    // TODO: make offset configurable
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
@@ -82,7 +83,13 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: hasArrow
+    /**
+     * Defines should tooltip have arrow
+     */
+    hasArrow: {
+      type: Boolean,
+      default: true,
+    },
     // TODO: enableHtml
     // TODO: outline
     // TODO: inverse
@@ -183,6 +190,9 @@ export default defineComponent({
       }
       if (this.verticalPosition) {
         classes.push(styles[this.verticalPosition]);
+      }
+      if (this.hasArrow) {
+        classes.push(styles.hasArrow);
       }
       return classes;
     },
