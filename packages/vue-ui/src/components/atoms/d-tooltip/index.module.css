@@ -19,7 +19,7 @@
   transform: scale(0);
   /*TODO: visibility: hidden;*/
   position: absolute;
-  width: fit-content;
+  /*TODO: width: fit-content;*/
   color: var(--color-text-inverse);
   background: var(--color-text);
   /*TODO: try to avoid hardcoded values*/

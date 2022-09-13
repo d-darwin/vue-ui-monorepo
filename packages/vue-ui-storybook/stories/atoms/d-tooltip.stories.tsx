@@ -6,7 +6,10 @@ export default {
   title: "atoms/DTooltip",
   component: DTooltip,
   argTypes: {},
-  args: {},
+  args: {
+    target: "Some target string",
+    content: "Some content string",
+  },
 };
 
 const Template: Story = (args) => ({
@@ -18,11 +21,28 @@ const Template: Story = (args) => ({
 });
 export const Default = Template.bind({});
 
-const SlotTemplate: Story = (args) => ({
+const SlotTargetTemplate: Story = (args) => ({
   components: { DTooltip: DTooltip },
   setup() {
     return { args, styles };
   },
-  template: `<DTooltip v-bind="args" :class="styles.dTooltip">Some <b>slot</b> content</DTooltip>`,
+  template: `
+    <DTooltip v-bind="args" :class="styles.dTooltip">
+      <template v-slot:target>Some <b>target slot</b> content</template>
+    </DTooltip>
+  `,
 });
-export const SlotDefault = SlotTemplate.bind({});
+export const SlotTarget = SlotTargetTemplate.bind({});
+
+const SlotContentTemplate: Story = (args) => ({
+  components: { DTooltip: DTooltip },
+  setup() {
+    return { args, styles };
+  },
+  template: `
+    <DTooltip v-bind="args" :class="styles.dTooltip">
+      <template v-slot:content>Some <b>content slot</b> content</template>
+    </DTooltip>
+  `,
+});
+export const SlotContent = SlotContentTemplate.bind({});

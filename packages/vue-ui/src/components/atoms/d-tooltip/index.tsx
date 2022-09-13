@@ -36,6 +36,7 @@ import styles from "./index.module.css";
 import config from "./config";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
+// TODO: on click or manually
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
  */
@@ -43,7 +44,12 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    // TODO: target / reference
+    /**
+     * Plain string or HTML if props.enableHtml is true
+     */
+    target: {
+      type: [String, Number] as PropType<Text>, // TODO: VNode ???
+    },
     /**
      * Plain string or HTML if props.enableHtml is true
      */
@@ -60,6 +66,7 @@ export default defineComponent({
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
+    // TODO: add outline
     // TODO: make offset configurable
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
@@ -90,8 +97,6 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    // TODO: enableHtml
-    // TODO: outline
     // TODO: inverse
     /**
      * Defines transition type of the component
@@ -100,6 +105,15 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+
+    // TODO: whenShow
   },
 
   emits: [EVENT_NAME.UPDATE_SHOW],
@@ -118,7 +132,7 @@ export default defineComponent({
     );
 
     // To manipulate get getBoundingClientRect and adjust tooltip position
-    // It's a bit of magic - use the same refs in the render function and your shout to return it from setup()
+    // It's a bit of magic - use the same refs name in the render function and return they from the setup()
     // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
     const tooltipContainer: Ref<HTMLElement | null> = ref(null);
     const tooltip: Ref<HTMLElement | null> = ref(null);
@@ -132,7 +146,7 @@ export default defineComponent({
     const verticalPosition = ref(defaultVerticalPosition);
 
     onMounted(async () => {
-      // We need to wait until children components will be mounted (if there are)
+      // We need to wait until children components will be mounted
       await nextTick();
 
       const adjustedPosition = getAdjustedPosition(
@@ -154,7 +168,7 @@ export default defineComponent({
       scrollOffsetY,
       windowWidth,
       windowHeight,
-      props, // TODO: more specific ones
+      props, // TODO: use more specific ones
     ];
     watchableList.forEach((watchable) =>
       watch(watchable, () => {
@@ -198,9 +212,13 @@ export default defineComponent({
     },
 
     renderTarget(): VNode {
+      if (this.enableHtml) {
+        return <div aris-describedby={this.controlId} v-html={this.target} />;
+      }
+
       return (
         <div aris-describedby={this.controlId}>
-          {this.$slots.target?.() || "TODO: target"}
+          {this.$slots.target?.() || this.target}
         </div>
       );
     },
@@ -227,23 +245,25 @@ export default defineComponent({
         this.size
       );
 
-      return (
-        <div
-          ref={config.tooltipRef}
-          id={this.controlId}
-          aria-hidden={!this.isShown}
-          class={[
-            styles[config.tooltipClassName], // TODO: naming
-            paddingStyles[paddingClassName],
-            paddingStyles[paddingSizeClassName],
-            roundingStyles[roundingClassName],
-            sizeStyles[sizeClassName],
-            transitionStyles[transitionClassName],
-          ]}
-        >
-          {this.$slots.content?.() || "TODO: content"}
-        </div>
-      );
+      const bindings = {
+        ref: config.tooltipRef,
+        id: this.controlId,
+        ariaHidden: !this.isShown,
+        class: [
+          styles[config.tooltipClassName], // TODO: naming
+          paddingStyles[paddingClassName],
+          paddingStyles[paddingSizeClassName],
+          roundingStyles[roundingClassName],
+          sizeStyles[sizeClassName],
+          transitionStyles[transitionClassName],
+        ],
+      };
+
+      if (this.enableHtml) {
+        return <div {...bindings} v-html={this.content} />;
+      }
+
+      return <div {...bindings}>{this.$slots.content?.() || this.content}</div>;
     },
   },
 
