@@ -9,7 +9,9 @@
 }
 
 .tooltip {
-  /* TODO: @include transition-short;*/
+  /*TODO: make it controllable via figma*/
+  --color-text-inverse: var(--color-secondary-background);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +20,10 @@
   /*TODO: visibility: hidden;*/
   position: absolute;
   width: fit-content;
+  color: var(--color-text-inverse);
+  background: var(--color-text);
+  /*TODO: try to avoid hardcoded values*/
+  margin: 8px 12px;
 }
 
 .dTooltip:hover > .tooltip ,
@@ -41,4 +47,13 @@
 
 .left > .tooltip {
   right: 100%;
+}
+
+/* Arrow */
+
+.tooltip::after {
+  position: absolute;
+  content: "";
+  /*TODO: try to avoid hardcoded values*/
+  border: 4px solid transparent;
 }

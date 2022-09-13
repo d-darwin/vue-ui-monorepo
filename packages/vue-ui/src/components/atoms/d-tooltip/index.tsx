@@ -8,13 +8,22 @@ import {
   nextTick,
   watch,
 } from "vue";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
-import type { Position } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/types";
+import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
+import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
+import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
+import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { Position } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/types";
+import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
@@ -51,8 +60,32 @@ export default defineComponent({
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
+    /**
+     * Defines padding type of the component, use 'equal' if the component contains only an icon
+     */
+    padding: {
+      type: String as PropType<Padding>,
+      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines corner rounding of the component
+     */
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines size of the component
+     */
+    // TODO: fontSize and size separately ???
+    size: {
+      type: String as PropType<Size>,
+      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
     // TODO: hasArrow
     // TODO: enableHtml
+    // TODO: outline
+    // TODO: inverse
     /**
      * Defines transition type of the component
      */
@@ -163,9 +196,25 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
+      const paddingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        this.padding
+      );
+      const paddingSizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
+        `${this.padding}-${this.size}`
+      );
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
       );
 
       return (
@@ -175,6 +224,10 @@ export default defineComponent({
           aria-hidden={!this.isShown}
           class={[
             styles[config.tooltipClassName], // TODO: naming
+            paddingStyles[paddingClassName],
+            paddingStyles[paddingSizeClassName],
+            roundingStyles[roundingClassName],
+            sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
         >
