@@ -50,12 +50,16 @@ export default defineComponent({
     target: {
       type: [String, Number] as PropType<Text>, // TODO: VNode ???
     },
+    // TODO: font
+    // TODO: class
     /**
      * Plain string or HTML if props.enableHtml is true
      */
     content: {
       type: [String, Number] as PropType<Text>, // TODO: VNode ???
     },
+    // TODO: font
+    // TODO: class
     /**
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
@@ -113,10 +117,15 @@ export default defineComponent({
       type: Boolean,
     },
 
-    // TODO: whenShow
+    /**
+     * Alternative way to catch change event
+     */
+    whenChange: {
+      type: Function as PropType<(value: boolean) => void | Promise<void>>,
+    },
   },
 
-  emits: [EVENT_NAME.UPDATE_SHOW],
+  emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_SHOW],
 
   // TODO: refac
   setup(props) {
@@ -268,16 +277,24 @@ export default defineComponent({
   },
 
   methods: {
-    updateShown(show = true): void {
-      this.isShown = show;
+    changeShown(isShown = true): void {
+      this.isShown = isShown;
 
       /**
        * Emits current tooltip state on change.
        *
-       * @event update:show
-       * @type {boolean}
+       * @event change
+       * @type {isShown: boolean}
        */
-      this.$emit(EVENT_NAME.UPDATE_SHOW, show);
+      this.$emit(EVENT_NAME.CHANGE, isShown);
+      /**
+       * Emits current tooltip state on change.
+       *
+       * @event update:show
+       * @type {isShown: boolean}
+       */
+      this.$emit(EVENT_NAME.UPDATE_SHOW, isShown);
+      this.whenChange?.(isShown);
     },
   },
 
@@ -286,10 +303,10 @@ export default defineComponent({
       <div
         ref={config.componentRef}
         class={this.containerClasses}
-        onMouseenter={() => this.updateShown()}
-        onFocus={() => this.updateShown()}
-        onMouseleave={() => this.updateShown(false)}
-        onBlur={() => this.updateShown(false)}
+        onMouseenter={() => this.changeShown()}
+        onFocus={() => this.changeShown()}
+        onMouseleave={() => this.changeShown(false)}
+        onBlur={() => this.changeShown(false)}
       >
         {this.renderTarget}
         {this.renderContent}
