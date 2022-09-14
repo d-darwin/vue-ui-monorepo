@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.tooltip {
+.content {
   /*TODO: make it controllable via figma*/
   --color-text-inverse: var(--color-secondary-background);
 
@@ -26,94 +26,94 @@
   margin: 8px 12px;
 }
 
-.dTooltip:hover > .tooltip ,
-.dTooltip:focus > .tooltip {
+.dTooltip:hover > .content ,
+.dTooltip:focus > .content {
   opacity: 1;
   transform: scale(1);
   /*TODO: visibility: visible;*/
 }
 
-.top > .tooltip {
+.top > .content {
   bottom: 100%;
 }
 
-.right > .tooltip {
+.right > .content {
   left: 100%;
 }
 
-.bottom > .tooltip {
+.bottom > .content {
   top: 100%;
 }
 
-.left > .tooltip {
+.left > .content {
   right: 100%;
 }
 
 /* Arrow */
 
-.hasArrow > .tooltip::after {
+.hasArrow > .content::after {
   position: absolute;
   content: "";
   /*TODO: make offset configurable*/
   border: 4px solid transparent;
 }
 
-.hasArrow.top > .tooltip::after {
+.hasArrow.top > .content::after {
   border-bottom: 0;
   border-top-color: var(--color-text);
   /*TODO: make offset configurable*/
   bottom: calc(4px * -1);
 }
 
-.hasArrow.top.right > .tooltip {
+.hasArrow.top.right > .content {
   border-bottom-left-radius: 0;
 }
 
-.hasArrow.top.right > .tooltip::after {
+.hasArrow.top.right > .content::after {
   display: none;
 }
 
-.hasArrow.right > .tooltip::after {
+.hasArrow.right > .content::after {
   border-left: 0;
   border-right-color: var(--color-text);
   /*TODO: make offset configurable*/
   left: calc(4px * -1);
 }
 
-.hasArrow.bottom.right > .tooltip {
+.hasArrow.bottom.right > .content {
   border-top-left-radius: 0;
 }
 
-.hasArrow.bottom.right > .tooltip::after {
+.hasArrow.bottom.right > .content::after {
   display: none;
 }
 
-.hasArrow.bottom > .tooltip::after {
+.hasArrow.bottom > .content::after {
   border-top: 0;
   border-bottom-color: var(--color-text);
   /*TODO: make offset configurable*/
   top: calc(4px * -1);
 }
 
-.hasArrow.bottom.left > .tooltip {
+.hasArrow.bottom.left > .content {
   border-top-right-radius: 0;
 }
 
-.hasArrow.bottom.left > .tooltip::after {
+.hasArrow.bottom.left > .content::after {
   display: none;
 }
 
-.hasArrow.left > .tooltip::after {
+.hasArrow.left > .content::after {
   border-right: 0;
   border-left-color: var(--color-text);
   /*TODO: make offset configurable*/
   right: calc(4px * -1);
 }
 
-.hasArrow.top.left > .tooltip {
+.hasArrow.top.left > .content {
   border-bottom-right-radius: 0;
 }
 
-.hasArrow.top.left > .tooltip::after {
+.hasArrow.top.left > .content::after {
   display: none;
 }

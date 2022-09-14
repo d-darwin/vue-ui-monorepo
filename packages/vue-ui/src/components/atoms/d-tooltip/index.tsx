@@ -70,8 +70,18 @@ export default defineComponent({
     content: {
       type: [String, Number] as PropType<Text>, // TODO: VNode ???
     },
-    // TODO: font
-    // TODO: class
+    /**
+     * You can pass own class name to the <b>content</b> element.
+     */
+    contentClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>content</b> element. By default depends on props.size
+     */
+    contentFont: {
+      type: String as PropType<Font>,
+    },
     /**
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
@@ -155,8 +165,8 @@ export default defineComponent({
     // To manipulate get getBoundingClientRect and adjust tooltip position
     // It's a bit of magic - use the same refs name in the render function and return they from the setup()
     // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
-    const tooltipContainer: Ref<HTMLElement | null> = ref(null);
-    const tooltip: Ref<HTMLElement | null> = ref(null);
+    const containerRef: Ref<HTMLElement | null> = ref(null);
+    const contentRef: Ref<HTMLElement | null> = ref(null);
 
     const {
       horizontal: defaultHorizontalPosition,
@@ -171,8 +181,8 @@ export default defineComponent({
       await nextTick();
 
       const adjustedPosition = getAdjustedPosition(
-        tooltipContainer,
-        tooltip,
+        containerRef,
+        contentRef,
         windowWidth,
         windowHeight,
         defaultHorizontalPosition,
@@ -194,8 +204,8 @@ export default defineComponent({
     watchableList.forEach((watchable) =>
       watch(watchable, () => {
         const adjustedPosition = getAdjustedPosition(
-          tooltipContainer,
-          tooltip,
+          containerRef,
+          contentRef,
           windowWidth,
           windowHeight,
           defaultHorizontalPosition,
@@ -210,8 +220,8 @@ export default defineComponent({
     return {
       controlId,
       isShown,
-      tooltipContainer,
-      tooltip,
+      containerRef,
+      contentRef,
       horizontalPosition,
       verticalPosition,
     };
@@ -250,6 +260,10 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.contentClass || this.size
+      );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
@@ -272,16 +286,18 @@ export default defineComponent({
       );
 
       const bindings = {
-        ref: config.tooltipRef,
+        ref: config.contentRef,
         id: this.controlId,
         ariaHidden: !this.isShown,
         class: [
-          styles[config.tooltipClassName], // TODO: naming
+          styles[config.contentClassName],
+          fontStyles[fontClassName],
           paddingStyles[paddingClassName],
           paddingStyles[paddingSizeClassName],
           roundingStyles[roundingClassName],
           sizeStyles[sizeClassName],
           transitionStyles[transitionClassName],
+          this.contentClass,
         ],
       };
 
@@ -318,7 +334,7 @@ export default defineComponent({
   render(): VNode {
     return (
       <div
-        ref={config.componentRef}
+        ref={config.containerRef}
         class={this.containerClasses}
         onMouseenter={() => this.changeShown()}
         onFocus={() => this.changeShown()}

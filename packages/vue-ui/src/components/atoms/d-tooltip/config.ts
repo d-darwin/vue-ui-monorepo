@@ -1,9 +1,9 @@
 export default {
   name: "DTooltip",
   className: "dTooltip",
-  tooltipClassName: "tooltip",
+  contentClassName: "content",
   positionSeparator: "-",
   throttleDuration: 100,
-  componentRef: "tooltipContainer",
-  tooltipRef: "tooltip",
+  containerRef: "containerRef",
+  contentRef: "contentRef",
 };
