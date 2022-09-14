@@ -89,9 +89,14 @@ export default defineComponent({
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
+    // TODO: description
     trigger: {
       type: String as PropType<Trigger>,
       default: TRIGGER.CLICK,
+    },
+    // TODO: description, naming
+    forceShow: {
+      type: Boolean,
     },
     // TODO: add outline
     // TODO: make offset configurable
@@ -150,7 +155,7 @@ export default defineComponent({
 
   emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_SHOW],
 
-  // TODO: refac
+  // TODO: refac / move somewhere ???
   setup(props) {
     const isShown = ref(false);
 
@@ -216,6 +221,15 @@ export default defineComponent({
         horizontalPosition.value = adjustedPosition.horizontal;
         verticalPosition.value = adjustedPosition.vertical;
       })
+    );
+
+    watch(
+      () => props.forceShow,
+      (show) => {
+        if (props.trigger === TRIGGER.MANUAL) {
+          isShown.value = show;
+        }
+      }
     );
 
     return {
