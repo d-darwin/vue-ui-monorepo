@@ -8,6 +8,7 @@ import {
   nextTick,
   watch,
 } from "vue";
+import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
@@ -16,6 +17,7 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TO
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -50,8 +52,18 @@ export default defineComponent({
     target: {
       type: [String, Number] as PropType<Text>, // TODO: VNode ???
     },
-    // TODO: font
-    // TODO: class
+    /**
+     * You can pass own class name to the <b>target</b> element.
+     */
+    targetClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>target</b> element. By default depends on props.size
+     */
+    targetFont: {
+      type: String as PropType<Font>,
+    },
     /**
      * Plain string or HTML if props.enableHtml is true
      */
@@ -221,15 +233,20 @@ export default defineComponent({
     },
 
     renderTarget(): VNode {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.targetFont || this.size
+      );
+      const bindings = {
+        ariaDescribedby: this.controlId,
+        class: [fontStyles[fontClassName], this.targetClass],
+      };
+
       if (this.enableHtml) {
-        return <div aris-describedby={this.controlId} v-html={this.target} />;
+        return <div {...bindings} v-html={this.target} />;
       }
 
-      return (
-        <div aris-describedby={this.controlId}>
-          {this.$slots.target?.() || this.target}
-        </div>
-      );
+      return <div {...bindings}>{this.$slots.target?.() || this.target}</div>;
     },
 
     renderContent(): VNode {
