@@ -31,3 +31,9 @@ export const POSITION_OPPOSITE = {
   [POSITION.LEFT]: POSITION.RIGHT,
   [POSITION.TOP_LEFT]: POSITION.BOTTOM_RIGHT,
 };
+
+export const TRIGGER = {
+  HOVER: "hover",
+  CLICK: "click",
+  MANUAL: "manual",
+};

@@ -23,20 +23,17 @@ import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.c
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { Position } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/types";
-import { POSITION } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
-import {
-  getAdjustedPosition,
-  parsePosition,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/utils";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { getAdjustedPosition, parsePosition } from "./utils";
+import type { Position, Trigger } from "./types";
+import { POSITION, TRIGGER } from "./constant";
 import styles from "./index.module.css";
 import config from "./config";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
 // TODO: on click or manually
 /**
@@ -91,6 +88,10 @@ export default defineComponent({
       default: POSITION.TOP,
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
+    },
+    trigger: {
+      type: String as PropType<Trigger>,
+      default: TRIGGER.CLICK,
     },
     // TODO: add outline
     // TODO: make offset configurable
@@ -230,14 +231,17 @@ export default defineComponent({
   computed: {
     containerClasses(): string[] {
       const classes = [styles[config.className]];
+      if (this.isShown) {
+        classes.push(styles.isShown);
+      }
+      if (this.hasArrow) {
+        classes.push(styles.hasArrow);
+      }
       if (this.horizontalPosition) {
         classes.push(styles[this.horizontalPosition]);
       }
       if (this.verticalPosition) {
         classes.push(styles[this.verticalPosition]);
-      }
-      if (this.hasArrow) {
-        classes.push(styles.hasArrow);
       }
       return classes;
     },
@@ -310,24 +314,34 @@ export default defineComponent({
   },
 
   methods: {
-    changeShown(isShown = true): void {
-      this.isShown = isShown;
-
+    emitShown(): void {
       /**
        * Emits current tooltip state on change.
        *
        * @event change
        * @type {isShown: boolean}
        */
-      this.$emit(EVENT_NAME.CHANGE, isShown);
+      this.$emit(EVENT_NAME.CHANGE, this.isShown);
       /**
        * Emits current tooltip state on change.
        *
        * @event update:show
        * @type {isShown: boolean}
        */
-      this.$emit(EVENT_NAME.UPDATE_SHOW, isShown);
-      this.whenChange?.(isShown);
+      this.$emit(EVENT_NAME.UPDATE_SHOW, this.isShown);
+      this.whenChange?.(this.isShown);
+    },
+    changeShown(isShown = true): void {
+      if (this.trigger === TRIGGER.HOVER && this.isShown !== isShown) {
+        this.isShown = isShown;
+        this.emitShown();
+      }
+    },
+    toggleShown(): void {
+      if (this.trigger === TRIGGER.CLICK) {
+        this.isShown = !this.isShown;
+        this.emitShown();
+      }
     },
   },
 
@@ -336,6 +350,7 @@ export default defineComponent({
       <div
         ref={config.containerRef}
         class={this.containerClasses}
+        onClick={() => this.toggleShown()}
         onMouseenter={() => this.changeShown()}
         onFocus={() => this.changeShown()}
         onMouseleave={() => this.changeShown(false)}
