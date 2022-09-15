@@ -90,12 +90,16 @@ export default defineComponent({
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
-    // TODO: description
+    /**
+     * Defines which user action should trigger the tooltip appearance. Use "manual" to control appearance via props.forceShow
+     */
     trigger: {
       type: String as PropType<Trigger>,
       default: TRIGGER.HOVER,
     },
-    // TODO: description, naming
+    /**
+     * Use in pair with trigger="manual" to control the tooltip appearance manually
+     */
     forceShow: {
       type: Boolean,
     },
@@ -167,7 +171,7 @@ export default defineComponent({
     const isShown = ref(false);
 
     // we will be watching on this to adjust tooltip position
-    const { controlId } = useControlId();
+    const { controlId: tooltipId } = useControlId();
     const { scrollOffsetX, scrollOffsetY } = useScrollOffset(
       config.throttleDuration
     );
@@ -240,7 +244,7 @@ export default defineComponent({
     );
 
     return {
-      controlId,
+      tooltipId,
       isShown,
       containerRef,
       contentRef,
@@ -280,7 +284,7 @@ export default defineComponent({
 
       const bindings = {
         tabindex: this.tabindex,
-        "aria-describedby": this.controlId,
+        "aria-describedby": this.tooltipId,
         class: [
           fontStyles[fontClassName],
           outlineStyles[outlineClassName],
@@ -323,7 +327,7 @@ export default defineComponent({
 
       const bindings = {
         ref: config.contentRef,
-        id: this.controlId,
+        id: this.tooltipId,
         "aria-hidden": !this.isShown,
         role: "tooltip",
         class: [
