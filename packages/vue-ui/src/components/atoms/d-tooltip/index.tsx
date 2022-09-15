@@ -35,7 +35,6 @@ import { POSITION, TRIGGER } from "./constant";
 import styles from "./index.module.css";
 import config from "./config";
 
-// TODO: on click or manually
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
  */
@@ -97,6 +96,13 @@ export default defineComponent({
     // TODO: description, naming
     forceShow: {
       type: Boolean,
+    },
+    /**
+     * Defines order of selection when navigating with Tab
+     */
+    tabindex: {
+      type: Number,
+      default: 0,
     },
     // TODO: add outline
     // TODO: make offset configurable
@@ -266,6 +272,7 @@ export default defineComponent({
         this.targetFont || this.size
       );
       const bindings = {
+        tabindex: this.tabindex,
         ariaDescribedby: this.controlId,
         class: [fontStyles[fontClassName], this.targetClass],
       };
@@ -357,6 +364,14 @@ export default defineComponent({
         this.emitShown();
       }
     },
+    keyupHandler(event: KeyboardEvent) {
+      if (
+        ["Enter", " "].includes(event.key) &&
+        this.trigger !== TRIGGER.MANUAL
+      ) {
+        this.toggleShown();
+      }
+    },
   },
 
   render(): VNode {
@@ -369,6 +384,7 @@ export default defineComponent({
         onFocus={() => this.changeShown()}
         onMouseleave={() => this.changeShown(false)}
         onBlur={() => this.changeShown(false)}
+        onKeyup={this.keyupHandler}
       >
         {this.renderTarget}
         {this.renderContent}
