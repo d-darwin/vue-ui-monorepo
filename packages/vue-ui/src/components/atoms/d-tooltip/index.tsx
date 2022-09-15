@@ -18,6 +18,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TOD
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -31,7 +32,7 @@ import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { getAdjustedPosition, parsePosition } from "./utils";
 import type { Position, Trigger } from "./types";
-import { POSITION, TRIGGER } from "./constant";
+import { POSITION, TRIGGER, BASE_COLOR_SCHEME } from "./constant";
 import styles from "./index.module.css";
 import config from "./config";
 
@@ -104,7 +105,6 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    // TODO: add outline
     // TODO: make offset configurable
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
@@ -271,10 +271,21 @@ export default defineComponent({
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.targetFont || this.size
       );
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${BASE_COLOR_SCHEME}-${this.size}`
+      );
+
       const bindings = {
         tabindex: this.tabindex,
-        ariaDescribedby: this.controlId,
-        class: [fontStyles[fontClassName], this.targetClass],
+        "aria-describedby": this.controlId,
+        role: "button",
+        class: [
+          fontStyles[fontClassName],
+          outlineStyles[outlineClassName],
+          this.targetClass,
+        ],
       };
 
       if (this.enableHtml) {
@@ -313,7 +324,7 @@ export default defineComponent({
       const bindings = {
         ref: config.contentRef,
         id: this.controlId,
-        ariaHidden: !this.isShown,
+        "aria-hidden": !this.isShown,
         class: [
           styles[config.contentClassName],
           fontStyles[fontClassName],
