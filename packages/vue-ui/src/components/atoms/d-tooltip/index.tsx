@@ -36,6 +36,7 @@ import { POSITION, TRIGGER, BASE_COLOR_SCHEME } from "./constant";
 import styles from "./index.module.css";
 import config from "./config";
 
+// TODO https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tooltip_role
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
  */
@@ -92,7 +93,7 @@ export default defineComponent({
     // TODO: description
     trigger: {
       type: String as PropType<Trigger>,
-      default: TRIGGER.CLICK,
+      default: TRIGGER.HOVER,
     },
     // TODO: description, naming
     forceShow: {
@@ -280,7 +281,6 @@ export default defineComponent({
       const bindings = {
         tabindex: this.tabindex,
         "aria-describedby": this.controlId,
-        role: "button",
         class: [
           fontStyles[fontClassName],
           outlineStyles[outlineClassName],
@@ -325,6 +325,7 @@ export default defineComponent({
         ref: config.contentRef,
         id: this.controlId,
         "aria-hidden": !this.isShown,
+        role: "tooltip",
         class: [
           styles[config.contentClassName],
           fontStyles[fontClassName],
@@ -380,7 +381,9 @@ export default defineComponent({
         ["Enter", " "].includes(event.key) &&
         this.trigger !== TRIGGER.MANUAL
       ) {
-        this.toggleShown();
+        this.changeShown();
+      } else if (event.key === "Escape") {
+        this.changeShown(false);
       }
     },
   },
@@ -390,11 +393,11 @@ export default defineComponent({
       <div
         ref={config.containerRef}
         class={this.containerClasses}
-        onClick={() => this.toggleShown()}
         onMouseenter={() => this.changeShown()}
-        onFocus={() => this.changeShown()}
         onMouseleave={() => this.changeShown(false)}
-        onBlur={() => this.changeShown(false)}
+        onFocusin={() => this.changeShown()}
+        onFocusout={() => this.changeShown(false)}
+        onClick={() => this.toggleShown()}
         onKeyup={this.keyupHandler}
       >
         {this.renderTarget}
