@@ -91,6 +91,13 @@ export default defineComponent({
         Boolean(Object.values(POSITION).includes(val)),
     },
     /**
+     * Defines offset of the tooltip from the target
+     */
+    offset: {
+      type: [] as PropType<[number, number]>,
+      default: () => [4, 4],
+    },
+    /**
      * Defines which user action should trigger the tooltip appearance. Use "manual" to control appearance via props.forceShow
      */
     trigger: {
@@ -110,7 +117,6 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    // TODO: make offset configurable
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
@@ -271,6 +277,14 @@ export default defineComponent({
       return classes;
     },
 
+    contentOffsetStyles(): string | undefined {
+      if (!this.offset[0] && !this.offset[1]) {
+        return undefined;
+      }
+
+      return `margin: ${this.offset[0] || 0}px ${this.offset[1] || 0}px;`;
+    },
+
     renderTarget(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -340,6 +354,7 @@ export default defineComponent({
           transitionStyles[transitionClassName],
           this.contentClass,
         ],
+        style: this.contentOffsetStyles,
       };
 
       if (this.enableHtml) {
