@@ -8,6 +8,10 @@
   justify-content: center;
 }
 
+.target {
+  /*TODO*/
+}
+
 .content {
   /*TODO: make it controllable via figma*/
   --color-text-inverse: var(--color-secondary-background);

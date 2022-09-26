@@ -14,7 +14,7 @@ import {
   emitClickEventCase,
   outlineClassCase,
   preventDefaultCase,
-  propLabelCase,
+  labelPresenceCase,
   contentHtmlCase,
   routerLinkComponentCase,
   slotDefaultCase,
@@ -27,7 +27,7 @@ describe("DLink", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propLabelCase(wrapper);
+  labelPresenceCase(wrapper);
 
   contentHtmlCase(wrapper);
 

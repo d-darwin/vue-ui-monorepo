@@ -30,13 +30,14 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { getAdjustedPosition, parsePosition } from "./utils";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position, Trigger } from "./types";
+import { getAdjustedPosition, parsePosition } from "./utils";
 import { POSITION, TRIGGER, BASE_COLOR_SCHEME } from "./constant";
 import styles from "./index.module.css";
 import config from "./config";
 
-// TODO https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tooltip_role
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.
  */
@@ -94,7 +95,10 @@ export default defineComponent({
      * Defines offset of the tooltip from the target
      */
     offset: {
-      type: [] as PropType<[number, number]>,
+      // TODO
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      type: Array as PropType<[number, number]>,
       default: () => [4, 4],
     },
     /**
@@ -118,6 +122,14 @@ export default defineComponent({
       default: 0,
     },
     /**
+     * Defines should tooltip have arrow
+     */
+    hasArrow: {
+      type: Boolean,
+      default: true,
+    },
+    // TODO: inverse ???
+    /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
@@ -140,19 +152,18 @@ export default defineComponent({
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * Defines should tooltip have arrow
-     */
-    hasArrow: {
-      type: Boolean,
-      default: true,
-    },
-    // TODO: inverse
-    /**
      * Defines transition type of the component
      */
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines container element type of the component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
@@ -300,6 +311,7 @@ export default defineComponent({
         tabindex: this.tabindex,
         "aria-describedby": this.tooltipId,
         class: [
+          styles[config.targetClassName],
           fontStyles[fontClassName],
           outlineStyles[outlineClassName],
           this.targetClass,
@@ -316,7 +328,7 @@ export default defineComponent({
     renderContent(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.contentClass || this.size
+        this.contentFont || this.size
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
@@ -408,8 +420,10 @@ export default defineComponent({
   },
 
   render(): VNode {
+    const Tag = this.tag;
+
     return (
-      <div
+      <Tag
         ref={config.containerRef}
         class={this.containerClasses}
         onMouseenter={() => this.changeShown()}
@@ -421,7 +435,7 @@ export default defineComponent({
       >
         {this.renderTarget}
         {this.renderContent}
-      </div>
+      </Tag>
     );
   },
 });
