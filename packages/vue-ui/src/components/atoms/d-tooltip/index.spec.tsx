@@ -30,7 +30,7 @@ describe("DTooltip", () => {
     expect(targetEl.text()).toBe(target);
   });
 
-  it("Should render props.target as HTML string", async () => {
+  it("Should render props.target as HTML string if props.enableHtml is true", async () => {
     const target = `<div>HTML <b>string</b> target</div>`;
     await wrapper.setProps({ target, enableHtml: true });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
@@ -40,7 +40,7 @@ describe("DTooltip", () => {
 
   it("Should render slots.target", async () => {
     const target = `<div>HTML <b>slot</b> target</div>`;
-    const wrapper = shallowMount(DTooltip, {
+    const wrapper = await shallowMount(DTooltip, {
       slots: {
         target,
       },
@@ -68,24 +68,51 @@ describe("DTooltip", () => {
     expect(targetEl.classes()).toContain(className);
   });
 
-  it("Should render props.content", () => {
-    expect(false).toBeTruthy();
+  it("Should render props.content", async () => {
+    const content = "simple string content";
+    await wrapper.setProps({ content });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+
+    expect(contentEl).toBeTruthy();
+    expect(contentEl.text()).toBe(content);
   });
 
-  it("Should render props.content as HTML string", () => {
-    expect(false).toBeTruthy();
+  it("Should render props.content as HTML string if props.enableHtml is true", async () => {
+    const content = `<div>HTML <b>string</b> content</div>`;
+    await wrapper.setProps({ content, enableHtml: true });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl).toBeTruthy();
+    expect(contentEl.html()).toContain(content);
   });
 
-  it("Should render slots.content", () => {
-    expect(false).toBeTruthy();
+  it("Should render slots.content", async () => {
+    const content = `<div>HTML <b>slot</b> content</div>`;
+    const wrapper = await shallowMount(DTooltip, {
+      slots: {
+        content,
+      },
+    });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl).toBeTruthy();
+    expect(contentEl.html()).toContain(content);
   });
 
-  it("Target element should have props.contentClass if passed", () => {
-    expect(false).toBeTruthy();
+  it("Target element should have props.contentClass if passed", async () => {
+    const contentClass = "someTargetClass";
+    await wrapper.setProps({ contentClass });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.classes()).toContain(contentClass);
   });
 
-  it("Should render props.contentFont to the target font class", () => {
-    expect(false).toBeTruthy();
+  it("Should render props.contentFont to the target font class", async () => {
+    const contentFont = FONT.HUGE;
+    await wrapper.setProps({ contentFont });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      contentFont
+    );
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.classes()).toContain(className);
   });
 
   /*
