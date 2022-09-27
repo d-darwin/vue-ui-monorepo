@@ -1,6 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import DTooltip from "@/components/atoms/d-tooltip";
 import config from "@/components/atoms/d-tooltip/config";
+import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import { BASE_COLOR_SCHEME } from "@/components/atoms/d-tooltip/constant";
+import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
   fontSizeClassCase,
@@ -11,33 +15,57 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import { BASE_COLOR_SCHEME } from "@/components/atoms/d-tooltip/constant";
+import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 
 describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);
 
   baseClassCase(wrapper, config.className);
 
-  it("Should render props.target", () => {
-    console.log(wrapper.html());
-    expect(false).toBeTruthy();
+  it("Should render props.target", async () => {
+    const target = "simple string target";
+    await wrapper.setProps({ target });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl).toBeTruthy();
+    expect(targetEl.text()).toBe(target);
   });
 
-  it("Should render props.target as HTML string", () => {
-    expect(false).toBeTruthy();
+  it("Should render props.target as HTML string", async () => {
+    const target = `<div>HTML <b>string</b> target</div>`;
+    await wrapper.setProps({ target, enableHtml: true });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl).toBeTruthy();
+    expect(targetEl.html()).toContain(target);
   });
 
-  it("Should render slots.target", () => {
-    expect(false).toBeTruthy();
+  it("Should render slots.target", async () => {
+    const target = `<div>HTML <b>slot</b> target</div>`;
+    const wrapper = shallowMount(DTooltip, {
+      slots: {
+        target,
+      },
+    });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl).toBeTruthy();
+    expect(targetEl.html()).toContain(target);
   });
 
-  it("Target element should has props.targetClass if passed", () => {
-    expect(false).toBeTruthy();
+  it("Target element should have props.targetClass if passed", async () => {
+    const targetClass = "someTargetClass";
+    await wrapper.setProps({ targetClass });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl.classes()).toContain(targetClass);
   });
 
-  it("Should render props.targetFont to the target font class", () => {
-    expect(false).toBeTruthy();
+  it("Should render props.targetFont to the target font class", async () => {
+    const targetFont = FONT.HUGE;
+    await wrapper.setProps({ targetFont });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      targetFont
+    );
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl.classes()).toContain(className);
   });
 
   it("Should render props.content", () => {
@@ -52,7 +80,7 @@ describe("DTooltip", () => {
     expect(false).toBeTruthy();
   });
 
-  it("Target element should has props.contentClass if passed", () => {
+  it("Target element should have props.contentClass if passed", () => {
     expect(false).toBeTruthy();
   });
 
@@ -60,6 +88,7 @@ describe("DTooltip", () => {
     expect(false).toBeTruthy();
   });
 
+  /*
   it("Should render props.position to the container position class", () => {
     expect(false).toBeTruthy();
   });
@@ -112,22 +141,22 @@ describe("DTooltip", () => {
     expect(false).toBeTruthy();
   });
 
-  fontSizeClassCase(wrapper, wrapper.find(config.contentClassName));
+  fontSizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
   outlineClassCase(
     wrapper,
-    wrapper.find(config.targetClassName),
+    wrapper.find(`.${config.targetClassName}`),
     BASE_COLOR_SCHEME,
     SIZE.TINY
   );
 
-  paddingClassesCase(wrapper, wrapper.find(config.contentClassName));
+  paddingClassesCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
-  roundingClassCase(wrapper, wrapper.find(config.contentClassName));
+  roundingClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
-  sizeClassCase(wrapper, wrapper.find(config.contentClassName));
+  sizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
-  transitionClassCase(wrapper, wrapper.find(config.contentClassName));
+  transitionClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
-  tagCase(wrapper);
+  tagCase(wrapper);*/
 });
