@@ -3,7 +3,10 @@ import DTooltip from "@/components/atoms/d-tooltip";
 import config from "@/components/atoms/d-tooltip/config";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import { BASE_COLOR_SCHEME } from "@/components/atoms/d-tooltip/constant";
+import {
+  BASE_COLOR_SCHEME,
+  POSITION,
+} from "@/components/atoms/d-tooltip/constant";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
@@ -21,6 +24,8 @@ describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);
 
   baseClassCase(wrapper, config.className);
+
+  fontSizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
   it("Should render props.target", async () => {
     const target = "simple string target";
@@ -115,20 +120,46 @@ describe("DTooltip", () => {
     expect(contentEl.classes()).toContain(className);
   });
 
+  // TODO: emulate window size and process.browser
+  /*  it("Should render props.position to the container position class", async () => {
+    const position = POSITION.BOTTOM_RIGHT;
+    await wrapper.setProps({ position });
+    expect(wrapper.classes()).toContain(".bottom"); // TODO: avoid hardcode
+    expect(wrapper.classes()).toContain(".right"); // TODO: avoid hardcode
+  });*/
+
+  it("Should render props.offset to the content offset style", async () => {
+    const offset = [10, 12];
+    await wrapper.setProps({ offset });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.attributes("style")).toBe(
+      `margin: ${offset[0]}px ${offset[1]}px;`
+    );
+  });
+
+  it("Should render props.tabindex to the target attr", async () => {
+    const tabindex = 11;
+    await wrapper.setProps({ tabindex });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    expect(targetEl.attributes("tabindex")).toBe(String(tabindex));
+  });
+
+  it("Should render the container class if props.hasArrow is true", async () => {
+    await wrapper.setProps({ hasArrow: true });
+    expect(wrapper.classes()).toContain("hasArrow"); // TODO: avoid hardcode
+  });
+
+  it("Shouldn't render the container class if props.hasArrow is false", async () => {
+    await wrapper.setProps({ hasArrow: false });
+    expect(wrapper.classes()).not.toContain("hasArrow"); // TODO: avoid hardcode
+  });
+
   /*
-  it("Should render props.position to the container position class", () => {
+  it("Should show content on mouse enter if props.trigger is 'hover'", () => {
     expect(false).toBeTruthy();
   });
 
-  it("Should render props.offset to the content offset style", () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should show content on mouse enter", () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should hide content on mouse leave", () => {
+  it("Should hide content on mouse leave if props.trigger is 'hover'", () => {
     expect(false).toBeTruthy();
   });
 
@@ -140,19 +171,15 @@ describe("DTooltip", () => {
     expect(false).toBeTruthy();
   });
 
-  it("Should toggle content on click", () => {
+  it("Should toggle content on click if props.trigger is 'click'", () => {
+    expect(false).toBeTruthy();
+  });
+
+  it("Should toggle content on props.forceShow if props.trigger is 'manual'", () => {
     expect(false).toBeTruthy();
   });
 
   it("Should hide content on Escape button keyup", () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should render props.tabindex to the target attr", () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should render props.hasArrow to the container class", () => {
     expect(false).toBeTruthy();
   });
 
@@ -167,8 +194,7 @@ describe("DTooltip", () => {
   it("Should call props.whenChange on visibility change", () => {
     expect(false).toBeTruthy();
   });
-
-  fontSizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+*/
 
   outlineClassCase(
     wrapper,
@@ -185,5 +211,5 @@ describe("DTooltip", () => {
 
   transitionClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
-  tagCase(wrapper);*/
+  tagCase(wrapper);
 });
