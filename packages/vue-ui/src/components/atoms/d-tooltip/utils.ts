@@ -9,6 +9,7 @@ import config from "./config";
 import { Ref } from "vue";
 import { PositionStrict } from "./types";
 
+//TODO: unit test
 /**
  * Return parsed position
  * @param position - position string (e.g. "top-right")
@@ -43,6 +44,7 @@ export function parsePosition(position: Position): {
   return { horizontal, vertical };
 }
 
+//TODO: unit test
 /**
  * Adjust position of the tooltip component if there is no space for default (user defined) position
  *
@@ -114,6 +116,7 @@ export function getAdjustedPosition(
 }
 
 // TODO: description
+// TODO: unit test
 function getAdjustedAxePosition(
   elementContainerClientSpace: Record<PositionStrict, number>,
   spaceForTooltip: Record<PositionStrict, number>,

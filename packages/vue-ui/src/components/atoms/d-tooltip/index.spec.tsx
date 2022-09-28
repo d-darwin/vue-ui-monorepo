@@ -5,7 +5,7 @@ import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import {
   BASE_COLOR_SCHEME,
-  POSITION,
+  TRIGGER,
 } from "@/components/atoms/d-tooltip/constant";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import {
@@ -137,6 +137,13 @@ describe("DTooltip", () => {
     );
   });
 
+  it("Shouldn't render the content offset style if props.offset if [0, 0] ", async () => {
+    const offset = [0, 0];
+    await wrapper.setProps({ offset });
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.attributes("style")).toBeFalsy();
+  });
+
   it("Should render props.tabindex to the target attr", async () => {
     const tabindex = 11;
     await wrapper.setProps({ tabindex });
@@ -154,47 +161,87 @@ describe("DTooltip", () => {
     expect(wrapper.classes()).not.toContain("hasArrow"); // TODO: avoid hardcode
   });
 
-  /*
-  it("Should show content on mouse enter if props.trigger is 'hover'", () => {
-    expect(false).toBeTruthy();
+  it("Should add isShown class to the container on mouse enter if props.trigger is 'hover'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.HOVER });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("mouseenter");
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should hide content on mouse leave if props.trigger is 'hover'", () => {
-    expect(false).toBeTruthy();
+  it("Should remove isShown class from the container on mouse leave if props.trigger is 'hover'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.HOVER });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("mouseleave");
+    expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should show content on focusin", () => {
-    expect(false).toBeTruthy();
+  it("Should add isShown class to the container on focusin if props.trigger is 'hover'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.HOVER });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("focusin");
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should hide content on focusout", () => {
-    expect(false).toBeTruthy();
+  it("Should remove isShown class from the container on focusout if props.trigger is 'hover'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.HOVER });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("focusout");
+    expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should toggle content on click if props.trigger is 'click'", () => {
-    expect(false).toBeTruthy();
+  it("Should toggle isShown class on the container on mouse click if props.trigger is 'click'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.CLICK });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("click");
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
+    await targetEl.trigger("click");
+    expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should toggle content on props.forceShow if props.trigger is 'manual'", () => {
-    expect(false).toBeTruthy();
+  it("Should add isShown class to the container on Enter keyup if props.trigger is 'click'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.CLICK });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("keyup", { key: "Enter" });
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should hide content on Escape button keyup", () => {
-    expect(false).toBeTruthy();
+  it("Should add isShown class to the container on Space keyup if props.trigger is 'click'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.CLICK });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("keyup", { key: " " });
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should emits change event on visibility change", () => {
-    expect(false).toBeTruthy();
+  it("Should remove isShown class from the container on Escape keyup if props.trigger is 'click'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.CLICK });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("click");
+    await targetEl.trigger("keyup", { key: "Escape" });
+    expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should emits update:show event on visibility change", () => {
-    expect(false).toBeTruthy();
+  it("Should toggle isShown class on the container on props.forceShow if props.trigger is 'manual'", async () => {
+    await wrapper.setProps({ trigger: TRIGGER.MANUAL, forceShow: true });
+    expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
+    await wrapper.setProps({ trigger: TRIGGER.MANUAL, forceShow: false });
+    expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
-  it("Should call props.whenChange on visibility change", () => {
-    expect(false).toBeTruthy();
+  it("Should emit change, update:show events and call props.whenChange on visibility change", async () => {
+    const whenChange = jest.fn();
+    const wrapper = shallowMount(DTooltip, {
+      props: { trigger: TRIGGER.CLICK, whenChange },
+    });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    await targetEl.trigger("click");
+    expect(wrapper.emitted("change")?.[0]).toEqual([true]);
+    expect(wrapper.emitted("update:show")?.[0]).toEqual([true]);
+    expect(whenChange).toBeCalledWith(true);
+    await targetEl.trigger("click");
+    expect(wrapper.emitted("change")?.[1]).toEqual([false]);
+    expect(wrapper.emitted("update:show")?.[1]).toEqual([false]);
+    expect(whenChange).toBeCalledWith(false);
   });
-*/
 
   outlineClassCase(
     wrapper,

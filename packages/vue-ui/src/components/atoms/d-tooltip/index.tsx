@@ -316,6 +316,12 @@ export default defineComponent({
           outlineStyles[outlineClassName],
           this.targetClass,
         ],
+        onMouseenter: () => this.changeShown(),
+        onMouseleave: () => this.changeShown(false),
+        onFocusin: () => this.changeShown(),
+        onFocusout: () => this.changeShown(false),
+        onClick: () => this.toggleShown(),
+        onKeyup: this.keyupHandler,
       };
 
       if (this.enableHtml) {
@@ -395,14 +401,15 @@ export default defineComponent({
       this.$emit(EVENT_NAME.UPDATE_SHOW, this.isShown);
       this.whenChange?.(this.isShown);
     },
+    // TODO: combine change and toggle !!!
     changeShown(isShown = true): void {
-      if (this.trigger === TRIGGER.HOVER && this.isShown !== isShown) {
+      if (this.trigger !== TRIGGER.MANUAL && this.isShown !== isShown) {
         this.isShown = isShown;
         this.emitShown();
       }
     },
     toggleShown(): void {
-      if (this.trigger === TRIGGER.CLICK) {
+      if (this.trigger !== TRIGGER.MANUAL) {
         this.isShown = !this.isShown;
         this.emitShown();
       }
@@ -423,16 +430,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag
-        ref={config.containerRef}
-        class={this.containerClasses}
-        onMouseenter={() => this.changeShown()}
-        onMouseleave={() => this.changeShown(false)}
-        onFocusin={() => this.changeShown()}
-        onFocusout={() => this.changeShown(false)}
-        onClick={() => this.toggleShown()}
-        onKeyup={this.keyupHandler}
-      >
+      <Tag ref={config.containerRef} class={this.containerClasses}>
         {this.renderTarget}
         {this.renderContent}
       </Tag>

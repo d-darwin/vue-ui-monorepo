@@ -55,7 +55,7 @@
 .hasArrow > .content::after {
   position: absolute;
   content: "";
-  border-color: transparent;
+  border: 4px solid transparent;
 }
 
 .hasArrow.top > .content::after {
