@@ -22,7 +22,7 @@ function getTargetName(
 }
 
 export function propContentCase(wrapper: VueWrapper) {
-  return it("Renders props.html", async () => {
+  return it("Renders props.content", async () => {
     const content = "some text content";
     await wrapper.setProps({ content });
     expect(wrapper.html()).toMatch(content);
@@ -30,7 +30,7 @@ export function propContentCase(wrapper: VueWrapper) {
 }
 
 export function contentHtmlCase(wrapper: VueWrapper) {
-  return it("Renders props.html", async () => {
+  return it("Renders props.content as HTML string", async () => {
     const contentHtml = `<div>some <b>html</b> content</div>`;
     await wrapper.setProps({ content: contentHtml, enableHtml: true });
     expect(wrapper.html()).toMatch(contentHtml);
@@ -94,14 +94,6 @@ export function minControlWidthCase(wrapper: VueWrapper) {
   });
 }
 
-export function propLabelCase(wrapper: VueWrapper) {
-  return it("Renders props.content", async () => {
-    const label = "Some text content";
-    await wrapper.setProps({ label });
-    expect(wrapper.text()).toMatch(label);
-  });
-}
-
 export function labelPresenceCase(
   wrapper: VueWrapper,
   labelSelector = "label"
@@ -147,7 +139,7 @@ export function labelFontCase(wrapper: VueWrapper) {
 }
 
 export function labelHtmlCase(wrapper: VueWrapper) {
-  return it("Should render prop.labelHtml to the label v-html", async () => {
+  return it("Should render prop.label as HTML string", async () => {
     const labelHtml = `<div>some label html</div>`;
     await wrapper.setProps({ label: labelHtml, enableHtml: true });
     const labelEl = wrapper.find("label");

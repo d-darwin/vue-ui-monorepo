@@ -10,6 +10,14 @@ export default {
   title: "atoms/DCheckbox",
   component: DCheckbox,
   argTypes: {
+    labelFont: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
+    errorFont: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -18,10 +26,6 @@ export default {
       control: { type: "select" },
       options: Object.values(ROUNDING),
     },
-    labelFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     size: {
       control: { type: "select" },
       options: Object.values(SIZE),
@@ -29,10 +33,6 @@ export default {
     transition: {
       control: { type: "select" },
       options: Object.values(TRANSITION),
-    },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
     },
     onChange: {
       action: "change", // TODO: why catch twice ???

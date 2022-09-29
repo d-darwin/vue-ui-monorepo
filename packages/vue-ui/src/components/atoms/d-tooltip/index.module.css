@@ -1,0 +1,115 @@
+.dTooltip {
+  position: relative;
+  /*TODO: is it true ?*/
+  cursor: help;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+.target {
+  /*TODO*/
+}
+
+.content {
+  /*TODO: make it controllable via figma*/
+  --color-text-inverse: var(--color-secondary-background);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0);
+  /*TODO: visibility: hidden;*/
+  position: absolute;
+  /*TODO: width: fit-content;*/
+  color: var(--color-text-inverse);
+  background: var(--color-text);
+}
+
+.dTooltip.isShown > .content {
+  opacity: 1;
+  transform: scale(1);
+  /*TODO: visibility: visible;*/
+}
+
+.top > .content {
+  bottom: 100%;
+}
+
+.right > .content {
+  left: 100%;
+}
+
+.bottom > .content {
+  top: 100%;
+}
+
+.left > .content {
+  right: 100%;
+}
+
+/* Arrow */
+
+.hasArrow > .content::after {
+  position: absolute;
+  content: "";
+  border: 4px solid transparent;
+}
+
+.hasArrow.top > .content::after {
+  border-bottom: 0;
+  border-top-color: var(--color-text);
+  bottom: calc(4px * -1);
+}
+
+.hasArrow.top.right > .content {
+  border-bottom-left-radius: 0;
+}
+
+.hasArrow.top.right > .content::after {
+  display: none;
+}
+
+.hasArrow.right > .content::after {
+  border-left: 0;
+  border-right-color: var(--color-text);
+  left: calc(4px * -1);
+}
+
+.hasArrow.bottom.right > .content {
+  border-top-left-radius: 0;
+}
+
+.hasArrow.bottom.right > .content::after {
+  display: none;
+}
+
+.hasArrow.bottom > .content::after {
+  border-top: 0;
+  border-bottom-color: var(--color-text);
+  top: calc(4px * -1);
+}
+
+.hasArrow.bottom.left > .content {
+  border-top-right-radius: 0;
+}
+
+.hasArrow.bottom.left > .content::after {
+  display: none;
+}
+
+.hasArrow.left > .content::after {
+  border-right: 0;
+  border-left-color: var(--color-text);
+  right: calc(4px * -1);
+}
+
+.hasArrow.top.left > .content {
+  border-bottom-right-radius: 0;
+}
+
+.hasArrow.top.left > .content::after {
+  display: none;
+}
