@@ -426,6 +426,15 @@ export default defineComponent({
     },
   },
 
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot $slots.target
+   * Use instead of props.target to fully customize target
+   * */
+  /**
+   * @slot $slots.content
+   * Use instead of props.error to fully customize content
+   * */
   render(): VNode {
     const Tag = this.tag;
 
