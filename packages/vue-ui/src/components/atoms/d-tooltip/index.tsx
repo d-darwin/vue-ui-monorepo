@@ -316,11 +316,11 @@ export default defineComponent({
           outlineStyles[outlineClassName],
           this.targetClass,
         ],
-        onMouseenter: () => this.changeShown(),
-        onMouseleave: () => this.changeShown(false),
-        onFocusin: () => this.changeShown(),
-        onFocusout: () => this.changeShown(false),
-        onClick: () => this.toggleShown(),
+        onMouseenter: () => this.hoverHandler(true),
+        onMouseleave: () => this.hoverHandler(false),
+        onFocusin: () => this.hoverHandler(true),
+        onFocusout: () => this.hoverHandler(false),
+        onClick: () => this.clickHandler(),
         onKeyup: this.keyupHandler,
       };
 
@@ -402,26 +402,29 @@ export default defineComponent({
       this.whenChange?.(this.isShown);
     },
     // TODO: combine change and toggle !!!
-    changeShown(isShown = true): void {
-      if (this.trigger !== TRIGGER.MANUAL && this.isShown !== isShown) {
+    hoverHandler(isShown = true): void {
+      if (this.trigger === TRIGGER.HOVER && this.isShown !== isShown) {
         this.isShown = isShown;
         this.emitShown();
       }
     },
-    toggleShown(): void {
-      if (this.trigger !== TRIGGER.MANUAL) {
+    clickHandler(): void {
+      if (this.trigger === TRIGGER.CLICK) {
         this.isShown = !this.isShown;
         this.emitShown();
       }
     },
-    keyupHandler(event: KeyboardEvent) {
-      if (
-        ["Enter", " "].includes(event.key) &&
-        this.trigger !== TRIGGER.MANUAL
-      ) {
-        this.changeShown();
+    keyupHandler(event: KeyboardEvent): void {
+      if (this.trigger === TRIGGER.MANUAL) {
+        return;
+      }
+
+      if (["Enter", " "].includes(event.key)) {
+        this.isShown = true;
+        this.emitShown();
       } else if (event.key === "Escape") {
-        this.changeShown(false);
+        this.isShown = false;
+        this.emitShown();
       }
     },
   },
