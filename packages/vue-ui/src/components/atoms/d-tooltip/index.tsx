@@ -17,12 +17,12 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TO
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
@@ -46,10 +46,10 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string or HTML if props.enableHtml is true
+     * Plain string, VNode or HTML if props.enableHtml is true
      */
     target: {
-      type: [String, Number] as PropType<Text>, // TODO: VNode ???
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
      * You can pass own class name to the <b>target</b> element.
@@ -64,10 +64,10 @@ export default defineComponent({
       type: String as PropType<Font>,
     },
     /**
-     * Plain string or HTML if props.enableHtml is true
+     * Plain string, VNode or HTML if props.enableHtml is true
      */
     content: {
-      type: [String, Number] as PropType<Text>, // TODO: VNode ???
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
      * You can pass own class name to the <b>content</b> element.

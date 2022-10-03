@@ -1,6 +1,6 @@
 import { PropType, defineComponent, VNode } from "vue";
 // TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css"; // TODO: module, common style ???
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
