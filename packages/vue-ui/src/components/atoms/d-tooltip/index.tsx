@@ -254,9 +254,7 @@ export default defineComponent({
     watch(
       () => props.forceShow,
       (show) => {
-        if (props.trigger === TRIGGER.MANUAL) {
-          isShown.value = show;
-        }
+        isShown.value = show;
       }
     );
 
