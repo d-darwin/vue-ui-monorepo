@@ -102,8 +102,6 @@ export function labelPresenceCase(
     const label = "Some label";
     await wrapper.setProps({ label });
 
-    console.log(wrapper.html());
-
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeTruthy();
     expect(labelEl.text()).toBe(label);

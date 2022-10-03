@@ -27,7 +27,7 @@ describe("DLink", () => {
 
   baseClassCase(wrapper, config.className);
 
-  labelPresenceCase(wrapper);
+  labelPresenceCase(wrapper, "a");
 
   contentHtmlCase(wrapper);
 

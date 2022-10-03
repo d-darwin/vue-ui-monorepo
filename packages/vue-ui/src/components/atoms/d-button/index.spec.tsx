@@ -31,7 +31,7 @@ describe("DButton", () => {
 
   baseClassCase(wrapper, config.className);
 
-  labelPresenceCase(wrapper);
+  labelPresenceCase(wrapper, "button");
 
   contentHtmlCase(wrapper);
 
