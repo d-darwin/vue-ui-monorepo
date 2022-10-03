@@ -19,10 +19,10 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string or HTML if props.enableHtml is true
+     * Plain string, VNode or HTML if props.enableHtml is true
      */
     content: {
-      type: [String, Number] as PropType<Text>,
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
      * Defines font size of the component. By default, depends on props.size

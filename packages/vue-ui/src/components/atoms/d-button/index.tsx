@@ -35,10 +35,10 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string or HTML if props.enableHtml is true
+     * Plain string, VNode or HTML if props.enableHtml is true
      */
     label: {
-      type: [String, Number] as PropType<Text>,
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
      * Defines appearance of the component
