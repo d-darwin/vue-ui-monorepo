@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-style-dictionary",
-  "version": "0.17.1",
+  "version": "0.17.12",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
