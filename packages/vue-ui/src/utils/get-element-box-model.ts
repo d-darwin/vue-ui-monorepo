@@ -16,7 +16,7 @@ export default function (element: HTMLElement | null): BoxModel | null {
   //TODO: refactor
   let boxModel: BoxModel | null = null;
 
-  if (process.browser && element) {
+  if (typeof window !== "undefined" && element) {
     const { marginBottom, marginTop, marginLeft, marginRight } =
       window.getComputedStyle(element);
 

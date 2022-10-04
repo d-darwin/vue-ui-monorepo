@@ -16,14 +16,14 @@ export default function useWindowSize(ms: number) {
   let throttledOnResize: (() => void) | null = null;
 
   function onResize() {
-    if (process.browser) {
+    if (typeof window !== "undefined") {
       windowHeight.value = document?.documentElement?.clientHeight;
       windowWidth.value = document?.documentElement?.clientWidth;
     }
   }
 
   onMounted(() => {
-    if (process.browser) {
+    if (typeof window !== "undefined") {
       // execute when mounted first time
       onResize();
 
@@ -33,7 +33,7 @@ export default function useWindowSize(ms: number) {
   });
 
   onUnmounted(() => {
-    if (process.browser && throttledOnResize) {
+    if (typeof window !== "undefined" && throttledOnResize) {
       window.removeEventListener(EVENT_NAME.RESIZE, throttledOnResize);
     }
   });

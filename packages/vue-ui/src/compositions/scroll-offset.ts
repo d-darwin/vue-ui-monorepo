@@ -20,7 +20,7 @@ export default function useScrollOffset(ms: number) {
   };
 
   onMounted(() => {
-    if (process.browser) {
+    if (typeof window !== "undefined") {
       // get current offset on mounted
       onScroll();
       // hold function pointer to remove event listener when the component will be unmounted
@@ -34,7 +34,7 @@ export default function useScrollOffset(ms: number) {
   });
 
   onUnmounted(() => {
-    if (process.browser && throttledOnScroll) {
+    if (typeof window !== "undefined" && throttledOnScroll) {
       // prevent memory leaks
       window.removeEventListener(EVENT_NAME.SCROLL, throttledOnScroll);
     }

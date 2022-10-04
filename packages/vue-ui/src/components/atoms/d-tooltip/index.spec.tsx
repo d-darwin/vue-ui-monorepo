@@ -120,7 +120,7 @@ describe("DTooltip", () => {
     expect(contentEl.classes()).toContain(className);
   });
 
-  // TODO: emulate window size and process.browser
+  // TODO: emulate window size and typeof window !== "undefined"
   /*  it("Should render props.position to the container position class", async () => {
     const position = POSITION.BOTTOM_RIGHT;
     await wrapper.setProps({ position });
