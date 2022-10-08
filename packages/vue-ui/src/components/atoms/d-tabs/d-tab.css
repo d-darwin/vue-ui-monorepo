@@ -1,3 +1,9 @@
 .dTab {
-  /*TODO*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dTab:not(.selected) {
+  cursor: pointer;
 }
