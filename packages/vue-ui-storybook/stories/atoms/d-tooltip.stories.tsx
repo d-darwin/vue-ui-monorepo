@@ -77,7 +77,7 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DTooltip: DTooltip },
+  components: { DTooltip },
   setup() {
     return { args, styles };
   },
@@ -86,7 +86,7 @@ const Template: Story = (args) => ({
 export const Default = Template.bind({});
 
 const SlotTargetTemplate: Story = (args) => ({
-  components: { DTooltip: DTooltip },
+  components: { DTooltip },
   setup() {
     return { args, styles };
   },
@@ -99,7 +99,7 @@ const SlotTargetTemplate: Story = (args) => ({
 export const SlotTarget = SlotTargetTemplate.bind({});
 
 const SlotContentTemplate: Story = (args) => ({
-  components: { DTooltip: DTooltip },
+  components: { DTooltip },
   setup() {
     return { args, styles };
   },
