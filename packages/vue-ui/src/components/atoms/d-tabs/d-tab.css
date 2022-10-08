@@ -4,6 +4,11 @@
   justify-content: center;
 }
 
-.dTab:not(.selected) {
+.dTab:not(.active),
+.dTab:not(.disabled) {
   cursor: pointer;
+}
+
+.dTab.disabled {
+  cursor: not-allowed;
 }

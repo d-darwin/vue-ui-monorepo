@@ -30,7 +30,7 @@ const Template: Story = (args) => ({
   template: `
     <DTabs v-bind="args">
       <DTab />
-      <DTab />
+      <DTab :active="true" />
     </DTabs>
   `,
 });

@@ -11,6 +11,12 @@ export default defineComponent({
 
   props: {
     /**
+     * Pass true to disable <b>DTab</b> element.
+     */
+    disabled: {
+      type: Boolean,
+    },
+    /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
@@ -29,9 +35,9 @@ export default defineComponent({
 
   render(): VNode {
     return (
-      <div class={styles[config.tabsClassName]}>
+      <div class={styles[config.tabsClassName]} role="tablist">
         {this.$slots.default?.().map((tab) => {
-          tab.props = this.$props;
+          Object.assign(tab.props || {}, this.$props);
           return tab;
         })}
       </div>
