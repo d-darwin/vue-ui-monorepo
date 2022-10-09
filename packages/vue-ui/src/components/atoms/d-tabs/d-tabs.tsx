@@ -50,6 +50,11 @@ export default defineComponent({
     // TODO: emit change ???
   },
 
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot default
+   * Use to place DTab components
+   * */
   render(): VNode {
     return (
       <div class={styles[config.tabsClassName]} role="tablist">

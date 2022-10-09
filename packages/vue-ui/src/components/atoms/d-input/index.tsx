@@ -437,6 +437,7 @@ export default defineComponent({
     },
   },
 
+  // TODO: describe slots
   render(): VNode {
     const Tag = this.tag;
 
