@@ -11,11 +11,18 @@ import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepare
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import config from "./config";
 import styles from "./d-tab.css?module";
+import { Text } from "@/types/text";
 
 export default defineComponent({
   name: config.tabName,
 
   props: {
+    /**
+     * Plain string, VNode or HTML if props.enableHtml is true
+     */
+    label: {
+      type: [String, Number, Object] as PropType<Text | VNode>,
+    },
     /**
      * Pass if the component is active
      */
@@ -43,12 +50,19 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * Enables html string rendering passed in props.label.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
 
     /**
      * Alternative way to catch click event
      */
     whenClick: {
-      type: Function as PropType<() => void | Promise<void>>,
+      type: Function as PropType<(event?: MouseEvent) => void | Promise<void>>,
     },
   },
 
@@ -91,14 +105,42 @@ export default defineComponent({
 
       return classes;
     },
+
+    bindings(): Record<
+      string,
+      string | string[] | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      return {
+        role: "tab",
+        class: this.classes,
+        onClick: this.clickHandler,
+      };
+    },
+  },
+
+  methods: {
+    clickHandler(event: MouseEvent): void | Promise<void> {
+      if (!this.$attrs.disabled) {
+        /**
+         * Emits on click with MouseEvent payload
+         * @event click
+         * @type {event: MouseEvent}
+         */
+        this.$emit(EVENT_NAME.CLICK, event);
+        this.whenClick?.(event);
+      }
+    },
   },
 
   render(): VNode {
-    return (
-      // TODO: use DButton ???
-      <div class={this.classes} role="tab">
-        {config.tabName}
-      </div>
-    );
+    // TODO: use DButton ???
+    if (!this.enableHtml) {
+      /** @slot Use instead of props.label to fully customize content */
+      return (
+        <div {...this.bindings}>{this.$slots.default?.() || this.label}</div>
+      );
+    }
+
+    return <div {...this.bindings} v-html={this.label} />;
   },
 });

@@ -19,6 +19,9 @@ export default {
   args: {
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
+    whenClick: () => {
+      console.log("click");
+    },
   },
 };
 
@@ -29,8 +32,8 @@ const Template: Story = (args) => ({
   },
   template: `
     <DTabs v-bind="args">
-      <DTab />
-      <DTab :active="true" />
+      <DTab label="Tab 1" />
+      <DTab label="Tab 2" :active="true" />
     </DTabs>
   `,
 });

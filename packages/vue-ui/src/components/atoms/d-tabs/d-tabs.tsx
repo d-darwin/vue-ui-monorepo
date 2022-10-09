@@ -31,13 +31,25 @@ export default defineComponent({
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * Enables html string rendering passed in props.label.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
   },
 
   render(): VNode {
     return (
       <div class={styles[config.tabsClassName]} role="tablist">
         {this.$slots.default?.().map((tab) => {
-          Object.assign(tab.props || {}, this.$props);
+          Object.assign(tab.props || {}, {
+            disabled: this.disabled,
+            padding: this.padding,
+            size: this.size,
+            enableHtml: this.enableHtml,
+          });
           return tab;
         })}
       </div>

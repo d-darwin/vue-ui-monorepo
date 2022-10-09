@@ -2,11 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-.dTab:not(.active),
-.dTab:not(.disabled) {
-  cursor: pointer;
+.dTab.active {
+  cursor: default;
 }
 
 .dTab.disabled {
