@@ -3,9 +3,12 @@ import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -51,6 +54,13 @@ export default defineComponent({
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
@@ -87,6 +97,10 @@ export default defineComponent({
         codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
 
       const classes = [
         styles[config.tabClassName],
@@ -94,6 +108,7 @@ export default defineComponent({
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
         sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
       ];
 
       if (this.active) {
@@ -120,7 +135,7 @@ export default defineComponent({
 
   methods: {
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (!this.$attrs.disabled) {
+      if (!this.disabled) {
         /**
          * Emits on click with MouseEvent payload
          * @event click

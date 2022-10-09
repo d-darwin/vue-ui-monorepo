@@ -1,8 +1,13 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
+
 .dTab {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+  color: var(--color-text);
 }
 
 .dTab.active {
@@ -10,5 +15,29 @@
 }
 
 .dTab.disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
+
+.dTab:after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  transition: inherit;
+}
+
+.dTab.active:after {
+  background: var(--color-primary-background);
+}
+
+.dTab:not(.disabled):hover:after {
+  background: var(--color-primary-background-hover);
+}
+
+.dTab.active.disabled:after {
+  background: var(--color-primary-background-disabled);
+}
+
+

@@ -3,6 +3,8 @@ import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
@@ -32,12 +34,20 @@ export default defineComponent({
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {
       type: Boolean,
     },
+    // TODO: emit change ???
   },
 
   render(): VNode {
@@ -48,6 +58,7 @@ export default defineComponent({
             disabled: this.disabled,
             padding: this.padding,
             size: this.size,
+            transition: this.transition,
             enableHtml: this.enableHtml,
           });
           return tab;
