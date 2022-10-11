@@ -2,10 +2,15 @@
 
 .dTabs {
   display: flex;
+  flex-direction: column;
+}
+
+.dTablist {
+  display: flex;
   position: relative;
 }
 
-.dTabs:after {
+.dTablist:after {
   position: absolute;
   content: '';
   height: 1px;
@@ -13,8 +18,4 @@
   bottom: 0;
   background: var(--color-text); /* TODO: add separator color ??? */
   opacity: 0.3;
-}
-
-.dTablist {
-  /*TODO*/
 }

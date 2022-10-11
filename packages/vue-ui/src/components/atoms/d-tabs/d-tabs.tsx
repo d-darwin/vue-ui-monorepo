@@ -16,17 +16,21 @@ export default defineComponent({
 
   props: {
     /**
-     *
+     * TODO
      */
     tablistLabel: {
       type: [String || Number] as PropType<Text>,
     },
+    /**
+     * TODO
+     */
     tablistClass: {
       type: String,
     },
     // TODO: tabs: Text | VNode
     // TODO: tabs class
     // TODO: tabs font
+
     // TODO: tabpanels: Text | VNode
     // TODO: tabs class
     // TODO: tabs font
@@ -77,8 +81,12 @@ export default defineComponent({
 
   /*TODO: why vue-docgen cant' detect not default slots ???*/
   /**
-   * @slot default
+   * @slot tabs
    * Use to place DTab components
+   * */
+  /**
+   * @slot tabpanels
+   * Use to place DTabpanel components
    * */
   render(): VNode {
     const Tag = this.tag;
@@ -90,7 +98,7 @@ export default defineComponent({
           aria-label={String(this.tablistLabel)}
           role="tablist"
         >
-          {this.$slots.default?.().map((tab) => {
+          {this.$slots.tabs?.().map((tab) => {
             Object.assign(tab.props || {}, {
               disabled: tab.props?.disabled || this.disabled,
               padding: tab.props?.padding || this.padding,
@@ -101,6 +109,15 @@ export default defineComponent({
             return tab;
           })}
         </div>
+        {this.$slots.tabpanels?.().map((tabpanel) => {
+          Object.assign(tabpanel.props || {}, {
+            padding: tabpanel.props?.padding || this.padding,
+            size: tabpanel.props?.size || this.size,
+            transition: tabpanel.props?.transition || this.transition,
+            enableHtml: tabpanel.props?.enableHtml || this.enableHtml,
+          });
+          return tabpanel;
+        })}
       </Tag>
     );
   },

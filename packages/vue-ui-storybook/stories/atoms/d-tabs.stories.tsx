@@ -36,8 +36,14 @@ const Template: Story = (args) => ({
   },
   template: `
     <DTabs v-bind="args">
-      <DTab label="Tab 1" :active="this.active === 'tab_1'" :whenClick="() => {this.active = 'tab_1'}" />
-      <DTab label="Tab 2" :active="this.active === 'tab_2'" :whenClick="() => {this.active = 'tab_2'}" />
+      <template v-slot:tabs>
+        <DTab label="Tab 1" :active="this.active === 'tab_1'" :whenClick="() => {this.active = 'tab_1'}" />
+        <DTab label="Tab 2" :active="this.active === 'tab_2'" :whenClick="() => {this.active = 'tab_2'}" />
+      </template>
+      <template v-slot:tabpanels>
+        <div>TODO: panel 1</div>
+        <div>TODO: panel 2</div>
+      </template>
     </DTabs>
   `,
 });
