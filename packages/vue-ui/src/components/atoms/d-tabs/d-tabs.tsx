@@ -5,8 +5,9 @@ import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TO
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
@@ -14,6 +15,21 @@ export default defineComponent({
   name: config.tabsName,
 
   props: {
+    /**
+     *
+     */
+    tablistLabel: {
+      type: [String || Number] as PropType<Text>,
+    },
+    tablistClass: {
+      type: String,
+    },
+    // TODO: tabs: Text | VNode
+    // TODO: tabs class
+    // TODO: tabs font
+    // TODO: tabpanels: Text | VNode
+    // TODO: tabs class
+    // TODO: tabs font
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -69,16 +85,22 @@ export default defineComponent({
 
     return (
       <Tag class={styles[config.tabsClassName]} role="tablist">
-        {this.$slots.default?.().map((tab) => {
-          Object.assign(tab.props || {}, {
-            disabled: tab.props?.disabled || this.disabled,
-            padding: tab.props?.padding || this.padding,
-            size: tab.props?.size || this.size,
-            transition: tab.props?.transition || this.transition,
-            enableHtml: tab.props?.enableHtml || this.enableHtml,
-          });
-          return tab;
-        })}
+        <div
+          class={[styles[config.tablistClassName], this.tablistClass]}
+          aria-label={String(this.tablistLabel)}
+          role="tablist"
+        >
+          {this.$slots.default?.().map((tab) => {
+            Object.assign(tab.props || {}, {
+              disabled: tab.props?.disabled || this.disabled,
+              padding: tab.props?.padding || this.padding,
+              size: tab.props?.size || this.size,
+              transition: tab.props?.transition || this.transition,
+              enableHtml: tab.props?.enableHtml || this.enableHtml,
+            });
+            return tab;
+          })}
+        </div>
       </Tag>
     );
   },
