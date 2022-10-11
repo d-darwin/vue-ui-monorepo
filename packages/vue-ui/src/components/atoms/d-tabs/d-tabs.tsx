@@ -71,11 +71,11 @@ export default defineComponent({
       <Tag class={styles[config.tabsClassName]} role="tablist">
         {this.$slots.default?.().map((tab) => {
           Object.assign(tab.props || {}, {
-            disabled: this.disabled,
-            padding: this.padding,
-            size: this.size,
-            transition: this.transition,
-            enableHtml: this.enableHtml,
+            disabled: tab.props?.disabled || this.disabled,
+            padding: tab.props?.padding || this.padding,
+            size: tab.props?.size || this.size,
+            transition: tab.props?.transition || this.transition,
+            enableHtml: tab.props?.enableHtml || this.enableHtml,
           });
           return tab;
         })}
