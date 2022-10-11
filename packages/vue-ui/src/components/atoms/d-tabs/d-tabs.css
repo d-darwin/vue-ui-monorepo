@@ -1,3 +1,16 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
 .dTabs {
   display: flex;
+  position: relative;
+}
+
+.dTabs:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  width: 100%;
+  bottom: 0;
+  background: var(--color-text); /* TODO: add separator color ??? */
+  opacity: 0.3;
 }
