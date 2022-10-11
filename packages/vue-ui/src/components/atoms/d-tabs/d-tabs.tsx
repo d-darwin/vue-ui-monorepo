@@ -7,6 +7,8 @@ import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transi
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import config from "./config";
 import styles from "./d-tabs.css?module";
+import { TagName } from "@/types/tag-name";
+import { TAG_NAME_DEFAULTS } from "@/constants/tag-name";
 
 export default defineComponent({
   name: config.tabsName,
@@ -41,6 +43,13 @@ export default defineComponent({
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines container element type of the component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
@@ -56,8 +65,10 @@ export default defineComponent({
    * Use to place DTab components
    * */
   render(): VNode {
+    const Tag = this.tag;
+
     return (
-      <div class={styles[config.tabsClassName]} role="tablist">
+      <Tag class={styles[config.tabsClassName]} role="tablist">
         {this.$slots.default?.().map((tab) => {
           Object.assign(tab.props || {}, {
             disabled: this.disabled,
@@ -68,7 +79,7 @@ export default defineComponent({
           });
           return tab;
         })}
-      </div>
+      </Tag>
     );
   },
 });
