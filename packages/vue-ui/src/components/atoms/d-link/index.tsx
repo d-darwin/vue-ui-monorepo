@@ -13,8 +13,8 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Tag } from "./types";
-import styles from "./index.module.css";
 import config from "./config";
+import styles from "./index.css?module";
 
 /**
  * Renders as a <b>router-link</b> or just as an <b>a</b> element depending on props.

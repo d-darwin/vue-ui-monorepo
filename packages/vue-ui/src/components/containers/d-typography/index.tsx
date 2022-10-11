@@ -8,8 +8,8 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: 
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import styles from "./index.module.css";
 import config from "./config";
+import styles from "./index.css?module";
 
 /**
  * The component is intended to render big text content. Use font styles from @darwin-studio/vue-ui-codegen/dist/styles/font.css instead to render short interface copyright texts.

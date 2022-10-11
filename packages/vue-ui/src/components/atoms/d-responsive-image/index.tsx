@@ -17,8 +17,8 @@ import type {
 } from "./types";
 import { prepareSource } from "./utils";
 import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
-import styles from "./index.module.css";
 import config from "./config";
+import styles from "./index.css?module";
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
 // TODO: is it a molecule, not an atom ???

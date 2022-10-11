@@ -32,7 +32,7 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import styles from "./index.module.css";
+import styles from "./index.css";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 
 describe("DCheckbox", () => {

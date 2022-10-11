@@ -12,9 +12,9 @@ import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transiti
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tab.css?module";
-import { Text } from "@/types/text";
 
 export default defineComponent({
   name: config.tabName,
