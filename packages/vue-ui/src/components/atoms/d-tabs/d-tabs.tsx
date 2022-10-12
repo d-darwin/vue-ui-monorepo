@@ -100,11 +100,11 @@ export default defineComponent({
     const TablistTag = this.tablistTag;
 
     return (
-      <Tag class={styles[config.tabsClassName]} role="tablist">
+      <Tag class={styles[config.tabsClassName]}>
         <TablistTag
-          class={[styles[config.tablistClassName], this.tablistClass]}
-          aria-label={String(this.tablistLabel)}
           role="tablist"
+          aria-label={String(this.tablistLabel)}
+          class={[styles[config.tablistClassName], this.tablistClass]}
         >
           {this.$slots.tabs?.().map((tab) => {
             Object.assign(tab.props || {}, {
@@ -117,10 +117,12 @@ export default defineComponent({
             return tab;
           })}
         </TablistTag>
+
+        {/*TODO: if different number of tabs and tabpanels*/}
         {this.$slots.tabpanels?.().map((tabpanel) => {
           Object.assign(tabpanel.props || {}, {
+            font: tabpanel.props?.font || this.size, // TODO: isnt a good idea...
             padding: tabpanel.props?.padding || this.padding,
-            size: tabpanel.props?.size || this.size,
             transition: tabpanel.props?.transition || this.transition,
             enableHtml: tabpanel.props?.enableHtml || this.enableHtml,
           });

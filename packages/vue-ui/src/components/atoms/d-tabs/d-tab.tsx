@@ -34,6 +34,8 @@ export default defineComponent({
     active: {
       type: Boolean,
     },
+    // TODO: id
+    // TODO: tabindex
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -132,10 +134,17 @@ export default defineComponent({
 
     bindings(): Record<
       string,
-      string | string[] | ((event: MouseEvent) => void | Promise<void>)
+      | undefined
+      | boolean
+      | string
+      | string[]
+      | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
         role: "tab",
+        // TODO: id
+        // TODO: index
+        ariaSelected: this.active || undefined,
         class: this.classes,
         onClick: this.clickHandler,
       };

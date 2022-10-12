@@ -1,6 +1,10 @@
 import { ref } from "vue";
 import { Story } from "@storybook/vue3";
-import { DTabs, DTab } from "@darwin-studio/vue-ui/src/components/atoms/d-tabs";
+import {
+  DTabs,
+  DTab,
+  DTabpanel,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-tabs";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
@@ -29,20 +33,20 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DTabs, DTab },
+  components: { DTabs, DTab, DTabpanel },
   setup() {
-    const active = ref("tab_1");
-    return { args, active };
+    const activeTab = ref("tab_1");
+    return { args, activeTab };
   },
   template: `
     <DTabs v-bind="args">
       <template v-slot:tabs>
-        <DTab label="Tab 1" :active="this.active === 'tab_1'" :whenClick="() => {this.active = 'tab_1'}" />
-        <DTab label="Tab 2" :active="this.active === 'tab_2'" :whenClick="() => {this.active = 'tab_2'}" />
+        <DTab label="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
+        <DTab label="Tab 2" :active="this.activeTab === 'tab_2'" :whenClick="() => {this.activeTab = 'tab_2'}" />
       </template>
       <template v-slot:tabpanels>
-        <div>TODO: panel 1</div>
-        <div>TODO: panel 2</div>
+        <DTabpanel :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>
+        <DTabpanel :active="this.activeTab === 'tab_2'">Panel 2</DTabpanel>
       </template>
     </DTabs>
   `,
