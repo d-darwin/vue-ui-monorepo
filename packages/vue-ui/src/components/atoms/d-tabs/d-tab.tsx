@@ -13,6 +13,8 @@ import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
@@ -59,6 +61,13 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines element type of the container component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.LI,
     },
     /**
      * Enables html string rendering passed in props.label.<br>
@@ -148,14 +157,16 @@ export default defineComponent({
   },
 
   render(): VNode {
+    const Tag = this.tag;
+
     // TODO: use DButton ???
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
       return (
-        <div {...this.bindings}>{this.$slots.default?.() || this.label}</div>
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
       );
     }
 
-    return <div {...this.bindings} v-html={this.label} />;
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

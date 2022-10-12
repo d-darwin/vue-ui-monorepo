@@ -63,11 +63,18 @@ export default defineComponent({
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * Defines container element type of the component
+     * Defines element type of the container component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
+     * Defines element type of the tablist component
+     */
+    tablistTag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.UL,
     },
     /**
      * Enables html string rendering passed in props.label.<br>
@@ -90,10 +97,11 @@ export default defineComponent({
    * */
   render(): VNode {
     const Tag = this.tag;
+    const TablistTag = this.tablistTag;
 
     return (
       <Tag class={styles[config.tabsClassName]} role="tablist">
-        <div
+        <TablistTag
           class={[styles[config.tablistClassName], this.tablistClass]}
           aria-label={String(this.tablistLabel)}
           role="tablist"
@@ -108,7 +116,7 @@ export default defineComponent({
             });
             return tab;
           })}
-        </div>
+        </TablistTag>
         {this.$slots.tabpanels?.().map((tabpanel) => {
           Object.assign(tabpanel.props || {}, {
             padding: tabpanel.props?.padding || this.padding,
