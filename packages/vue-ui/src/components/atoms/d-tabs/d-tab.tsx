@@ -136,6 +136,7 @@ export default defineComponent({
       string,
       | undefined
       | boolean
+      | number
       | string
       | string[]
       | ((event: MouseEvent) => void | Promise<void>)
@@ -143,8 +144,9 @@ export default defineComponent({
       return {
         role: "tab",
         // TODO: id
-        // TODO: index
+        tabindex: this.active ? 0 : -1,
         ariaSelected: this.active || undefined,
+        // TODO ariaControls: ,
         class: this.classes,
         onClick: this.clickHandler,
       };
