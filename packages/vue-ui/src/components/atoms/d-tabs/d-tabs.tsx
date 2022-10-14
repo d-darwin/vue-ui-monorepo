@@ -1,4 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
+import { v4 as uuid } from "uuid";
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -8,6 +9,7 @@ import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transit
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
@@ -86,8 +88,21 @@ export default defineComponent({
     // TODO: emit change ???
   },
 
-  setup(props) {
-    // TODO: prepare ids
+  setup(props, { slots }) {
+    const tabs = slots.tabs?.();
+    const tabpanels = slots.tabpanels?.();
+    if (tabpanels?.length && tabpanels?.length !== tabs?.length) {
+      log("Number of tabs and tabpanels are different", LOG_TYPE.WARN);
+    }
+
+    // TODO: если ids есть то не трогаем
+    tabs?.forEach((tab, index) => {
+      if (!tab.props?.id) {
+        tab.props.id = uuid(); // TODO: seems it doesnt work
+        console.log(tab.props);
+      }
+    });
+    // TODO: если ids нет, то генерируем и проставляем согласно очередности.
   },
 
   /*TODO: why vue-docgen cant' detect not default slots ???*/
@@ -122,7 +137,6 @@ export default defineComponent({
           })}
         </TablistTag>
 
-        {/*TODO: if different number of tabs and tabpanels*/}
         {this.$slots.tabpanels?.().map((tabpanel) => {
           Object.assign(tabpanel.props || {}, {
             font: tabpanel.props?.font || this.size, // TODO: isnt a good idea...

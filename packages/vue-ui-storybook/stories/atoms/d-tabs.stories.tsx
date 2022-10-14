@@ -47,6 +47,7 @@ const Template: Story = (args) => ({
       <template v-slot:tabpanels>
         <DTabpanel :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>
         <DTabpanel :active="this.activeTab === 'tab_2'">Panel 2</DTabpanel>
+        <DTabpanel :active="this.activeTab === 'tab_3'">Panel 3</DTabpanel>
       </template>
     </DTabs>
   `,
