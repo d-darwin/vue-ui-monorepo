@@ -13,6 +13,7 @@ import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tabpanel.css?module";
 
@@ -32,6 +33,18 @@ export default defineComponent({
     active: {
       type: Boolean,
       required: true,
+    },
+    /**
+     * Defines <i>id</i> attr of the component
+     */
+    id: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * Defines <i>id</i> attr of the corresponding DTab component
+     */
+    tabId: {
+      type: [String, Number] as PropType<Text>,
     },
     /**
      * Defines font size of the component
@@ -109,10 +122,11 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
+        id: this.id,
+        tabindex: 0,
         role: "tabpanel",
-        id: "panel-1", // TODO
-        tabindex: 0, // TODO
-        ariaLabelledby: "tab-1", // TODO
+        ariaLabelledby: this.tabId,
+        ariaExpanded: this.active || undefined,
         hidden: !this.active || undefined,
         class: this.classes,
       };

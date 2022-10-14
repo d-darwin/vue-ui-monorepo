@@ -86,6 +86,10 @@ export default defineComponent({
     // TODO: emit change ???
   },
 
+  setup(props) {
+    // TODO: prepare ids
+  },
+
   /*TODO: why vue-docgen cant' detect not default slots ???*/
   /**
    * @slot tabs

@@ -34,8 +34,18 @@ export default defineComponent({
     active: {
       type: Boolean,
     },
-    // TODO: id
-    // TODO: tabindex
+    /**
+     * Defines <i>id</i> attr of the component
+     */
+    id: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * Defines <i>id</i> attr of the corresponding DTabpanel component
+     */
+    tabpanelId: {
+      type: [String, Number] as PropType<Text>,
+    },
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -142,11 +152,11 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
-        role: "tab",
-        // TODO: id
+        id: this.id,
         tabindex: this.active ? 0 : -1,
+        role: "tab",
         ariaSelected: this.active || undefined,
-        // TODO ariaControls: ,
+        ariaControls: this.tabpanelId,
         class: this.classes,
         onClick: this.clickHandler,
       };
