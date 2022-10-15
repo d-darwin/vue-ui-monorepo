@@ -26,6 +26,7 @@ export default defineComponent({
      * Plain string, VNode or HTML if props.enableHtml is true
      */
     label: {
+      // TODO: rename -> content ???
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
@@ -178,7 +179,6 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    // TODO: use DButton ???
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
       return (
