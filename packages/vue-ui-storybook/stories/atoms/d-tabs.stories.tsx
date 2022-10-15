@@ -45,7 +45,7 @@ const Template: Story = (args) => ({
     return { args, activeTab };
   },
   computed: {
-    propSlots() {
+    tabs() {
       return [
         <DTab
           id="111"
@@ -65,18 +65,36 @@ const Template: Story = (args) => ({
         />,
       ];
     },
+    tabpanels() {
+      return [
+        <DTabpanel id="222" tab-id="111" active={this.activeTab === "tab_1"}>
+          Panel 1
+        </DTabpanel>,
+        <DTabpanel active={this.activeTab === "tab_2"}>Panel 2</DTabpanel>,
+      ];
+    },
+  },
+  template: `<DTabs v-bind="args" :tabs="tabs" :tabpanels="tabpanels" />`,
+});
+export const Default = Template.bind({});
+
+const TemplateSlots: Story = (args) => ({
+  components: { DTabs, DTab, DTabpanel },
+  setup() {
+    const activeTab = ref("tab_1");
+    return { args, activeTab };
   },
   template: `
-    <DTabs
-      v-bind="args"
-      :tabs="propSlots"
-    >
+    <DTabs v-bind="args">
+      <template v-slot:tabs>
+        <DTab id="111" tabpanel-id="222" label="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
+        <DTab label="Tab 2" :active="this.activeTab === 'tab_2'" :whenClick="() => {this.activeTab = 'tab_2'}" />
+      </template>
       <template v-slot:tabpanels>
         <DTabpanel id="222" tab-id="111" :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>
         <DTabpanel :active="this.activeTab === 'tab_2'">Panel 2</DTabpanel>
-        <DTabpanel :active="this.activeTab === 'tab_3'">Panel 3</DTabpanel>
       </template>
     </DTabs>
   `,
 });
-export const Default = Template.bind({});
+export const Slots = TemplateSlots.bind({});
