@@ -17,38 +17,49 @@ import DTabpanel from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
+// TODO: is it a container ???
 export default defineComponent({
   name: config.tabsName,
 
   props: {
     /**
-     * TODO
+     * Aria label of the component
      */
     tablistLabel: {
       type: [String || Number] as PropType<Text>,
     },
     /**
-     * TODO
+     * You can pass own class name to the tablist container element.
      */
     tablistClass: {
       type: String,
     },
     /**
-     * TODO
+     * Array of the DTab components, alternatively you can use slots.tabs
      */
     tabs: {
       type: Array as PropType<VNode<typeof DTab>[]>,
     },
-    // TODO: tabs class
-    // TODO: tabs font
     /**
-     * TODO
+     * Defines size of the tabs
+     */
+    tabsSize: {
+      type: String as PropType<Size>,
+      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     Array of the DTabpanel components, alternatively you can use slots.tabpanels
      */
     tabpanels: {
       type: Array as PropType<VNode<typeof DTabpanel>[]>,
     },
-    // TODO: tabs class
-    // TODO: tabs font
+    /**
+     * Defines font size of the tabpanels
+     */
+    tabpanelsFont: {
+      type: String as PropType<Font>,
+      default: FONT.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -61,20 +72,6 @@ export default defineComponent({
     padding: {
       type: String as PropType<Padding>,
       default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Defines size of the tabs
-     */
-    tabsSize: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Defines font size of the tabpanels
-     */
-    tabpanelsFont: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines transition type of the component
@@ -104,7 +101,6 @@ export default defineComponent({
     enableHtml: {
       type: Boolean,
     },
-    // TODO: emit change ???
   },
 
   setup(props, { slots }) {
@@ -178,11 +174,11 @@ export default defineComponent({
   /*TODO: why vue-docgen cant' detect not default slots ???*/
   /**
    * @slot slots.tabs
-   * Use to place DTab components
+   * Use instead of props.tabs to place DTab components
    * */
   /**
    * @slot slots.tabpanels
-   * Use to place DTabpanel components
+   * Use instead of props.tabpanels to place DTabpanel components
    * */
   render(): VNode {
     const Tag = this.tag;

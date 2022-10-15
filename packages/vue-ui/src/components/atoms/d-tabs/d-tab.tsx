@@ -62,7 +62,6 @@ export default defineComponent({
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ??? - use font
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
@@ -101,7 +100,6 @@ export default defineComponent({
 
   computed: {
     classes(): string[] {
-      // TODO: font and size separately
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.size
