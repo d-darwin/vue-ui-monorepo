@@ -155,8 +155,8 @@ export default defineComponent({
         id: this.id,
         tabindex: this.active ? 0 : -1,
         role: "tab",
-        ariaSelected: this.active || undefined,
-        ariaControls: this.tabpanelId,
+        ["aria-selected"]: this.active || undefined,
+        ["aria-controls"]: this.tabpanelId,
         class: this.classes,
         onClick: this.clickHandler,
       };

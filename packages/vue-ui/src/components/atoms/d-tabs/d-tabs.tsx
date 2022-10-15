@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, PropType, VNode, ref } from "vue";
 import { v4 as uuid } from "uuid";
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
@@ -95,14 +95,15 @@ export default defineComponent({
       log("Number of tabs and tabpanels are different", LOG_TYPE.WARN);
     }
 
-    // TODO: если ids есть то не трогаем
+    const defaultIds: { tabId: Text; tabpanelId: Text }[] = [];
     tabs?.forEach((tab, index) => {
-      if (!tab.props?.id) {
-        tab.props.id = uuid(); // TODO: seems it doesnt work
-        console.log(tab.props);
-      }
+      defaultIds.push({
+        tabId: tab.props?.id || uuid(),
+        tabpanelId: tabpanels?.[index]?.props?.id || uuid(),
+      });
     });
-    // TODO: если ids нет, то генерируем и проставляем согласно очередности.
+
+    return { ids: ref(defaultIds) };
   },
 
   /*TODO: why vue-docgen cant' detect not default slots ???*/
@@ -125,8 +126,10 @@ export default defineComponent({
           aria-label={String(this.tablistLabel)}
           class={[styles[config.tablistClassName], this.tablistClass]}
         >
-          {this.$slots.tabs?.().map((tab) => {
+          {this.$slots.tabs?.().map((tab, index) => {
             Object.assign(tab.props || {}, {
+              id: this.ids?.[index]?.tabId,
+              tabpanelId: this.ids?.[index]?.tabpanelId,
               disabled: tab.props?.disabled || this.disabled,
               padding: tab.props?.padding || this.padding,
               size: tab.props?.size || this.size,
@@ -137,8 +140,10 @@ export default defineComponent({
           })}
         </TablistTag>
 
-        {this.$slots.tabpanels?.().map((tabpanel) => {
+        {this.$slots.tabpanels?.().map((tabpanel, index) => {
           Object.assign(tabpanel.props || {}, {
+            id: this.ids?.[index]?.tabpanelId,
+            tabId: this.ids?.[index]?.tabId,
             font: tabpanel.props?.font || this.size, // TODO: isnt a good idea...
             padding: tabpanel.props?.padding || this.padding,
             transition: tabpanel.props?.transition || this.transition,

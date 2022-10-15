@@ -41,11 +41,11 @@ const Template: Story = (args) => ({
   template: `
     <DTabs v-bind="args">
       <template v-slot:tabs>
-        <DTab label="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
+        <DTab id="111" tabpanel-id="222" label="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
         <DTab label="Tab 2" :active="this.activeTab === 'tab_2'" :whenClick="() => {this.activeTab = 'tab_2'}" />
       </template>
       <template v-slot:tabpanels>
-        <DTabpanel :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>
+        <DTabpanel id="222" tab-id="111" :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>
         <DTabpanel :active="this.activeTab === 'tab_2'">Panel 2</DTabpanel>
         <DTabpanel :active="this.activeTab === 'tab_3'">Panel 3</DTabpanel>
       </template>

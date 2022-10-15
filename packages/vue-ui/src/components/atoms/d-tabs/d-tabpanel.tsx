@@ -125,8 +125,8 @@ export default defineComponent({
         id: this.id,
         tabindex: 0,
         role: "tabpanel",
-        ariaLabelledby: this.tabId,
-        ariaExpanded: this.active || undefined,
+        ["aria-labelledby"]: this.tabId,
+        ["aria-expanded"]: this.active || undefined,
         hidden: !this.active || undefined,
         class: this.classes,
       };
