@@ -62,7 +62,7 @@ export default defineComponent({
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ???
+    // TODO: fontSize and size separately ??? - use font
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded

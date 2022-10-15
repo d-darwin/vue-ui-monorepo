@@ -20,5 +20,5 @@
   width: 100%;
   bottom: 0;
   background: var(--color-text); /* TODO: add separator color ??? */
-  opacity: 0.3;
+  opacity: 0.3; /* TODO: add separator color ??? */
 }

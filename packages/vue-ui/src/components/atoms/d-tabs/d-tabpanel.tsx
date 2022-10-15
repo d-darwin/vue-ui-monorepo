@@ -1,5 +1,4 @@
 import { defineComponent, PropType, VNode } from "vue";
-
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -122,11 +121,13 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
+        key: this.id,
         id: this.id,
         tabindex: 0,
         role: "tabpanel",
         ["aria-labelledby"]: this.tabId,
         ["aria-expanded"]: this.active || undefined,
+        ["aria-hidden"]: !this.active || undefined,
         hidden: !this.active || undefined,
         class: this.classes,
       };
