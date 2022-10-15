@@ -6,6 +6,7 @@ import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TOD
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -105,6 +106,10 @@ export default defineComponent({
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.size
       );
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `primary-${this.size}` // TODO: not flexible
+      );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
@@ -127,6 +132,7 @@ export default defineComponent({
         fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
+        outlineStyles[outlineClassName],
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
       ];

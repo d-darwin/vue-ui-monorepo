@@ -16,6 +16,7 @@ import DTab from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import DTabpanel from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import config from "./config";
 import styles from "./d-tabs.css?module";
+import { EVENT_NAME } from "@/constants/event-name";
 
 // TODO: is it a container ???
 export default defineComponent({
@@ -171,6 +172,23 @@ export default defineComponent({
     },
   },
 
+  methods: {
+    keyupHandler(event: KeyboardEvent) {
+      if (event.key === "ArrowLeft") {
+        console.log("ArrowLeft", event.target);
+        // TODO: Focuses and optionally activates the previous tab in the tab list. If the current tab is the first tab in the tab list it activates the last tab.
+      }
+      if (event.key === "ArrowRight") {
+        console.log("ArrowRight", event.target);
+        // TODO: Focuses and optionally activates the next tab in the tab list. If the current tab is the last tab in the tab list it activates the first tab.
+      }
+      if (event.key === "Delete") {
+        console.log("Delete", event.target);
+        // TODO: When allowed removes the currently selected tab from the tab list
+      }
+    },
+  },
+
   /*TODO: why vue-docgen cant' detect not default slots ???*/
   /**
    * @slot slots.tabs
@@ -190,6 +208,7 @@ export default defineComponent({
           role="tablist"
           aria-label={String(this.tablistLabel)}
           class={[styles[config.tablistClassName], this.tablistClass]}
+          onKeyup={this.keyupHandler}
         >
           {this.renderTabs}
         </TablistTag>

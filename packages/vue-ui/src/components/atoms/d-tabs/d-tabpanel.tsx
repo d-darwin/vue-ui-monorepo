@@ -8,6 +8,7 @@ import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transit
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
@@ -89,6 +90,11 @@ export default defineComponent({
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.font
       );
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `primary-medium` // TODO: not flexible at all
+      );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
@@ -105,6 +111,7 @@ export default defineComponent({
       return [
         styles[config.tabpanelClassName],
         fontStyles[fontClassName],
+        outlineStyles[outlineClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
         transitionStyles[transitionClassName],
