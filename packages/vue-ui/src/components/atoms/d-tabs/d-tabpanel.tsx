@@ -32,7 +32,7 @@ export default defineComponent({
      */
     active: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     /**
      * Defines <i>id</i> attr of the component
@@ -128,7 +128,6 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
-        key: this.id,
         id: this.id,
         tabindex: 0,
         role: "tabpanel",
