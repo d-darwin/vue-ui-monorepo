@@ -1,8 +1,11 @@
 import { mount } from "@vue/test-utils";
 import {
   baseClassCase,
+  contentHtmlCase,
   outlineClassCase,
   paddingClassesCase,
+  propContentCase,
+  slotDefaultCase,
   transitionClassCase,
 } from "@darwin-studio/vue-ui/src/utils/test-case-factories";
 import { DTabpanel } from "./index";
@@ -35,13 +38,17 @@ describe("DTabpanel", () => {
   paddingClassesCase(wrapper, wrapper);
 
   transitionClassCase(wrapper, wrapper);
-  // TODO: bindings
+
+  propContentCase(wrapper);
+
+  contentHtmlCase(wrapper);
+
+  slotDefaultCase(DTabpanel);
+
+  // TODO: props.active
   it("Should ....", () => {
     expect(true).toBeFalsy();
   });
-  // TODO: props.content
-  // TODO: slots.default
-  // TODO: props.active
   // TODO: props.id
   // TODO: props.tabId
   // TODO: props.tag
