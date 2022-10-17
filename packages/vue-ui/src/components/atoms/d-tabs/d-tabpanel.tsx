@@ -101,7 +101,7 @@ export default defineComponent({
       );
       const paddingSizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.font}` // TODO: isnt a good idea, get size from somewhere ???
+        `${this.padding}-${this.font}` // TODO: isn't a good idea, get size from somewhere ???
       );
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
