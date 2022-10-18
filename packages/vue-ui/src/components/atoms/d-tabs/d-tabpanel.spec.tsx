@@ -28,12 +28,18 @@ describe("DTabpanel", () => {
 
   baseClassCase(wrapper, config.tabpanelClassName);
 
+  it("Should render 'tabpanel' role attr", () => {
+    expect(wrapper.attributes("role")).toBe("tabpanel");
+  });
+
   it("Should render 'tabindex' attr eq to '0'", () => {
     expect(wrapper.attributes("tabindex")).toBe("0");
   });
 
-  it("Should render 'tabpanel' role attr", () => {
-    expect(wrapper.attributes("role")).toBe("tabpanel");
+  it("Should render props.id to the attrs", async () => {
+    const id = "some-id";
+    await wrapper.setProps({ id });
+    expect(wrapper.attributes("id")).toBe(id);
   });
 
   it("Should render 'aria-labelledby' attr eq to props.tabId", async () => {
@@ -56,11 +62,11 @@ describe("DTabpanel", () => {
     expect(wrapper.attributes("hidden")).toBe("");
   });
 
-  it("Should render props.id to the attrs", async () => {
-    const id = "some-id";
-    await wrapper.setProps({ id });
-    expect(wrapper.attributes("id")).toBe(id);
-  });
+  propContentCase(wrapper);
+
+  contentHtmlCase(wrapper);
+
+  slotDefaultCase(DTabpanel);
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -73,12 +79,6 @@ describe("DTabpanel", () => {
   paddingClassesCase(wrapper, wrapper);
 
   transitionClassCase(wrapper, wrapper);
-
-  propContentCase(wrapper);
-
-  contentHtmlCase(wrapper);
-
-  slotDefaultCase(DTabpanel);
 
   tagCase(wrapper);
 });
