@@ -16,7 +16,6 @@ import DTab from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import DTabpanel from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import config from "./config";
 import styles from "./d-tabs.css?module";
-import { EVENT_NAME } from "@/constants/event-name";
 
 // TODO: is it a container ???
 export default defineComponent({
@@ -24,7 +23,7 @@ export default defineComponent({
 
   props: {
     /**
-     * Aria label of the component
+     * Aria label of the tablist
      */
     tablistLabel: {
       type: [String || Number] as PropType<Text>,

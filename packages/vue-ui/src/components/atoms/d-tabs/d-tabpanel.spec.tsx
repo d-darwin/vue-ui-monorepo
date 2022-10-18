@@ -17,6 +17,7 @@ import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 
+// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),

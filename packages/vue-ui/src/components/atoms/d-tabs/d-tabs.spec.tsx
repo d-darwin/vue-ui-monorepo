@@ -3,6 +3,7 @@ import { baseClassCase } from "@/utils/test-case-factories";
 import { DTabs } from "./index";
 import config from "./config";
 
+// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),
@@ -10,21 +11,39 @@ jest.mock("chalk", () => ({
 }));
 
 describe("DTabs", () => {
-  const dTabsWrapper = mount(DTabs);
+  const wrapper = mount(DTabs);
 
-  baseClassCase(dTabsWrapper, config.tabsClassName);
+  baseClassCase(wrapper, config.tabsClassName);
 
-  // TODO: props.tablistLabel
-  // TODO: config.tablistClassName
+  it("Should render config.tablistClassName to the tablist's class name", () => {
+    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    expect(tablist).toBeTruthy();
+  });
+
+  it("Should render props.tablistLabel to the tablist's aria-label attr", async () => {
+    const tablistLabel = "Some aria label";
+    await wrapper.setProps({ tablistLabel });
+    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    expect(tablist.attributes("aria-label")).toBe(tablistLabel);
+  });
+
   // TODO: props.tablistClass
+  it("Should props.tablistClass to the tablist's class name", async () => {
+    const tablistClass = "some-tablist-class";
+    await wrapper.setProps({ tablistClass });
+    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    expect(tablist.classes()).toContain(tablistClass);
+  });
+
   // TODO: props.tabs
   // TODO: slots.tabs
-  // TODO: ids
   // TODO: props.tabsSize
+  // TODO: ids
   // TODO: props.tabpanels
   // TODO: slots.tabpanels
-  // TODO: ids
   // TODO: props.tabpanelsFont
+  // TODO: ids
+  // Classes and behaviour
   // TODO: props.disabled
   // TODO: props.padding
   // TODO: props.transition
@@ -32,7 +51,9 @@ describe("DTabs", () => {
   // TODO: props.tablistTag
   // TODO: props.enableHtml
   // TODO: DTab.props
+  // active ???
   // TODO: DTab.onClick
   // TODO: DTab.whenClick
   // TODO: DTabpanel.props
+  // active ???
 });
