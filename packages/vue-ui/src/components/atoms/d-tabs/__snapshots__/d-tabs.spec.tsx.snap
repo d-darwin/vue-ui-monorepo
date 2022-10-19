@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
+<li
+  aria-selected="true"
+  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast active"
+  role="tab"
+  tabindex="0"
+>
+  Tab 1
+</li>
+`;
+
+exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
+<li
+  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast"
+  role="tab"
+  tabindex="-1"
+>
+  Tab 2
+</li>
+`;

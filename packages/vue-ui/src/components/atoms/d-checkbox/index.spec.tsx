@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
-import DCheckbox from "@/components/atoms/d-checkbox";
-import { BASE_COLOR_SCHEME } from "@/components/atoms/d-checkbox/constants";
+import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
+import { BASE_COLOR_SCHEME } from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/constants";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import config from "@/components/atoms/d-checkbox/config";
+import config from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/config";
 import {
   baseClassCase,
   borderClassCase,
@@ -30,7 +30,7 @@ import {
   sizeClassCase,
   tagCase,
   transitionClassCase,
-} from "@/utils/test-case-factories";
+} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import styles from "./index.css";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
