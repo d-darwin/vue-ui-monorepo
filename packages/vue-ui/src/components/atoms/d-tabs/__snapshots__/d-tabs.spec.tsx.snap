@@ -2,8 +2,10 @@
 
 exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
 <li
+  aria-controls="111-1"
   aria-selected="true"
   class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast active"
+  id="111"
   role="tab"
   tabindex="0"
 >
@@ -13,7 +15,34 @@ exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
 
 exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
 <li
+  aria-controls="222-2"
   class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast"
+  id="222"
+  role="tab"
+  tabindex="-1"
+>
+  Tab 2
+</li>
+`;
+
+exports[`DTabs Should render slots.tabs as content of the tablist 1`] = `
+<li
+  aria-controls="111-1"
+  aria-selected="true"
+  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast active"
+  id="111"
+  role="tab"
+  tabindex="0"
+>
+  Tab 1
+</li>
+`;
+
+exports[`DTabs Should render slots.tabs as content of the tablist 2`] = `
+<li
+  aria-controls="222-2"
+  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast"
+  id="222"
   role="tab"
   tabindex="-1"
 >

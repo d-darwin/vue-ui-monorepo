@@ -12,7 +12,6 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
-import DTab from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import DTabpanel from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import config from "./config";
 import styles from "./d-tabs.css?module";
@@ -38,7 +37,7 @@ export default defineComponent({
      * Array of the DTab components, alternatively you can use slots.tabs
      */
     tabs: {
-      type: Array as PropType<VNode<typeof DTab>[]>,
+      type: Array as PropType<VNode[]>, // TODO: more accurate type
     },
     /**
      * Defines size of the tabs
@@ -113,12 +112,14 @@ export default defineComponent({
     }
 
     const ids: { tabId: Text; tabpanelId: Text }[] = [];
+    // TODO: reactivity doesnt work - fix it !!!
     (props.tabs || slotTabs)?.forEach((tab, index) => {
       ids.push({
         tabId: tab.props?.id || uuid(),
         tabpanelId:
           slotTabpanels?.[index]?.props?.id ||
           props.tabpanels?.[index]?.props?.id ||
+          tab.props?.tabpanelId ||
           uuid(),
       });
     });
