@@ -12,7 +12,6 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
-import DTabpanel from "@darwin-studio/vue-ui/src/components/atoms/d-tabs/d-tab";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
@@ -50,7 +49,7 @@ export default defineComponent({
      Array of the DTabpanel components, alternatively you can use slots.tabpanels
      */
     tabpanels: {
-      type: Array as PropType<VNode<typeof DTabpanel>[]>,
+      type: Array as PropType<VNode[]>, // TODO: more accurate type
     },
     /**
      * Defines font size of the tabpanels

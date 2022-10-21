@@ -12,7 +12,7 @@ type LogType = typeof LOG_TYPE[keyof typeof LOG_TYPE];
 
 // TODO: descr
 export default function (message: string, type: LogType = LOG_TYPE.INFO): void {
-  if (process?.env?.NODE_ENV === "production") {
+  if (process?.env?.NODE_ENV !== "development") {
     return;
   }
 

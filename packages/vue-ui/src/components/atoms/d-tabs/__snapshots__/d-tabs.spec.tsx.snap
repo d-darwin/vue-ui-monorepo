@@ -1,5 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 1`] = `
+<div
+  aria-expanded="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 1
+</div>
+`;
+
+exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 2`] = `
+<div
+  aria-hidden="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  hidden=""
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 2
+</div>
+`;
+
+exports[`DTabs Should render props.tabpanels as content the list of tabpanels 1`] = `
+<div
+  aria-expanded="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 1
+</div>
+`;
+
+exports[`DTabs Should render props.tabpanels as content the list of tabpanels 2`] = `
+<div
+  aria-hidden="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  hidden=""
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 2
+</div>
+`;
+
 exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
 <li
   aria-controls="111-1"
@@ -23,6 +69,52 @@ exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
 >
   Tab 2
 </li>
+`;
+
+exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 1`] = `
+<div
+  aria-expanded="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 1
+</div>
+`;
+
+exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 2`] = `
+<div
+  aria-hidden="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  hidden=""
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 2
+</div>
+`;
+
+exports[`DTabs Should render slots.tabpanels as content the list of tabpanels 1`] = `
+<div
+  aria-expanded="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 1
+</div>
+`;
+
+exports[`DTabs Should render slots.tabpanels as content the list of tabpanels 2`] = `
+<div
+  aria-hidden="true"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  hidden=""
+  role="tabpanel"
+  tabindex="0"
+>
+  Tabpanel 2
+</div>
 `;
 
 exports[`DTabs Should render slots.tabs as content of the tablist 1`] = `
