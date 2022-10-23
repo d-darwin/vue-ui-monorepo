@@ -178,25 +178,28 @@ export default defineComponent({
   },
 
   methods: {
-    keyupHandler(event: KeyboardEvent) {
+    async keydownHandler(event: KeyboardEvent): Promise<void> {
+      // TODO: dont calc if not in array
+      const tabs = (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
+      const tabId = (event.target as HTMLElement).getAttribute("id");
+      const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
+
       if (event.key === "ArrowLeft") {
-        // TODO: Focuses and optionally activates the previous tab in the tab list. If the current tab is the first tab in the tab list it activates the last tab.
-        // 1. get id
-        const tabId = (event.target as HTMLElement).getAttribute("id");
-        console.log("ArrowLeft", tabId);
-        // 2. find prev tab
-        // 3. call whenClick on prev element ???
+        event.preventDefault();
+        const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
+        // TODO: find out more elegant way
+        tabs?.[prevIndex]?.el?.focus();
       }
       if (event.key === "ArrowRight") {
-        console.log("ArrowRight", event.target);
-        // TODO: Focuses and optionally activates the next tab in the tab list. If the current tab is the last tab in the tab list it activates the first tab.
+        event.preventDefault();
+        const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
+        // TODO: find out more elegant way
+        tabs?.[nextIndex]?.el?.focus();
       }
       if (event.key === "Enter") {
-        const tabId = (event.target as HTMLElement).getAttribute("id");
-        const tabs =
-          (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
-        const tab = tabs.find((tab) => tab?.props?.id === tabId);
-        tab?.props?.whenClick();
+        event.preventDefault();
+        // TODO: find out more elegant way
+        tabs?.[tabIndex]?.props?.whenClick();
       }
     },
   },
@@ -220,7 +223,7 @@ export default defineComponent({
           role="tablist"
           aria-label={String(this.tablistLabel)}
           class={[styles[config.tablistClassName], this.tablistClass]}
-          onKeyup={this.keyupHandler}
+          onKeydown={this.keydownHandler}
         >
           {this.renderTabs}
         </TablistTag>
