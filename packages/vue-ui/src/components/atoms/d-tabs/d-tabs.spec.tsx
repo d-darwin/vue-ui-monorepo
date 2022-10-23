@@ -1,7 +1,12 @@
 import { mount } from "@vue/test-utils";
-import { baseClassCase } from "@darwin-studio/vue-ui/src/utils/test-case-factories";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import {
+  baseClassCase,
+  tagCase,
+} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
+import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
 import { DTabs, DTab, DTabpanel } from "./index";
 import config from "./config";
 
@@ -176,20 +181,71 @@ describe("DTabs", () => {
     expect(tabpanelWrapper.props("tabId")).toBe(tabId);
   });
 
-  // Classes and behaviour
-  // TODO: props.disabled
-  // TODO: props.padding
-  // TODO: props.transition
-  // TODO: props.tag
-  // TODO: props.tablistTag
-  // TODO: props.enableHtml
+  it("Should pass props.disabled to the containing DTabs", async () => {
+    const disabled = true;
+    await wrapper.setProps({
+      disabled,
+      tabs: [<DTab id="111" active={true} label={"Tab 1"} />],
+    });
+    const tab = wrapper.findComponent(DTab);
+    expect(tab.props("disabled")).toBe(disabled);
+  });
 
-  // TODO: DTab.props
-  // active ???
-  // TODO: DTab.onClick
-  // TODO: DTab.whenClick
-  // TODO: DTabpanel.props
-  // active ???
+  // TODO paddingClassesCase(wrapper, wrapper.findComponent(DTab));
+  it(`Should render props.padding to DTab padding classes`, async () => {
+    const padding = PADDING.EQUAL;
+    const wrapper = await mount(DTabs, {
+      props: {
+        padding,
+        tabs: [<DTab label={"Tab 1"} />],
+      },
+    });
+    const tab = wrapper.findComponent(DTab);
+    expect(tab.props("padding")).toBe(padding);
+  });
+
+  // TODO: transitionClassCase(wrapper, wrapper.findComponent(DTab))
+  it(`Should render props.transition to DTab transition class`, async () => {
+    const transition = TRANSITION.AVERAGE;
+    // TODO: without mounting new component ???
+    const wrapper = await mount(DTabs, {
+      props: {
+        transition,
+        tabs: [<DTab label={"Tab 1"} />],
+      },
+    });
+    const tab = wrapper.findComponent(DTab);
+    expect(tab.props("transition")).toBe(transition);
+  });
+
+  tagCase(wrapper);
+
+  it("Should render tablist as element passed in props.tablistTag", async () => {
+    const tablistTag = "section";
+    await wrapper.setProps({ tablistTag });
+    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    expect(tablist.element.tagName).toEqual(tablistTag.toLocaleUpperCase());
+  });
+
+  it("Should pass props.enableHtml to the containing DTabs and DTabpanels", async () => {
+    const enableHtml = true;
+    // TODO: without mounting new component ???
+    const wrapper = await mount(DTabs, {
+      props: {
+        enableHtml,
+        tabs: [<DTab label={"Tab 1"} />],
+        tabpanels: [<DTabpanel content={"some content"} />],
+      },
+    });
+    const tab = await wrapper.findComponent(DTab);
+    expect(tab.props("enableHtml")).toBe(enableHtml);
+    const tabpanel = await wrapper.findComponent(DTabpanel);
+    expect(tabpanel.props("enableHtml")).toBe(enableHtml);
+  });
 
   // TODO: arrow navigation
+
+  // TODO: DTab.active ???
+  // TODO: DTab.onClick ???
+  // TODO: DTab.whenClick ???
 });
