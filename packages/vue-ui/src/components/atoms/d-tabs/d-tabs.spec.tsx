@@ -243,14 +243,76 @@ describe("DTabs", () => {
     expect(tabpanel.props("enableHtml")).toBe(enableHtml);
   });
 
-  // TODO: arrow navigation right
-  it("Should activate(?) next tab on arrow right", async () => {
-    expect(true).toBeFalsy();
+  it("Should focus on prev tab on ArrowLeft keydown", async () => {
+    // TODO: without mounting new component ???
+    const wrapper = await mount(DTabs, {
+      props: {
+        tabs: [<DTab label={"Tab 1"} />, <DTab label={"Tab 2"} />],
+      },
+    });
+
+    const tabs = wrapper.findAllComponents(DTab);
+    const tab0 = tabs?.[0];
+    tab0.vm.$el.focus = jest.fn();
+    const tab1 = tabs?.[1];
+    tab1.vm.$el.focus = jest.fn();
+
+    await tab0?.trigger("focus");
+    await tab0?.trigger("keydown", { key: "ArrowLeft" });
+    expect(tab1.vm.$el.focus).toBeCalled();
+
+    await tab1?.trigger("focus");
+    await tab1?.trigger("keydown", { key: "ArrowLeft" });
+    expect(tab0.vm.$el.focus).toBeCalled();
   });
 
-  // TODO: arrow navigation left
-  it("Should activate(?) prev tab on arrow right", async () => {
-    expect(true).toBeFalsy();
+  it("Should focus on next tab on ArrowRight keydown", async () => {
+    // TODO: without mounting new component ???
+    const wrapper = await mount(DTabs, {
+      props: {
+        tabs: [<DTab label={"Tab 1"} />, <DTab label={"Tab 2"} />],
+      },
+    });
+
+    const tabs = wrapper.findAllComponents(DTab);
+    const tab0 = tabs?.[0];
+    tab0.vm.$el.focus = jest.fn();
+    const tab1 = tabs?.[1];
+    tab1.vm.$el.focus = jest.fn();
+
+    await tab0?.trigger("focus");
+    await tab0?.trigger("keydown", { key: "ArrowRight" });
+    expect(tab1.vm.$el.focus).toBeCalled();
+
+    await tab1?.trigger("focus");
+    await tab1?.trigger("keydown", { key: "ArrowRight" });
+    expect(tab0.vm.$el.focus).toBeCalled();
+  });
+
+  it("Should call focused tab props.whenClick on Enter", async () => {
+    // TODO: without mounting new component ???
+    const whenClick0 = jest.fn();
+    const whenClick1 = jest.fn();
+    const wrapper = await mount(DTabs, {
+      props: {
+        tabs: [
+          <DTab label={"Tab 1"} whenClick={whenClick0} />,
+          <DTab label={"Tab 2"} whenClick={whenClick1} />,
+        ],
+      },
+    });
+
+    const tabs = wrapper.findAllComponents(DTab);
+    const tab0 = tabs?.[0];
+    const tab1 = tabs?.[1];
+
+    await tab0?.trigger("focus");
+    await tab0?.trigger("keydown", { key: "Enter" });
+    expect(whenClick0).toBeCalled();
+
+    await tab1?.trigger("focus");
+    await tab1?.trigger("keydown", { key: "Enter" });
+    expect(whenClick1).toBeCalled();
   });
 
   // TODO: Should following to be a part of the DTabs component:

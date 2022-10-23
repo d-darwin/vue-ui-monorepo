@@ -188,18 +188,18 @@ export default defineComponent({
         event.preventDefault();
         const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
         // TODO: find out more elegant way
-        tabs?.[prevIndex]?.el?.focus();
+        tabs?.[prevIndex]?.el?.focus?.();
       }
       if (event.key === "ArrowRight") {
         event.preventDefault();
         const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
         // TODO: find out more elegant way
-        tabs?.[nextIndex]?.el?.focus();
+        tabs?.[nextIndex]?.el?.focus?.();
       }
       if (event.key === "Enter") {
         event.preventDefault();
         // TODO: find out more elegant way
-        tabs?.[tabIndex]?.props?.whenClick();
+        tabs?.[tabIndex]?.props?.whenClick?.();
       }
     },
   },
