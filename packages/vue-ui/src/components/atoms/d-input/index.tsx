@@ -31,8 +31,8 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
-import styles from "./index.module.css";
 import config from "./config";
+import styles from "./index.css?module";
 
 // TODO: mask ???
 // TODO: inverse (dark) color scheme ???

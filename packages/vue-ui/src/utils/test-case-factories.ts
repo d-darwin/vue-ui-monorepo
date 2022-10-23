@@ -369,9 +369,8 @@ export function emitClickEventCase(wrapper: VueWrapper) {
 
 export function dontCallWhenClickCase(wrapper: VueWrapper) {
   return it("Doesn't call props.whenClick when clicked if disabled", async () => {
-    await wrapper.setProps({ disabled: true });
     const whenClick = jest.fn();
-    await wrapper.setProps({ whenClick });
+    await wrapper.setProps({ disabled: true, whenClick });
     await wrapper.trigger("click"); // TODO: shouldn't we find button element ???
     expect(whenClick).toHaveBeenCalledTimes(0);
   });
@@ -380,7 +379,7 @@ export function dontCallWhenClickCase(wrapper: VueWrapper) {
 export function callWhenClickCase(wrapper: VueWrapper) {
   return it("Calls props.whenClick when clicked", async () => {
     const whenClick = jest.fn();
-    await wrapper.setProps({ whenClick, disabled: false });
+    await wrapper.setProps({ disabled: false, whenClick });
     await wrapper.trigger("click");
     expect(whenClick).toHaveBeenCalledTimes(1);
   });

@@ -1,20 +1,21 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/vue-ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/vue-ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
 import styles from "./d-tab.css?module";
-import { Text } from "@/types/text";
 
 export default defineComponent({
   name: config.tabName,
@@ -24,6 +25,7 @@ export default defineComponent({
      * Plain string, VNode or HTML if props.enableHtml is true
      */
     label: {
+      // TODO: rename -> content ???
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
@@ -31,6 +33,18 @@ export default defineComponent({
      */
     active: {
       type: Boolean,
+    },
+    /**
+     * Defines <i>id</i> attr of the component
+     */
+    id: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * Defines <i>id</i> attr of the corresponding DTabpanel component
+     */
+    tabpanelId: {
+      type: [String, Number] as PropType<Text>,
     },
     /**
      * Pass true to disable <b>DTab</b> element.
@@ -43,12 +57,10 @@ export default defineComponent({
      */
     padding: {
       type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
@@ -58,7 +70,17 @@ export default defineComponent({
      */
     transition: {
       type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /*TODO: It is recommended to use a <button> element with the role tab for their built-in functional and accessible features instead,
+       as opposed to needing to add them yourself. For controlling tab key functionality for elements with the role tab,
+       it is recommended to set all non-active elements to tabindex="-1", and to set the active element to tabindex="0".
+    */
+    /**
+     * Defines element type of the container component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.LI,
     },
     /**
      * Enables html string rendering passed in props.label.<br>
@@ -80,10 +102,13 @@ export default defineComponent({
 
   computed: {
     classes(): string[] {
-      // TODO: font and size separately
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.size
+      );
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `primary-${this.size}` // TODO: not flexible
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
@@ -107,6 +132,7 @@ export default defineComponent({
         fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
+        outlineStyles[outlineClassName],
         sizeStyles[sizeClassName],
         transitionStyles[transitionClassName],
       ];
@@ -123,10 +149,19 @@ export default defineComponent({
 
     bindings(): Record<
       string,
-      string | string[] | ((event: MouseEvent) => void | Promise<void>)
+      | undefined
+      | boolean
+      | number
+      | string
+      | string[]
+      | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
+        id: this.id,
+        tabindex: this.active ? 0 : -1,
         role: "tab",
+        ["aria-selected"]: this.active || undefined,
+        ["aria-controls"]: this.tabpanelId,
         class: this.classes,
         onClick: this.clickHandler,
       };
@@ -148,14 +183,15 @@ export default defineComponent({
   },
 
   render(): VNode {
-    // TODO: use DButton ???
+    const Tag = this.tag;
+
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
       return (
-        <div {...this.bindings}>{this.$slots.default?.() || this.label}</div>
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
       );
     }
 
-    return <div {...this.bindings} v-html={this.label} />;
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

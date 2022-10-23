@@ -25,7 +25,7 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Tag } from "./types";
 import config from "./config";
-import styles from "./index.module.css";
+import styles from "./index.css?module";
 
 /**
  * A clickable component which renders as <b>button</b> element, <b>router-link</b> component or <b>a</b> element depending on props.

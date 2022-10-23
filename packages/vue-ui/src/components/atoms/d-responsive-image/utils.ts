@@ -2,7 +2,7 @@ import {
   DensityPictureSource,
   PictureSource,
   PreparedSource,
-} from "@/components/atoms/d-responsive-image/types";
+} from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image/types";
 
 // TODO: descr, move to the common utils?
 function constructMediaQuery(item: {

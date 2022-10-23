@@ -35,8 +35,8 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position, Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
 import { POSITION, TRIGGER, BASE_COLOR_SCHEME } from "./constant";
-import styles from "./index.module.css";
 import config from "./config";
+import styles from "./index.css?module";
 
 /**
  * Renders tooltip on hover, click or manually. Adjusts tooltip position if there is no enough space.

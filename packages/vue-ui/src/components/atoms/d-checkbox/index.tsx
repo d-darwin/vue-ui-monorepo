@@ -34,7 +34,7 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
-import styles from "./index.module.css";
+import styles from "./index.css?module";
 
 /**
  * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.

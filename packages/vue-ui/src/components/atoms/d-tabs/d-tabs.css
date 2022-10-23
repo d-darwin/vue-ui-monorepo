@@ -1,3 +1,24 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
 .dTabs {
   display: flex;
+  flex-direction: column;
+}
+
+.dTablist {
+  display: flex;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dTablist:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  width: 100%;
+  bottom: 0;
+  background: var(--color-text); /* TODO: add separator color ??? */
+  opacity: 0.3; /* TODO: add separator color ??? */
 }
