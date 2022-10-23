@@ -93,6 +93,12 @@ export default defineComponent({
       default: TAG_NAME_DEFAULTS.UL,
     },
     /**
+     * Defines should DTabs be activated on arrow navigation
+     */
+    activateOnKeys: {
+      type: Boolean,
+    },
+    /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
@@ -174,16 +180,23 @@ export default defineComponent({
   methods: {
     keyupHandler(event: KeyboardEvent) {
       if (event.key === "ArrowLeft") {
-        console.log("ArrowLeft", event.target);
         // TODO: Focuses and optionally activates the previous tab in the tab list. If the current tab is the first tab in the tab list it activates the last tab.
+        // 1. get id
+        const tabId = (event.target as HTMLElement).getAttribute("id");
+        console.log("ArrowLeft", tabId);
+        // 2. find prev tab
+        // 3. call whenClick on prev element ???
       }
       if (event.key === "ArrowRight") {
         console.log("ArrowRight", event.target);
         // TODO: Focuses and optionally activates the next tab in the tab list. If the current tab is the last tab in the tab list it activates the first tab.
       }
-      if (event.key === "Delete") {
-        console.log("Delete", event.target);
-        // TODO: When allowed removes the currently selected tab from the tab list
+      if (event.key === "Enter") {
+        const tabId = (event.target as HTMLElement).getAttribute("id");
+        const tabs =
+          (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
+        const tab = tabs.find((tab) => tab?.props?.id === tabId);
+        tab?.props?.whenClick();
       }
     },
   },

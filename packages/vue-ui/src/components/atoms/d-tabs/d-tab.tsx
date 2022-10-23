@@ -71,6 +71,10 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
     },
+    /*TODO: It is recommended to use a <button> element with the role tab for their built-in functional and accessible features instead,
+       as opposed to needing to add them yourself. For controlling tab key functionality for elements with the role tab,
+       it is recommended to set all non-active elements to tabindex="-1", and to set the active element to tabindex="0".
+    */
     /**
      * Defines element type of the container component
      */

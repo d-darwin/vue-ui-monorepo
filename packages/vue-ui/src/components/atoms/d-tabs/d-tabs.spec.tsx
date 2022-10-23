@@ -243,9 +243,19 @@ describe("DTabs", () => {
     expect(tabpanel.props("enableHtml")).toBe(enableHtml);
   });
 
-  // TODO: arrow navigation
+  // TODO: arrow navigation right
+  it("Should activate(?) next tab on arrow right", async () => {
+    expect(true).toBeFalsy();
+  });
 
-  // TODO: DTab.active ???
-  // TODO: DTab.onClick ???
-  // TODO: DTab.whenClick ???
+  // TODO: arrow navigation left
+  it("Should activate(?) prev tab on arrow right", async () => {
+    expect(true).toBeFalsy();
+  });
+
+  // TODO: Should following to be a part of the DTabs component:
+  // DTabpanel.active ???
+  // DTab.active ???
+  // DTab.onClick ???
+  // DTab.whenClick ???
 });
