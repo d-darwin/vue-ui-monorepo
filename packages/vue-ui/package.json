@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui",
-  "version": "0.18.12",
+  "version": "0.19.0",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,8 +12,8 @@
     "stylelint:nofix": "stylelint src/**/*.{css,scss} --quiet"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui-codegen": "^0.18.10",
-    "@darwin-studio/vue-ui-style-dictionary": "^0.18.10",
+    "@darwin-studio/vue-ui-codegen": "^0.19.0",
+    "@darwin-studio/vue-ui-style-dictionary": "^0.19.0",
     "core-js": "^3.22.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.33"
