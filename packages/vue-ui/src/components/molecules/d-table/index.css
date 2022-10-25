@@ -1,3 +1,9 @@
+@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+
 .dTable {
-  /*TODO*/
+  border-collapse: collapse;
+}
+
+.row {
+  border-bottom: 1px solid var(--color-primary-background-disabled); /* TODO: add separator color ??? */
 }

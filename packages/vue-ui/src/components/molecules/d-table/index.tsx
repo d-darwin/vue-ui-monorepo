@@ -23,7 +23,7 @@ export default defineComponent({
      * TODO
      */
     headers: {
-      type: Array as PropType<Text[] | VNode[]>, // TODO: align, font, special class ???
+      type: Array as PropType<Text[] | VNode[]>, // TODO: align, font, width, special class ???
     },
     /**
      * TODO
@@ -107,8 +107,9 @@ export default defineComponent({
       return (
         <thead>
           {/*TODO: what if 2 level of headers with colspan*/}
-          <tr class={this.headerRowClass}>
-            {/* TODO: slot*/}
+          <tr class={[styles[config.rowClassName], this.headerRowClass]}>
+            {/* TODO: slot */}
+            {/* TODO: keys */}
             {this.headers?.map((header) => (
               /*TODO: aria*/
               <th
@@ -129,10 +130,12 @@ export default defineComponent({
       // TODO: enableHtml
       return (
         <tbody>
-          {/* TODO: slot*/}
+          {/* TODO: slot */}
+          {/* TODO: keys */}
           {this.items?.map((item) => (
             /*TODO: what if colspan*/
-            <tr class={this.itemRowClass}>
+            <tr class={[styles[config.rowClassName], this.itemRowClass]}>
+              {/* TODO: keys */}
               {item?.map((itemCell) => (
                 <td class={[this.itemCellClass, ...this.commonClasses]}>
                   {itemCell}
