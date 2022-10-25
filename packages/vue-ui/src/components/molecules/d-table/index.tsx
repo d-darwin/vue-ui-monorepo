@@ -4,6 +4,7 @@ import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; 
 import type { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
+import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
@@ -74,6 +75,11 @@ export default defineComponent({
 
   computed: {
     commonClasses(): string[] {
+      // TODO: font and size separately
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.size
+      );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
         this.padding
@@ -88,6 +94,7 @@ export default defineComponent({
       );
 
       return [
+        fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
         sizeStyles[sizeClassName],
