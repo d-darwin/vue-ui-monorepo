@@ -10,13 +10,10 @@ export default {
       control: { type: "select" },
       options: Object.values(FONT),
     },
-  },
-  args: {
-    content: "Some text content",
-    font: FONT.MEDIUM,
-    tag: "div",
-    enableHtml: false,
   },*/
+  args: {
+    headers: ["Column 1", "Column 2", "Column 3"],
+  },
 };
 
 const Template: Story = (args) => ({
