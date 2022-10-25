@@ -1,16 +1,21 @@
 import { Story } from "@storybook/vue3";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import DTable from "@darwin-studio/vue-ui/src/components/molecules/d-table";
 
 export default {
   title: "molecules/DTable",
   component: DTable,
-  // TODO
-  /*  argTypes: {
-    font: {
+  argTypes: {
+    padding: {
       control: { type: "select" },
-      options: Object.values(FONT),
+      options: Object.values(PADDING),
     },
-  },*/
+    size: {
+      control: { type: "select" },
+      options: Object.values(SIZE),
+    },
+  },
   args: {
     headers: ["Column 1", "Column 2", "Column 3"],
     items: [
@@ -18,6 +23,8 @@ export default {
       ["item 21", "item 22", "item 23"],
       ["item 31", "item 32", "item 33"],
     ],
+    padding: PADDING.DEFAULT, // TODO: don't hardcode values
+    size: SIZE.MEDIUM, // TODO: don't hardcode values
   },
 };
 
