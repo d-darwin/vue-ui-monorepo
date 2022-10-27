@@ -59,6 +59,12 @@ export default defineComponent({
       type: String,
     },
     /**
+     * TODO
+     */
+    itemRowAttrs: {
+      type: Function as PropType<(index?: number) => Record<string, unknown>>,
+    },
+    /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
@@ -156,7 +162,7 @@ export default defineComponent({
         <tbody>
           {/* TODO: slot */}
           {/* TODO: keys */}
-          {this.items?.map((item) => (
+          {this.items?.map((row, index) => (
             /*TODO: what if colspan*/
             <tr
               class={[
@@ -164,11 +170,12 @@ export default defineComponent({
                 styles[config.rowClassName],
                 this.itemRowClass,
               ]}
+              {...this?.itemRowAttrs?.(index)}
             >
               {/* TODO: keys */}
-              {item?.map((itemCell) => (
+              {row?.map((cell) => (
                 <td class={[...this.commonCellClasses, this.itemCellClass]}>
-                  {itemCell}
+                  {cell}
                 </td>
               ))}
             </tr>
