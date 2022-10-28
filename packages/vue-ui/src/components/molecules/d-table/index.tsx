@@ -31,6 +31,12 @@ export default defineComponent({
     /**
      * TODO
      */
+    headerClass: {
+      type: String,
+    },
+    /**
+     * TODO
+     */
     headerRowClass: {
       type: String,
     },
@@ -43,26 +49,59 @@ export default defineComponent({
     /**
      * TODO
      */
+    headerRowAttrs: {
+      // TODO: naming
+      type: Object as PropType<Record<string, unknown>>,
+    },
+    /**
+     * TODO
+     */
+    headerCellAttrs: {
+      // TODO: naming
+      type: Function as PropType<(colIndex: number) => Record<string, unknown>>,
+    },
+    /**
+     * TODO
+     */
     items: {
       type: Array as PropType<(Text | VNode)[][]>, // TODO: separators ???
     },
     /**
      * TODO
      */
+    bodyClass: {
+      // TODO: naming
+      type: String,
+    },
+    /**
+     * TODO
+     */
     itemRowClass: {
+      // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
     itemCellClass: {
+      // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
     itemRowAttrs: {
-      type: Function as PropType<(index?: number) => Record<string, unknown>>,
+      // TODO: naming
+      type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
+    },
+    /**
+     * TODO
+     */
+    itemCellAttrs: {
+      // TODO: naming
+      type: Function as PropType<
+        (rowIndex: number, colIndex: number) => Record<string, unknown>
+      >,
     },
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
@@ -85,8 +124,6 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: headClassName
-    // TODO: bodyClassName
     // TODO: enableHtml
   },
 
@@ -129,7 +166,7 @@ export default defineComponent({
     renderHead(): VNode {
       // TODO: enableHtml
       return (
-        <thead>
+        <thead class={this.headerClass}>
           {/*TODO: what if 2 level of headers with colspan*/}
           <tr
             class={[
@@ -137,10 +174,11 @@ export default defineComponent({
               styles[config.rowClassName],
               this.headerRowClass,
             ]}
+            {...this.headerRowAttrs}
           >
             {/* TODO: slot */}
             {/* TODO: keys */}
-            {this.headers?.map((header) => (
+            {this.headers?.map((header, colIndex) => (
               /*TODO: aria*/
               <th
                 role="columnheader"
@@ -148,6 +186,7 @@ export default defineComponent({
                 aria-label={"TODO"}
                 aria-sort="none" // TODO
                 class={[...this.commonCellClasses, this.headerCellClass]}
+                {...this.headerCellAttrs?.(colIndex)}
               >
                 {header}
               </th>
@@ -159,10 +198,10 @@ export default defineComponent({
     renderBody(): VNode {
       // TODO: enableHtml
       return (
-        <tbody>
+        <tbody class={this.bodyClass}>
           {/* TODO: slot */}
           {/* TODO: keys */}
-          {this.items?.map((row, index) => (
+          {this.items?.map((row, rowIndex) => (
             /*TODO: what if colspan*/
             <tr
               class={[
@@ -170,11 +209,14 @@ export default defineComponent({
                 styles[config.rowClassName],
                 this.itemRowClass,
               ]}
-              {...this?.itemRowAttrs?.(index)}
+              {...this?.itemRowAttrs?.(rowIndex)}
             >
               {/* TODO: keys */}
-              {row?.map((cell) => (
-                <td class={[...this.commonCellClasses, this.itemCellClass]}>
+              {row?.map((cell, colIndex) => (
+                <td
+                  class={[...this.commonCellClasses, this.itemCellClass]}
+                  {...this?.itemCellAttrs?.(rowIndex, colIndex)}
+                >
                   {cell}
                 </td>
               ))}
