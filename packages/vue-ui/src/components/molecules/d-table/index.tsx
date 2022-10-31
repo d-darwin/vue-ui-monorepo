@@ -126,7 +126,13 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: enableHtml
+    /**
+     * Enables html string rendering passed in props.label.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
   },
 
   computed: {
@@ -166,61 +172,74 @@ export default defineComponent({
 
     // TODO: warn if number of header and item cells a different
     renderHead(): VNode {
-      // TODO: enableHtml
+      const rowClasses = [
+        ...this.commonRowClasses,
+        styles[config.rowClassName],
+        this.headerRowClass,
+      ];
+      const cellClasses = [...this.commonCellClasses, this.headerCellClass];
+
       return (
         <thead class={this.headerClass}>
           {/* TODO: slot */}
           {/* TODO: keys */}
           {this.headers?.map((row, rowIndex) => (
-            <tr
-              class={[
-                ...this.commonRowClasses,
-                styles[config.rowClassName],
-                this.headerRowClass,
-              ]}
-              {...this.headerRowAttrs?.(rowIndex)}
-            >
+            <tr class={rowClasses} {...this.headerRowAttrs?.(rowIndex)}>
               {/* TODO: slot */}
               {/* TODO: keys */}
-              {row?.map((cell, colIndex) => (
-                /*TODO: aria*/
-                <th
-                  class={[...this.commonCellClasses, this.headerCellClass]}
-                  {...this.headerCellAttrs?.(rowIndex, colIndex)}
-                >
-                  {cell}
-                </th>
-              ))}
+              {row?.map((cell, colIndex) =>
+                this.enableHtml ? (
+                  <th
+                    class={cellClasses}
+                    {...this.headerCellAttrs?.(rowIndex, colIndex)}
+                    v-html={cell}
+                  />
+                ) : (
+                  <th
+                    class={cellClasses}
+                    {...this.headerCellAttrs?.(rowIndex, colIndex)}
+                  >
+                    {cell}
+                  </th>
+                )
+              )}
             </tr>
           ))}
         </thead>
       );
     },
     renderBody(): VNode {
-      // TODO: enableHtml
+      const rowClasses = [
+        ...this.commonRowClasses,
+        styles[config.rowClassName],
+        this.itemRowClass,
+      ];
+      const cellClasses = [...this.commonCellClasses, this.itemCellClass];
+
       return (
         <tbody class={this.bodyClass}>
           {/* TODO: slot */}
           {/* TODO: keys */}
           {this.items?.map((row, rowIndex) => (
-            /*TODO: what if colspan*/
-            <tr
-              class={[
-                ...this.commonRowClasses,
-                styles[config.rowClassName],
-                this.itemRowClass,
-              ]}
-              {...this?.itemRowAttrs?.(rowIndex)}
-            >
+            <tr class={rowClasses} {...this?.itemRowAttrs?.(rowIndex)}>
+              {/* TODO: slot */}
               {/* TODO: keys */}
-              {row?.map((cell, colIndex) => (
-                <td
-                  class={[...this.commonCellClasses, this.itemCellClass]}
-                  {...this?.itemCellAttrs?.(rowIndex, colIndex)}
-                >
-                  {cell}
-                </td>
-              ))}
+              {row?.map((cell, colIndex) =>
+                this.enableHtml ? (
+                  <td
+                    class={cellClasses}
+                    {...this?.itemCellAttrs?.(rowIndex, colIndex)}
+                    v-html={cell}
+                  />
+                ) : (
+                  <td
+                    class={cellClasses}
+                    {...this?.itemCellAttrs?.(rowIndex, colIndex)}
+                  >
+                    {cell}
+                  </td>
+                )
+              )}
             </tr>
           ))}
         </tbody>
