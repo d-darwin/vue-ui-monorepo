@@ -26,7 +26,7 @@ export default defineComponent({
      * TODO
      */
     headers: {
-      type: Array as PropType<(Text | VNode)[]>, // TODO: align, font, width, special class ???
+      type: Array as PropType<(Text | VNode)[][]>, // TODO: align, font, width, special class ???
     },
     /**
      * TODO
@@ -51,14 +51,16 @@ export default defineComponent({
      */
     headerRowAttrs: {
       // TODO: naming
-      type: Object as PropType<Record<string, unknown>>,
+      type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * TODO
      */
     headerCellAttrs: {
       // TODO: naming
-      type: Function as PropType<(colIndex: number) => Record<string, unknown>>,
+      type: Function as PropType<
+        (rowIndex: number, colIndex: number) => Record<string, unknown>
+      >,
     },
     /**
      * TODO
@@ -167,31 +169,30 @@ export default defineComponent({
       // TODO: enableHtml
       return (
         <thead class={this.headerClass}>
-          {/*TODO: what if 2 level of headers with colspan*/}
-          <tr
-            class={[
-              ...this.commonRowClasses,
-              styles[config.rowClassName],
-              this.headerRowClass,
-            ]}
-            {...this.headerRowAttrs}
-          >
-            {/* TODO: slot */}
-            {/* TODO: keys */}
-            {this.headers?.map((header, colIndex) => (
-              /*TODO: aria*/
-              <th
-                role="columnheader"
-                scope="col"
-                aria-label={"TODO"}
-                aria-sort="none" // TODO
-                class={[...this.commonCellClasses, this.headerCellClass]}
-                {...this.headerCellAttrs?.(colIndex)}
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
+          {/* TODO: slot */}
+          {/* TODO: keys */}
+          {this.headers?.map((row, rowIndex) => (
+            <tr
+              class={[
+                ...this.commonRowClasses,
+                styles[config.rowClassName],
+                this.headerRowClass,
+              ]}
+              {...this.headerRowAttrs?.(rowIndex)}
+            >
+              {/* TODO: slot */}
+              {/* TODO: keys */}
+              {row?.map((cell, colIndex) => (
+                /*TODO: aria*/
+                <th
+                  class={[...this.commonCellClasses, this.headerCellClass]}
+                  {...this.headerCellAttrs?.(rowIndex, colIndex)}
+                >
+                  {cell}
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
       );
     },

@@ -17,7 +17,7 @@ export default {
     },
   },
   args: {
-    headers: ["Column 1", "Column 2", "Column 3"],
+    headers: [["Column 1", "Column 2", "Column 3"]],
     items: [
       ["item 11", "item 12", "item 13"],
       ["item 21", "item 22", "item 23"],
