@@ -23,49 +23,49 @@ export default defineComponent({
 
   props: {
     /**
-     * TODO
+     * TODO: headRows ???
      */
-    headers: {
+    headRows: {
       type: Array as PropType<(Text | VNode)[][]>, // TODO: align, font, width, special class ???
     },
     /**
      * TODO
      */
-    headerClass: {
+    headClass: {
       type: String,
     },
     /**
      * TODO
      */
-    headerRowClass: {
+    headRowClass: {
       type: String,
     },
     /**
      * TODO
      */
-    headerCellClass: {
+    headCellClass: {
       type: String,
     },
     /**
      * TODO
      */
-    headerRowAttrs: {
+    headRowAttrs: {
       // TODO: naming
       type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * TODO
      */
-    headerCellAttrs: {
+    headCellAttrs: {
       // TODO: naming
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
       >,
     },
     /**
-     * TODO
+     * TODO:
      */
-    items: {
+    bodyRows: {
       type: Array as PropType<(Text | VNode)[][]>, // TODO: separators ???
     },
     /**
@@ -78,28 +78,28 @@ export default defineComponent({
     /**
      * TODO
      */
-    itemRowClass: {
+    bodyRowClass: {
       // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
-    itemCellClass: {
+    bodyCellClass: {
       // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
-    itemRowAttrs: {
+    bodyRowAttrs: {
       // TODO: naming
       type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * TODO
      */
-    itemCellAttrs: {
+    bodyCellAttrs: {
       // TODO: naming
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
@@ -175,29 +175,29 @@ export default defineComponent({
       const rowClasses = [
         ...this.commonRowClasses,
         styles[config.rowClassName],
-        this.headerRowClass,
+        this.headRowClass,
       ];
-      const cellClasses = [...this.commonCellClasses, this.headerCellClass];
+      const cellClasses = [...this.commonCellClasses, this.headCellClass];
+
+      /* TODO: slot */
 
       return (
-        <thead class={this.headerClass}>
-          {/* TODO: slot */}
+        <thead class={this.headClass}>
           {/* TODO: keys */}
-          {this.headers?.map((row, rowIndex) => (
-            <tr class={rowClasses} {...this.headerRowAttrs?.(rowIndex)}>
-              {/* TODO: slot */}
+          {this.headRows?.map((row, rowIndex) => (
+            <tr class={rowClasses} {...this.headRowAttrs?.(rowIndex)}>
               {/* TODO: keys */}
               {row?.map((cell, colIndex) =>
                 this.enableHtml ? (
                   <th
                     class={cellClasses}
-                    {...this.headerCellAttrs?.(rowIndex, colIndex)}
+                    {...this.headCellAttrs?.(rowIndex, colIndex)}
                     v-html={cell}
                   />
                 ) : (
                   <th
                     class={cellClasses}
-                    {...this.headerCellAttrs?.(rowIndex, colIndex)}
+                    {...this.headCellAttrs?.(rowIndex, colIndex)}
                   >
                     {cell}
                   </th>
@@ -212,29 +212,29 @@ export default defineComponent({
       const rowClasses = [
         ...this.commonRowClasses,
         styles[config.rowClassName],
-        this.itemRowClass,
+        this.bodyRowClass,
       ];
-      const cellClasses = [...this.commonCellClasses, this.itemCellClass];
+      const cellClasses = [...this.commonCellClasses, this.bodyCellClass];
+
+      /* TODO: slot */
 
       return (
         <tbody class={this.bodyClass}>
-          {/* TODO: slot */}
           {/* TODO: keys */}
-          {this.items?.map((row, rowIndex) => (
-            <tr class={rowClasses} {...this?.itemRowAttrs?.(rowIndex)}>
-              {/* TODO: slot */}
+          {this.bodyRows?.map((row, rowIndex) => (
+            <tr class={rowClasses} {...this?.bodyRowAttrs?.(rowIndex)}>
               {/* TODO: keys */}
               {row?.map((cell, colIndex) =>
                 this.enableHtml ? (
                   <td
                     class={cellClasses}
-                    {...this?.itemCellAttrs?.(rowIndex, colIndex)}
+                    {...this?.bodyCellAttrs?.(rowIndex, colIndex)}
                     v-html={cell}
                   />
                 ) : (
                   <td
                     class={cellClasses}
-                    {...this?.itemCellAttrs?.(rowIndex, colIndex)}
+                    {...this?.bodyCellAttrs?.(rowIndex, colIndex)}
                   >
                     {cell}
                   </td>

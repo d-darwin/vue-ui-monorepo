@@ -8,5 +8,13 @@ describe("DTable", () => {
 
   baseClassCase(wrapper, config.className);
 
+  it("Should render props.headerClass to the thead element's class", () => {
+    expect(true).toBeFalsy();
+  });
+
+  it("Should render props.headerClass to the thead element's class", () => {
+    expect(true).toBeFalsy();
+  });
+
   // TODO
 });
