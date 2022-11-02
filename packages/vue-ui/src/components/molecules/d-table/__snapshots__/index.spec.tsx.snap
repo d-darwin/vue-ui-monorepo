@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DTable Should render props.headRows as tr elements inside the thead 1`] = `
+<th class="paddingDefaultMedium paddingDefault sizeMedium">
+  <div class="inner-th-element">head 3</div>
+</th>
+`;

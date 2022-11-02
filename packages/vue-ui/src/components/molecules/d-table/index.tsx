@@ -16,17 +16,17 @@ import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * A clickable component which renders as <b>button</b> element, <b>router-link</b> component or <b>a</b> element depending on props.
+ * TODO
  */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * TODO: headRows ???
+     * TODO:
      */
     headRows: {
-      type: Array as PropType<(Text | VNode)[][]>, // TODO: align, font, width, special class ???
+      type: Array as PropType<(Text | VNode)[][]>,
     },
     /**
      * TODO
@@ -50,14 +50,12 @@ export default defineComponent({
      * TODO
      */
     headRowAttrs: {
-      // TODO: naming
       type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * TODO
      */
     headCellAttrs: {
-      // TODO: naming
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
       >,
@@ -66,41 +64,36 @@ export default defineComponent({
      * TODO:
      */
     bodyRows: {
-      type: Array as PropType<(Text | VNode)[][]>, // TODO: separators ???
+      type: Array as PropType<(Text | VNode)[][]>,
     },
     /**
      * TODO
      */
     bodyClass: {
-      // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
     bodyRowClass: {
-      // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
     bodyCellClass: {
-      // TODO: naming
       type: String,
     },
     /**
      * TODO
      */
     bodyRowAttrs: {
-      // TODO: naming
       type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * TODO
      */
     bodyCellAttrs: {
-      // TODO: naming
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
       >,

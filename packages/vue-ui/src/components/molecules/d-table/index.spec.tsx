@@ -3,6 +3,17 @@ import { baseClassCase } from "@/utils/test-case-factories";
 import DTable from "./index";
 import config from "./config";
 
+const head0Label = "head 1";
+const head1Label = "head 2";
+const head2Label = "head 3";
+const headRows = [
+  [
+    head0Label,
+    <b>{head1Label}</b>,
+    <div class="inner-th-element">{head2Label}</div>,
+  ],
+];
+
 describe("DTable", () => {
   const wrapper = shallowMount(DTable);
 
@@ -16,27 +27,59 @@ describe("DTable", () => {
     expect(theadEl.classes()).toContain(headClass);
   });
 
-  // TODO: props.headRows
   it("Should render props.headRows as tr elements inside the thead", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: props.headRowClass
-  it("Should render props.headRowClass as tr elements inside the thead class", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: props.headCellClass
-  it("Should render props.headCellClass as td elements inside the thead class", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: props.headRowAttrs
-  it("Should render props.headRowAttrs as tr elements inside the thead attrs", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: props.headCellAttrs
-  it("Should render props.headCellAttrs as td elements inside the thead attrs", async () => {
-    expect(true).toBeFalsy();
+    await wrapper.setProps({ headRows });
+    const thElements = wrapper.findAll("thead > tr > th");
+    expect(thElements.length).toBe(headRows[0].length);
+    expect(thElements[0].text()).toBe(head0Label);
+    expect(thElements[1].text()).toBe(head1Label);
+    expect(thElements[2].html()).toMatchSnapshot();
   });
 
+  it("Should render props.headRowClass as tr elements inside the thead class", async () => {
+    const headRowClass = "some-head-row-class";
+    await wrapper.setProps({ headRows, headRowClass });
+    const headRowEl = wrapper.find("thead > tr");
+    expect(headRowEl.classes()).toContain(headRowClass);
+  });
+
+  it("Should render props.headCellClass as td elements inside the thead class", async () => {
+    const headCellClass = "some-head-row-class";
+    await wrapper.setProps({ headRows, headCellClass });
+    const thElements = wrapper.findAll("thead > tr > th");
+    thElements.forEach((thEl) => {
+      expect(thEl.classes()).toContain(headCellClass);
+    });
+  });
+
+  it("Should render props.headRowAttrs as tr elements inside the thead attrs", async () => {
+    const headRowAttrsObj = {
+      tabindex: "1",
+      "data-id": "123",
+    };
+    await wrapper.setProps({ headRows, headRowAttrs: () => headRowAttrsObj });
+    const headRowEl = wrapper.find("thead > tr");
+    expect(headRowEl.attributes("tabindex")).toBe(headRowAttrsObj.tabindex);
+    expect(headRowEl.attributes("data-id")).toBe(headRowAttrsObj["data-id"]);
+  });
+
+  it("Should render props.headCellAttrs as td elements inside the thead attrs", async () => {
+    const headCellAttrsObj = {
+      style: "background: red;",
+      onClick: jest.fn(),
+    };
+    await wrapper.setProps({ headRows, headCellAttrs: () => headCellAttrsObj });
+    const thElements = wrapper.findAll("thead > tr > th");
+    await Promise.all(
+      thElements.map(async (thEl) => {
+        expect(thEl.attributes("style")).toBe(headCellAttrsObj.style);
+        await thEl.trigger("click");
+      })
+    );
+    expect(headCellAttrsObj.onClick).toBeCalledTimes(headRows[0].length);
+  });
+
+  /*
   it("Should render props.bodyClass to the tbody element class", async () => {
     const bodyClass = "some-body-class";
     await wrapper.setProps({ bodyClass });
@@ -82,5 +125,5 @@ describe("DTable", () => {
   // TODO: props.enableHtml
   it("props.enableHtml should allow to pass HTML strings as content of the td elements", async () => {
     expect(true).toBeFalsy();
-  });
+  });*/
 });
