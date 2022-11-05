@@ -293,8 +293,18 @@ describe("DTable", () => {
     expect(bodyTrElement.classes()).toContain(className);
   });
 
-  // TODO: props.enableHtml
   it("props.enableHtml should allow to pass HTML strings as content of the td elements", async () => {
-    expect(true).toBeFalsy();
+    const headHtmlString = "<b>head html string</b>";
+    const bodyHtmlString = "<i>body html string</i>";
+    await wrapper.setProps({
+      enableHtml: true,
+      headRows: [[headHtmlString]],
+      bodyRows: [[bodyHtmlString]],
+    });
+
+    const headTdContentElement = wrapper.find("thead > tr > th > b");
+    expect(headTdContentElement.html()).toBe(headHtmlString);
+    const bodyTdContentElement = wrapper.find("tbody > tr > td > i");
+    expect(bodyTdContentElement.html()).toBe(bodyHtmlString);
   });
 });
