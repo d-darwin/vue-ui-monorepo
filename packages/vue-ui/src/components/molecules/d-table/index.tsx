@@ -16,44 +16,44 @@ import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * TODO
+ * Simply renders <b>table</b> element with passed head and body rows.
  */
 export default defineComponent({
   name: config.name,
 
   props: {
     /**
-     * TODO:
+     * Two-dimensional array of head cells content
      */
     headRows: {
       type: Array as PropType<(Text | VNode)[][]>,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>thead</b> element.
      */
     headClass: {
       type: String,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>tr</b> elements inside <b>thead</b>.
      */
     headRowClass: {
       type: String,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>th</b> elements inside <b>thead</b>.
      */
     headCellClass: {
       type: String,
     },
     /**
-     * TODO
+     * Pass any attrs to the <b>tr</b> elements inside <b>thead</b>.
      */
     headRowAttrs: {
       type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
-     * TODO
+     * Pass any attrs to the <b>th</b> elements inside <b>thead</b>.
      */
     headCellAttrs: {
       type: Function as PropType<
@@ -61,37 +61,37 @@ export default defineComponent({
       >,
     },
     /**
-     * TODO:
+     * Two-dimensional array of body cells content
      */
     bodyRows: {
       type: Array as PropType<(Text | VNode)[][]>,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>tbody</b> element.
      */
     bodyClass: {
       type: String,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>tr</b> elements inside <b>tbody</b>.
      */
     bodyRowClass: {
       type: String,
     },
     /**
-     * TODO
+     * You can pass own class name to the <b>td</b> elements inside <b>tbody</b>.
      */
     bodyCellClass: {
       type: String,
     },
     /**
-     * TODO
+     * Pass any attrs to the <b>tr</b> elements inside <b>tbody</b>.
      */
     bodyRowAttrs: {
       type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
-     * TODO
+     * Pass any attrs to the <b>td</b> elements inside <b>tbody</b>.
      */
     bodyCellAttrs: {
       type: Function as PropType<
