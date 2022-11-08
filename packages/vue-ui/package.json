@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui",
-  "version": "0.19.9",
+  "version": "0.20.0",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,8 +12,8 @@
     "stylelint:nofix": "stylelint src/**/*.{css,scss} --quiet"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui-codegen": "^0.19.6",
-    "@darwin-studio/vue-ui-style-dictionary": "^0.19.6",
+    "@darwin-studio/vue-ui-codegen": "^0.20.0",
+    "@darwin-studio/vue-ui-style-dictionary": "^0.20.0",
     "core-js": "^3.22.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.33"
@@ -56,5 +56,12 @@
   ],
   "main": "dist/vue-ui.common.js",
   "unpkg": "dist/vue-ui.umd.min.js",
-  "keywords": ["vue", "vuejs", "vue 3", "vue lib", "vue ui lib", "vue ui library"]
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vue 3",
+    "vue lib",
+    "vue ui lib",
+    "vue ui library"
+  ]
 }
