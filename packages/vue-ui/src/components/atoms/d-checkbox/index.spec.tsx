@@ -56,6 +56,7 @@ describe("DCheckbox", () => {
 
   minControlWidthCase(wrapper);
 
+  // TODO: make ckeck default mark test case
   it(`Should render default icon with ${config.checkMark}`, () => {
     const iconEl = wrapper.find(`.${config.iconClassName}`);
     expect(iconEl.exists()).toBeTruthy();

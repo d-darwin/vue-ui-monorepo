@@ -3,6 +3,7 @@ import DRadio from "@darwin-studio/vue-ui/src/components/atoms/d-radio";
 import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-radio/constants";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
@@ -26,6 +27,10 @@ export default {
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
+    },
+    padding: {
+      control: { type: "select" },
+      options: Object.values(PADDING),
     },
     rounding: {
       control: { type: "select" },
@@ -59,6 +64,7 @@ export default {
     labelClass: "someCustomLabelClass",
     disabled: false,
     colorScheme: COLOR_SCHEME.SECONDARY, // TODO: don't hardcode values
+    padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.FULL, // TODO: don't hardcode values
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values

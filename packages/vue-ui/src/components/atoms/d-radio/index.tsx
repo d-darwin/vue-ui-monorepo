@@ -11,6 +11,7 @@ import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -26,6 +27,7 @@ import paddingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/padding.css
 import roundingStyles from "@darwin-studio/vue-ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/vue-ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min-control-width.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
@@ -96,6 +98,13 @@ export default defineComponent({
       default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines padding type of the component, use 'equal' if the component contains only an icon
+     */
+    padding: {
+      type: String as PropType<Padding>,
+      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Defines corner rounding of the icon container element
      */
     rounding: {
@@ -162,7 +171,7 @@ export default defineComponent({
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
+    // TODO: disabled and unchecked should have different appearance
     disabled: {
       type: Boolean,
     },
@@ -234,7 +243,9 @@ export default defineComponent({
           id={this.label || this.id ? this.controlId : undefined}
           name={String(this.name)}
           checked={this.checked}
+          value={this.value}
           disabled={this.disabled}
+          tabindex={this.type === TYPE.BASE ? 1 : -1}
           {...this.inputAttrs}
           class={[
             styles[config.inputClassName],
@@ -260,11 +271,11 @@ export default defineComponent({
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        PADDING.EQUAL
+        this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
       );
       const paddingSizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${PADDING.EQUAL}-${this.size}` //TODO: avoid hardcode
+        `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${this.size}`
       );
       const roundingClassName = prepareCssClassName(
         codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
@@ -353,8 +364,10 @@ export default defineComponent({
       return (
         <DButton
           label={this.label}
-          active={this.checked}
+          active={this.checked} // TODO: checked and disabled state should have different appearance
+          disabled={this.disabled} // TODO: checked and disabled state should have different appearance
           colorScheme={this.colorScheme}
+          padding={this.padding}
           rounding={this.rounding}
           size={this.size}
           transition={this.transition}
@@ -479,8 +492,18 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
+    const minControlWidthClassName = prepareCssClassName(
+      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
+      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
+    );
+
     return (
-      <Tag class={[styles[config.className]]}>
+      <Tag
+        class={[
+          styles[config.className],
+          minControlWidthStyles[minControlWidthClassName],
+        ]}
+      >
         {this.renderLabel}
         {/*TODO: add transition | what about layout shift ???*/}
         {this.renderError}
