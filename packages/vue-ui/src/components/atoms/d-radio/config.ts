@@ -8,5 +8,7 @@ export default {
   iconContainerClassName: "iconContainer",
   iconContainerBackdropClassName: "iconContainerBackdrop",
   iconClassName: "icon",
+  inputRef: "inputRef",
+  buttonClass: "button",
   checkMark: "⬤",
 };

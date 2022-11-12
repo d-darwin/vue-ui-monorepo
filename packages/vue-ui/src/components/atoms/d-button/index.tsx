@@ -82,7 +82,18 @@ export default defineComponent({
     preventDefault: {
       type: Boolean,
     },
-    // TODO: disabled ???
+    /**
+     * Pass true to make the button disabled // TODO: test, story
+     */
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * Pass true to make the button active // TODO: test, story
+     */
+    active: {
+      type: Boolean,
+    },
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -157,8 +168,13 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
 
-      if (this.$attrs.disabled) {
-        classes.push(styles["__disabled"]);
+      if (this.disabled) {
+        classes.push(styles["__disabled"]); // TODO: const
+        classes.push(colorSchemeStyles["__disabled"]); // TODO: const
+      }
+
+      if (this.active) {
+        classes.push(colorSchemeStyles["__active"]); // TODO: const
       }
 
       return classes;

@@ -5,6 +5,7 @@ import {
   ref,
   VNode,
   Transition as Trans,
+  Ref,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
@@ -197,9 +198,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    const innerChecked = ref(props.checked);
+    const innerChecked = ref(props.checked); // TODO: what for ???
+    // To manipulate get getBoundingClientRect and adjust tooltip position
+    // It's a bit of magic - use the same refs name in the render function and return they from the setup()
+    // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
+    const inputRef: Ref<HTMLElement | null> = ref(null);
     const { controlId } = useControlId(props);
-    return { innerChecked, controlId };
+
+    return { innerChecked, inputRef, controlId };
   },
 
   emits: [
@@ -223,6 +229,7 @@ export default defineComponent({
 
       return (
         <input
+          ref={config.inputRef}
           type="radio"
           id={this.label || this.id ? this.controlId : undefined}
           name={String(this.name)}
@@ -341,17 +348,20 @@ export default defineComponent({
     },
 
     renderButton(): VNode {
-      /*
-      * <!--TODO: use DButtons instead ???-->
-      <span
-        v-if="type === 'button'"
-        :class="{ [`__${color}`]: color }"
-        :style="buttonStyle"
-        class="button __smooth"
-        v-text="label"
-      />
-      * */
-      return <div>TODO: renderButton</div>;
+      console.log(styles[config.buttonClass]);
+      // TODO: other props and attrs
+      return (
+        <DButton
+          label={this.label}
+          active={this.checked}
+          colorScheme={this.colorScheme}
+          rounding={this.rounding}
+          size={this.size}
+          transition={this.transition}
+          class={styles[config.buttonClass]}
+          whenClick={this.buttonClickHandler}
+        />
+      );
     },
 
     renderLabel(): VNode {
@@ -442,6 +452,13 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
+    },
+
+    buttonClickHandler(): void {
+      const inputEl = this.inputRef;
+      if (inputEl) {
+        inputEl.click();
+      }
     },
   },
 

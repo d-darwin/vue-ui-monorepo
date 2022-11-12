@@ -185,8 +185,9 @@ export default defineComponent({
   },
 
   setup(props) {
-    const innerChecked = ref(props.checked);
+    const innerChecked = ref(props.checked); // TODO: what for ???
     const { controlId } = useControlId(props);
+
     return { innerChecked, controlId };
   },
 

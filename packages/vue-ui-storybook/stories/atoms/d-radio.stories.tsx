@@ -1,5 +1,6 @@
 import { Story } from "@storybook/vue3";
 import DRadio from "@darwin-studio/vue-ui/src/components/atoms/d-radio";
+import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-radio/constants";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
@@ -10,6 +11,10 @@ export default {
   title: "atoms/DRadio",
   component: DRadio,
   argTypes: {
+    type: {
+      control: { type: "select" },
+      options: Object.values(TYPE),
+    },
     labelFont: {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
@@ -42,6 +47,7 @@ export default {
     },
   },
   args: {
+    type: TYPE.BASE,
     name: "some-input-name",
     checked: false,
     value: "some value",
