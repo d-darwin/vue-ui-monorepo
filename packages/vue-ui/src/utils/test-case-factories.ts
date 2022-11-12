@@ -94,6 +94,17 @@ export function minControlWidthCase(wrapper: VueWrapper) {
   });
 }
 
+export function defaultCheckMarkCase(
+  wrapper: VueWrapper,
+  config: Record<string, string | number>
+) {
+  return it(`Should render default icon with ${config.checkMark}`, async () => {
+    const iconEl = wrapper.find(`.${config.iconClassName}`);
+    expect(iconEl.exists()).toBeTruthy();
+    expect(iconEl.text()).toBe(config.checkMark);
+  });
+}
+
 export function labelPresenceCase(
   wrapper: VueWrapper,
   labelSelector = "label"

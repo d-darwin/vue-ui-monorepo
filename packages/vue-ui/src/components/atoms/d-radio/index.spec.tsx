@@ -1,18 +1,21 @@
 import { shallowMount } from "@vue/test-utils";
 import DRadio from "@/components/atoms/d-radio";
+import config from "@/components/atoms/d-radio/config";
 import {
   baseClassCase,
+  defaultCheckMarkCase,
   inputAttrsCase,
   inputClassCase,
   inputValueCase,
   minControlWidthCase,
 } from "@/utils/test-case-factories";
-import config from "@/components/atoms/d-radio/config";
 
 describe("DRadio", () => {
   const name = "some name";
   const value = "some value";
-  const wrapper = shallowMount(DRadio, { props: { name, value } });
+  const wrapper = shallowMount(DRadio, {
+    props: { name, value, checked: true },
+  });
 
   baseClassCase(wrapper, config.className);
 
@@ -30,6 +33,8 @@ describe("DRadio", () => {
   inputAttrsCase(wrapper);
 
   minControlWidthCase(wrapper);
+
+  defaultCheckMarkCase(wrapper, config);
 
   // TODO: type and other radio specific
 });
