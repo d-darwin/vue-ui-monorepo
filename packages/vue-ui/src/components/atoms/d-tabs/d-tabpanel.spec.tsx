@@ -8,7 +8,7 @@ import {
   slotDefaultCase,
   tagCase,
   transitionClassCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
+} from "@/utils/test-case-factories";
 import { DTabpanel } from "./index";
 import config from "./config";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";

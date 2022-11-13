@@ -1,8 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
-import { BASE_COLOR_SCHEME } from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/constants";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import config from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/config";
+import { BASE_COLOR_SCHEME } from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/constants";
+import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
+import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import {
   baseClassCase,
   borderClassCase,
@@ -16,10 +18,12 @@ import {
   errorHtmlCase,
   errorSlotCase,
   errorStringCase,
+  iconSlotCase,
   inputAttrsCase,
   inputClassCase,
   inputValueCase,
   labelClassCase,
+  labelDisabledClassCase,
   labelFontCase,
   labelHtmlCase,
   labelPresenceCase,
@@ -31,10 +35,7 @@ import {
   sizeClassCase,
   tagCase,
   transitionClassCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
-import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
-import styles from "./index.css";
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
+} from "@/utils/test-case-factories";
 
 describe("DCheckbox", () => {
   const wrapper = shallowMount(DCheckbox, {
@@ -59,23 +60,7 @@ describe("DCheckbox", () => {
 
   defaultCheckMarkCase(wrapper, config);
 
-  // TODO: make check slot factory
-  it("Should render icon slot instead of default icon", () => {
-    const slotIconClass = "slotAfter";
-    const slotIcon = `<div class=${slotIconClass}>icon slot content</div>`;
-    const wrapper = shallowMount(DCheckbox, {
-      props: {
-        checked: true,
-      },
-      slots: {
-        icon: slotIcon,
-      },
-    });
-    const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
-    expect(iconContainerEl.exists()).toBeTruthy();
-    const slotIconEl = wrapper.find(`.${slotIconClass}`);
-    expect(slotIconEl.exists()).toBeTruthy();
-  });
+  iconSlotCase(DCheckbox, config);
 
   // TODO: make check target class ??
   it("Icon container classes should contain props.iconContainerClass if passed", async () => {
@@ -85,6 +70,7 @@ describe("DCheckbox", () => {
     expect(iconContainerEl.classes()).toContain(iconContainerClass);
   });
 
+  // TODO: make check target class ??
   it("Icon container classes should contain colorSchemeStyles.__disabled if props.disabled passed", async () => {
     await wrapper.setProps({ disabled: true });
     const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
@@ -101,11 +87,7 @@ describe("DCheckbox", () => {
 
   labelSlotCase(DCheckbox);
 
-  it("Label classes should contain __disabled if props.disabled passed", async () => {
-    await wrapper.setProps({ disabled: true });
-    const labelEl = wrapper.find("label");
-    expect(labelEl.classes()).toContain(styles.__disabled);
-  });
+  labelDisabledClassCase(wrapper);
 
   controlIdPresenceCase(wrapper);
 
@@ -181,7 +163,7 @@ describe("DCheckbox", () => {
     ]);
   });
 
-  it("Shouldn't emit onChange it props.disabled is passed", async () => {
+  it("Shouldn't emit onChange if props.disabled is passed", async () => {
     const value = "some value";
     const checked = true;
     const disabled = true;
@@ -245,7 +227,7 @@ describe("DCheckbox", () => {
     );
   });
 
-  it("Shouldn't emit onInput it props.disabled is passed", async () => {
+  it("Shouldn't emit onInput if props.disabled is passed", async () => {
     const value = "some value";
     const checked = true;
     const disabled = true;

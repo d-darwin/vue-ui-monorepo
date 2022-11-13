@@ -10,7 +10,7 @@ import {
   slotDefaultCase,
   tagCase,
   transitionClassCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
+} from "@/utils/test-case-factories";
 import { DTab } from "./index";
 import config from "./config";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
