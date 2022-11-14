@@ -242,7 +242,7 @@ export default defineComponent({
           type="radio"
           id={this.label || this.id ? this.controlId : undefined}
           name={String(this.name)}
-          checked={this.checked}
+          checked={this.innerChecked}
           value={this.value}
           disabled={this.disabled}
           tabindex={this.type === TYPE.BASE ? 1 : -1}
@@ -362,7 +362,7 @@ export default defineComponent({
       return (
         <DButton
           label={this.label}
-          active={this.checked} // TODO: checked and disabled state should have different appearance
+          active={this.innerChecked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
           colorScheme={this.colorScheme}
           padding={this.padding}

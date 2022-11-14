@@ -91,3 +91,8 @@ const Template: Story = (args) => ({
   template: `<DRadio v-bind="args" />`,
 });
 export const Default = Template.bind({});
+
+export const Button = Template.bind({});
+Button.args = {
+  type: TYPE.BUTTON,
+};
