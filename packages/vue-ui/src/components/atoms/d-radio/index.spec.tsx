@@ -1,8 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import DRadio from "@/components/atoms/d-radio";
 import config from "@/components/atoms/d-radio/config";
-import { BASE_COLOR_SCHEME } from "@/components/atoms/d-radio/constants";
+import DButton from "@/components/atoms/d-button";
+import { BASE_COLOR_SCHEME, TYPE } from "@/components/atoms/d-radio/constants";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
+import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import {
@@ -29,7 +31,7 @@ import {
   labelPresenceCase,
   minControlWidthCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
   transitionClassCase,
@@ -64,7 +66,7 @@ describe("DRadio", () => {
 
   iconSlotCase(DRadio, config);
 
-  // TODO: make check target class ??
+  // TODO: make check target class factory ???
   it("Icon container classes should contain props.iconContainerClass if passed", async () => {
     const iconContainerClass = "iconContainerCustomClass";
     await wrapper.setProps({ iconContainerClass });
@@ -72,11 +74,33 @@ describe("DRadio", () => {
     expect(iconContainerEl.classes()).toContain(iconContainerClass);
   });
 
-  // TODO: make check target class ??
+  // TODO: make check target class factory ???
   it("Icon container classes should contain colorSchemeStyles.__disabled if props.disabled passed", async () => {
     await wrapper.setProps({ disabled: true });
     const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
     expect(iconContainerEl.classes()).toContain(colorSchemeStyles.__disabled);
+  });
+
+  it("Should render DButton instead of icon container if props.type === 'button'", async () => {
+    const label = "some label";
+    const wrapper = shallowMount(DRadio, {
+      props: { type: TYPE.BUTTON, name, value, label },
+    });
+    const button = wrapper.findComponent(DButton);
+    expect(button).toBeTruthy();
+    expect(button.props().label).toBe(label);
+  });
+
+  it("Should trigger input events on DButton click", async () => {
+    const wrapper = shallowMount(DRadio, {
+      props: { type: TYPE.BUTTON, name, value },
+    });
+    const button = wrapper.findComponent(DButton);
+    button.props().whenClick();
+    // TODO
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
 
   labelPresenceCase(wrapper, `.${config.labelInnerClassName}`);
@@ -114,10 +138,20 @@ describe("DRadio", () => {
     SIZE.LARGE
   );
 
-  paddingClassesCase(
+  paddingEqualClassesCase(
     wrapper,
     wrapper.find(`.${config.iconContainerClassName}`)
   );
+
+  it("Should pass props.padding to DButton if props.type === 'button'", async () => {
+    const padding = PADDING.NONE;
+    const wrapper = shallowMount(DRadio, {
+      props: { type: TYPE.BUTTON, name, value, padding },
+    });
+    const button = wrapper.findComponent(DButton);
+    expect(button).toBeTruthy();
+    expect(button.props().padding).toBe(padding);
+  });
 
   roundingClassCase(wrapper, wrapper.find(`.${config.iconContainerClassName}`));
 
@@ -265,6 +299,23 @@ describe("DRadio", () => {
     await inputEl.trigger("click");
     await inputEl.trigger("input");
 
+    expect(whenInput).toHaveBeenCalledTimes(0);
+  });
+
+  it("Shouldn't call any props.when... or emit events if already is checked", async () => {
+    const checked = true;
+    const whenInput = jest.fn();
+    const whenChange = jest.fn();
+    const wrapper = shallowMount(DRadio, {
+      props: { name, value, checked, whenChange, whenInput },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
+    expect(whenChange).toHaveBeenCalledTimes(0);
     expect(whenInput).toHaveBeenCalledTimes(0);
   });
 

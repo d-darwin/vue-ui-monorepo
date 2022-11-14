@@ -4,7 +4,7 @@ import {
   contentHtmlCase,
   fontSizeClassCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   propContentCase,
   sizeClassCase,
   slotDefaultCase,
@@ -68,7 +68,7 @@ describe("DTab", () => {
 
   outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
 
-  paddingClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, wrapper);
 
   transitionClassCase(wrapper, wrapper);
 

@@ -32,7 +32,7 @@ import {
   labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
   tagCase,
@@ -114,7 +114,7 @@ describe("DInput", () => {
     SIZE.LARGE
   );
 
-  paddingClassesCase(wrapper, wrapper.find("input"));
+  paddingEqualClassesCase(wrapper, wrapper.find("input"));
 
   roundingClassCase(wrapper, wrapper.find("input"));
 

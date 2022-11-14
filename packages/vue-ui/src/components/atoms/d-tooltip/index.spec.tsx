@@ -12,7 +12,7 @@ import {
   baseClassCase,
   fontSizeClassCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
   tagCase,
@@ -250,7 +250,7 @@ describe("DTooltip", () => {
     SIZE.TINY
   );
 
-  paddingClassesCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  paddingEqualClassesCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 
   roundingClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
 

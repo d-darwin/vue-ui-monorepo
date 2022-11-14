@@ -308,7 +308,7 @@ export function outlineClassCase(
   });
 }
 
-export function paddingClassesCase(
+export function paddingEqualClassesCase(
   wrapper: VueWrapper,
   targetWrapper: VueWrapper | DOMWrapper<HTMLElement> // TODO: should pass selector
 ) {

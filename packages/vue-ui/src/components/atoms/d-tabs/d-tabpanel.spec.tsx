@@ -3,7 +3,7 @@ import {
   baseClassCase,
   contentHtmlCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   propContentCase,
   slotDefaultCase,
   tagCase,
@@ -77,7 +77,7 @@ describe("DTabpanel", () => {
 
   outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
 
-  paddingClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, wrapper);
 
   transitionClassCase(wrapper, wrapper);
 

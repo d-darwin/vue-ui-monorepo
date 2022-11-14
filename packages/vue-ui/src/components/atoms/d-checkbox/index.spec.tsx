@@ -30,7 +30,7 @@ import {
   labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
   tagCase,
@@ -114,7 +114,7 @@ describe("DCheckbox", () => {
     SIZE.LARGE
   );
 
-  paddingClassesCase(
+  paddingEqualClassesCase(
     wrapper,
     wrapper.find(`.${config.iconContainerClassName}`)
   );

@@ -359,8 +359,6 @@ export default defineComponent({
     },
 
     renderButton(): VNode {
-      console.log(styles[config.buttonClass]);
-      // TODO: other props and attrs
       return (
         <DButton
           label={this.label}
