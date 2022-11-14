@@ -1,8 +1,5 @@
 import { mount } from "@vue/test-utils";
-import {
-  baseClassCase,
-  tagCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
+import { baseClassCase, tagCase } from "@/utils/test-case-factories";
 import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
 import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";

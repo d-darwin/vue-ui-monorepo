@@ -39,6 +39,7 @@ export default {
     label: "Some text content",
     href: "",
     disabled: false,
+    active: false,
     preventDefault: true,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values

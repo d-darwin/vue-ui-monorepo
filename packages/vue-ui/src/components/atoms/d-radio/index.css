@@ -1,0 +1,67 @@
+.dRadio {
+  width: fit-content;
+}
+
+.input,
+.label {
+  cursor: pointer;
+}
+
+.label.__disabled {
+  cursor: not-allowed;
+}
+
+.input {
+  margin: 0;
+  position: absolute;
+}
+
+.label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--color-text); /*TODO: color-text-inverse, color-text-disabled*/
+}
+
+.iconContainer {
+  margin-right: 8px; /*TODO: avoid hardcode*/
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.iconContainer > * {
+  position: absolute;
+  transition: inherit;
+}
+
+.iconContainerBackdrop {
+  box-sizing: border-box;
+  position: absolute;
+  content: '';
+  /*TODO: make the same as what ???*/
+  background: white;
+}
+
+.icon {
+  font-weight: bold;
+  transition: inherit;
+}
+
+.transitionEnterActive,
+.transitionLeaveActive {
+  opacity: 0;
+}
+
+.button {
+  z-index: 1;
+}
+
+.error {
+  /*TODO: avoid hardcode*/
+  margin-top: 4px;
+  /*TODO: avoid hardcode*/
+  color: var(--color-danger-background);
+}

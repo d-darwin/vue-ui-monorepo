@@ -14,7 +14,7 @@ import {
   emitClickEventCase,
   fontSizeClassCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   preventDefaultCase,
   labelPresenceCase,
   contentHtmlCase,
@@ -45,7 +45,7 @@ describe("DButton", () => {
 
   outlineClassCase(wrapper, wrapper, COLOR_SCHEME.SECONDARY, SIZE.SMALL);
 
-  paddingClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, wrapper);
 
   roundingClassCase(wrapper, wrapper);
 

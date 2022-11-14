@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-storybook",
-  "version": "0.20.0",
+  "version": "0.20.7",
   "description": "TODO",
   "main": ".eslintrc.js",
   "scripts": {
@@ -8,16 +8,16 @@
     "build": "build-storybook"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui": "^0.20.0"
+    "@darwin-studio/vue-ui": "^0.20.7"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
-    "@storybook/addon-actions": "^6.5.12",
-    "@storybook/addon-essentials": "^6.5.12",
-    "@storybook/addon-links": "^6.5.12",
-    "@storybook/builder-webpack5": "^6.5.12",
-    "@storybook/manager-webpack5": "^6.5.12",
-    "@storybook/vue3": "^6.5.12",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/vue3": "^6.5.13",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "@vue/cli-plugin-babel": "~5.0.4",
@@ -32,7 +32,7 @@
     "css-loader": "^5.2.7",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-storybook": "^0.6.4",
+    "eslint-plugin-storybook": "^0.6.7",
     "eslint-plugin-vue": "^7.20.0",
     "identity-obj-proxy": "^3.0.0",
     "prettier": "^2.6.2",

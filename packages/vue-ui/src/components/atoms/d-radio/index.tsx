@@ -1,14 +1,17 @@
 import {
   defineComponent,
-  VNode,
-  PropType,
   InputHTMLAttributes,
+  PropType,
   ref,
+  VNode,
   Transition as Trans,
+  Ref,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
+import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import type { Padding } from "@darwin-studio/vue-ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/vue-ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -28,17 +31,15 @@ import minControlWidthStyles from "@darwin-studio/vue-ui-codegen/dist/styles/min
 import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import config from "./config";
-import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { Type } from "./types";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { TYPE, BASE_COLOR_SCHEME } from "./constants";
 import styles from "./index.css?module";
+import config from "./config";
 
-/**
- * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
- */
 export default defineComponent({
   name: config.name,
 
@@ -54,7 +55,40 @@ export default defineComponent({
      */
     value: {
       type: [String, Number] as PropType<Text>,
-      default: DEFAULT_VALUE,
+      required: true,
+    },
+    /**
+     * The common name for the radio group
+     */
+    name: {
+      type: [String, Number] as PropType<Text>,
+      required: true,
+    },
+    /**
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
+     * If you don't want to specify it, it will be generated automatically.
+     */
+    id: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * Defines appearance of the components.
+     */
+    type: {
+      type: String as PropType<Type>,
+      default: TYPE.BASE,
+    },
+    /**
+     * You can pass own class name to the <b>input</b> element.
+     */
+    inputClass: {
+      type: String,
+    },
+    /**
+     * You can pass any attributes to the <b>input</b> element.
+     */
+    inputAttrs: {
+      type: Object as PropType<InputHTMLAttributes>,
     },
     /**
      * Defines appearance of the component
@@ -64,11 +98,18 @@ export default defineComponent({
       default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines padding type of the component, use 'equal' if the component contains only an icon
+     */
+    padding: {
+      type: String as PropType<Padding>,
+      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Defines corner rounding of the icon container element
      */
     rounding: {
       type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines size of the component
@@ -84,25 +125,6 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Defines <i>id</i> attr of the <b>input</b> element.<br>
-     * If you don't want to specify it, it will be generated automatically.
-     */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
-    /**
-     * You can pass own class name to the <b>input</b> element.
-     */
-    inputClass: {
-      type: String,
-    },
-    /**
-     * You can pass any attributes to the <b>input</b> element.
-     */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
     },
     /**
      * Defines content of the <b>label</b> element.
@@ -149,7 +171,7 @@ export default defineComponent({
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
+    // TODO: disabled and unchecked should have different appearance
     disabled: {
       type: Boolean,
     },
@@ -186,9 +208,13 @@ export default defineComponent({
 
   setup(props) {
     const innerChecked = ref(props.checked); // TODO: what for ???
+    // To manipulate get getBoundingClientRect and adjust tooltip position
+    // It's a bit of magic - use the same refs name in the render function and return they from the setup()
+    // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
+    const inputRef: Ref<HTMLElement | null> = ref(null);
     const { controlId } = useControlId(props);
 
-    return { innerChecked, controlId };
+    return { innerChecked, inputRef, controlId };
   },
 
   emits: [
@@ -199,6 +225,40 @@ export default defineComponent({
   ],
 
   computed: {
+    renderInput(): VNode {
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${BASE_COLOR_SCHEME}-${this.size}`
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+
+      return (
+        <input
+          ref={config.inputRef}
+          type="radio"
+          id={this.label || this.id ? this.controlId : undefined}
+          name={String(this.name)}
+          checked={this.innerChecked}
+          value={this.value}
+          disabled={this.disabled}
+          tabindex={this.type === TYPE.BASE ? 1 : -1}
+          {...this.inputAttrs}
+          class={[
+            styles[config.inputClassName],
+            outlineStyles[outlineClassName],
+            sizeStyles[sizeClassName],
+            this.inputClass,
+          ]}
+          onChange={this.changeHandler}
+          onInput={this.inputHandler}
+        />
+      );
+    },
+
     renderIcon(): VNode[] {
       // TODO: border and size and colorScheme separately ???
       const borderClassName = prepareCssClassName(
@@ -211,11 +271,11 @@ export default defineComponent({
       );
       const paddingClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        PADDING.EQUAL
+        this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
       );
       const paddingSizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${PADDING.EQUAL}-${this.size}` //TODO: avoid hardcode
+        `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${this.size}`
       );
       const roundingClassName = prepareCssClassName(
         codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
@@ -277,37 +337,6 @@ export default defineComponent({
       ];
     },
 
-    renderInput(): VNode {
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-
-      return (
-        <input
-          type="checkbox"
-          id={this.label || this.id ? this.controlId : undefined}
-          checked={this.checked}
-          value={this.value}
-          disabled={this.disabled}
-          {...this.inputAttrs}
-          class={[
-            styles[config.inputClassName],
-            outlineStyles[outlineClassName],
-            sizeStyles[sizeClassName],
-            this.inputClass,
-          ]}
-          onChange={this.changeHandler}
-          onInput={this.inputHandler}
-        />
-      );
-    },
-
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
         if (this.enableHtml) {
@@ -329,6 +358,23 @@ export default defineComponent({
       return null;
     },
 
+    renderButton(): VNode {
+      return (
+        <DButton
+          label={this.label}
+          active={this.innerChecked} // TODO: checked and disabled state should have different appearance
+          disabled={this.disabled} // TODO: checked and disabled state should have different appearance
+          colorScheme={this.colorScheme}
+          padding={this.padding}
+          rounding={this.rounding}
+          size={this.size}
+          transition={this.transition}
+          class={styles[config.buttonClass]}
+          whenClick={this.buttonClickHandler}
+        />
+      );
+    },
+
     renderLabel(): VNode {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -347,8 +393,9 @@ export default defineComponent({
       return (
         <label for={this.controlId} class={labelClasses}>
           {this.renderInput}
-          {this.renderIcon}
-          {this.renderLabelContent}
+          {this.type === TYPE.BASE
+            ? [this.renderIcon, this.renderLabelContent]
+            : this.renderButton}
         </label>
       );
     },
@@ -416,6 +463,13 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
+    },
+
+    buttonClickHandler(): void {
+      const inputEl = this.inputRef;
+      if (inputEl) {
+        inputEl.click();
+      }
     },
   },
 

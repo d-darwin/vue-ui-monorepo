@@ -4,13 +4,13 @@ import {
   contentHtmlCase,
   fontSizeClassCase,
   outlineClassCase,
-  paddingClassesCase,
+  paddingEqualClassesCase,
   propContentCase,
   sizeClassCase,
   slotDefaultCase,
   tagCase,
   transitionClassCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
+} from "@/utils/test-case-factories";
 import { DTab } from "./index";
 import config from "./config";
 import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
@@ -68,7 +68,7 @@ describe("DTab", () => {
 
   outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
 
-  paddingClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, wrapper);
 
   transitionClassCase(wrapper, wrapper);
 
