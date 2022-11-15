@@ -1,0 +1,23 @@
+{
+  "source": ["properties/**/*.json"],
+  "platforms": {
+    "web": {
+      "transformGroup": "web",
+      "buildPath": "build/",
+      "files": [{
+        "destination": "variables.css",
+        "format": "css/variables"
+      }],
+      "transforms": [
+        "name/cti/kebab",
+        "color/css",
+        "size/pixel",
+        "radius/pixel",
+        "spacing/pixel",
+        "border/pixel/style",
+        "font/string",
+        "motion/transition"
+      ]
+    }
+  }
+}
