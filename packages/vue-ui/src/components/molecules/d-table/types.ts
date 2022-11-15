@@ -1,5 +1,5 @@
 import { VNode } from "vue";
-import { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font";
+import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { TEXT_ALIGN } from "./constants";
 

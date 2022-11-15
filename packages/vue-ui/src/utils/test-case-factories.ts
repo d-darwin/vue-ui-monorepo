@@ -1,14 +1,14 @@
 import { DOMWrapper, shallowMount, VueWrapper } from "@vue/test-utils";
 import { defineComponent } from "vue";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
-import { ColorScheme } from "@darwin-studio/vue-ui-codegen/dist/types/color-scheme";
-import { Size } from "@darwin-studio/vue-ui-codegen/dist/types/size";
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import { Size } from "@darwin-studio/ui-codegen/dist/types/size";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 // TODO: description
 

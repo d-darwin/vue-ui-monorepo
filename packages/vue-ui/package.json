@@ -12,7 +12,7 @@
     "stylelint:nofix": "stylelint src/**/*.{css,scss} --quiet"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui-codegen": "^0.20.0",
+    "@darwin-studio/ui-codegen": "^0.20.0",
     "@darwin-studio/vue-ui-style-dictionary": "^0.20.0",
     "core-js": "^3.22.0",
     "uuid": "^8.3.2",

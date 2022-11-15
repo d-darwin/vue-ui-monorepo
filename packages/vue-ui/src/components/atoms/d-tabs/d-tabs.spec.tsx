@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
 import { baseClassCase, tagCase } from "@/utils/test-case-factories";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { DTabs, DTab, DTabpanel } from "./index";
 import config from "./config";
 

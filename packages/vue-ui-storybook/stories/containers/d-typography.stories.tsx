@@ -1,7 +1,7 @@
 import { Story } from "@storybook/vue3";
 import DTypography from "@darwin-studio/vue-ui/src/components/containers/d-typography";
-// TODO: use vue-ui-codegen/config.json to define path
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+// TODO: use ui-codegen/config.json to define path
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
 export default {
   title: "containers/DTypography",

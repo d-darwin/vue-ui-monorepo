@@ -3,10 +3,10 @@ import DRadio from "@/components/atoms/d-radio";
 import config from "@/components/atoms/d-radio/config";
 import DButton from "@/components/atoms/d-button";
 import { BASE_COLOR_SCHEME, TYPE } from "@/components/atoms/d-radio/constants";
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import colorSchemeStyles from "@darwin-studio/vue-ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
 import {
   baseClassCase,
   borderClassCase,

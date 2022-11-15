@@ -1,11 +1,11 @@
 import { Story } from "@storybook/vue3";
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
-// TODO: use vue-ui-codegen/config.json to define path
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+// TODO: use ui-codegen/config.json to define path
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
   title: "atoms/DButton",

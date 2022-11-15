@@ -1,8 +1,8 @@
 import { Story } from "@storybook/vue3";
 import DLink from "@darwin-studio/vue-ui/src/components/atoms/d-link";
-// TODO: use vue-ui-codegen/config.json to define path
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+// TODO: use ui-codegen/config.json to define path
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
   title: "atoms/DLink",

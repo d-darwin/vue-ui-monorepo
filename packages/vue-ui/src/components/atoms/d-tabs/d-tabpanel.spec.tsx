@@ -11,11 +11,11 @@ import {
 } from "@/utils/test-case-factories";
 import { DTabpanel } from "./index";
 import config from "./config";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
 // TODO: move to the config
 jest.mock("chalk", () => ({

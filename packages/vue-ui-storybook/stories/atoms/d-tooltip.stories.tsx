@@ -4,11 +4,11 @@ import {
   POSITION,
   TRIGGER,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-tooltip/constant";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import styles from "./d-tooltip.css";
 
 export default {

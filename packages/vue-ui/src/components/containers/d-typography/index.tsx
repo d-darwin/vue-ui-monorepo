@@ -1,10 +1,10 @@
 import { PropType, defineComponent, VNode } from "vue";
-// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import fontStyles from "@darwin-studio/vue-ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import type { Font } from "@darwin-studio/vue-ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
+// TODO: get @darwin-studio/ui-codegen paths from config.json
+import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
+import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
+import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
@@ -12,7 +12,7 @@ import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * The component is intended to render big text content. Use font styles from @darwin-studio/vue-ui-codegen/dist/styles/font.css instead to render short interface copyright texts.
+ * The component is intended to render big text content. Use font styles from @darwin-studio/ui-codegen/dist/styles/font.css instead to render short interface copyright texts.
  */
 export default defineComponent({
   name: config.name,

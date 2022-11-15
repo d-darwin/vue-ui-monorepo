@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
 import DButton from "@/components/atoms/d-button";
-// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+// TODO: get @darwin-studio/ui-codegen paths from config.json
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import {
   baseClassCase,
   borderClassCase,

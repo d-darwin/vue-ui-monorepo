@@ -4,7 +4,7 @@ import {
   OBJECT_FIT,
   LOADING,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image/constants";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import styles from "./d-responsive-image.css";
 import rocketImg from "./assets/rocket.jpg";
 import spaceXStarship from "./assets/1-SpaceX-Starship.webp";

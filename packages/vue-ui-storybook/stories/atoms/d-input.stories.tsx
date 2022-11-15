@@ -1,11 +1,11 @@
 import { Story } from "@storybook/vue3";
 import DInput from "@darwin-studio/vue-ui/src/components/atoms/d-input";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { INPUT_TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-input/constants";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
   title: "atoms/DInput",

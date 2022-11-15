@@ -1,9 +1,9 @@
 import { shallowMount } from "@vue/test-utils";
-// TODO: get @darwin-studio/vue-ui-codegen paths from config.json
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
+// TODO: get @darwin-studio/ui-codegen paths from config.json
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import DTypography from "@/components/containers/d-typography";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
   baseClassCase,
   propContentCase,

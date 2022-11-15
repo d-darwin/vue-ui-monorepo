@@ -2,11 +2,11 @@ import { shallowMount } from "@vue/test-utils";
 import { baseClassCase } from "@/utils/test-case-factories";
 import DTable from "./index";
 import config from "./config";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 const headLabel0 = "head 1";
 const headLabel1 = "head 2";

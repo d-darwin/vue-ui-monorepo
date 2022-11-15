@@ -1,13 +1,13 @@
 import { shallowMount } from "@vue/test-utils";
 import DTooltip from "@/components/atoms/d-tooltip";
 import config from "@/components/atoms/d-tooltip/config";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import {
   BASE_COLOR_SCHEME,
   TRIGGER,
 } from "@/components/atoms/d-tooltip/constant";
-import prepareCssClassName from "@darwin-studio/vue-ui-codegen/src/utils/prepareCssClassName";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
   fontSizeClassCase,
@@ -18,7 +18,7 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import codegenConfig from "@darwin-studio/vue-ui-codegen/config.json";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);

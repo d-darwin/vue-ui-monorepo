@@ -1,12 +1,12 @@
 import { Story } from "@storybook/vue3";
 import DRadio from "@darwin-studio/vue-ui/src/components/atoms/d-radio";
 import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-radio/constants";
-import { COLOR_SCHEME } from "@darwin-studio/vue-ui-codegen/dist/constants/color-scheme";
-import { FONT } from "@darwin-studio/vue-ui-codegen/dist/constants/font";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { ROUNDING } from "@darwin-studio/vue-ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
-import { TRANSITION } from "@darwin-studio/vue-ui-codegen/dist/constants/transition";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
   title: "atoms/DRadio",

@@ -1,6 +1,6 @@
 import { Story } from "@storybook/vue3";
-import { PADDING } from "@darwin-studio/vue-ui-codegen/dist/constants/padding";
-import { SIZE } from "@darwin-studio/vue-ui-codegen/dist/constants/size";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import DTable from "@darwin-studio/vue-ui/src/components/molecules/d-table";
 
 export default {
