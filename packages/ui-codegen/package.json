@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "@darwin-studio/vue-ui-style-dictionary": "^0.20.0",
+    "@darwin-studio/ui-dictionary": "^0.20.0",
     "camel-case": "^4.1.2"
   },
   "devDependencies": {

@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@darwin-studio/ui-codegen": "^0.20.0",
-    "@darwin-studio/vue-ui-style-dictionary": "^0.20.0",
+    "@darwin-studio/ui-dictionary": "^0.20.0",
     "core-js": "^3.22.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.33"

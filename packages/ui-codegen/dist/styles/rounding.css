@@ -1,4 +1,4 @@
-@import '~@darwin-studio/vue-ui-style-dictionary/build/variables.css';
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
 
 .roundingNone {
   border-radius: var(--radius-none);

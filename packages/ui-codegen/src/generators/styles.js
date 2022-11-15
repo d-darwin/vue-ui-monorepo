@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var config = require("@darwin-studio/vue-ui-codegen/config.json");
+var config = require("@darwin-studio/ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateStylesFile_1 = require("../utils/generateStylesFile");
 var generateBorderCssClasses_1 = require("../utils/generateBorderCssClasses");
@@ -74,7 +74,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 4:
                 _b.sent();
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
-                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig,
                     // TODO: move to config ???
                     function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
                         var isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(function (ignoredSubstring) {
