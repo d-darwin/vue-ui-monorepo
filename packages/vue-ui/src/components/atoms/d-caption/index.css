@@ -1,0 +1,23 @@
+.dCaption {
+  /*TODO*/
+}
+
+.success {
+  /*TODO: color: var(--color-success);*/
+}
+
+.note {
+  /*TODO: color: var(--color-info);*/
+}
+
+.warning {
+  /*TODO: color: var(--color-waring);*/
+}
+
+.danger {
+  color: var(--color-danger-background); /*TODO: own color ???*/
+}
+
+.none {
+  /*TODO: color: var(--color-neutral);*/
+}
