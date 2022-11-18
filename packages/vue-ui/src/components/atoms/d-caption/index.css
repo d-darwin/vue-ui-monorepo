@@ -19,5 +19,5 @@
 }
 
 .none {
-  /*TODO: color: var(--color-neutral);*/
+  color: var(--color-text);
 }

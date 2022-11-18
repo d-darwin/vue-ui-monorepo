@@ -20,6 +20,8 @@ export default {
     label: "Some text content",
     type: TYPE.DANGER,
     size: SIZE.SMALL, // TODO: don't hardcode values
+    tag: "div",
+    enableHtml: false,
   },
 };
 
