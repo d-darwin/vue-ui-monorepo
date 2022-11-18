@@ -32,8 +32,8 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import config from "./config";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
+import config from "./config";
 import styles from "./index.css?module";
 
 /**

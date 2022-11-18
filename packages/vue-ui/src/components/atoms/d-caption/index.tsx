@@ -1,8 +1,8 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
@@ -35,9 +35,9 @@ export default defineComponent({
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.SMALL, // TODO: gent defaults base on actual values, not hardcoded
+    font: {
+      type: String as PropType<Font>,
+      default: FONT.SMALL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines container element type of the component
@@ -60,7 +60,7 @@ export default defineComponent({
 
     const fontClassName = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-      this.size
+      this.font
     );
     const classes = [
       styles[config.className],

@@ -1,7 +1,7 @@
 import { Story } from "@storybook/vue3";
 import DCaption from "@darwin-studio/vue-ui/src/components/atoms/d-caption";
 import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/constant";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
 export default {
   title: "atoms/DCaption",
@@ -11,15 +11,15 @@ export default {
       control: { type: "select" },
       options: Object.values(TYPE),
     },
-    size: {
+    font: {
       control: { type: "select" },
-      options: Object.values(SIZE),
+      options: Object.values(FONT),
     },
   },
   args: {
     label: "Some text content",
     type: TYPE.DANGER,
-    size: SIZE.SMALL, // TODO: don't hardcode values
+    font: FONT.SMALL, // TODO: don't hardcode values
     tag: "div",
     enableHtml: false,
   },
