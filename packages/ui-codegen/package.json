@@ -1,13 +1,13 @@
 {
   "name": "@darwin-studio/ui-codegen",
-  "version": "0.20.8",
+  "version": "0.20.9",
   "scripts": {
     "build": "node index.js",
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
   "dependencies": {
-    "@darwin-studio/ui-dictionary": "^0.20.0",
+    "@darwin-studio/ui-dictionary": "^0.20.9",
     "camel-case": "^4.1.2"
   },
   "devDependencies": {
