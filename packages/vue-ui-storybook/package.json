@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-storybook",
-  "version": "0.20.9",
+  "version": "0.21.0",
   "description": "TODO",
   "main": ".eslintrc.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "build-storybook"
   },
   "dependencies": {
-    "@darwin-studio/vue-ui": "^0.20.9"
+    "@darwin-studio/vue-ui": "^0.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
