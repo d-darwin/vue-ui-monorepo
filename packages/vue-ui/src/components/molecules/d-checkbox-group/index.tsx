@@ -11,20 +11,29 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    // TODO: items
+    // TODO: label, font, class ...
+    // TODO: error, font, class ...
     /**
      * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
+      default: TAG_NAME_DEFAULTS.FIELDSET,
     },
+    // TODO: enableHtml
+    // TODO: whenChange
   },
 
   render(): VNode {
     const Tag = this.tag;
 
     return (
-      <Tag class={styles[config.className]}>TODO</Tag>
+      <Tag class={styles[config.className]}>
+        {/*        {this.renderLabel}
+        {this.renderItemList}
+        {this.renderError}*/}
+      </Tag>
     );
   },
 });
