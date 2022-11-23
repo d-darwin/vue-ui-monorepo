@@ -36,7 +36,7 @@ export default defineComponent({
      * Array of the DTab components, alternatively you can use slots.tabs
      */
     tabs: {
-      type: Array as PropType<VNode[]>, // TODO: more accurate type
+      type: Array as PropType<VNode[]>, // TODO: more accurate type, what about array of DCheckbox props?
     },
     /**
      * Defines size of the tabs

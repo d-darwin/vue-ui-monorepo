@@ -18,7 +18,12 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    // TODO: items
+    /**
+     * Array of the DCheckbox components, alternatively you can use default slot
+     */
+    items: {
+      type: Array as PropType<VNode[]>, // TODO: more accurate type, what about array of DCheckbox props?
+    },
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
@@ -109,9 +114,27 @@ export default defineComponent({
       return null;
     },
 
-    renderItemList(): VNode | null {
-      // TODO
-      return null;
+    renderItemList(): VNode[] {
+      const prepareProps = (checkbox: VNode) => {
+        Object.assign(checkbox.props || {}, {
+          // id: this.ids?.[index]?.tabId,
+          // tabpanelId: this.ids?.[index]?.tabpanelId,
+          // disabled: tab.props?.disabled || this.disabled,
+          // padding: tab.props?.padding || this.padding,
+          // size: tab.props?.size || this.tabsSize,
+          // transition: tab.props?.transition || this.transition,
+          enableHtml: checkbox.props?.enableHtml || this.enableHtml,
+        });
+        // checkbox.class = config.checkboxClassName; // TODO: own classes
+        checkbox.key = checkbox.key || checkbox.props?.id;
+        return checkbox;
+      };
+
+      if (this.items?.length) {
+        return this.items.map(prepareProps);
+      }
+
+      return this.$slots.default?.().map(prepareProps) || [];
     },
 
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success

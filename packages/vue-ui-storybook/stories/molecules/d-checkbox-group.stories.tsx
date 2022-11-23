@@ -1,5 +1,6 @@
 import { Story } from "@storybook/vue3";
 import DCheckboxGroup from "@darwin-studio/vue-ui/src/components/molecules/d-checkbox-group";
+import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 
@@ -24,6 +25,11 @@ export default {
     label: "Some text content",
     labelFont: undefined,
     labelClass: "someCustomLabelClass",
+    items: [
+      <DCheckbox label={"checkbox 1"} />,
+      <DCheckbox label={"checkbox 2"} />,
+      <DCheckbox label={"checkbox 3"} />,
+    ],
     error: "Some error string",
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
