@@ -28,7 +28,7 @@ export default {
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     size: SIZE.MEDIUM, // TODO: don't hardcode values
-    tag: "div",
+    tag: "fieldset",
     enableHtml: false,
   },
 };

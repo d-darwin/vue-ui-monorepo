@@ -96,14 +96,21 @@ export default defineComponent({
 
       if (this.$slots.label?.() || this.label) {
         if (this.enableHtml) {
-          return <div class={labelClasses} v-html={this.label} />;
+          return <legend class={labelClasses} v-html={this.label} />;
         }
 
         return (
-          <div class={labelClasses}>{this.$slots.label?.() || this.label}</div>
+          <legend class={labelClasses}>
+            {this.$slots.label?.() || this.label}
+          </legend>
         );
       }
 
+      return null;
+    },
+
+    renderItemList(): VNode | null {
+      // TODO
       return null;
     },
 
@@ -138,7 +145,7 @@ export default defineComponent({
     return (
       <Tag class={styles[config.className]}>
         {this.renderLabel}
-        {/*        {this.renderItemList}*/}
+        {this.renderItemList}
         {this.renderError}
       </Tag>
     );

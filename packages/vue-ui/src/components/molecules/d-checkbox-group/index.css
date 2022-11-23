@@ -1,5 +1,11 @@
 .dCheckboxGroup {
-  /*TODO*/
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.label {
+  padding: 0;
 }
 
 .error {
