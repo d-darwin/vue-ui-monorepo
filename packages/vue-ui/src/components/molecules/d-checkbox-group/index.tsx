@@ -106,6 +106,29 @@ export default defineComponent({
 
       return null;
     },
+
+    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
+    renderError(): VNode | null {
+      if (this.error || this.$slots.error) {
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.errorFont || this.size
+        );
+        const classes = [
+          styles[config.errorClassName],
+          fontStyles[fontClassName],
+          this.errorClass,
+        ];
+
+        if (this.enableHtml) {
+          return <div class={classes} v-html={this.error} />;
+        }
+
+        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
+      }
+
+      return null;
+    },
   },
 
   // TODO: slots descr
@@ -115,8 +138,8 @@ export default defineComponent({
     return (
       <Tag class={styles[config.className]}>
         {this.renderLabel}
-        {/*        {this.renderItemList}
-        {this.renderError}*/}
+        {/*        {this.renderItemList}*/}
+        {this.renderError}
       </Tag>
     );
   },

@@ -1,3 +1,10 @@
 .dCheckboxGroup {
   /*TODO*/
 }
+
+.error {
+  /*TODO: avoid hardcode*/
+  margin-top: 4px;
+  /*TODO: avoid hardcode*/
+  color: var(--color-danger-background);
+}
