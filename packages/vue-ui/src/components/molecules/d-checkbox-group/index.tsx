@@ -1,7 +1,14 @@
 import { defineComponent, PropType, VNode } from "vue";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
+import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
@@ -41,6 +48,7 @@ export default defineComponent({
      */
     labelFont: {
       type: String as PropType<Font>,
+      default: FONT.MEDIUM,
     },
     /**
      * If not empty renders as an error string below the <b>input</b> element.
@@ -61,12 +69,40 @@ export default defineComponent({
       type: String as PropType<Font>,
     },
     /**
+     * Pass true to disable <b>input</b> element.
+     */
+    // TODO: - or add one props.inputAttrs
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * Defines appearance of the component
+     */
+    colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines corner rounding of the icon container element
+     */
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
       default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines container element type of the component
@@ -117,15 +153,14 @@ export default defineComponent({
     renderItemList(): VNode[] {
       const prepareProps = (checkbox: VNode) => {
         Object.assign(checkbox.props || {}, {
-          // id: this.ids?.[index]?.tabId,
-          // tabpanelId: this.ids?.[index]?.tabpanelId,
-          // disabled: tab.props?.disabled || this.disabled,
-          // padding: tab.props?.padding || this.padding,
-          // size: tab.props?.size || this.tabsSize,
-          // transition: tab.props?.transition || this.transition,
+          class: [styles[config.checkboxClassName], checkbox.props?.class],
+          disabled: checkbox.props?.disabled || this.disabled,
+          colorScheme: checkbox.props?.colorScheme || this.colorScheme,
+          rounding: checkbox.props?.rounding || this.rounding,
+          size: checkbox.props?.size || this.size,
+          transition: checkbox.props?.transition || this.transition,
           enableHtml: checkbox.props?.enableHtml || this.enableHtml,
         });
-        // checkbox.class = config.checkboxClassName; // TODO: own classes
         checkbox.key = checkbox.key || checkbox.props?.id;
         return checkbox;
       };
