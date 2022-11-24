@@ -54,7 +54,7 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DCheckboxGroup },
+  components: { DCheckboxGroup, DCheckbox },
   setup() {
     return { args };
   },
@@ -70,3 +70,18 @@ const Template: Story = (args) => ({
   template: `<DCheckboxGroup v-bind="args" :items="items" />`,
 });
 export const Default = Template.bind({});
+
+const TemplateSlots: Story = (args) => ({
+  components: { DCheckboxGroup, DCheckbox },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DCheckboxGroup v-bind="args">
+      <DCheckbox label="checkbox 1" />
+      <DCheckbox label="checkbox 2" />
+      <DCheckbox label="checkbox 3" />
+    </DCheckboxGroup>
+  `,
+});
+export const Slots = TemplateSlots.bind({});
