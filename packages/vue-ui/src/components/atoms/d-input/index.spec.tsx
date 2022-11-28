@@ -28,7 +28,7 @@ import {
   labelClassCase,
   labelFontCase,
   labelHtmlCase,
-  labelPresenceCase,
+  labelStringCase,
   labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
@@ -73,7 +73,7 @@ describe("DInput", () => {
 
   inputAttrsCase(wrapper);
 
-  labelPresenceCase(wrapper);
+  labelStringCase(wrapper);
 
   labelAbsenceCase(wrapper);
 

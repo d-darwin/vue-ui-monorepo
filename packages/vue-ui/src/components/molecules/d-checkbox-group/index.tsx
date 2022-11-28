@@ -141,6 +141,7 @@ export default defineComponent({
         }
 
         return (
+          /*TODO: customizable tag*/
           <legend class={labelClasses}>
             {this.$slots.label?.() || this.label}
           </legend>
@@ -152,14 +153,21 @@ export default defineComponent({
 
     renderItemList(): VNode[] {
       const prepareProps = (checkbox: VNode) => {
+        console.log(checkbox.props);
         Object.assign(checkbox.props || {}, {
           class: [styles[config.checkboxClassName], checkbox.props?.class],
-          disabled: checkbox.props?.disabled || this.disabled,
+          disabled:
+            typeof checkbox.props?.disabled === "undefined"
+              ? this.disabled
+              : checkbox.props?.disabled,
           colorScheme: checkbox.props?.colorScheme || this.colorScheme,
           rounding: checkbox.props?.rounding || this.rounding,
           size: checkbox.props?.size || this.size,
           transition: checkbox.props?.transition || this.transition,
-          enableHtml: checkbox.props?.enableHtml || this.enableHtml,
+          enableHtml:
+            typeof checkbox.props?.enableHtml === "undefined"
+              ? this.enableHtml
+              : checkbox.props?.enableHtml,
         });
         checkbox.key = checkbox.key || checkbox.props?.id;
         return checkbox;

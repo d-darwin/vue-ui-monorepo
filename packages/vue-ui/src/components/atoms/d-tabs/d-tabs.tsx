@@ -138,11 +138,17 @@ export default defineComponent({
         Object.assign(tab.props || {}, {
           id: this.ids?.[index]?.tabId,
           tabpanelId: this.ids?.[index]?.tabpanelId,
-          disabled: tab.props?.disabled || this.disabled,
+          disabled:
+            typeof tab.props?.disabled === "undefined"
+              ? this.disabled
+              : tab.props?.disabled,
           padding: tab.props?.padding || this.padding,
           size: tab.props?.size || this.tabsSize,
           transition: tab.props?.transition || this.transition,
-          enableHtml: tab.props?.enableHtml || this.enableHtml,
+          enableHtml:
+            typeof tab.props?.enableHtml === "undefined"
+              ? this.enableHtml
+              : tab.props?.enableHtml,
         });
         tab.key = tab.key || tab.props?.id;
         return tab;
@@ -163,7 +169,10 @@ export default defineComponent({
           font: tabpanel.props?.font || this.tabpanelsFont,
           padding: tabpanel.props?.padding || this.padding,
           transition: tabpanel.props?.transition || this.transition,
-          enableHtml: tabpanel.props?.enableHtml || this.enableHtml,
+          enableHtml:
+            typeof tabpanel.props?.enableHtml === "undefined"
+              ? this.enableHtml
+              : tabpanel.props?.enableHtml,
         });
         tabpanel.key = tabpanel.key || tabpanel.props?.id;
         return tabpanel;
