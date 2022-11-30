@@ -1,0 +1,21 @@
+.dRadioGroup {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.label {
+  padding: 0;
+}
+
+.radio {
+  /*TODO: avoid hardcode*/
+  margin-top: 4px;
+}
+
+.error {
+  /*TODO: avoid hardcode*/
+  margin-top: 4px;
+  /*TODO: avoid hardcode*/
+  color: var(--color-danger-background);
+}

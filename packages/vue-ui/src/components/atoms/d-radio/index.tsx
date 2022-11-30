@@ -62,7 +62,6 @@ export default defineComponent({
      */
     name: {
       type: [String, Number] as PropType<Text>,
-      required: true,
     },
     /**
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
