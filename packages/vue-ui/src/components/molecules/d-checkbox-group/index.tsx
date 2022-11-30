@@ -19,7 +19,7 @@ import styles from "./index.css?module";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 /**
- * TODO
+ * Renders group of the DCheckbox components with label and error
  */
 export default defineComponent({
   name: config.name,

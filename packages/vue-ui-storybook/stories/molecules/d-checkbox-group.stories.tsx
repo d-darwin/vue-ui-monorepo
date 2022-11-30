@@ -84,4 +84,4 @@ const TemplateSlots: Story = (args) => ({
     </DCheckboxGroup>
   `,
 });
-export const Slots = TemplateSlots.bind({});
+export const Slot = TemplateSlots.bind({});
