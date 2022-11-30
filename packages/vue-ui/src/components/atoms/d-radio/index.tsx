@@ -206,14 +206,13 @@ export default defineComponent({
   },
 
   setup(props) {
-    const innerChecked = ref(props.checked); // TODO: what for ???
     // To manipulate get getBoundingClientRect and adjust tooltip position
     // It's a bit of magic - use the same refs name in the render function and return they from the setup()
     // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
     const inputRef: Ref<HTMLElement | null> = ref(null);
     const { controlId } = useControlId(props);
 
-    return { innerChecked, inputRef, controlId };
+    return { inputRef, controlId };
   },
 
   emits: [
@@ -241,7 +240,7 @@ export default defineComponent({
           type="radio"
           id={this.label || this.id ? this.controlId : undefined}
           name={String(this.name)}
-          checked={this.innerChecked}
+          checked={this.checked}
           value={this.value}
           disabled={this.disabled}
           tabindex={this.type === TYPE.BASE ? 1 : -1}
@@ -319,7 +318,7 @@ export default defineComponent({
             enterActiveClass={styles.transitionEnterActive}
             leaveActiveClass={styles.transitionLeaveActive}
           >
-            {!this.$slots?.icon && this.innerChecked && (
+            {!this.$slots?.icon && this.checked && (
               <div
                 class={{
                   [styles[config.iconClassName]]: true,
@@ -330,7 +329,7 @@ export default defineComponent({
               </div>
             )}
 
-            {this.$slots?.icon && this.innerChecked && this.$slots.icon?.()}
+            {this.$slots?.icon && this.checked && this.$slots.icon?.()}
           </Trans>
         </div>,
       ];
@@ -361,7 +360,7 @@ export default defineComponent({
       return (
         <DButton
           label={this.label}
-          active={this.innerChecked} // TODO: checked and disabled state should have different appearance
+          active={this.checked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
           colorScheme={this.colorScheme}
           padding={this.padding}
@@ -447,8 +446,6 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
-
-      this.innerChecked = checked;
     },
 
     inputHandler(event: Event): void {

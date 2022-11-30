@@ -88,7 +88,12 @@ const Template: Story = (args) => ({
   setup() {
     return { args };
   },
-  template: `<DRadio v-bind="args" />`,
+  data() {
+    return {
+      checked: false,
+    };
+  },
+  template: `<DRadio v-bind="args" v-model:checked="this.checked" />`,
 });
 export const Default = Template.bind({});
 

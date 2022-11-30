@@ -59,12 +59,31 @@ const Template: Story = (args) => ({
   setup() {
     return { args };
   },
+  data() {
+    return {
+      checked1: false,
+      checked2: false,
+      checked3: false,
+    };
+  },
   computed: {
     items() {
       return [
-        <DRadio label={"checkbox 1"} value={1} />,
-        <DRadio label={"checkbox 2"} value={2} />,
-        <DRadio label={"checkbox 3"} value={3} />,
+        <DRadio
+          label={"checkbox 1"}
+          value={1}
+          // v-model:checked="this.checked1"
+        />,
+        <DRadio
+          label={"checkbox 2"}
+          value={2}
+          // v-model:checked="this.checked2"
+        />,
+        <DRadio
+          label={"checkbox 3"}
+          value={3}
+          // v-model:checked="this.checked3"
+        />,
       ];
     },
   },
@@ -77,11 +96,18 @@ const TemplateSlots: Story = (args) => ({
   setup() {
     return { args };
   },
+  data() {
+    return {
+      checked1: false,
+      checked2: false,
+      checked3: false,
+    };
+  },
   template: `
     <DRadioGroup v-bind="args">
-      <DRadio label="checkbox 1" value="1" />
-      <DRadio label="checkbox 2" value="2"/>
-      <DRadio label="checkbox 3" value="3"/>
+      <DRadio label="checkbox 1" value="1" v-model:checked="this.checked1"/>
+      <DRadio label="checkbox 2" value="2" v-model:checked="this.checked2"/>
+      <DRadio label="checkbox 3" value="3" v-model:checked="this.checked3"/>
     </DRadioGroup>
   `,
 });
