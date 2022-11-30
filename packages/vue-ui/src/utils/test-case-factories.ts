@@ -105,10 +105,7 @@ export function defaultCheckMarkCase(
   });
 }
 
-export function labelPresenceCase(
-  wrapper: VueWrapper,
-  labelSelector = "label"
-) {
+export function labelStringCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Should render label element with props.label content if passed", async () => {
     const label = "Some label";
     await wrapper.setProps({ label });
@@ -119,24 +116,24 @@ export function labelPresenceCase(
   });
 }
 
-export function labelAbsenceCase(wrapper: VueWrapper) {
+export function labelAbsenceCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Shouldn't render label element if props.label isn't passed", async () => {
     await wrapper.setProps({ label: undefined });
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeFalsy();
   });
 }
 
-export function labelClassCase(wrapper: VueWrapper) {
+export function labelClassCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Label element classes should contain props.labelClass if passed", async () => {
     const labelClass = "someCustomLabelClass";
     await wrapper.setProps({ label: "Some label", labelClass });
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.classes()).toContain(labelClass);
   });
 }
 
-export function labelFontCase(wrapper: VueWrapper) {
+export function labelFontCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Should render props.labelFont to font class", async () => {
     const labelFont = FONT.HUGE;
     await wrapper.setProps({ label: "Some label", labelFont });
@@ -144,21 +141,24 @@ export function labelFontCase(wrapper: VueWrapper) {
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       labelFont
     );
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.classes()).toContain(className);
   });
 }
 
-export function labelHtmlCase(wrapper: VueWrapper) {
+export function labelHtmlCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Should render prop.label as HTML string", async () => {
     const labelHtml = `<div>some label html</div>`;
     await wrapper.setProps({ label: labelHtml, enableHtml: true });
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.html()).toMatch(labelHtml);
   });
 }
 
-export function labelSlotCase(component: ReturnType<typeof defineComponent>) {
+export function labelSlotCase(
+  component: ReturnType<typeof defineComponent>,
+  labelSelector = "label"
+) {
   return it("Should render $slots.label instead of label content", async () => {
     const labelSlot = `<div>Some <b>slot</b> content</div>`;
     const wrapper = shallowMount(component, {
@@ -166,15 +166,18 @@ export function labelSlotCase(component: ReturnType<typeof defineComponent>) {
         label: labelSlot,
       },
     });
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.html()).toMatch(labelSlot);
   });
 }
 
-export function labelDisabledClassCase(wrapper: VueWrapper) {
+export function labelDisabledClassCase(
+  wrapper: VueWrapper,
+  labelSelector = "label"
+) {
   return it("Label classes should contain __disabled if props.disabled passed", async () => {
     await wrapper.setProps({ disabled: true });
-    const labelEl = wrapper.find("label");
+    const labelEl = wrapper.find(labelSelector);
     expect(labelEl.classes()).toContain("__disabled");
   });
 }
@@ -447,6 +450,14 @@ export function disabledControlCase(
     await wrapper.setProps({ disabled: true });
     expect(targetWrapper.attributes()?.disabled).toBe("");
     expect(wrapper.classes()).toContain("__disabled");
+  });
+}
+
+export function errorAbsenceCase(wrapper: VueWrapper, errorClassName: string) {
+  return it("Shouldn't render error element if props.error isn't passed", async () => {
+    await wrapper.setProps({ error: undefined });
+    const labelEl = wrapper.find(`.${errorClassName}`);
+    expect(labelEl.exists()).toBeFalsy();
   });
 }
 

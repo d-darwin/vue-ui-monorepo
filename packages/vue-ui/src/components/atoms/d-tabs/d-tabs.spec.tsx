@@ -182,10 +182,14 @@ describe("DTabs", () => {
     const disabled = true;
     await wrapper.setProps({
       disabled,
-      tabs: [<DTab id="111" active={true} label={"Tab 1"} />],
+      tabs: [
+        <DTab id="111" active={true} label={"Tab 1"} />,
+        <DTab id="222" disabled={false} label={"Tab 2"} />,
+      ],
     });
-    const tab = wrapper.findComponent(DTab);
-    expect(tab.props("disabled")).toBe(disabled);
+    const tabs = wrapper.findAllComponents(DTab);
+    expect(tabs[0]?.props("disabled")).toBe(disabled);
+    expect(tabs[1]?.props("disabled")).toBe(false);
   });
 
   // TODO paddingClassesCase(wrapper, wrapper.findComponent(DTab));
@@ -230,14 +234,22 @@ describe("DTabs", () => {
     const wrapper = await mount(DTabs, {
       props: {
         enableHtml,
-        tabs: [<DTab label={"Tab 1"} />],
-        tabpanels: [<DTabpanel content={"some content"} />],
+        tabs: [
+          <DTab label={"Tab 1"} />,
+          <DTab label={"Tab 2"} enableHtml={false} />,
+        ],
+        tabpanels: [
+          <DTabpanel content={"some content"} />,
+          <DTabpanel content={"some content"} enableHtml={false} />,
+        ],
       },
     });
-    const tab = await wrapper.findComponent(DTab);
-    expect(tab.props("enableHtml")).toBe(enableHtml);
-    const tabpanel = await wrapper.findComponent(DTabpanel);
-    expect(tabpanel.props("enableHtml")).toBe(enableHtml);
+    const tabs = wrapper.findAllComponents(DTab);
+    expect(tabs[0]?.props("enableHtml")).toBe(enableHtml);
+    expect(tabs[1]?.props("enableHtml")).toBe(false);
+    const tabpanels = wrapper.findAllComponents(DTabpanel);
+    expect(tabpanels[0]?.props("enableHtml")).toBe(enableHtml);
+    expect(tabpanels[1]?.props("enableHtml")).toBe(false);
   });
 
   it("Should focus on prev tab on ArrowLeft keydown", async () => {

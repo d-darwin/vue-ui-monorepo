@@ -1,9 +1,10 @@
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 
-export const TAG_NAME_DEFAULTS: Record<string, TagName> = {
+export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> = {
   DIV: "div",
   SPAN: "span",
   P: "p",
   UL: "ul",
   LI: "li",
+  FIELDSET: "fieldset",
 } as const;

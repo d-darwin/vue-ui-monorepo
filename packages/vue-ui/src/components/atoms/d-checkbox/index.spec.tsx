@@ -26,7 +26,7 @@ import {
   labelDisabledClassCase,
   labelFontCase,
   labelHtmlCase,
-  labelPresenceCase,
+  labelStringCase,
   labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
@@ -77,7 +77,7 @@ describe("DCheckbox", () => {
     expect(iconContainerEl.classes()).toContain(colorSchemeStyles.__disabled);
   });
 
-  labelPresenceCase(wrapper, `.${config.labelInnerClassName}`);
+  labelStringCase(wrapper, `.${config.labelInnerClassName}`);
 
   labelClassCase(wrapper);
 

@@ -28,7 +28,7 @@ import {
   labelDisabledClassCase,
   labelFontCase,
   labelHtmlCase,
-  labelPresenceCase,
+  labelStringCase,
   minControlWidthCase,
   outlineClassCase,
   paddingEqualClassesCase,
@@ -103,7 +103,7 @@ describe("DRadio", () => {
     expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
 
-  labelPresenceCase(wrapper, `.${config.labelInnerClassName}`);
+  labelStringCase(wrapper, `.${config.labelInnerClassName}`);
 
   labelClassCase(wrapper);
 

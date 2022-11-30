@@ -16,7 +16,7 @@ import {
   outlineClassCase,
   paddingEqualClassesCase,
   preventDefaultCase,
-  labelPresenceCase,
+  labelStringCase,
   contentHtmlCase,
   roundingClassCase,
   routerLinkComponentCase,
@@ -31,7 +31,7 @@ describe("DButton", () => {
 
   baseClassCase(wrapper, config.className);
 
-  labelPresenceCase(wrapper, "button");
+  labelStringCase(wrapper, "button");
 
   contentHtmlCase(wrapper);
 
