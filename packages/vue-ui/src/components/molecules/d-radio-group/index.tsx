@@ -39,6 +39,14 @@ export default defineComponent({
       type: Array as PropType<VNode[]>, // TODO: more accurate type, what about array of DRadio props?
     },
     /**
+     * Defines value of the <b>input</b> element to preselect
+     */
+    /*TODO: do we need it ?
+    value: {
+      type: [String, Number] as PropType<Text>,
+      required: true,
+    },*/
+    /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
     label: {
@@ -129,6 +137,12 @@ export default defineComponent({
     // TODO: whenChange\WhenInput
   },
 
+  data() {
+    return {
+      innerValue: null as Text | null,
+    };
+  },
+
   computed: {
     renderLabel(): VNode | null {
       const fontClassName = prepareCssClassName(
@@ -160,8 +174,8 @@ export default defineComponent({
 
     renderItemList(): VNode[] {
       const prepareProps = (radio: VNode) => {
-        console.log(radio.props);
         Object.assign(radio.props || {}, {
+          checked: this.innerValue === radio.props?.value,
           name: radio.props?.name || this.name,
           class: [styles[config.radioClassName], radio.props?.class],
           disabled:
@@ -176,6 +190,12 @@ export default defineComponent({
             typeof radio.props?.enableHtml === "undefined"
               ? this.enableHtml
               : radio.props?.enableHtml,
+          whenInput: (value: Text) => {
+            if (this.innerValue !== value) {
+              this.changeHandler(value);
+              radio.props?.whenInput?.(value);
+            }
+          },
         });
         radio.key = radio.key || radio.props?.id;
         return radio;
@@ -209,6 +229,13 @@ export default defineComponent({
       }
 
       return null;
+    },
+  },
+
+  methods: {
+    changeHandler(value: Text): void {
+      // TODO: emits/whens
+      this.innerValue = value;
     },
   },
 

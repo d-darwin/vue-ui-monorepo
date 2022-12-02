@@ -54,40 +54,23 @@ export default {
   },
 };
 
+const items = [
+  <DRadio label={"checkbox 1"} value={1} />,
+  <DRadio label={"checkbox 2"} value={2} />,
+  <DRadio label={"checkbox 3"} value={3} />,
+];
+
 const Template: Story = (args) => ({
   components: { DRadioGroup, DRadio },
   setup() {
-    return { args };
+    return { args, items };
   },
-  data() {
-    return {
-      checked1: false,
-      checked2: false,
-      checked3: false,
-    };
-  },
-  computed: {
-    items() {
-      return [
-        <DRadio
-          label={"checkbox 1"}
-          value={1}
-          // v-model:checked="this.checked1"
-        />,
-        <DRadio
-          label={"checkbox 2"}
-          value={2}
-          // v-model:checked="this.checked2"
-        />,
-        <DRadio
-          label={"checkbox 3"}
-          value={3}
-          // v-model:checked="this.checked3"
-        />,
-      ];
-    },
-  },
-  template: `<DRadioGroup v-bind="args" :items="items" />`,
+  template: `
+    <DRadioGroup
+      v-bind="args"
+      :items="items"
+    />
+  `,
 });
 export const Default = Template.bind({});
 
@@ -96,18 +79,11 @@ const TemplateSlots: Story = (args) => ({
   setup() {
     return { args };
   },
-  data() {
-    return {
-      checked1: false,
-      checked2: false,
-      checked3: false,
-    };
-  },
   template: `
     <DRadioGroup v-bind="args">
-      <DRadio label="checkbox 1" value="1" v-model:checked="this.checked1"/>
-      <DRadio label="checkbox 2" value="2" v-model:checked="this.checked2"/>
-      <DRadio label="checkbox 3" value="3" v-model:checked="this.checked3"/>
+      <DRadio label="checkbox 1" value="1" />
+      <DRadio label="checkbox 2" value="2" />
+      <DRadio label="checkbox 3" value="3" />
     </DRadioGroup>
   `,
 });
