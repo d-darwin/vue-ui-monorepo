@@ -191,6 +191,7 @@ export default defineComponent({
               ? this.enableHtml
               : radio.props?.enableHtml,
           whenInput: (value: Text) => {
+            // TODO: find a better way to watch on checked item
             if (this.innerValue !== value) {
               this.changeHandler(value);
               radio.props?.whenInput?.(value);

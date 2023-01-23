@@ -218,7 +218,6 @@ export default defineComponent({
       () => props.checked,
       (checked) => {
         innerChecked.value = checked;
-        console.log(innerChecked.value, checked);
       }
     );
 
