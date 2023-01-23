@@ -6,6 +6,7 @@ import {
   VNode,
   Transition as Trans,
   Ref,
+  watch,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
@@ -62,7 +63,6 @@ export default defineComponent({
      */
     name: {
       type: [String, Number] as PropType<Text>,
-      required: true,
     },
     /**
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
@@ -211,8 +211,15 @@ export default defineComponent({
     // To manipulate get getBoundingClientRect and adjust tooltip position
     // It's a bit of magic - use the same refs name in the render function and return they from the setup()
     // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
-    const inputRef: Ref<HTMLElement | null> = ref(null);
+    const inputRef: Ref<HTMLInputElement | null> = ref(null);
     const { controlId } = useControlId(props);
+
+    watch(
+      () => props.checked,
+      (checked) => {
+        innerChecked.value = checked;
+      }
+    );
 
     return { innerChecked, inputRef, controlId };
   },
@@ -463,6 +470,8 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
+
+      this.innerChecked = checked;
     },
 
     buttonClickHandler(): void {
