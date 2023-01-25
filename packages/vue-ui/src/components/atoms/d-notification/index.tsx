@@ -27,7 +27,9 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -41,6 +43,16 @@ export default defineComponent({
      */
     content: {
       type: [String, Number, Object] as PropType<Text | VNode>,
+    },
+    /**
+     * Positions on the component.
+     * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
+     */
+    position: {
+      type: String as PropType<Position>,
+      default: POSITION.LEFT,
+      validator: (val: Position) =>
+        Boolean(Object.values(POSITION).includes(val)),
     },
     /**
      * Defines container element type of the component
@@ -164,6 +176,7 @@ export default defineComponent({
 
       return [
         styles[config.className],
+        styles[this.position],
         colorSchemeStyles[colorSchemeClassName],
         fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
