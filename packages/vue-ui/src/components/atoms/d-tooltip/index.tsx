@@ -25,16 +25,18 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import type { Position, Trigger } from "./types";
+import type { Position } from "@darwin-studio/vue-ui/src/types/position";
+import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
-import { POSITION, TRIGGER, BASE_COLOR_SCHEME } from "./constant";
+import { TRIGGER, BASE_COLOR_SCHEME } from "./constant";
 import config from "./config";
 import styles from "./index.css?module";
 

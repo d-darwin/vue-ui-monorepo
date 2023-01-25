@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   width: fit-content;
+  z-index: 100;
 }
 
 .transitionEnterActive,

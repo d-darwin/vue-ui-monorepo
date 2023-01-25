@@ -54,8 +54,9 @@ export default defineComponent({
      */
     duration: {
       type: Number,
-      default: 5,
+      default: 0, // TODO: 5
     },
+    // TODO: class
     // TODO: min\max height\width
     // TODO: target
     // TODO: position
@@ -72,6 +73,7 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
+      // TODO: hover ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },

@@ -1,13 +1,17 @@
+import { Ref } from "vue";
 import getElementBoxModel from "@darwin-studio/vue-ui/src/utils/get-element-box-model";
-import type { Position, PositionHorizontal, PositionVertical } from "./types";
+import type {
+  Position,
+  PositionHorizontal,
+  PositionVertical,
+  PositionStrict,
+} from "@darwin-studio/vue-ui/src/types/position";
 import {
   POSITION_HORIZONTAL,
   POSITION_OPPOSITE,
   POSITION_VERTICAL,
-} from "./constant";
-import config from "./config";
-import { Ref } from "vue";
-import { PositionStrict } from "./types";
+  POSITION_SEPARATOR,
+} from "@darwin-studio/vue-ui/src/constants/position";
 
 //TODO: unit test
 /**
@@ -20,7 +24,7 @@ export function parsePosition(position: Position): {
   horizontal: PositionHorizontal | null;
   vertical: PositionVertical | null;
 } {
-  const splitPosition = position && position.split(config.positionSeparator);
+  const splitPosition = position && position.split(POSITION_SEPARATOR);
 
   // if position is hybrid, left/right should be the second
   const possibleHorizontalPosition = (splitPosition[1] ||
