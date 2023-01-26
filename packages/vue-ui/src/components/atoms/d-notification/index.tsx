@@ -68,7 +68,12 @@ export default defineComponent({
       type: Number,
       default: 0, // TODO: 5
     },
-    // TODO: class
+    /**
+     * You can pass own class name to the <b>notification</b> element.
+     */
+    notificationClass: {
+      type: String,
+    },
     // TODO: min\max height\width
     // TODO: target
     // TODO: position
@@ -144,7 +149,7 @@ export default defineComponent({
   },
 
   computed: {
-    classes(): string[] {
+    classes(): (string | undefined)[] {
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.font
@@ -175,6 +180,7 @@ export default defineComponent({
       );
 
       return [
+        this.notificationClass,
         styles[config.className],
         styles[this.position],
         colorSchemeStyles[colorSchemeClassName],
