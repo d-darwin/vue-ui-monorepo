@@ -4,6 +4,7 @@ import {
   VNode,
   Teleport,
   Transition as Trans,
+  CSSProperties,
 } from "vue";
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
@@ -30,6 +31,7 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
+import { prepareSize } from "./utils";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -61,9 +63,18 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    // TODO: type: error \ warning \ notice \ success
-    // TODO: min\max height\width
-    // TODO: offset ???
+    minWidth: {
+      type: [String, Number],
+    },
+    maxWidth: {
+      type: [String, Number],
+    },
+    minHeight: {
+      type: [String, Number],
+    },
+    maxHeight: {
+      type: [String, Number],
+    },
     /**
      * Defines container element type of the component
      */
@@ -97,6 +108,7 @@ export default defineComponent({
      */
     colorScheme: {
       // TODO: hover ??? dont use at all ???
+      // TODO: type: error \ warning \ notice \ success
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -198,6 +210,38 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
     },
+
+    styles(): CSSProperties {
+      const styles: CSSProperties = {};
+
+      if (typeof this.minWidth !== "undefined") {
+        styles.minWidth = prepareSize(this.minWidth);
+      }
+      if (typeof this.maxWidth !== "undefined") {
+        styles.maxWidth = prepareSize(this.maxWidth);
+      }
+      if (typeof this.minHeight !== "undefined") {
+        styles.minHeight = prepareSize(this.minHeight);
+      }
+      if (typeof this.maxHeight !== "undefined") {
+        styles.maxHeight = prepareSize(this.maxHeight);
+      }
+
+      return styles;
+    },
+
+    bindings(): Record<
+      string,
+      | (string | undefined)[]
+      | CSSProperties
+      | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      return {
+        class: this.classes,
+        style: this.styles,
+        onClick: this.close,
+      };
+    },
   },
 
   methods: {
@@ -235,7 +279,7 @@ export default defineComponent({
             leaveActiveClass={styles.transitionLeaveActive}
           >
             {this.shown && (
-              <Tag class={this.classes} onClick={this.close}>
+              <Tag {...this.bindings}>
                 {this.$slots.default?.() || this.content}
               </Tag>
             )}
@@ -250,13 +294,7 @@ export default defineComponent({
           enterActiveClass={styles.transitionEnterActive}
           leaveActiveClass={styles.transitionLeaveActive}
         >
-          {this.shown && (
-            <Tag
-              class={this.classes}
-              v-html={this.content}
-              onClick={this.close}
-            />
-          )}
+          {this.shown && <Tag {...this.bindings} v-html={this.content} />}
         </Trans>
       </Teleport>
     );
