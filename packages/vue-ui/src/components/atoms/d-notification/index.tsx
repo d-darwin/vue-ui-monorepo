@@ -55,6 +55,16 @@ export default defineComponent({
         Boolean(Object.values(POSITION).includes(val)),
     },
     /**
+     * If close button shown.
+     */
+    closable: {
+      type: Boolean,
+      default: true,
+    },
+    // TODO: type: error \ warning \ notice \ success
+    // TODO: min\max height\width
+    // TODO: offset ???
+    /**
      * Defines container element type of the component
      */
     tag: {
@@ -74,11 +84,7 @@ export default defineComponent({
     notificationClass: {
       type: String,
     },
-    // TODO: min\max height\width
     // TODO: target
-    // TODO: position
-    // TODO: closable
-    // TODO: offset ???
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -90,7 +96,7 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
-      // TODO: hover ???
+      // TODO: hover ??? dont use at all ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -133,7 +139,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.showNotification();
+    this.show();
   },
 
   beforeUnmount() {
@@ -195,7 +201,7 @@ export default defineComponent({
   },
 
   methods: {
-    showNotification() {
+    show(): void {
       this.shown = true;
       if (!this.duration) {
         return;
@@ -206,6 +212,14 @@ export default defineComponent({
       this.timeoutHandler = setTimeout(() => {
         this.shown = false;
       }, this.duration * 1000);
+    },
+
+    close(): void {
+      if (!this.closable) {
+        return;
+      }
+      this.shown = false;
+      clearTimeout(this.timeoutHandler);
     },
   },
 
@@ -221,7 +235,7 @@ export default defineComponent({
             leaveActiveClass={styles.transitionLeaveActive}
           >
             {this.shown && (
-              <Tag class={this.classes}>
+              <Tag class={this.classes} onClick={this.close}>
                 {this.$slots.default?.() || this.content}
               </Tag>
             )}
@@ -236,7 +250,13 @@ export default defineComponent({
           enterActiveClass={styles.transitionEnterActive}
           leaveActiveClass={styles.transitionLeaveActive}
         >
-          {this.shown && <Tag class={this.classes} v-html={this.content} />}
+          {this.shown && (
+            <Tag
+              class={this.classes}
+              v-html={this.content}
+              onClick={this.close}
+            />
+          )}
         </Trans>
       </Teleport>
     );
