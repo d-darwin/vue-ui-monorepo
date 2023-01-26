@@ -7,28 +7,51 @@
   z-index: 100;
   position: absolute;
   margin: auto;
+  --indent: 20px; /*TODO: make it configurable*/
 }
 
 .top {
+  top: var(--indent);
   left: 0;
   right: 0;
+}
+
+.top-right {
+  top: var(--indent);
+  right: var(--indent);
 }
 
 .right {
-  right: 0;
+  right: var(--indent);
   top: 0;
   bottom: 0;
 }
 
+.bottom-right {
+  bottom: var(--indent);
+  right: var(--indent);
+}
+
 .bottom {
-  bottom: 0;
+  bottom: var(--indent);
   left: 0;
   right: 0;
 }
 
+.bottom-left {
+  bottom: var(--indent);
+  left: var(--indent);
+}
+
 .left {
+  left: var(--indent);
   top: 0;
   bottom: 0;
+}
+
+.top-left {
+  top: var(--indent);
+  left: var(--indent);
 }
 
 .transitionEnterActive,
