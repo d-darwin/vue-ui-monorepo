@@ -1,3 +1,5 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
 .dNotification {
   box-sizing: border-box;
   display: flex;
@@ -60,6 +62,18 @@
   opacity: 0;
 }
 
-.error {
+.success {
+  border-bottom: 4px solid green; /*TODO: use custom prop*/
+}
 
+.info {
+  border-bottom: 4px solid var(--color-link); /*TODO: use other custom prop*/
+}
+
+.warning {
+  border-bottom: 4px solid var(--color-alternative-background); /*TODO: use other custom prop*/
+}
+
+.error {
+  border-bottom: 4px solid var(--color-danger-background); /*TODO: use other custom prop*/
 }

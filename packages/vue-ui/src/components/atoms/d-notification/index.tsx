@@ -33,6 +33,8 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { prepareSize } from "./utils";
+import { Type } from "./types";
+import { TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -131,6 +133,13 @@ export default defineComponent({
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * TODO
+     */
+    type: {
+      type: String as PropType<Type>,
+      default: TYPE.INFO,
+    },
+    /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
@@ -219,6 +228,7 @@ export default defineComponent({
         this.notificationClass,
         styles[config.className],
         styles[this.position],
+        styles[this.type],
         colorSchemeStyles[colorSchemeClassName],
         fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
