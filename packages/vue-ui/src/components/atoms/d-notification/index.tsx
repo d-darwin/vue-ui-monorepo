@@ -38,7 +38,7 @@ import { TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
-// TODO
+// TODO: descriptions, ARIA, rename notification -> alert
 export default defineComponent({
   name: config.name,
 
