@@ -6,6 +6,7 @@ import {
   Transition as Trans,
   CSSProperties,
 } from "vue";
+import { RendererElement } from "@vue/runtime-core";
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
@@ -52,7 +53,7 @@ export default defineComponent({
      */
     position: {
       type: String as PropType<Position>,
-      default: POSITION.LEFT,
+      default: POSITION.TOP_RIGHT,
       validator: (val: Position) =>
         Boolean(Object.values(POSITION).includes(val)),
     },
@@ -63,15 +64,27 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    /**
+     * TODO
+     */
     minWidth: {
       type: [String, Number],
     },
+    /**
+     * TODO
+     */
     maxWidth: {
       type: [String, Number],
     },
+    /**
+     * TODO
+     */
     minHeight: {
       type: [String, Number],
     },
+    /**
+     * TODO
+     */
     maxHeight: {
       type: [String, Number],
     },
@@ -95,7 +108,13 @@ export default defineComponent({
     notificationClass: {
       type: String,
     },
-    // TODO: target
+    /**
+     * TODO
+     */
+    target: {
+      type: [String, Object] as PropType<string | RendererElement>,
+      default: config.defaultTarget,
+    },
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -108,7 +127,6 @@ export default defineComponent({
      */
     colorScheme: {
       // TODO: hover ??? dont use at all ???
-      // TODO: type: error \ warning \ notice \ success
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -162,7 +180,7 @@ export default defineComponent({
   data() {
     return {
       shown: false as boolean,
-      timeoutHandler: undefined as number | undefined,
+      timeoutHandler: undefined as number | undefined, // TODO: naming
     };
   },
 
@@ -289,7 +307,7 @@ export default defineComponent({
     }
 
     return (
-      <Teleport to="body">
+      <Teleport to={this.target}>
         <Trans
           enterActiveClass={styles.transitionEnterActive}
           leaveActiveClass={styles.transitionLeaveActive}
