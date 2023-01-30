@@ -5,6 +5,7 @@ import {
   Teleport,
   Transition as Trans,
   CSSProperties,
+  ref,
 } from "vue";
 import { RendererElement } from "@vue/runtime-core";
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
@@ -38,13 +39,9 @@ import { TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
-// TODO: descriptions
-// As with all other live regions, alerts will only be announced when the content of the element with role="alert" is updated.
-// Make sure that the element with the role is present in the page's markup first -
-// this will "prime" the browser and screen reader to keep watching the element for changes.
-// After this, any changes to the content will be announced. Do not try to dynamically add/generate
-// an element with role="alert" that is already populated with the alert message you want announced -
-// this generally does not lead to an announcement, as it is not a content change.
+/**
+ * The component renders text notification (alert) for a given duration.
+ */
 export default defineComponent({
   name: config.name,
 
@@ -182,21 +179,20 @@ export default defineComponent({
     },
   },
 
+  setup() {
+    const shown = ref(false as boolean);
+    const isContentShown = ref(false as boolean);
+    const timeoutId = ref(undefined as number | undefined);
+
+    return { shown, isContentShown, timeoutId };
+  },
+
   mounted() {
     this.show();
   },
 
   beforeUnmount() {
-    clearTimeout(this.timeoutHandler);
-  },
-
-  // TODO: move to setup()
-  data() {
-    return {
-      shown: false as boolean,
-      isContentShown: false as boolean,
-      timeoutHandler: undefined as number | undefined, // TODO: naming
-    };
+    clearTimeout(this.timeoutId);
   },
 
   computed: {
@@ -292,8 +288,8 @@ export default defineComponent({
         return;
       }
 
-      clearTimeout(this.timeoutHandler);
-      this.timeoutHandler = setTimeout(() => {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = setTimeout(() => {
         this.shown = false;
       }, this.duration * 1000);
     },
@@ -303,7 +299,7 @@ export default defineComponent({
         return;
       }
       this.shown = false;
-      clearTimeout(this.timeoutHandler);
+      clearTimeout(this.timeoutId);
     },
   },
 
