@@ -38,7 +38,13 @@ import { TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
-// TODO: descriptions, ARIA, rename notification -> alert
+// TODO: descriptions
+// As with all other live regions, alerts will only be announced when the content of the element with role="alert" is updated.
+// Make sure that the element with the role is present in the page's markup first -
+// this will "prime" the browser and screen reader to keep watching the element for changes.
+// After this, any changes to the content will be announced. Do not try to dynamically add/generate
+// an element with role="alert" that is already populated with the alert message you want announced -
+// this generally does not lead to an announcement, as it is not a content change.
 export default defineComponent({
   name: config.name,
 
@@ -67,25 +73,25 @@ export default defineComponent({
       default: true,
     },
     /**
-     * TODO
+     * Min width of the component.
      */
     minWidth: {
       type: [String, Number],
     },
     /**
-     * TODO
+     * Max width of the component.
      */
     maxWidth: {
       type: [String, Number],
     },
     /**
-     * TODO
+     * Min height of the component.
      */
     minHeight: {
       type: [String, Number],
     },
     /**
-     * TODO
+     * Max height of the component.
      */
     maxHeight: {
       type: [String, Number],
@@ -102,7 +108,7 @@ export default defineComponent({
      */
     duration: {
       type: Number,
-      default: 0, // TODO: 5
+      default: 5,
     },
     /**
      * You can pass own class name to the <b>notification</b> element.
@@ -111,7 +117,7 @@ export default defineComponent({
       type: String,
     },
     /**
-     * TODO
+     * The component is mounted inside passed element.
      */
     target: {
       type: [String, Object] as PropType<string | RendererElement>,
@@ -128,12 +134,11 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
-      // TODO: hover ??? dont use at all ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * TODO
+     * The notification type: success, info, warning, error.
      */
     type: {
       type: String as PropType<Type>,
@@ -189,6 +194,7 @@ export default defineComponent({
   data() {
     return {
       shown: false as boolean,
+      isContentShown: false as boolean,
       timeoutHandler: undefined as number | undefined, // TODO: naming
     };
   },
@@ -260,11 +266,13 @@ export default defineComponent({
 
     bindings(): Record<
       string,
+      | string
       | (string | undefined)[]
       | CSSProperties
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
+        role: config.role,
         class: this.classes,
         style: this.styles,
         onClick: this.close,
@@ -275,12 +283,16 @@ export default defineComponent({
   methods: {
     show(): void {
       this.shown = true;
+
+      this.$nextTick(() => {
+        this.isContentShown = true;
+      });
+
       if (!this.duration) {
         return;
       }
 
       clearTimeout(this.timeoutHandler);
-
       this.timeoutHandler = setTimeout(() => {
         this.shown = false;
       }, this.duration * 1000);
@@ -308,7 +320,9 @@ export default defineComponent({
           >
             {this.shown && (
               <Tag {...this.bindings}>
-                {this.$slots.default?.() || this.content}
+                {this.isContentShown
+                  ? this.$slots.default?.() || this.content
+                  : ""}
               </Tag>
             )}
           </Trans>
@@ -322,7 +336,12 @@ export default defineComponent({
           enterActiveClass={styles.transitionEnterActive}
           leaveActiveClass={styles.transitionLeaveActive}
         >
-          {this.shown && <Tag {...this.bindings} v-html={this.content} />}
+          {this.shown && (
+            <Tag
+              {...this.bindings}
+              v-html={this.isContentShown ? this.content : ""}
+            />
+          )}
         </Trans>
       </Teleport>
     );
