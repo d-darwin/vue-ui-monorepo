@@ -274,6 +274,16 @@ export default defineComponent({
         onClick: this.close,
       };
     },
+
+    transitionBindings(): {
+      enterActiveClass: string;
+      leaveActiveClass: string;
+    } {
+      return {
+        enterActiveClass: styles.transitionEnterActive,
+        leaveActiveClass: styles.transitionLeaveActive,
+      };
+    },
   },
 
   methods: {
@@ -309,11 +319,8 @@ export default defineComponent({
     if (!this.enableHtml) {
       /** @slot Use instead of props.content to fully customize content */
       return (
-        <Teleport to="body">
-          <Trans
-            enterActiveClass={styles.transitionEnterActive}
-            leaveActiveClass={styles.transitionLeaveActive}
-          >
+        <Teleport to={this.target}>
+          <Trans {...this.transitionBindings}>
             {this.shown && (
               <Tag {...this.bindings}>
                 {this.isContentShown
@@ -328,10 +335,7 @@ export default defineComponent({
 
     return (
       <Teleport to={this.target}>
-        <Trans
-          enterActiveClass={styles.transitionEnterActive}
-          leaveActiveClass={styles.transitionLeaveActive}
-        >
+        <Trans {...this.transitionBindings}>
           {this.shown && (
             <Tag
               {...this.bindings}
