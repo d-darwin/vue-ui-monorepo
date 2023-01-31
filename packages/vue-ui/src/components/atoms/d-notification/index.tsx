@@ -66,6 +66,7 @@ export default defineComponent({
      * If close button shown.
      */
     closable: {
+      // TODO: dont use hover classes
       type: Boolean,
       default: true,
     },
@@ -105,7 +106,7 @@ export default defineComponent({
      */
     duration: {
       type: Number,
-      default: 5,
+      default: config.duration,
     },
     /**
      * You can pass own class name to the <b>notification</b> element.
@@ -131,6 +132,7 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
+      // TODO: other colors ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -317,7 +319,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     if (!this.enableHtml) {
-      /** @slot Use instead of props.content to fully customize content */
+      /** TODO:  @slot Use instead of props.content to fully customize content */
       return (
         <Teleport to={this.target}>
           <Trans {...this.transitionBindings}>
