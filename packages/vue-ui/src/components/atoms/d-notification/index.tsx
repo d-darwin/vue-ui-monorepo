@@ -33,6 +33,7 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { prepareSize } from "./utils";
 import { Type } from "./types";
 import { TYPE } from "./constants";
@@ -50,6 +51,7 @@ export default defineComponent({
      * Plain string, VNode or HTML if props.enableHtml is true
      */
     content: {
+      // TODO: array of messages ???
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
@@ -155,7 +157,7 @@ export default defineComponent({
      */
     rounding: {
       type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+      default: ROUNDING.SMALL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines size of the component
@@ -179,7 +181,16 @@ export default defineComponent({
     enableHtml: {
       type: Boolean,
     },
+
+    /**
+     * Alternative way to catch close event
+     */
+    whenClose: {
+      type: Function as PropType<() => void | Promise<void>>,
+    },
   },
+
+  emits: [EVENT_NAME.CLOSE],
 
   setup() {
     const shown = ref(false as boolean);
@@ -311,15 +322,24 @@ export default defineComponent({
         return;
       }
       this.shown = false;
+      /**
+       * Emits on close event
+       * @event close
+       */
+      this.$emit(EVENT_NAME.CLOSE);
+      this.whenClose?.();
       clearTimeout(this.timeoutId);
     },
   },
 
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /** @slot $slots.default
+   *  Use instead of props.content to fully customize content
+   */
   render(): VNode {
     const Tag = this.tag;
 
     if (!this.enableHtml) {
-      /** TODO:  @slot Use instead of props.content to fully customize content */
       return (
         <Teleport to={this.target}>
           <Trans {...this.transitionBindings}>
