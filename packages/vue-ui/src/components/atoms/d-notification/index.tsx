@@ -313,7 +313,7 @@ export default defineComponent({
 
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
-        this.shown = false;
+        this.close();
       }, this.duration * 1000);
     },
 
@@ -323,7 +323,7 @@ export default defineComponent({
       }
       this.shown = false;
       /**
-       * Emits on close event
+       * Emits on the component close
        * @event close
        */
       this.$emit(EVENT_NAME.CLOSE);
