@@ -54,6 +54,16 @@ describe("DNotification", () => {
     expect(notificationEl.html()).toMatch(slotContent);
   });
 
+  // TODO: position
+  // TODO: closable
+  // TODO: minWidth
+  // TODO: maxWidth
+  // TODO: minHeight
+  // TODO: maxHeight
+  // TODO: duration
+  // TODO: notificationClass
+  // TODO: target
+
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
     await wrapper.setProps({ font });
@@ -68,6 +78,13 @@ describe("DNotification", () => {
     expect(notificationEl?.classes()).toContain(className);
   });
 
+  // TODO: colorScheme
+  // TODO: type
+  // TODO: padding
+  // TODO: rounding
+  // TODO: size
+  // TODO: transition
+
   it("Should render as element passed in props.tag", async () => {
     const tag = "section";
     await wrapper.setProps({ tag });
@@ -75,4 +92,6 @@ describe("DNotification", () => {
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
+
+  // TODO: on\whenClose
 });

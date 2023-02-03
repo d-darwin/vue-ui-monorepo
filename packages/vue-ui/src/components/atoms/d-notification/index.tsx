@@ -97,13 +97,6 @@ export default defineComponent({
       type: [String, Number],
     },
     /**
-     * Defines container element type of the component
-     */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
-    /**
      * Defines how long the notification will be displayed.
      */
     duration: {
@@ -173,6 +166,13 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines container element type of the component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
