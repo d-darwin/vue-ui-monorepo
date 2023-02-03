@@ -49,9 +49,12 @@ export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
   });
 }
 
-export function baseClassCase(wrapper: VueWrapper, className: string) {
+export function baseClassCase(
+  wrapper: VueWrapper | DOMWrapper<HTMLElement> | undefined,
+  className: string
+) {
   return it(`Renders ${className} class name`, async () => {
-    expect(wrapper.classes()).toContain(className);
+    expect(wrapper?.classes()).toContain(className);
   });
 }
 

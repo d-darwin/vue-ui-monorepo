@@ -202,6 +202,7 @@ export default defineComponent({
 
   mounted() {
     this.show();
+    // TODO: watch on content and $slots.content ???
   },
 
   beforeUnmount() {
@@ -341,7 +342,7 @@ export default defineComponent({
 
     if (!this.enableHtml) {
       return (
-        <Teleport to={this.target}>
+        <Teleport to={this.target} disabled={Boolean(this.$attrs.disabled)}>
           <Trans {...this.transitionBindings}>
             {this.shown && (
               <Tag {...this.bindings}>
@@ -356,7 +357,7 @@ export default defineComponent({
     }
 
     return (
-      <Teleport to={this.target}>
+      <Teleport to={this.target} disabled={Boolean(this.$attrs.disabled)}>
         <Trans {...this.transitionBindings}>
           {this.shown && (
             <Tag
