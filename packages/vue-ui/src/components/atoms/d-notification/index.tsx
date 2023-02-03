@@ -65,14 +65,6 @@ export default defineComponent({
         Boolean(Object.values(POSITION).includes(val)),
     },
     /**
-     * If close button shown.
-     */
-    closable: {
-      // TODO: dont use hover classes
-      type: Boolean,
-      default: true,
-    },
-    /**
      * Min width of the component.
      */
     minWidth: {
@@ -97,6 +89,14 @@ export default defineComponent({
       type: [String, Number],
     },
     /**
+     * If close button shown.
+     */
+    closable: {
+      // TODO: dont use hover classes
+      type: Boolean,
+      default: true,
+    },
+    /**
      * Defines how long the notification will be displayed.
      */
     duration: {
@@ -117,6 +117,13 @@ export default defineComponent({
       default: config.defaultTarget,
     },
     /**
+     * The notification type: success, info, warning, error.
+     */
+    type: {
+      type: String as PropType<Type>,
+      default: TYPE.INFO,
+    },
+    /**
      * Defines font size of the component. By default, depends on props.size
      */
     font: {
@@ -130,13 +137,6 @@ export default defineComponent({
       // TODO: other colors ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * The notification type: success, info, warning, error.
-     */
-    type: {
-      type: String as PropType<Type>,
-      default: TYPE.INFO,
     },
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon

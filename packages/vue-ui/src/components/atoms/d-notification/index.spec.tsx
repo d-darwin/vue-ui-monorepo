@@ -55,14 +55,45 @@ describe("DNotification", () => {
   });
 
   // TODO: position
-  // TODO: closable
+  it("Should render the position class depend on props.position", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: minWidth
+  it("Should add min-width style if props.minWidth is set", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: maxWidth
+  it("Should add max-width style if props.maxWidth is set", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: minHeight
+  it("Should add min-height style if props.minHeight is set", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: maxHeight
+  it("Should add max-height style if props.maxHeight is set", async () => {
+    expect(true).toBeFalsy();
+  });
+  // TODO: closable
+  it("Should close manually on click if props.closable is true", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: duration
+  it("Should close automatically after props.duration seconds", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: notificationClass
+  it("Should render props.notificationClass to the notification class list", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: target
+  it("Should append the notification to the props.target", async () => {
+    expect(true).toBeFalsy();
+  });
+  // TODO: type
+  it("Should props.type to the type class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
 
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
@@ -79,11 +110,25 @@ describe("DNotification", () => {
   });
 
   // TODO: colorScheme
-  // TODO: type
+  it("Should props.colorScheme to the colorScheme class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: padding
+  it("Should props.padding to the padding class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: rounding
+  it("Should props.rounding to the rounding class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: size
+  it("Should props.size to the size class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
   // TODO: transition
+  it("Should props.transition to the transition class of the notification", async () => {
+    expect(true).toBeFalsy();
+  });
 
   it("Should render as element passed in props.tag", async () => {
     const tag = "section";
@@ -93,5 +138,12 @@ describe("DNotification", () => {
     expect(notificationEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
 
-  // TODO: on\whenClose
+  // TODO: onClose
+  it("Should emits close event on close", async () => {
+    expect(true).toBeFalsy();
+  });
+  // TODO: whenClose
+  it("Should call props.whenClose when passed", async () => {
+    expect(true).toBeFalsy();
+  });
 });
