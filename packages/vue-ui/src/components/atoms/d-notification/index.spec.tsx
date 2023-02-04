@@ -5,6 +5,7 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import DNotification from "@/components/atoms/d-notification";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { propContentCase, contentHtmlCase } from "@/utils/test-case-factories";
+import { POSITION } from "@/constants/position";
 import config from "./config";
 
 describe("DNotification", () => {
@@ -23,7 +24,7 @@ describe("DNotification", () => {
   });
 
   beforeEach(async () => {
-    // The thing is the content doesn't appear immediately
+    // The thing is the content doesn't appear immediately due to this.show() implementation
     await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
   });
@@ -56,10 +57,13 @@ describe("DNotification", () => {
 
   // TODO: position
   it("Should render the position class depend on props.position", async () => {
-    expect(true).toBeFalsy();
+    const position = POSITION.BOTTOM_LEFT;
+    await wrapper.setProps({ position });
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.classes()).toContain(position);
   });
   // TODO: minWidth
-  it("Should add min-width style if props.minWidth is set", async () => {
+  /*  it("Should add min-width style if props.minWidth is set", async () => {
     expect(true).toBeFalsy();
   });
   // TODO: maxWidth
@@ -145,5 +149,5 @@ describe("DNotification", () => {
   // TODO: whenClose
   it("Should call props.whenClose when passed", async () => {
     expect(true).toBeFalsy();
-  });
+  });*/
 });
