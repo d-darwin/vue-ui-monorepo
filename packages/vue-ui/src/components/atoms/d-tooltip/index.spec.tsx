@@ -25,7 +25,7 @@ describe("DTooltip", () => {
 
   baseClassCase(wrapper, config.className);
 
-  fontSizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  fontSizeClassCase(wrapper, `.${config.contentClassName}`);
 
   it("Should render props.target", async () => {
     const target = "simple string target";
@@ -245,18 +245,18 @@ describe("DTooltip", () => {
 
   outlineClassCase(
     wrapper,
-    wrapper.find(`.${config.targetClassName}`),
+    `.${config.targetClassName}`,
     BASE_COLOR_SCHEME,
     SIZE.TINY
   );
 
-  paddingEqualClassesCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  paddingEqualClassesCase(wrapper, `.${config.contentClassName}`);
 
-  roundingClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  roundingClassCase(wrapper, `.${config.contentClassName}`);
 
-  sizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  sizeClassCase(wrapper, `.${config.contentClassName}`);
 
-  transitionClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  transitionClassCase(wrapper, `.${config.contentClassName}`);
 
   tagCase(wrapper);
 });

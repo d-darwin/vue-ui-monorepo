@@ -20,7 +20,7 @@ describe("DButton", () => {
     expect(wrapper.classes()).toContain(styles.danger);
   });
 
-  fontSizeClassCase(wrapper, wrapper);
+  fontSizeClassCase(wrapper, `.${config.className}`);
 
   tagCase(wrapper);
 

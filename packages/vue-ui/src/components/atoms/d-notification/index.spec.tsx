@@ -5,7 +5,15 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import DNotification from "@/components/atoms/d-notification";
 import { TYPE } from "@/components/atoms/d-notification/constants";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import { propContentCase, contentHtmlCase } from "@/utils/test-case-factories";
+import {
+  propContentCase,
+  contentHtmlCase,
+  colorSchemeClassCase,
+  paddingEqualClassesCase,
+  roundingClassCase,
+  sizeClassCase,
+  transitionClassCase,
+} from "@/utils/test-case-factories";
 import { sleep } from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
@@ -183,47 +191,15 @@ describe("DNotification", () => {
     expect(notificationEl.classes()).toContain(type);
   });
 
-  it("Renders props.font to font class when passed", async () => {
-    const font = FONT.HUGE;
-    await wrapper.setProps({ font });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-      font
-    );
+  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
 
-    const notificationEl = wrapper.find(`.${config.className}`);
-    expect(notificationEl?.classes()).toContain(className);
-  });
+  paddingEqualClassesCase(wrapper, `.${config.className}`);
 
-  it("Should props.colorScheme to the colorScheme class of the notification", async () => {
-    const colorScheme = COLOR_SCHEME.DANGER;
-    await wrapper.setProps({ colorScheme });
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-      colorScheme
-    );
+  roundingClassCase(wrapper, `.${config.className}`);
 
-    const notificationEl = wrapper.find(`.${config.className}`);
-    expect(notificationEl?.classes()).toContain(className);
-  });
+  sizeClassCase(wrapper, `.${config.className}`);
 
-  /*
-  // TODO: padding
-  it("Should props.padding to the padding class of the notification", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: rounding
-  it("Should props.rounding to the rounding class of the notification", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: size
-  it("Should props.size to the size class of the notification", async () => {
-    expect(true).toBeFalsy();
-  });
-  // TODO: transition
-  it("Should props.transition to the transition class of the notification", async () => {
-    expect(true).toBeFalsy();
-  });
+  transitionClassCase(wrapper, `.${config.className}`);
 
   it("Should render as element passed in props.tag", async () => {
     const tag = "section";
@@ -233,6 +209,7 @@ describe("DNotification", () => {
     expect(notificationEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
 
+  /*
   // TODO: onClose
   it("Should emits close event on close", async () => {
     expect(true).toBeFalsy();
