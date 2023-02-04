@@ -152,14 +152,20 @@ describe("DNotification", () => {
     await wrapper.vm.$nextTick();
     expect(closeSpy).toBeCalled();
   });
-  // TODO: notificationClass
+
   it("Should render props.notificationClass to the notification class list", async () => {
-    expect(true).toBeFalsy();
+    const notificationClass = "some-custom-class";
+    await wrapper.setProps({ notificationClass });
+
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.classes()).toContain(notificationClass);
   });
+
   // TODO: target
   it("Should append the notification to the props.target", async () => {
     expect(true).toBeFalsy();
   });
+
   // TODO: type
   it("Should props.type to the type class of the notification", async () => {
     expect(true).toBeFalsy();
