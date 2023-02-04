@@ -22,7 +22,6 @@ describe("DNotification", () => {
   beforeEach(async () => {
     // The thing is the content doesn't appear immediately due to this.show() implementation
     await wrapper.vm.$nextTick();
-    await wrapper.vm.$nextTick();
   });
 
   it(`Renders ${config.className} class name`, async () => {
@@ -103,7 +102,6 @@ describe("DNotification", () => {
     });
 
     await wrapper.vm.$nextTick();
-    await wrapper.vm.$nextTick();
     let notificationEl = wrapper.find(`.${config.className}`);
     await notificationEl.trigger("click");
 
@@ -129,7 +127,6 @@ describe("DNotification", () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.timeoutId).toBeFalsy();
   });
@@ -161,9 +158,20 @@ describe("DNotification", () => {
     expect(notificationEl.classes()).toContain(notificationClass);
   });
 
-  // TODO: target
   it("Should append the notification to the props.target", async () => {
-    expect(true).toBeFalsy();
+    // create teleport target
+    const target = document.createElement("div");
+    target.id = "custom-target";
+    document.body.appendChild(target);
+    const wrapper = mount(DNotification, {
+      attachTo: document.body,
+      props: {
+        target,
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
   });
 
   // TODO: type
@@ -180,7 +188,6 @@ describe("DNotification", () => {
       font
     );
 
-    await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl?.classes()).toContain(className);
