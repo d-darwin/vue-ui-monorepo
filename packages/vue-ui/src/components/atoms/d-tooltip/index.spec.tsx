@@ -31,7 +31,7 @@ describe("DTooltip", () => {
     const target = "simple string target";
     await wrapper.setProps({ target });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.text()).toBe(target);
   });
 
@@ -39,7 +39,7 @@ describe("DTooltip", () => {
     const target = `<div>HTML <b>string</b> target</div>`;
     await wrapper.setProps({ target, enableHtml: true });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.html()).toContain(target);
   });
 
@@ -51,7 +51,7 @@ describe("DTooltip", () => {
       },
     });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.html()).toContain(target);
   });
 
@@ -78,7 +78,7 @@ describe("DTooltip", () => {
     await wrapper.setProps({ content });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
 
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.text()).toBe(content);
   });
 
@@ -86,7 +86,7 @@ describe("DTooltip", () => {
     const content = `<div>HTML <b>string</b> content</div>`;
     await wrapper.setProps({ content, enableHtml: true });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.html()).toContain(content);
   });
 
@@ -98,7 +98,7 @@ describe("DTooltip", () => {
       },
     });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.html()).toContain(content);
   });
 

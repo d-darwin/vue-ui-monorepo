@@ -50,34 +50,79 @@ describe("DNotification", () => {
     expect(notificationEl.html()).toMatch(slotContent);
   });
 
-  // TODO: position
   it("Should render the position class depend on props.position", async () => {
     const position = POSITION.BOTTOM_LEFT;
     await wrapper.setProps({ position });
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl.classes()).toContain(position);
   });
-  // TODO: minWidth
-  /*  it("Should add min-width style if props.minWidth is set", async () => {
-    expect(true).toBeFalsy();
+
+  it("Should add min-width style if props.minWidth is set", async () => {
+    const minWidth = 120;
+    await wrapper.setProps({ minWidth });
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.attributes()?.style).toContain(
+      "min-width: " + minWidth + "px"
+    );
   });
-  // TODO: maxWidth
+
   it("Should add max-width style if props.maxWidth is set", async () => {
-    expect(true).toBeFalsy();
+    const maxWidth = "33%";
+    await wrapper.setProps({ maxWidth });
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.attributes()?.style).toContain(
+      "max-width: " + maxWidth
+    );
   });
-  // TODO: minHeight
+
   it("Should add min-height style if props.minHeight is set", async () => {
-    expect(true).toBeFalsy();
+    const minHeight = 240;
+    await wrapper.setProps({ minHeight });
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.attributes()?.style).toContain(
+      "min-height: " + minHeight + "px"
+    );
   });
-  // TODO: maxHeight
+
   it("Should add max-height style if props.maxHeight is set", async () => {
-    expect(true).toBeFalsy();
+    const maxHeight = "10vh";
+    await wrapper.setProps({ maxHeight });
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.attributes()?.style).toContain(
+      "max-height: " + maxHeight
+    );
   });
-  // TODO: closable
+
   it("Should close manually on click if props.closable is true", async () => {
+    await wrapper.setProps({ closable: false });
+    let notificationEl = wrapper.find(`.${config.className}`);
+    await notificationEl.trigger("click");
+
+    notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeTruthy();
+  });
+
+  it("Should not close manually on click if props.closable is false", async () => {
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true,
+        closable: true,
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    let notificationEl = wrapper.find(`.${config.className}`);
+    await notificationEl.trigger("click");
+
+    notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeFalsy();
+  });
+
+  // TODO: duration
+  it("Should not close automatically if props.duration is falsy", async () => {
     expect(true).toBeFalsy();
   });
-  // TODO: duration
   it("Should close automatically after props.duration seconds", async () => {
     expect(true).toBeFalsy();
   });
@@ -94,6 +139,7 @@ describe("DNotification", () => {
     expect(true).toBeFalsy();
   });
 
+  /*
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
     await wrapper.setProps({ font });
@@ -107,7 +153,6 @@ describe("DNotification", () => {
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl?.classes()).toContain(className);
   });
-
   // TODO: colorScheme
   it("Should props.colorScheme to the colorScheme class of the notification", async () => {
     expect(true).toBeFalsy();
