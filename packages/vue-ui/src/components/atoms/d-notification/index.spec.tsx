@@ -5,6 +5,7 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import DNotification from "@/components/atoms/d-notification";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { propContentCase, contentHtmlCase } from "@/utils/test-case-factories";
+import { sleep } from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
 
@@ -119,12 +120,37 @@ describe("DNotification", () => {
     expect(notificationEl.exists()).toBeTruthy();
   });
 
-  // TODO: duration
   it("Should not close automatically if props.duration is falsy", async () => {
-    expect(true).toBeFalsy();
+    const duration = 0;
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true,
+        duration,
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.timeoutId).toBeFalsy();
   });
+
   it("Should close automatically after props.duration seconds", async () => {
-    expect(true).toBeFalsy();
+    const duration = 0.1;
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true,
+        duration,
+      },
+    });
+    const closeSpy = jest.spyOn(wrapper.vm, "close");
+
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.timeoutId).toBeTruthy();
+
+    const delta = 0.01;
+    await sleep((duration + delta) * 1000);
+    await wrapper.vm.$nextTick();
+    expect(closeSpy).toBeCalled();
   });
   // TODO: notificationClass
   it("Should render props.notificationClass to the notification class list", async () => {
@@ -186,6 +212,7 @@ describe("DNotification", () => {
   it("Should emits close event on close", async () => {
     expect(true).toBeFalsy();
   });
+
   // TODO: whenClose
   it("Should call props.whenClose when passed", async () => {
     expect(true).toBeFalsy();
@@ -196,7 +223,6 @@ describe("DNotification", () => {
     const wrapper = mount(DNotification, {
       props: {
         disabled: true,
-        closable: true,
       },
     });
     await wrapper.unmount();
