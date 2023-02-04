@@ -9,6 +9,7 @@ import { propContentCase, contentHtmlCase } from "@/utils/test-case-factories";
 import { sleep } from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DNotification", () => {
   const content = "Some content";
@@ -190,16 +191,23 @@ describe("DNotification", () => {
       font
     );
 
-    await wrapper.vm.$nextTick();
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl?.classes()).toContain(className);
+  });
+
+  it("Should props.colorScheme to the colorScheme class of the notification", async () => {
+    const colorScheme = COLOR_SCHEME.DANGER;
+    await wrapper.setProps({ colorScheme });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+      colorScheme
+    );
+
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl?.classes()).toContain(className);
   });
 
   /*
-  // TODO: colorScheme
-  it("Should props.colorScheme to the colorScheme class of the notification", async () => {
-    expect(true).toBeFalsy();
-  });
   // TODO: padding
   it("Should props.padding to the padding class of the notification", async () => {
     expect(true).toBeFalsy();
