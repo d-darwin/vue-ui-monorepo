@@ -14,12 +14,7 @@ describe("DNotification", () => {
     props: {
       disabled: true, // Turn of the Teleport
       content,
-      duration: 0,
-    },
-    global: {
-      stubs: {
-        transition: true,
-      },
+      duration: 0, // Do not hide automatically
     },
   });
 
