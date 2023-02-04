@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DNotification Should append the notification to the props.target 1`] = `
+<div id="custom-target">
+  <transition-stub>
+    <div role="alert" class="dNotification top-right info colorSchemePrimary fontMedium paddingDefaultMedium paddingDefault roundingSmall sizeMedium transitionFast"></div>
+  </transition-stub>
+</div>
+<div data-v-app="">
+  <!--teleport start-->
+  <!--teleport end-->
+</div>
+`;

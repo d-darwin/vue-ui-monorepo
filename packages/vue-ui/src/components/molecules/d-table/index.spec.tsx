@@ -51,7 +51,7 @@ describe("DTable", () => {
     await wrapper.setProps({ headClass });
 
     const theadEl = wrapper.find("thead");
-    expect(theadEl).toBeTruthy();
+    expect(theadEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(theadEl.classes()).toContain(headClass);
   });
 
@@ -117,7 +117,7 @@ describe("DTable", () => {
     await wrapper.setProps({ bodyClass });
 
     const theadEl = wrapper.find("tbody");
-    expect(theadEl).toBeTruthy();
+    expect(theadEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(theadEl.classes()).toContain(bodyClass);
   });
 

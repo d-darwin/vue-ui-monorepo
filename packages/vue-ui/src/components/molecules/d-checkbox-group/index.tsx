@@ -153,7 +153,6 @@ export default defineComponent({
 
     renderItemList(): VNode[] {
       const prepareProps = (checkbox: VNode) => {
-        console.log(checkbox.props);
         Object.assign(checkbox.props || {}, {
           class: [styles[config.checkboxClassName], checkbox.props?.class],
           disabled:

@@ -97,43 +97,29 @@ describe("DCheckbox", () => {
 
   borderClassCase(
     wrapper,
-    wrapper.find(`.${config.iconContainerClassName}`),
+    `.${config.iconContainerClassName}`,
     COLOR_SCHEME.SECONDARY
   );
 
   colorSchemeClassCase(
     wrapper,
-    wrapper.find(`.${config.iconContainerClassName}`),
+    `.${config.iconContainerClassName}`,
     COLOR_SCHEME.DANGER
   );
 
-  outlineClassCase(
-    wrapper,
-    wrapper.find("input"),
-    BASE_COLOR_SCHEME,
-    SIZE.LARGE
-  );
+  outlineClassCase(wrapper, "input", BASE_COLOR_SCHEME, SIZE.LARGE);
 
-  paddingEqualClassesCase(
-    wrapper,
-    wrapper.find(`.${config.iconContainerClassName}`)
-  );
+  paddingEqualClassesCase(wrapper, `.${config.iconContainerClassName}`);
 
-  roundingClassCase(wrapper, wrapper.find(`.${config.iconContainerClassName}`));
+  roundingClassCase(wrapper, `.${config.iconContainerClassName}`);
 
-  sizeClassCase(wrapper, wrapper.find("input"));
+  sizeClassCase(wrapper, "input");
 
-  sizeClassCase(wrapper, wrapper.find(`.${config.iconContainerClassName}`));
+  sizeClassCase(wrapper, `.${config.iconContainerClassName}`);
 
-  sizeClassCase(
-    wrapper,
-    wrapper.find(`.${config.iconContainerBackdropClassName}`)
-  );
+  sizeClassCase(wrapper, `.${config.iconContainerBackdropClassName}`);
 
-  transitionClassCase(
-    wrapper,
-    wrapper.find(`.${config.iconContainerClassName}`)
-  );
+  transitionClassCase(wrapper, `.${config.iconContainerClassName}`);
 
   errorStringCase(wrapper, config.errorClassName);
 

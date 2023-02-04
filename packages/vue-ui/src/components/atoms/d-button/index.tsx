@@ -209,7 +209,7 @@ export default defineComponent({
         event.preventDefault();
       }
 
-      if (!this.$attrs.disabled) {
+      if (!this.disabled) {
         /**
          * Emits on click with MouseEvent payload
          * @event click

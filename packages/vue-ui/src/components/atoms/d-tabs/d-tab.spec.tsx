@@ -64,15 +64,20 @@ describe("DTab", () => {
 
   slotDefaultCase(DTab);
 
-  fontSizeClassCase(wrapper, wrapper);
+  fontSizeClassCase(wrapper, `.${config.tabClassName}`);
 
-  outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
+  outlineClassCase(
+    wrapper,
+    `.${config.tabClassName}`,
+    COLOR_SCHEME.PRIMARY,
+    SIZE.MEDIUM
+  );
 
-  paddingEqualClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, `.${config.tabClassName}`);
 
-  transitionClassCase(wrapper, wrapper);
+  sizeClassCase(wrapper, `.${config.tabClassName}`);
 
-  sizeClassCase(wrapper, wrapper);
+  transitionClassCase(wrapper, `.${config.tabClassName}`);
 
   it("Should render disabled class if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });

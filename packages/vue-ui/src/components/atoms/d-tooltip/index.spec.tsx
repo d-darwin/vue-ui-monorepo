@@ -25,13 +25,13 @@ describe("DTooltip", () => {
 
   baseClassCase(wrapper, config.className);
 
-  fontSizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  fontSizeClassCase(wrapper, `.${config.contentClassName}`);
 
   it("Should render props.target", async () => {
     const target = "simple string target";
     await wrapper.setProps({ target });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.text()).toBe(target);
   });
 
@@ -39,7 +39,7 @@ describe("DTooltip", () => {
     const target = `<div>HTML <b>string</b> target</div>`;
     await wrapper.setProps({ target, enableHtml: true });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.html()).toContain(target);
   });
 
@@ -51,7 +51,7 @@ describe("DTooltip", () => {
       },
     });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy();
+    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.html()).toContain(target);
   });
 
@@ -78,7 +78,7 @@ describe("DTooltip", () => {
     await wrapper.setProps({ content });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
 
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.text()).toBe(content);
   });
 
@@ -86,7 +86,7 @@ describe("DTooltip", () => {
     const content = `<div>HTML <b>string</b> content</div>`;
     await wrapper.setProps({ content, enableHtml: true });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.html()).toContain(content);
   });
 
@@ -98,7 +98,7 @@ describe("DTooltip", () => {
       },
     });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy();
+    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.html()).toContain(content);
   });
 
@@ -245,18 +245,18 @@ describe("DTooltip", () => {
 
   outlineClassCase(
     wrapper,
-    wrapper.find(`.${config.targetClassName}`),
+    `.${config.targetClassName}`,
     BASE_COLOR_SCHEME,
     SIZE.TINY
   );
 
-  paddingEqualClassesCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  paddingEqualClassesCase(wrapper, `.${config.contentClassName}`);
 
-  roundingClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  roundingClassCase(wrapper, `.${config.contentClassName}`);
 
-  sizeClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  sizeClassCase(wrapper, `.${config.contentClassName}`);
 
-  transitionClassCase(wrapper, wrapper.find(`.${config.contentClassName}`));
+  transitionClassCase(wrapper, `.${config.contentClassName}`);
 
   tagCase(wrapper);
 });

@@ -43,9 +43,14 @@ describe("DLink", () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
+  outlineClassCase(
+    wrapper,
+    `.${config.className}`,
+    COLOR_SCHEME.PRIMARY,
+    SIZE.MEDIUM
+  );
 
-  transitionClassCase(wrapper, wrapper);
+  transitionClassCase(wrapper, `.${config.className}`);
 
   it("Renders as 'button' html tag by default", () => {
     expect(wrapper.element.tagName).toEqual("A");

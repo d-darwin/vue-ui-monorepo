@@ -75,11 +75,16 @@ describe("DTabpanel", () => {
   );
   baseClassCase(wrapper, fontClassName);
 
-  outlineClassCase(wrapper, wrapper, COLOR_SCHEME.PRIMARY, SIZE.MEDIUM);
+  outlineClassCase(
+    wrapper,
+    `.${config.tabpanelClassName}`,
+    COLOR_SCHEME.PRIMARY,
+    SIZE.MEDIUM
+  );
 
-  paddingEqualClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, `.${config.tabpanelClassName}`);
 
-  transitionClassCase(wrapper, wrapper);
+  transitionClassCase(wrapper, `.${config.tabpanelClassName}`);
 
   tagCase(wrapper);
 });

@@ -1,0 +1,80 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
+.dNotification {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  z-index: 100;
+  position: absolute;
+  margin: auto;
+  cursor: pointer;
+  --offset: 20px; /*TODO: make it configurable*/
+}
+
+.top {
+  top: var(--offset);
+  left: 0;
+  right: 0;
+}
+
+.top-right {
+  top: var(--offset);
+  right: var(--offset);
+}
+
+.right {
+  right: var(--offset);
+  top: 0;
+  bottom: 0;
+}
+
+.bottom-right {
+  bottom: var(--offset);
+  right: var(--offset);
+}
+
+.bottom {
+  bottom: var(--offset);
+  left: 0;
+  right: 0;
+}
+
+.bottom-left {
+  bottom: var(--offset);
+  left: var(--offset);
+}
+
+.left {
+  left: var(--offset);
+  top: 0;
+  bottom: 0;
+}
+
+.top-left {
+  top: var(--offset);
+  left: var(--offset);
+}
+
+.transitionEnterActive,
+.transitionLeaveActive {
+  opacity: 0;
+}
+
+.success {
+  border-bottom: 4px solid green; /*TODO: use custom prop*/
+}
+
+.info {
+  border-bottom: 4px solid var(--color-link); /*TODO: use other custom prop*/
+}
+
+.warning {
+  border-bottom: 4px solid var(--color-alternative-background); /*TODO: use other custom prop*/
+}
+
+.error {
+  border-bottom: 4px solid var(--color-danger-background); /*TODO: use other custom prop*/
+}

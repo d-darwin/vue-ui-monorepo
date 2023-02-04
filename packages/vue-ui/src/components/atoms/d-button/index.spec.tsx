@@ -37,21 +37,26 @@ describe("DButton", () => {
 
   slotDefaultCase(DButton);
 
-  borderClassCase(wrapper, wrapper, COLOR_SCHEME.DANGER);
+  borderClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
 
-  colorSchemeClassCase(wrapper, wrapper, COLOR_SCHEME.INVERSE);
+  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.INVERSE);
 
-  fontSizeClassCase(wrapper, wrapper);
+  fontSizeClassCase(wrapper, `.${config.className}`);
 
-  outlineClassCase(wrapper, wrapper, COLOR_SCHEME.SECONDARY, SIZE.SMALL);
+  outlineClassCase(
+    wrapper,
+    `.${config.className}`,
+    COLOR_SCHEME.SECONDARY,
+    SIZE.SMALL
+  );
 
-  paddingEqualClassesCase(wrapper, wrapper);
+  paddingEqualClassesCase(wrapper, `.${config.className}`);
 
-  roundingClassCase(wrapper, wrapper);
+  roundingClassCase(wrapper, `.${config.className}`);
 
-  sizeClassCase(wrapper, wrapper);
+  sizeClassCase(wrapper, `.${config.className}`);
 
-  transitionClassCase(wrapper, wrapper);
+  transitionClassCase(wrapper, `.${config.className}`);
 
   // TODO: utils/test-case-factories ?
   it("Renders as 'a' html tag if 'href' is passed", async () => {
@@ -61,15 +66,15 @@ describe("DButton", () => {
 
   routerLinkComponentCase(wrapper);
 
-  dontEmitClickEventCase(wrapper);
+  dontEmitClickEventCase(shallowMount(DButton));
+
+  dontCallWhenClickCase(shallowMount(DButton));
 
   emitClickEventCase(wrapper);
-
-  dontCallWhenClickCase(wrapper);
 
   callWhenClickCase(wrapper);
 
   preventDefaultCase(wrapper);
 
-  disabledControlCase(wrapper, wrapper);
+  disabledControlCase(wrapper, `.${config.className}`);
 });
