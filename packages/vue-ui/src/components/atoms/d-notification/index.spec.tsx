@@ -3,6 +3,7 @@ import { mount } from "@vue/test-utils";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
 import DNotification from "@/components/atoms/d-notification";
+import { TYPE } from "@/components/atoms/d-notification/constants";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { propContentCase, contentHtmlCase } from "@/utils/test-case-factories";
 import { sleep } from "@/utils/sleep";
@@ -159,7 +160,6 @@ describe("DNotification", () => {
   });
 
   it("Should append the notification to the props.target", async () => {
-    // create teleport target
     const target = document.createElement("div");
     target.id = "custom-target";
     document.body.appendChild(target);
@@ -174,12 +174,14 @@ describe("DNotification", () => {
     expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
   });
 
-  // TODO: type
   it("Should props.type to the type class of the notification", async () => {
-    expect(true).toBeFalsy();
+    const type = TYPE.WARNING;
+    await wrapper.setProps({ type });
+
+    const notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.classes()).toContain(type);
   });
 
-  /*
   it("Renders props.font to font class when passed", async () => {
     const font = FONT.HUGE;
     await wrapper.setProps({ font });
@@ -192,6 +194,8 @@ describe("DNotification", () => {
     const notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl?.classes()).toContain(className);
   });
+
+  /*
   // TODO: colorScheme
   it("Should props.colorScheme to the colorScheme class of the notification", async () => {
     expect(true).toBeFalsy();
