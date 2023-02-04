@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui-monorepo",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Monorepo for the Darwin's Vue UI development",
   "repository": "https://github.com/d-darwin/vue-ui-monorepo",
   "author": "DMITRII BYKOV <d@darwin.st>",
