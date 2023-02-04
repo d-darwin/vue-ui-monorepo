@@ -381,7 +381,7 @@ export function dontEmitClickEventCase(wrapper: VueWrapper) {
   return it("Doesn't emit click event when clicked if disabled", async () => {
     await wrapper.setProps({ disabled: true });
     await wrapper.trigger("click");
-    expect(wrapper.emitted().click).toBeFalsy();
+    expect(wrapper.emitted("click")).toBeFalsy();
   });
 }
 

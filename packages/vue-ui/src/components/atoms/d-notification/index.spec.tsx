@@ -1,10 +1,8 @@
 import { mount } from "@vue/test-utils";
 // TODO: get @darwin-studio/ui-codegen paths from config.json
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import DNotification from "@/components/atoms/d-notification";
 import { TYPE } from "@/components/atoms/d-notification/constants";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
   propContentCase,
   contentHtmlCase,
@@ -17,7 +15,6 @@ import {
 import { sleep } from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DNotification", () => {
   const content = "Some content";
@@ -209,16 +206,71 @@ describe("DNotification", () => {
     expect(notificationEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
 
-  /*
-  // TODO: onClose
   it("Should emits close event on close", async () => {
-    expect(true).toBeFalsy();
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true, // Turn of the Teleport
+        content,
+        duration: 0, // Do not hide automatically
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    const notificationEl = wrapper.find(`.${config.className}`);
+    await notificationEl.trigger("click");
+    expect(wrapper.emitted("close")).toBeTruthy();
   });
 
-  // TODO: whenClose
   it("Should call props.whenClose when passed", async () => {
-    expect(true).toBeFalsy();
-  });*/
+    const whenClose = jest.fn();
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true, // Turn of the Teleport
+        content,
+        duration: 0, // Do not hide automatically
+        whenClose,
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    const notificationEl = wrapper.find(`.${config.className}`);
+    await notificationEl.trigger("click");
+    expect(whenClose).toBeCalled();
+  });
+
+  it("The content of the component should appear on nextTick when using props.content", async () => {
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true, // Turn of the Teleport
+        content,
+        duration: 0, // Do not hide automatically
+      },
+    });
+    let notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeFalsy();
+
+    await wrapper.vm.$nextTick();
+    notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeTruthy();
+  });
+
+  it("The content of the component should appear on nextTick when using default slot", async () => {
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true, // Turn of the Teleport
+        duration: 0, // Do not hide automatically
+      },
+      slots: {
+        default: content,
+      },
+    });
+    let notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeFalsy();
+
+    await wrapper.vm.$nextTick();
+    notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeTruthy();
+  });
 
   it("Should call clearTimeout on unmount", async () => {
     window.clearTimeout = jest.fn();
