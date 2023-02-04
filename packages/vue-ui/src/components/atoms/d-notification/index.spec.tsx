@@ -94,15 +94,6 @@ describe("DNotification", () => {
   });
 
   it("Should close manually on click if props.closable is true", async () => {
-    await wrapper.setProps({ closable: false });
-    let notificationEl = wrapper.find(`.${config.className}`);
-    await notificationEl.trigger("click");
-
-    notificationEl = wrapper.find(`.${config.className}`);
-    expect(notificationEl.exists()).toBeTruthy();
-  });
-
-  it("Should not close manually on click if props.closable is false", async () => {
     const wrapper = mount(DNotification, {
       props: {
         disabled: true,
@@ -117,6 +108,15 @@ describe("DNotification", () => {
 
     notificationEl = wrapper.find(`.${config.className}`);
     expect(notificationEl.exists()).toBeFalsy();
+  });
+
+  it("Should not close manually on click if props.closable is false", async () => {
+    await wrapper.setProps({ closable: false });
+    let notificationEl = wrapper.find(`.${config.className}`);
+    await notificationEl.trigger("click");
+
+    notificationEl = wrapper.find(`.${config.className}`);
+    expect(notificationEl.exists()).toBeTruthy();
   });
 
   // TODO: duration
@@ -190,4 +190,18 @@ describe("DNotification", () => {
   it("Should call props.whenClose when passed", async () => {
     expect(true).toBeFalsy();
   });*/
+
+  it("Should call clearTimeout on unmount", async () => {
+    window.clearTimeout = jest.fn();
+    const wrapper = mount(DNotification, {
+      props: {
+        disabled: true,
+        closable: true,
+      },
+    });
+    await wrapper.unmount();
+
+    await wrapper.vm.$nextTick();
+    expect(window.clearTimeout).toBeCalled();
+  });
 });
