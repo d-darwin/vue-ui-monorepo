@@ -158,9 +158,13 @@ export default defineComponent({
   emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_VALUE],
 
   computed: {
-    renderFalsyLabel(): VNode {
-      // TODO: slot
-      return <div>renderFalsyLabel</div>;
+    renderFalsyLabel(): VNode | null {
+      if (this.labels?.falsy) {
+        // TODO: slot
+        return <div>renderFalsyLabel</div>;
+      }
+
+      return null;
     },
 
     renderInput(): VNode {
@@ -171,14 +175,22 @@ export default defineComponent({
       return <div>renderInput</div>;
     },
 
-    renderTruthyLabel(): VNode {
-      // TODO: slot
-      return <div>renderTruthyLabel</div>;
+    renderTruthyLabel(): VNode | null {
+      if (this.labels?.truthy) {
+        // TODO: slot
+        return <div>renderTruthyLabel</div>;
+      }
+
+      return null;
     },
 
-    renderError(): VNode {
-      // TODO: slot
-      return <div>renderError</div>;
+    renderError(): VNode | null {
+      if (this.error || this.$slots.error) {
+        // TODO: slot
+        return <div>renderError</div>;
+      }
+
+      return null;
     },
   },
 
