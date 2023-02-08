@@ -12,16 +12,15 @@ import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { Values } from "./types";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { Values, Value } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
 
-/** TODO
- * The components renders switch (has true / false value) or toggle (has custom values).<br>
- * Feel free to use any attrs you expect with <b>input</b> tag with <i>type="checkbox"</i>,
- * they will be pass to the tag automatically.<br>
- * If values prop defined the component will be rendered as toggle (slightly different appearance).
+/** TODO: description, ARIA
+ * The components renders switch (has true / false value) or toggle (has custom values).
  */
 export default defineComponent({
   name: config.name,
@@ -33,18 +32,21 @@ export default defineComponent({
     id: {
       type: [String, Number] as PropType<Text>,
     },
+    value: {
+      type: [String, Number, Boolean] as PropType<Value>,
+    },
     /**
      * Replace default true/false values with your own.
      */
     values: {
-      // TODO: specify more accurate type ???
+      // TODO: naming, combine with labels ???
       type: Object as PropType<Values>,
     },
     /**
      * Add labels to the component states.
      */
     labels: {
-      // TODO: specify more accurate type ???
+      // TODO: naming, combine with values ???
       type: Object as PropType<Values>,
     },
     /**
@@ -119,15 +121,76 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
+    /**
+     * Pass true to disable <b>input</b> element.
+     */
+    // TODO: plus readonly ???
+    disabled: {
+      type: Boolean,
+    },
+    /**
+     * Defines container element type of the component
+     */
+    tag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
+     * Enables html string rendering passed in props.label and props.error.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
+
+    /**
+     * Alternative way to catch change event
+     */
+    whenChange: {
+      type: Function as PropType<(value?: Value) => void | Promise<void>>,
+    },
   },
 
   setup(props) {
     return useControlId(props);
   },
 
-  emits: [EVENT_NAME.UPDATE_VALUE],
+  emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_VALUE],
+
+  computed: {
+    renderFalsyLabel(): VNode {
+      // TODO: slot
+      return <div>renderFalsyLabel</div>;
+    },
+
+    renderInput(): VNode {
+      // TODO: role="switch"
+      // TODO: aria-checked=???
+      // TODO: aria-disabled=???
+      // TODO: aria-readonly=???
+      return <div>renderInput</div>;
+    },
+
+    renderTruthyLabel(): VNode {
+      // TODO: slot
+      return <div>renderTruthyLabel</div>;
+    },
+
+    renderError(): VNode {
+      // TODO: slot
+      return <div>renderError</div>;
+    },
+  },
 
   render(): VNode {
-    return <div class={styles[config.className]}>TODO: DSwitch</div>;
+    return (
+      // TODO: tag
+      <div class={styles[config.className]}>
+        {this.renderFalsyLabel}
+        {this.renderInput}
+        {this.renderTruthyLabel}
+        {this.renderError}
+      </div>
+    );
   },
 });

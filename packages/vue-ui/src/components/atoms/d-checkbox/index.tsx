@@ -39,6 +39,7 @@ import styles from "./index.css?module";
 /**
  * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
  */
+// TODO: indeterminate or mixed state
 export default defineComponent({
   name: config.name,
 
