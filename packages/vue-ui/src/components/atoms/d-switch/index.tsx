@@ -220,9 +220,11 @@ export default defineComponent({
 
     return (
       <Tag class={styles[config.className]}>
-        {this.renderFalsyLabel}
-        {this.renderInput}
-        {this.renderTruthyLabel}
+        <div class={styles.wrapper}>
+          {this.renderFalsyLabel}
+          {this.renderInput}
+          {this.renderTruthyLabel}
+        </div>
         {this.renderError}
       </Tag>
     );
