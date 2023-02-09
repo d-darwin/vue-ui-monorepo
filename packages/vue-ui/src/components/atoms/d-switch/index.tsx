@@ -32,8 +32,11 @@ export default defineComponent({
     id: {
       type: [String, Number] as PropType<Text>,
     },
-    value: {
-      type: [String, Number, Boolean] as PropType<Value>,
+    /**
+     * Defines if the component at the truthy state by default
+     */
+    checked: {
+      type: Boolean,
     },
     /**
      * Replace default true/false values with your own.
@@ -161,24 +164,42 @@ export default defineComponent({
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy) {
         // TODO: slot
-        return <div>renderFalsyLabel</div>;
+        return (
+          <label for={this.controlId} class={styles.label}>
+            {this.labels.falsy}
+          </label>
+        );
       }
 
       return null;
     },
 
     renderInput(): VNode {
-      // TODO: role="switch"
       // TODO: aria-checked=???
       // TODO: aria-disabled=???
       // TODO: aria-readonly=???
-      return <div>renderInput</div>;
+      return (
+        <label for={this.controlId} class={styles.track}>
+          <input
+            id={this.controlId}
+            checked={this.checked}
+            class={styles.input}
+            type="checkbox"
+            role="switch"
+          />
+          <div class={styles.thumb} />
+        </label>
+      );
     },
 
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy) {
         // TODO: slot
-        return <div>renderTruthyLabel</div>;
+        return (
+          <label for={this.controlId} class={styles.label}>
+            {this.labels.truthy}
+          </label>
+        );
       }
 
       return null;
@@ -195,14 +216,15 @@ export default defineComponent({
   },
 
   render(): VNode {
+    const Tag = this.tag;
+
     return (
-      // TODO: tag
-      <div class={styles[config.className]}>
+      <Tag class={styles[config.className]}>
         {this.renderFalsyLabel}
         {this.renderInput}
         {this.renderTruthyLabel}
         {this.renderError}
-      </div>
+      </Tag>
     );
   },
 });
