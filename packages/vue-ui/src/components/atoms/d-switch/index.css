@@ -11,10 +11,7 @@
 .track {
   display: block;
   position: relative;
-  width: 44px;/*TODO*/
-  min-width: 44px;/*TODO*/
-  height: 24px;/*TODO*/
-  background: blue;/*TODO*/
+  background:  var(--color-primary-background); /*TODO*/
   border-radius: 10vmin;
   cursor: pointer;
 }
@@ -36,23 +33,22 @@
 
 .thumb {
   position: absolute;
-  height: 24px;/*TODO*/
-  width: 24px;/*TODO*/
   border-radius: 50%;
-  background: red; /*TODO*/
+  background: var(--color-primary); /*TODO*/
   top: 0;
   left: 0;
-  transition: all 150ms;
+  transition: all 150ms; /*TODO*/
 }
 
 .input:checked ~ .thumb {
-  left: calc(100% - 24px); /*TODO*/
+  left: calc(100% - var(--size));
+  background: var(--color-alternative-background); /*TODO*/
 }
 
 .error {
   /*TODO: avoid hardcode*/
   margin-top: 2px;
   /*TODO: avoid hardcode*/
-  color: var(--color-danger-background);
+  color: var(--color-danger-background); /*TODO: use special color*/
 }
 

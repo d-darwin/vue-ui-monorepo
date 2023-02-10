@@ -1,6 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -12,6 +11,7 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: s
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
@@ -19,6 +19,7 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import type { Values, Value } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -97,7 +98,6 @@ export default defineComponent({
      */
     font: {
       type: String as PropType<Font>,
-      default: FONT.SMALL,
     },
     /**
      * Defines appearance of the component
@@ -126,7 +126,7 @@ export default defineComponent({
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
+      default: SIZE.SMALL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines transition type of the component
@@ -172,11 +172,24 @@ export default defineComponent({
   emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_VALUE],
 
   computed: {
+    labelClasses(): (string | undefined)[] {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.labelFont || this.font || this.size
+      );
+
+      return [
+        styles[config.labelClassName],
+        fontStyles[fontClassName],
+        this.labelClass,
+      ];
+    },
+
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy) {
         // TODO: slot
         return (
-          <label for={this.controlId} class={styles.label}>
+          <label for={this.controlId} class={this.labelClasses}>
             {this.labels.falsy}
           </label>
         );
@@ -186,11 +199,20 @@ export default defineComponent({
     },
 
     renderInput(): VNode {
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+
       // TODO: aria-checked=???
       // TODO: aria-disabled=???
       // TODO: aria-readonly=???
       return (
-        <label for={this.controlId} class={styles.track}>
+        <DAspectRatio
+          aspectRatio={config.trackAspectRatio}
+          class={[styles.track, sizeStyles[sizeClassName]]}
+          tag="label"
+        >
           <input
             id={this.controlId}
             checked={this.checked}
@@ -198,8 +220,8 @@ export default defineComponent({
             type="checkbox"
             role="switch"
           />
-          <div class={styles.thumb} />
-        </label>
+          <div class={[styles.thumb, sizeStyles[sizeClassName]]} />
+        </DAspectRatio>
       );
     },
 
@@ -207,7 +229,7 @@ export default defineComponent({
       if (this.labels?.truthy) {
         // TODO: slot
         return (
-          <label for={this.controlId} class={styles.label}>
+          <label for={this.controlId} class={this.labelClasses}>
             {this.labels.truthy}
           </label>
         );
