@@ -1,5 +1,6 @@
 import { defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -10,6 +11,9 @@ import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: 
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -87,6 +91,13 @@ export default defineComponent({
      */
     errorFont: {
       type: String as PropType<Font>,
+    },
+    /**
+     * Defines common font size of the component
+     */
+    font: {
+      type: String as PropType<Font>,
+      default: FONT.SMALL,
     },
     /**
      * Defines appearance of the component
@@ -205,16 +216,32 @@ export default defineComponent({
       return null;
     },
 
+    // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
+    // TODO: how to avoid layout shift
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        // TODO: slot
-        return <div>renderError</div>;
+        const fontClassName = prepareCssClassName(
+          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+          this.errorFont || this.font || this.size
+        );
+        const classes = [
+          styles[config.errorClassName],
+          fontStyles[fontClassName],
+          this.errorClass,
+        ];
+
+        if (this.enableHtml) {
+          return <div class={classes} v-html={this.error} />;
+        }
+
+        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
       return null;
     },
   },
 
+  // TODO: describe slots
   render(): VNode {
     const Tag = this.tag;
 

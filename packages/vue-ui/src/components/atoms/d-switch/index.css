@@ -1,8 +1,5 @@
 .dSwitch {
-  display: flex;
-  flex-direction: column;
-  gap: 4px; /*TODO: avoid hardcoded values*/
-  width: fit-content;
+  width: fit-content; /*TODO: do we really need this*/
 }
 
 .wrapper {
@@ -50,5 +47,12 @@
 
 .input:checked ~ .thumb {
   left: calc(100% - 24px); /*TODO*/
+}
+
+.error {
+  /*TODO: avoid hardcode*/
+  margin-top: 2px;
+  /*TODO: avoid hardcode*/
+  color: var(--color-danger-background);
 }
 

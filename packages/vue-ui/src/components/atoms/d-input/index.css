@@ -1,5 +1,5 @@
 .dInput {
-  width: fit-content;
+  width: fit-content; /*TODO: do we really need this*/
   /* TODO: min-width: var(--control-min-width);*/
 }
 
