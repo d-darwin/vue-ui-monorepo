@@ -198,13 +198,19 @@ export default defineComponent({
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy || this.$slots.labelFalsy) {
         if (this.enableHtml) {
-          return <div class={this.labelClasses} v-html={this.labels?.falsy} />;
+          return (
+            <label
+              for={this.controlId}
+              class={this.labelClasses}
+              v-html={this.labels?.falsy}
+            />
+          );
         }
 
         return (
-          <div class={this.labelClasses}>
+          <label for={this.controlId} class={this.labelClasses}>
             {this.$slots.labelFalsy?.() || this.labels?.falsy}
-          </div>
+          </label>
         );
       }
 
@@ -296,13 +302,19 @@ export default defineComponent({
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy || this.$slots.labelTruthy) {
         if (this.enableHtml) {
-          return <div class={this.labelClasses} v-html={this.labels?.truthy} />;
+          return (
+            <label
+              for={this.controlId}
+              class={this.labelClasses}
+              v-html={this.labels?.truthy}
+            />
+          );
         }
 
         return (
-          <div class={this.labelClasses}>
+          <label for={this.controlId} class={this.labelClasses}>
             {this.$slots.labelTruthy?.() || this.labels?.truthy}
-          </div>
+          </label>
         );
       }
 
