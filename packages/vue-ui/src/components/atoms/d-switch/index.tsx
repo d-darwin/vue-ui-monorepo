@@ -243,7 +243,7 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles.thumb,
+            styles[config.thumbClassName],
             fontStyles[fontClassName],
             roundingStyles[roundingClassName],
             sizeStyles[sizeClassName],
@@ -253,7 +253,7 @@ export default defineComponent({
           {this.$slots.thumb?.() || (
             <div
               class={[
-                styles.thumbInner,
+                styles[config.thumbInnerClassName],
                 roundingStyles[roundingClassName],
                 transitionStyles[transitionClassName],
               ]}
@@ -301,7 +301,7 @@ export default defineComponent({
         <DAspectRatio
           aspectRatio={config.trackAspectRatio}
           class={[
-            styles.track,
+            styles[config.trackClassName],
             this.disabled ? styles.__disabled : undefined,
             this.disabled ? colorSchemeStyles.__disabled : undefined,
             borderStyles[borderClassName],
@@ -319,11 +319,12 @@ export default defineComponent({
           <input
             id={this.controlId}
             checked={this.checked}
+            value={this.values?.truthy} // TODO: is it right ???
             aria-checked={this.checked}
             disabled={this.disabled}
             aria-disabled={this.disabled}
             class={[
-              styles.input,
+              styles[config.inputClassName],
               this.inputClass,
               borderStyles[borderClassName],
               outlineStyles[outlineClassName],
@@ -453,6 +454,7 @@ export default defineComponent({
 
     return (
       <Tag class={styles[config.className]}>
+        {/*TODO: move .wrapper to config ???*/}
         <div class={styles.wrapper}>
           {this.renderFalsyLabel}
           {this.renderInput}
