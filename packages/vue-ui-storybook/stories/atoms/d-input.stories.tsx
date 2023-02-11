@@ -52,6 +52,9 @@ export default {
     onSubmit: {
       action: "submit",
     },
+    "onUpdate:value": {
+      action: "update:value",
+    },
   },
   args: {
     value: "some value",

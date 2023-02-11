@@ -1,15 +1,19 @@
 import { Story } from "@storybook/vue3";
-import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import DSwitch from "@darwin-studio/vue-ui/src/components/atoms/d-switch";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
-  title: "atoms/DCheckbox",
-  component: DCheckbox,
+  title: "atoms/DSwitch",
+  component: DSwitch,
   argTypes: {
+    font: {
+      control: { type: "select" },
+      options: [undefined, ...Object.values(FONT)],
+    },
     labelFont: {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
@@ -48,25 +52,30 @@ export default {
     },
   },
   args: {
-    checked: true,
-    value: "some value",
-    id: "custom-id",
-    inputClass: "someCustomInputClass",
-    inputAttrs: { autofocus: true },
-    label: "Some label",
+    id: "",
+    checked: false,
+    values: {
+      falsy: "falsy",
+      truthy: "truthy",
+    },
+    labels: {
+      falsy: "Off",
+      truthy: "On",
+    },
+    inputClass: "customInputClass",
     labelFont: undefined,
-    labelClass: "someCustomLabelClass",
+    labelClass: "customLabelClass",
     disabled: false,
-    colorScheme: COLOR_SCHEME.SECONDARY, // TODO: don't hardcode values
-    rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
+    colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
+    rounding: ROUNDING.FULL, // TODO: don't hardcode values
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
+    font: undefined,
     error: "Some error string",
     errorFont: undefined,
-    errorClass: "someCustomErrorClass",
-    iconContainerClass: "someIconContainerClass",
+    errorClass: "customErrorClass",
     tag: "div",
-    enableHtml: false,
+    enableHtml: false, // TODO: add story for this prop for all components
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);
     },
@@ -77,49 +86,63 @@ export default {
 };
 
 const Template: Story = (args) => ({
-  components: { DCheckbox },
+  components: { DSwitch },
   setup() {
     return { args };
   },
-  template: `<DCheckbox v-bind="args" />`,
+  template: `<DSwitch v-bind="args" />`,
 });
+
 export const Default = Template.bind({});
 
-const SlotIconTemplate: Story = (args) => ({
-  components: { DCheckbox },
-  setup() {
-    return { args };
-  },
-  template: `
-    <DCheckbox v-bind="args">
-      <template v-slot:icon><b>&#11044;</b></template>
-    </DCheckbox>
-  `,
-});
-export const SlotIcon = SlotIconTemplate.bind({});
-
-const SlotLabelTemplate: Story = (args) => ({
-  components: { DCheckbox },
-  setup() {
-    return { args };
-  },
-  template: `
-    <DCheckbox v-bind="args">
-      <template v-slot:label><b>Label slot</b></template>
-    </DCheckbox>
-  `,
-});
-export const SlotLabel = SlotLabelTemplate.bind({});
-
 const SlotErrorTemplate: Story = (args) => ({
-  components: { DCheckbox },
+  components: { DSwitch },
   setup() {
     return { args };
   },
   template: `
-    <DCheckbox v-bind="args">
+    <DSwitch v-bind="args">
       <template v-slot:error><b>Error slot</b></template>
-    </DCheckbox>
+    </DSwitch>
   `,
 });
 export const SlotError = SlotErrorTemplate.bind({});
+
+const SlotLabelFalsyTemplate: Story = (args) => ({
+  components: { DSwitch },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DSwitch v-bind="args">
+      <template v-slot:labelFalsy><b>❌</b></template>
+    </DSwitch>
+  `,
+});
+export const SlotLabelFalsy = SlotLabelFalsyTemplate.bind({});
+
+const SlotLabelTruthyTemplate: Story = (args) => ({
+  components: { DSwitch },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DSwitch v-bind="args">
+      <template v-slot:labelTruthy><b>✔️</b></template>
+    </DSwitch>
+  `,
+});
+export const SlotLabelTruthy = SlotLabelTruthyTemplate.bind({});
+
+const SlotThumbTemplate: Story = (args) => ({
+  components: { DSwitch },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DSwitch v-bind="args">
+      <template v-slot:thumb><b>👍</b></template>
+    </DSwitch>
+  `,
+});
+export const SlotThumb = SlotThumbTemplate.bind({});

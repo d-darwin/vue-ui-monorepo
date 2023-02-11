@@ -5,5 +5,6 @@ export default function(className: string, sizeCustomPropertyName: string): stri
   return `\n.${className} {
   min-height: var(${sizeCustomPropertyName});
   min-width: var(${sizeCustomPropertyName});
+  --size: var(${sizeCustomPropertyName});
 }`;
 }

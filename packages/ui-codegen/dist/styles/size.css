@@ -3,24 +3,29 @@
 .sizeHuge {
   min-height: var(--size-huge);
   min-width: var(--size-huge);
+  --size: var(--size-huge);
 }
 
 .sizeLarge {
   min-height: var(--size-large);
   min-width: var(--size-large);
+  --size: var(--size-large);
 }
 
 .sizeMedium {
   min-height: var(--size-medium);
   min-width: var(--size-medium);
+  --size: var(--size-medium);
 }
 
 .sizeSmall {
   min-height: var(--size-small);
   min-width: var(--size-small);
+  --size: var(--size-small);
 }
 
 .sizeTiny {
   min-height: var(--size-tiny);
   min-width: var(--size-tiny);
+  --size: var(--size-tiny);
 }

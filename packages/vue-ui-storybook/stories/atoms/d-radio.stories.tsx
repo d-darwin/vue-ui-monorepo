@@ -45,10 +45,16 @@ export default {
       options: Object.values(TRANSITION),
     },
     onChange: {
-      action: "change", // TODO: why catch twice ???
+      action: "change",
     },
     onInput: {
       action: "input",
+    },
+    "onUpdate:checked": {
+      action: "update:checked",
+    },
+    "onUpdate:value": {
+      action: "update:value",
     },
   },
   args: {

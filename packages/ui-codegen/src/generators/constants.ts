@@ -1,9 +1,9 @@
 import * as config from "@darwin-studio/ui-codegen/config.json";
-import log, { LOG_TYPE } from "../utils/log";
-import generateConstantsFile from "../utils/generateConstantsFile";
-import type { DesignTokens } from "../types";
-import getNakedName from "../utils/getNakedName";
-import {SIZE} from "../../dist/constants/size";
+import log, { LOG_TYPE } from "@darwin-studio/ui-codegen/src/utils/log";
+import generateConstantsFile from "@darwin-studio/ui-codegen/src/utils/generateConstantsFile";
+import type { DesignTokens } from "@darwin-studio/ui-codegen/src/types";
+import getNakedName from "@darwin-studio/ui-codegen/src/utils/getNakedName";
+import { SIZE } from "../../dist/constants/size";
 
 export default async () => {
   // TODO: move to helpers ???

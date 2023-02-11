@@ -39,6 +39,7 @@ import styles from "./index.css?module";
 /**
  * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
  */
+// TODO: indeterminate or mixed state
 export default defineComponent({
   name: config.name,
 
@@ -402,7 +403,7 @@ export default defineComponent({
       this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
 
-      this.innerChecked = checked;
+      this.innerChecked = checked; // TODO: try to avoid using inner state
     },
 
     inputHandler(event: Event): void {
@@ -415,6 +416,12 @@ export default defineComponent({
        * @type {value: Text | undefined}
        */
       this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
+      /**
+       * Emits on click with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
       this.whenInput?.(checked ? value : undefined);
     },
   },
