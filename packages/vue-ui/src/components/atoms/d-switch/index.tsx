@@ -103,6 +103,7 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
+      // TODO: how to use ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -110,6 +111,7 @@ export default defineComponent({
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: {
+      // TODO: how to use ???
       type: String as PropType<Padding>,
       default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -117,29 +119,31 @@ export default defineComponent({
      * Defines corner rounding of the icon container element
      */
     rounding: {
+      // TODO: use it
       type: String as PropType<Rounding>,
       default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ???
     size: {
+      // TODO: fontSize and size separately ???
       type: String as PropType<Size>,
-      default: SIZE.SMALL, // TODO: gent defaults base on actual values, not hardcoded
+      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines transition type of the component
      */
     transition: {
+      // TODO: use it
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: plus readonly ???
     disabled: {
+      // TODO: use it plus readonly ???
       type: Boolean,
     },
     /**
@@ -161,6 +165,7 @@ export default defineComponent({
      * Alternative way to catch change event
      */
     whenChange: {
+      // TODO: use it
       type: Function as PropType<(value?: Value) => void | Promise<void>>,
     },
   },
@@ -216,7 +221,7 @@ export default defineComponent({
           <input
             id={this.controlId}
             checked={this.checked}
-            class={styles.input}
+            class={[styles.input, this.inputClass]}
             type="checkbox"
             role="switch"
           />

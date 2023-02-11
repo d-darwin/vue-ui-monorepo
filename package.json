@@ -17,8 +17,9 @@
     "prepare": "husky install",
     "storybook": "yarn workspace @darwin-studio/vue-ui-storybook start",
     "build": "yarn workspace @darwin-studio/vue-ui build",
-    "build:styles": "yarn workspace @darwin-studio/vue-ui-style-dictionary build",
-    "build:codegen": "yarn workspace @darwin-studio/vue-ui-codegen build",
+    "build:styles": "yarn workspace @darwin-studio/ui-dictionary build",
+    "build:codegen": "yarn workspace @darwin-studio/ui-codegen build",
+    "rebuild:codegen": "yarn workspace @darwin-studio/ui-codegen rebuild",
     "build:storybook": "yarn workspace @darwin-studio/vue-ui-storybook build"
   },
   "devDependencies": {

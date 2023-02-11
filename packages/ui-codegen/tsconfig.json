@@ -24,9 +24,11 @@
   },
   "include": [
     "src/**/*.ts",
+    "dist/**/*.ts",
     "/config.json"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/**/*.js"
   ]
 }

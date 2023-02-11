@@ -37,9 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var config = require("@darwin-studio/ui-codegen/config.json");
-var log_1 = require("../utils/log");
-var generateConstantsFile_1 = require("../utils/generateConstantsFile");
-var getNakedName_1 = require("../utils/getNakedName");
+var log_1 = require("@darwin-studio/ui-codegen/src/utils/log");
+var generateConstantsFile_1 = require("@darwin-studio/ui-codegen/src/utils/generateConstantsFile");
+var getNakedName_1 = require("@darwin-studio/ui-codegen/src/utils/getNakedName");
 var size_1 = require("../../dist/constants/size");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
     var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig, roundingTokenConfig, transitionTokenConfig;
@@ -57,14 +57,14 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [2 /*return*/];
             case 3:
                 colorSchemeTokenConfig = config.TOKENS.COLOR_SCHEME;
-                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig,
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[colorSchemeTokenConfig.NAME], colorSchemeTokenConfig, 
                     // TODO: move to config ???
                     function (designTokenNames) { return designTokenNames.filter(function (designTokenName) {
                         var isIgnored = (colorSchemeTokenConfig.IGNORE || []).some(function (ignoredSubstring) {
                             return designTokenName.includes(ignoredSubstring);
                         });
                         return !designTokenName.includes('-') && !isIgnored;
-                    }); },
+                    }); }, 
                     // TODO: combine filter and transformer ???
                     null)];
             case 4:
