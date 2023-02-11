@@ -3,5 +3,5 @@ export default {
   className: "dSwitch",
   labelClassName: "label",
   errorClassName: "error",
-  trackAspectRatio: 2.3,
+  trackAspectRatio: 2.4,
 };

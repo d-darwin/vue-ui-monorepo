@@ -10,7 +10,11 @@ import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: 
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
@@ -105,7 +109,7 @@ export default defineComponent({
     colorScheme: {
       // TODO: how to use ???
       type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
+      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
@@ -187,6 +191,7 @@ export default defineComponent({
         styles[config.labelClassName],
         fontStyles[fontClassName],
         this.labelClass,
+        this.disabled ? styles.__disabled : undefined,
       ];
     },
 
@@ -204,24 +209,58 @@ export default defineComponent({
     },
 
     renderInput(): VNode {
+      // TODO: border and size and colorScheme separately ???
+      const borderClassName = prepareCssClassName(
+        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
+        `${this.colorScheme}-${this.size}`
+      );
+      const colorSchemeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        this.colorScheme
+      );
+      // TODO: outline and size and colorScheme separately ???
+      const outlineClassName = prepareCssClassName(
+        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
+        `${this.colorScheme}-${this.size}`
+      );
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
       const sizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
 
-      // TODO: aria-checked=???
-      // TODO: aria-disabled=???
       // TODO: aria-readonly=???
       return (
         <DAspectRatio
           aspectRatio={config.trackAspectRatio}
-          class={[styles.track, sizeStyles[sizeClassName]]}
+          class={[
+            styles.track,
+            this.disabled ? styles.__disabled : undefined,
+            this.disabled ? colorSchemeStyles.__disabled : undefined,
+            borderStyles[borderClassName],
+            colorSchemeStyles[colorSchemeClassName],
+            outlineStyles[outlineClassName],
+            roundingStyles[roundingClassName],
+            sizeStyles[sizeClassName],
+          ]}
           tag="label"
         >
           <input
             id={this.controlId}
             checked={this.checked}
-            class={[styles.input, this.inputClass]}
+            aria-checked={this.checked}
+            disabled={this.disabled}
+            aria-disabled={this.disabled}
+            class={[
+              styles.input,
+              this.inputClass,
+              borderStyles[borderClassName],
+              outlineStyles[outlineClassName],
+              roundingStyles[roundingClassName],
+            ]}
             type="checkbox"
             role="switch"
           />
