@@ -1,4 +1,4 @@
-import { mount, VueWrapper } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import {
   baseClassCase,
   colorSchemeClassCase,
@@ -18,6 +18,8 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import DSwitch from "@/components/atoms/d-switch/index";
+import styles from "@/components/atoms/d-switch/index.css?module";
+import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import config from "@/components/atoms/d-switch/config";
 import { DOMWrapper } from "@vue/test-utils/dist/domWrapper";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
@@ -200,35 +202,57 @@ describe("DSwitch", () => {
   tagCase(wrapper);
 
   it("Should render $slots.thumb", async () => {
-    expect(true).toBeFalsy();
+    const thumb = `<b>Thumb slot</b>`;
+    const wrapper = mount(DSwitch, {
+      slots: { thumb },
+    });
+    const slotThumbEl = wrapper.find(`.${config.thumbClassName}`);
+    expect(slotThumbEl.html()).toMatch(thumb);
   });
 
   it("Shouldn render disabled attr for input element if props.disabled is true", async () => {
-    // TODO expect(true).toBeFalsy();
+    await wrapper.setProps({ disabled: true });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.element.disabled).toBeTruthy();
   });
 
   it("Shouldn't render disabled attr for input element if props.disabled is falsy", async () => {
-    // TODO expect(true).toBeFalsy();
+    await wrapper.setProps({ disabled: false });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.element.disabled).toBeFalsy();
   });
 
   it("Shouldn render aria-disabled attr for input element if props.disabled is true", async () => {
-    // TODO expect(true).toBeFalsy();
+    await wrapper.setProps({ disabled: true });
+    const inputEl = wrapper.find("input");
+    expect(inputEl.attributes("aria-disabled")).toBeTruthy();
   });
 
   it("Shouldn't render aria-disabled attr for input element if props.disabled is falsy", async () => {
-    // TODO expect(true).toBeFalsy();
+    await wrapper.setProps({ disabled: false });
+    const inputEl = wrapper.find("input");
+    console.log(inputEl.html());
+    expect(inputEl.attributes("aria-disabled")).toBeFalsy();
   });
 
   it("Shouldn render .__disabled class for .track and .label elements if props.disabled is true", async () => {
-    // TODO expect(true).toBeFalsy();
-    // styles.__disabled
-    // colorSchemeStyles.__disabled
+    await wrapper.setProps({ disabled: true });
+    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    expect(trackEl.classes()).toContain(styles.__disabled);
+    expect(trackEl.classes()).toContain(colorSchemeStyles.__disabled);
+    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    expect(labelEl.classes()).toContain(styles.__disabled);
+    expect(labelEl.classes()).toContain(colorSchemeStyles.__disabled);
   });
 
   it("Shouldn't render .__disabled class for .track and .label elements if props.disabled is false", async () => {
-    // TODO expect(true).toBeFalsy();
-    // styles.__disabled
-    // colorSchemeStyles.__disabled
+    await wrapper.setProps({ disabled: false });
+    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    expect(trackEl.classes()).not.toContain(styles.__disabled);
+    expect(trackEl.classes()).not.toContain(colorSchemeStyles.__disabled);
+    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    expect(labelEl.classes()).not.toContain(styles.__disabled);
+    expect(labelEl.classes()).not.toContain(colorSchemeStyles.__disabled);
   });
 
   it("Should emit onChange event with checked and value payload", async () => {

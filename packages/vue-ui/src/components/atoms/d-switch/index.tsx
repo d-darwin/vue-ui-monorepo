@@ -319,10 +319,10 @@ export default defineComponent({
           <input
             id={this.controlId}
             value={this.values?.truthy} // TODO: is it right ???
-            checked={this.checked}
-            aria-checked={this.checked}
-            disabled={this.disabled}
-            aria-disabled={this.disabled}
+            checked={this.checked || undefined}
+            aria-checked={this.checked || undefined}
+            disabled={this.disabled || undefined}
+            aria-disabled={this.disabled || undefined}
             class={[
               styles[config.inputClassName],
               this.inputClass,
