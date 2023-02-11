@@ -48,6 +48,9 @@ export default {
     onChange: {
       action: "change",
     },
+    "onUpdate:show": {
+      action: "update:show",
+    },
   },
   args: {
     target: "Some target string",

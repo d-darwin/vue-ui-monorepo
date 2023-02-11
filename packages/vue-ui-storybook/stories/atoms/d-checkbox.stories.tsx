@@ -40,6 +40,12 @@ export default {
     onInput: {
       action: "input",
     },
+    "onUpdate:checked": {
+      action: "update:checked",
+    },
+    "onUpdate:value": {
+      action: "update:value",
+    },
   },
   args: {
     checked: true,
