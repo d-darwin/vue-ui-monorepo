@@ -25,24 +25,37 @@
   padding: 0;
   border: 0;
   appearance: none;
+  cursor: pointer;
 }
 
- .label.__disabled,
- .track.__disabled {
+.label.__disabled,
+.track.__disabled {
   cursor: not-allowed;
 }
 
 .thumb {
   position: absolute;
-  border-radius: 50%;
   top: 0;
   left: 0;
   background-color: var(--color);
-  transition: all 150ms; /*TODO*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbInner {
+  height: calc(var(--size) / 1.62);
+  width: calc(var(--size) / 1.62);
+  background-color: var(--background-color);
+  scale: 0;
 }
 
 .input:checked ~ .thumb {
   left: calc(100% - var(--size));
+}
+
+.input:checked ~ .thumb .thumbInner {
+  scale: 1;
 }
 
 .error {

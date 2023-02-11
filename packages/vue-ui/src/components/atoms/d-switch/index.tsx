@@ -14,6 +14,7 @@ import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; 
 import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
@@ -219,6 +220,10 @@ export default defineComponent({
         codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
 
       // TODO: aria-readonly=???
       return (
@@ -233,6 +238,7 @@ export default defineComponent({
             outlineStyles[outlineClassName],
             roundingStyles[roundingClassName],
             sizeStyles[sizeClassName],
+            transitionStyles[transitionClassName],
           ]}
           tag="label"
         >
@@ -252,7 +258,22 @@ export default defineComponent({
             type="checkbox"
             role="switch"
           />
-          <div class={[styles.thumb, sizeStyles[sizeClassName]]} />
+          <div
+            class={[
+              styles.thumb,
+              roundingStyles[roundingClassName],
+              sizeStyles[sizeClassName],
+              transitionStyles[transitionClassName],
+            ]}
+          >
+            <div
+              class={[
+                styles.thumbInner,
+                roundingStyles[roundingClassName],
+                transitionStyles[transitionClassName],
+              ]}
+            />
+          </div>
         </DAspectRatio>
       );
     },
