@@ -318,8 +318,8 @@ export default defineComponent({
         >
           <input
             id={this.controlId}
-            checked={this.checked}
             value={this.values?.truthy} // TODO: is it right ???
+            checked={this.checked}
             aria-checked={this.checked}
             disabled={this.disabled}
             aria-disabled={this.disabled}
