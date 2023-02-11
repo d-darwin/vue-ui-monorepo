@@ -4,6 +4,14 @@ import DSwitch from "@darwin-studio/vue-ui/src/components/atoms/d-switch";
 export default {
   title: "atoms/DSwitch",
   component: DSwitch,
+  argTypes: {
+    onChange: {
+      action: "change",
+    },
+    onInput: {
+      action: "input",
+    },
+  },
   args: {
     checked: false,
     labels: {
@@ -15,6 +23,13 @@ export default {
       truthy: "truthy",
     },
     error: "Some error string",
+    enableHtml: false,
+    whenChange: (checked: boolean, value: Text) => {
+      console.log("change", checked, value);
+    },
+    whenInput: (value: Text | undefined) => {
+      console.log("input", value);
+    },
   },
 };
 

@@ -403,7 +403,7 @@ export default defineComponent({
       this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenChange?.(checked, checked ? value : undefined);
 
-      this.innerChecked = checked;
+      this.innerChecked = checked; // TODO: try to avoid using inner state
     },
 
     inputHandler(event: Event): void {

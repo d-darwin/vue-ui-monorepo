@@ -27,7 +27,7 @@ import type { Values, Value } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
 
-/** TODO: description, ARIA
+/**
  * The components renders switch (has true / false value) or toggle (has custom values).
  */
 export default defineComponent({
@@ -128,7 +128,6 @@ export default defineComponent({
      * Defines transition type of the component
      */
     transition: {
-      // TODO: use it
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -158,7 +157,14 @@ export default defineComponent({
      * Alternative way to catch change event
      */
     whenChange: {
-      // TODO: use it
+      type: Function as PropType<
+        (checked?: boolean, value?: Value) => void | Promise<void>
+      >,
+    },
+    /**
+     * Alternative way to catch input event
+     */
+    whenInput: {
       type: Function as PropType<(value?: Value) => void | Promise<void>>,
     },
   },
@@ -167,7 +173,12 @@ export default defineComponent({
     return useControlId(props);
   },
 
-  emits: [EVENT_NAME.CHANGE, EVENT_NAME.UPDATE_VALUE],
+  emits: [
+    EVENT_NAME.CHANGE,
+    EVENT_NAME.INPUT,
+    EVENT_NAME.UPDATE_CHECKED,
+    EVENT_NAME.UPDATE_VALUE,
+  ],
 
   computed: {
     labelClasses(): (string | undefined)[] {
@@ -187,6 +198,7 @@ export default defineComponent({
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy) {
         // TODO: slot
+        // TODO: enableHtml
         return (
           <label for={this.controlId} class={this.labelClasses}>
             {this.labels.falsy}
@@ -225,7 +237,6 @@ export default defineComponent({
         this.transition
       );
 
-      // TODO: aria-readonly=???
       return (
         <DAspectRatio
           aspectRatio={config.trackAspectRatio}
@@ -257,6 +268,8 @@ export default defineComponent({
             ]}
             type="checkbox"
             role="switch"
+            onChange={this.changeHandler}
+            onInput={this.inputHandler}
           />
           <div
             class={[
@@ -281,6 +294,7 @@ export default defineComponent({
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy) {
         // TODO: slot
+        // TODO: enableHtml
         return (
           <label for={this.controlId} class={this.labelClasses}>
             {this.labels.truthy}
@@ -316,7 +330,56 @@ export default defineComponent({
     },
   },
 
-  // TODO: describe slots
+  methods: {
+    changeHandler(event: Event): void {
+      const checked = (event.target as HTMLInputElement).checked;
+      const value = checked
+        ? this.values?.truthy || (event.target as HTMLInputElement).value
+        : this.values?.falsy;
+
+      /**
+       * Emits on click with checked and value payload
+       * @event change
+       * @type {checked: Boolean, value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.CHANGE, checked, value);
+      /**
+       * Emits on click with checked payload
+       * @event update:checked
+       * @type {checked: Boolean}
+       */
+      this.$emit(EVENT_NAME.UPDATE_CHECKED, checked);
+      /**
+       * Emits on click with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
+      this.whenChange?.(checked, value);
+    },
+
+    inputHandler(event: Event): void {
+      const checked = (event.target as HTMLInputElement).checked;
+      const value = checked
+        ? this.values?.truthy || (event.target as HTMLInputElement).value
+        : this.values?.falsy;
+
+      /**
+       * Emits on input with checked payload
+       * @event input
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.INPUT, value);
+      this.whenInput?.(value);
+    },
+  },
+
+  /**
+   * @slot $slots.error
+   * Use instead of props.error to fully customize error content
+   * */
+  // TODO: other describe slots
+  // TODO: input slots ???
   render(): VNode {
     const Tag = this.tag;
 

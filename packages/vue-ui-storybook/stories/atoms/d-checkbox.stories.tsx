@@ -35,7 +35,7 @@ export default {
       options: Object.values(TRANSITION),
     },
     onChange: {
-      action: "change", // TODO: why catch twice ???
+      action: "change",
     },
     onInput: {
       action: "input",
