@@ -196,13 +196,15 @@ export default defineComponent({
     },
 
     renderFalsyLabel(): VNode | null {
-      if (this.labels?.falsy) {
-        // TODO: slot
-        // TODO: enableHtml
+      if (this.labels?.falsy || this.$slots.labelFalsy) {
+        if (this.enableHtml) {
+          return <div class={this.labelClasses} v-html={this.labels?.falsy} />;
+        }
+
         return (
-          <label for={this.controlId} class={this.labelClasses}>
-            {this.labels.falsy}
-          </label>
+          <div class={this.labelClasses}>
+            {this.$slots.labelFalsy?.() || this.labels?.falsy}
+          </div>
         );
       }
 
@@ -292,13 +294,15 @@ export default defineComponent({
     },
 
     renderTruthyLabel(): VNode | null {
-      if (this.labels?.truthy) {
-        // TODO: slot
-        // TODO: enableHtml
+      if (this.labels?.truthy || this.$slots.labelTruthy) {
+        if (this.enableHtml) {
+          return <div class={this.labelClasses} v-html={this.labels?.truthy} />;
+        }
+
         return (
-          <label for={this.controlId} class={this.labelClasses}>
-            {this.labels.truthy}
-          </label>
+          <div class={this.labelClasses}>
+            {this.$slots.labelTruthy?.() || this.labels?.truthy}
+          </div>
         );
       }
 
@@ -378,7 +382,14 @@ export default defineComponent({
    * @slot $slots.error
    * Use instead of props.error to fully customize error content
    * */
-  // TODO: other describe slots
+  /**
+   * @slot $slots.labelFalsy
+   * Use instead of props.labels.falsy to fully customize falsy label content
+   * */
+  /**
+   * @slot $slots.labelTruthy
+   * Use instead of props.labels.truthy to fully customize truthy label content
+   * */
   // TODO: input slots ???
   render(): VNode {
     const Tag = this.tag;
