@@ -182,6 +182,7 @@ export default defineComponent({
 
   computed: {
     labelClasses(): (string | undefined)[] {
+      // TODO: add getters?
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.labelFont || this.font || this.size
@@ -194,7 +195,7 @@ export default defineComponent({
         this.disabled ? styles.__disabled : undefined,
       ];
     },
-
+    // TODO: add label generator ???
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy || this.$slots.labelFalsy) {
         if (this.enableHtml) {
@@ -217,29 +218,80 @@ export default defineComponent({
       return null;
     },
 
+    renderThumb(): VNode | VNode[] {
+      // TODO: add getters?
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.font || this.size
+      );
+      // TODO: add getters?
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
+      // TODO: add getters?
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+      // TODO: add getters?
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return (
+        <div
+          class={[
+            styles.thumb,
+            fontStyles[fontClassName],
+            roundingStyles[roundingClassName],
+            sizeStyles[sizeClassName],
+            transitionStyles[transitionClassName],
+          ]}
+        >
+          {this.$slots.thumb?.() || (
+            <div
+              class={[
+                styles.thumbInner,
+                roundingStyles[roundingClassName],
+                transitionStyles[transitionClassName],
+              ]}
+            />
+          )}
+        </div>
+      );
+    },
+
     renderInput(): VNode {
       // TODO: border and size and colorScheme separately ???
+      // TODO: add getters?
       const borderClassName = prepareCssClassName(
         codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
         `${this.colorScheme}-${this.size}`
       );
+      // TODO: add getters?
       const colorSchemeClassName = prepareCssClassName(
         codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
       );
       // TODO: outline and size and colorScheme separately ???
+      // TODO: add getters?
       const outlineClassName = prepareCssClassName(
         codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
         `${this.colorScheme}-${this.size}`
       );
+      // TODO: add getters?
       const roundingClassName = prepareCssClassName(
         codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
         this.rounding
       );
+      // TODO: add getters?
       const sizeClassName = prepareCssClassName(
         codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
         this.size
       );
+      // TODO: add getters?
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
@@ -260,6 +312,9 @@ export default defineComponent({
             transitionStyles[transitionClassName],
           ]}
           tag="label"
+          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+          /* @ts-ignore TODO */
+          for={this.controlId}
         >
           <input
             id={this.controlId}
@@ -279,26 +334,12 @@ export default defineComponent({
             onChange={this.changeHandler}
             onInput={this.inputHandler}
           />
-          <div
-            class={[
-              styles.thumb,
-              roundingStyles[roundingClassName],
-              sizeStyles[sizeClassName],
-              transitionStyles[transitionClassName],
-            ]}
-          >
-            <div
-              class={[
-                styles.thumbInner,
-                roundingStyles[roundingClassName],
-                transitionStyles[transitionClassName],
-              ]}
-            />
-          </div>
+
+          {this.renderThumb}
         </DAspectRatio>
       );
     },
-
+    // TODO: add label generator ???
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy || this.$slots.labelTruthy) {
         if (this.enableHtml) {
@@ -401,6 +442,10 @@ export default defineComponent({
   /**
    * @slot $slots.labelTruthy
    * Use instead of props.labels.truthy to fully customize truthy label content
+   * */
+  /**
+   * @slot $slots.thumb
+   * Use instead of regular .thumb content
    * */
   // TODO: input slots ???
   render(): VNode {

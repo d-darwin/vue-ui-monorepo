@@ -133,3 +133,16 @@ const SlotLabelTruthyTemplate: Story = (args) => ({
   `,
 });
 export const SlotLabelTruthy = SlotLabelTruthyTemplate.bind({});
+
+const SlotThumbTemplate: Story = (args) => ({
+  components: { DSwitch },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DSwitch v-bind="args">
+      <template v-slot:thumb><b>👍</b></template>
+    </DSwitch>
+  `,
+});
+export const SlotThumb = SlotThumbTemplate.bind({});
