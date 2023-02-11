@@ -231,7 +231,6 @@ describe("DSwitch", () => {
   it("Shouldn't render aria-disabled attr for input element if props.disabled is falsy", async () => {
     await wrapper.setProps({ disabled: false });
     const inputEl = wrapper.find("input");
-    console.log(inputEl.html());
     expect(inputEl.attributes("aria-disabled")).toBeFalsy();
   });
 
@@ -256,20 +255,85 @@ describe("DSwitch", () => {
   });
 
   it("Should emit onChange event with checked and value payload", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    let checked = false;
+    const valueFalsy = "custom value falsy";
+    const wrapper = await mount(DSwitch, {
+      props: {
+        checked,
+        values: { falsy: valueFalsy },
+      },
+    });
+
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+    checked = !checked;
+
+    expect(wrapper.emitted("change")?.[0]).toStrictEqual([checked, "on"]);
+    expect(wrapper.emitted("update:checked")?.[0]).toStrictEqual([checked]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual(["on"]);
+
+    await wrapper.setProps({ checked });
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+    checked = !checked;
+
+    expect(wrapper.emitted("change")?.[1]).toStrictEqual([checked, valueFalsy]);
+    expect(wrapper.emitted("update:checked")?.[1]).toStrictEqual([checked]);
+    expect(wrapper.emitted("update:value")?.[1]).toStrictEqual([valueFalsy]);
   });
-  it("Shouldn't emit onChange if props.disabled is passed", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+
+  it("Shouldn't emit onChange if props.disabled is true", async () => {
+    const wrapper = await mount(DSwitch, {
+      props: { disabled: true },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
+
   it("Should call passed props.whenChange", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    let checked = false;
+    const valueTruthy = "custom value truthy";
+    const whenChange = jest.fn();
+    const wrapper = await mount(DSwitch, {
+      props: {
+        checked,
+        whenChange,
+        values: { truthy: valueTruthy },
+      },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+    checked = !checked;
+
+    expect(whenChange).toHaveBeenCalledWith(checked, valueTruthy);
+
+    await wrapper.setProps({ checked });
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+    checked = !checked;
+
+    expect(whenChange).toHaveBeenCalledWith(checked, undefined);
   });
-  it("Shouldn't call passed props.whenChange if props.disabled passed", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+
+  it("Shouldn't call passed props.whenChange if props.disabled is true", async () => {
+    const whenChange = jest.fn();
+    const wrapper = await mount(DSwitch, {
+      props: {
+        disabled: true,
+        whenChange,
+      },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+    expect(whenChange).not.toHaveBeenCalled();
   });
 
   it("Should emit onInput event with value payload", async () => {
