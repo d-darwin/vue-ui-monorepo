@@ -2,8 +2,6 @@ import { defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -107,23 +105,13 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
-      // TODO: how to use ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Defines padding type of the component, use 'equal' if the component contains only an icon
-     */
-    padding: {
-      // TODO: how to use ???
-      type: String as PropType<Padding>,
-      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines corner rounding of the icon container element
      */
     rounding: {
-      // TODO: use it
       type: String as PropType<Rounding>,
       default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -147,9 +135,9 @@ export default defineComponent({
      * Pass true to disable <b>input</b> element.
      */
     disabled: {
-      // TODO: use it plus readonly ???
       type: Boolean,
     },
+    // TODO: readonly state ???
     /**
      * Defines container element type of the component
      */
