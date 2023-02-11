@@ -303,8 +303,8 @@ describe("DSwitch", () => {
     const wrapper = await mount(DSwitch, {
       props: {
         checked,
-        whenChange,
         values: { truthy: valueTruthy },
+        whenChange,
       },
     });
     const inputEl = wrapper.find("input");
@@ -337,22 +337,76 @@ describe("DSwitch", () => {
   });
 
   it("Should emit onInput event with value payload", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    const valueFalsy = "custom value falsy";
+    const wrapper = await mount(DSwitch, {
+      props: {
+        checked: false,
+        values: { falsy: valueFalsy },
+      },
+    });
+
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toStrictEqual(["on"]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual(["on"]);
+
+    await wrapper.setProps({ checked: true });
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[1]).toStrictEqual([valueFalsy]);
+    expect(wrapper.emitted("update:value")?.[1]).toStrictEqual([valueFalsy]);
   });
 
   it("Shouldn't emit onInput if props.disabled is passed", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    const wrapper = await mount(DSwitch, {
+      props: { disabled: true },
+    });
+
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
 
   it("Should call passed props.whenInput", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    const valueTruthy = "custom value truthy";
+    const whenInput = jest.fn();
+    const wrapper = await mount(DSwitch, {
+      props: {
+        checked: false,
+        values: { truthy: valueTruthy },
+        whenInput,
+      },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledWith(valueTruthy);
+
+    await wrapper.setProps({ checked: true });
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledWith(undefined);
   });
 
   it("Shouldn't call passed props.whenInput if props.disabled passed", async () => {
-    // TODO expect(true).toBeFalsy();
-    // - values
+    const whenInput = jest.fn();
+    const wrapper = await mount(DSwitch, {
+      props: {
+        disabled: true,
+        whenInput,
+      },
+    });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("input");
+    expect(whenInput).not.toHaveBeenCalled();
   });
 });

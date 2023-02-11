@@ -416,6 +416,12 @@ export default defineComponent({
        * @type {value: Text | undefined}
        */
       this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
+      /**
+       * Emits on click with value payload
+       * @event update:value
+       * @type {value: Text | undefined}
+       */
+      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
       this.whenInput?.(checked ? value : undefined);
     },
   },
