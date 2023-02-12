@@ -13,7 +13,7 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: PartialRecord<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
-  cssClassGenerator: (className: string, customPropertyName: string, colorClassPropertyName?: string) => string,
+  cssClassGenerator: (className: string, customPropertyName: string, specialPropertyName?: string, isLast?: boolean) => string,
   colorVariantList?: string[],
 ): Promise<void> {
   if (designTokens) {
@@ -26,17 +26,21 @@ export default async function (
     const tokenVariantNameList = tokenNameFilter
       ? tokenNameFilter(Object.keys(designTokens))
       : Object.keys(designTokens);
-    tokenVariantNameList?.forEach((tokenVariantName) => {
+    let prevCustomPropertyName = '';
+    tokenVariantNameList?.forEach((tokenVariantName, index) => {
       const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
       const customPropertyName = `--${designTokenConfig.NAME}-${tokenVariantName}`;
       if (colorVariantList?.length) {
         const { extractedWord: colorVariantName } = getNakedName(customPropertyName, colorVariantList)
         const colorCustomPropertyName = `--${config.TOKENS.COLOR_SCHEME.NAME}-${colorVariantName}-${designTokenConfig.NAME}`
-        cssClassStringList.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName));
+        cssClassStringList.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName)); // TODO: add options{}
         return;
       } else {
-        cssClassStringList.push(cssClassGenerator(className, customPropertyName));
+        cssClassStringList.push(cssClassGenerator(
+          className, customPropertyName, prevCustomPropertyName, index === tokenVariantNameList.length - 1
+        )); // TODO: add options{}
       }
+      prevCustomPropertyName = customPropertyName;
     })
 
     await writeFile(

@@ -78,6 +78,15 @@
       "TYPE_FILE_PATH": "/types/transition",
       "CSS_CLASS_PREFIX": "transition",
       "CSS_FILE_PATH": "/styles/transition"
+    },
+    "BREAKPOINT": {
+      "NAME": "breakpoints",
+      "CONSTANT_NAME": "BREAKPOINTS",
+      "CONSTANT_FILE_PATH": "/constants/breakpoints",
+      "TYPE_NAME": "Breakpoints",
+      "TYPE_FILE_PATH": "/types/breakpoints",
+      "CSS_CLASS_PREFIX": "breakpoints",
+      "CSS_FILE_PATH": "/styles/breakpoints"
     }
   }
 }

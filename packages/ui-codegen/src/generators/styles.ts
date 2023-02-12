@@ -12,6 +12,7 @@ import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
 import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
 import generateTransitionCssClass from "../utils/generateTransitionCssClass";
+import generateBreakpointCssClasses from "../utils/generateBreakpointCssClasses";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -109,5 +110,13 @@ export default async () => {
     transitionTokenConfig,
     null, // TODO: move to config ???
     generateTransitionCssClass, // TODO: move to config ???
+  )
+
+  const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+  await generateStylesFile(
+    designTokens[breakpointTokenConfig.NAME],
+    breakpointTokenConfig,
+    null, // TODO: move to config ???
+    generateBreakpointCssClasses, // TODO: move to config ???
   )
 }

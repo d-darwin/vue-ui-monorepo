@@ -1,9 +1,9 @@
 "use strict";
 exports.__esModule = true;
 // TODO: descr
-function default_1(className, sizeCustomPropertyName) {
+function default_1(className, customPropertyName) {
     // TODO: move \n to the caller
     // TODO: check if min-... is appropriate
-    return "\n.".concat(className, " {\n  min-height: var(").concat(sizeCustomPropertyName, ");\n  min-width: var(").concat(sizeCustomPropertyName, ");\n  --size: var(").concat(sizeCustomPropertyName, ");\n}");
+    return "\n.".concat(className, " {\n  min-height: var(").concat(customPropertyName, ");\n  min-width: var(").concat(customPropertyName, ");\n  --size: var(").concat(customPropertyName, ");\n}");
 }
 exports["default"] = default_1;

@@ -49,8 +49,9 @@ var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 var color_scheme_1 = require("../../dist/constants/color-scheme");
 var generateTransitionCssClass_1 = require("../utils/generateTransitionCssClass");
+var generateBreakpointCssClasses_1 = require("../utils/generateBreakpointCssClasses");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig, breakpointTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -119,6 +120,11 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, // TODO: move to config ???
                     generateTransitionCssClass_1["default"])];
             case 12:
+                _b.sent();
+                breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig, null, // TODO: move to config ???
+                    generateBreakpointCssClasses_1["default"])];
+            case 13:
                 _b.sent();
                 return [2 /*return*/];
         }

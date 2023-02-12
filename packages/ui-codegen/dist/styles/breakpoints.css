@@ -1,0 +1,42 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
+
+@media (min-width: var(--breakpoints-xs)) and (max-width: var(--breakpoints-sm) - 1) {
+  :root {
+    --grid-column-count: var(--grid-xs-column-count);
+    --grid-column-gap: var(--grid-xs-column-gap);
+    --grid-column-offset: var(--grid-xs-column-offset);
+  }
+}
+
+@media (min-width: var(--breakpoints-sm)) and (max-width: var(--breakpoints-md) - 1) {
+  :root {
+    --grid-column-count: var(--grid-sm-column-count);
+    --grid-column-gap: var(--grid-sm-column-gap);
+    --grid-column-offset: var(--grid-sm-column-offset);
+  }
+}
+
+@media (min-width: var(--breakpoints-md)) and (max-width: var(--breakpoints-lg) - 1) {
+  :root {
+    --grid-column-count: var(--grid-md-column-count);
+    --grid-column-gap: var(--grid-md-column-gap);
+    --grid-column-offset: var(--grid-md-column-offset);
+  }
+}
+
+@media (min-width: var(--breakpoints-lg)) and (max-width: var(--breakpoints-xl) - 1) {
+  :root {
+    --grid-column-count: var(--grid-lg-column-count);
+    --grid-column-gap: var(--grid-lg-column-gap);
+    --grid-column-offset: var(--grid-lg-column-offset);
+  }
+}
+
+@media (min-width: var(--breakpoints-xl)) {
+  :root {
+    --grid-column-count: var(--grid-xl-column-count);
+    --grid-column-gap: var(--grid-xl-column-gap);
+    --grid-column-offset: var(--grid-xl-column-offset);
+  }
+}
