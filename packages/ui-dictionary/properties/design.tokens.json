@@ -101,6 +101,68 @@
       }
     }
   },
+  "breakpoints": {
+    "xs": {
+      "description": null,
+      "value": 320,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    },
+    "s": {
+      "description": null,
+      "value": 480,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    },
+    "m": {
+      "description": null,
+      "value": 640,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    },
+    "l": {
+      "description": null,
+      "value": 768,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    },
+    "xl": {
+      "description": null,
+      "value": 1024,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    },
+    "xxl": {
+      "description": null,
+      "value": 1200,
+      "type": "dimension",
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "exportKey": "breakpoint"
+        }
+      }
+    }
+  },
   "spacing": {
     "equal-tiny": {
       "description": null,
@@ -2304,6 +2366,25 @@
         "org.lukasoppermann.figmaDesignTokens": {
           "styleId": "S:705458e8c3fd43924d20161adbcfcd33a1cd4465,",
           "exportKey": "color"
+        }
+      }
+    }
+  },
+  "grid": {
+    "grid-m": {
+      "description": "for medium devices",
+      "type": "custom-grid",
+      "value": {
+        "pattern": "columns",
+        "gutterSize": 24,
+        "alignment": "stretch",
+        "count": 6,
+        "offset": 32
+      },
+      "extensions": {
+        "org.lukasoppermann.figmaDesignTokens": {
+          "styleId": "S:afe98b7350d313c415b521b56c819156daea2c11,",
+          "exportKey": "grid"
         }
       }
     }
