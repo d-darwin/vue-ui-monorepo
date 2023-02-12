@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 23 Jul 2022 12:15:46 GMT
+ * Generated on Sun, 12 Feb 2023 10:40:26 GMT
  */
 
 :root {
@@ -14,6 +14,12 @@
   --size-medium: 38px;
   --size-small: 28px;
   --size-tiny: 20px;
+  --breakpoints-xs: 320px;
+  --breakpoints-s: 480px;
+  --breakpoints-m: 640px;
+  --breakpoints-l: 768px;
+  --breakpoints-xl: 1024px;
+  --breakpoints-xxl: 1200px;
   --spacing-equal-tiny: 4px;
   --spacing-equal-small: 4px;
   --spacing-equal-medium: 8px;
@@ -153,6 +159,7 @@
   --color-link-hover: #5b4c76ff;
   --color-link-active: #5b4c76ff;
   --color-link-disabled: #ada5bbff;
+  --grid-grid-m: [object Object];
   --font-tiny: 400 12px/12px Arial, Helvetica, sans-serif;
   --font-small: 400 13px/20px Arial, Helvetica, sans-serif;
   --font-medium: 400 15px/22px Arial, Helvetica, sans-serif;
