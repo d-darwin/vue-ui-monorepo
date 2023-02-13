@@ -1,19 +1,21 @@
 // TODO: descr
 export default function(
   className: string,
-  customPropertyName: string,
-  prevCustomPropertyName?: string,
+  customProperty: { name: string, value?: string },
+  prevCustomProperty?: { name: string, value?: string },
   isLast?: boolean,
 ): string {
 
-  if (!prevCustomPropertyName) {
+  if (!prevCustomProperty?.value) {
     return '';
   }
 
-  const prevPropPrefix = prevCustomPropertyName.replace('breakpoints', 'grid');
+  console.log(customProperty, prevCustomProperty);
+
+  const prevPropPrefix = prevCustomProperty.name.replace('breakpoints', 'grid');
   if (isLast) {
-    const propPrefix = customPropertyName.replace('breakpoints', 'grid');
-    return `\n@media (min-width: var(${prevCustomPropertyName})) and (max-width: var(${customPropertyName}) - 1) {
+    const propPrefix = customProperty.name.replace('breakpoints', 'grid');
+    return `\n@media (min-width: ${prevCustomProperty.value}px) and (max-width: calc(${customProperty.value}px - 1px)) {
   :root {
     --grid-column-count: var(${prevPropPrefix}-column-count);
     --grid-column-gap: var(${prevPropPrefix}-column-gap);
@@ -21,7 +23,7 @@ export default function(
     --grid-max-width: var(${prevPropPrefix}-max-width);
   }
 }
-\n@media (min-width: var(${customPropertyName})) {
+\n@media (min-width: ${customProperty.value}px) {
   :root {
     --grid-column-count: var(${propPrefix}-column-count);
     --grid-column-gap: var(${propPrefix}-column-gap);
@@ -31,7 +33,7 @@ export default function(
 }`;
   }
 
-  return `\n@media (min-width: var(${prevCustomPropertyName})) and (max-width: var(${customPropertyName}) - 1) {
+  return `\n@media (min-width: ${prevCustomProperty.value}px) and (max-width: calc(${customProperty.value}px - 1px)) {
   :root {
     --grid-column-count: var(${prevPropPrefix}-column-count);
     --grid-column-gap: var(${prevPropPrefix}-column-gap);

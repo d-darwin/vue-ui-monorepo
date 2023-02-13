@@ -11,6 +11,7 @@
     "useDefineForClassFields": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "types": [
       "node",
       "webpack-env"
@@ -23,6 +24,7 @@
     ]
   },
   "include": [
+    "src/typings.d.ts",
     "src/**/*.ts",
     "dist/**/*.ts",
     "/config.json"

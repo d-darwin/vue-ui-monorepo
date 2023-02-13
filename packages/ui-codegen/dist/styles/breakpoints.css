@@ -1,7 +1,5 @@
 @import '~@darwin-studio/ui-dictionary/build/variables.css';
 
-
-/*// TODO*/
 @media (min-width: 360px) and (max-width: calc(600px - 1px)) {
   :root {
     --grid-column-count: var(--grid-xs-column-count);
@@ -11,7 +9,7 @@
   }
 }
 
-@media (min-width: var(--breakpoints-sm)) and (max-width: var(--breakpoints-md) - 1) {
+@media (min-width: 600px) and (max-width: calc(960px - 1px)) {
   :root {
     --grid-column-count: var(--grid-sm-column-count);
     --grid-column-gap: var(--grid-sm-column-gap);
@@ -20,7 +18,7 @@
   }
 }
 
-@media (min-width: var(--breakpoints-md)) and (max-width: var(--breakpoints-lg) - 1) {
+@media (min-width: 960px) and (max-width: calc(1264px - 1px)) {
   :root {
     --grid-column-count: var(--grid-md-column-count);
     --grid-column-gap: var(--grid-md-column-gap);
@@ -29,7 +27,7 @@
   }
 }
 
-@media (min-width: var(--breakpoints-lg)) and (max-width: var(--breakpoints-xl) - 1) {
+@media (min-width: 1264px) and (max-width: calc(1904px - 1px)) {
   :root {
     --grid-column-count: var(--grid-lg-column-count);
     --grid-column-gap: var(--grid-lg-column-gap);
@@ -38,7 +36,7 @@
   }
 }
 
-@media (min-width: var(--breakpoints-xl)) {
+@media (min-width: 1904px) {
   :root {
     --grid-column-count: var(--grid-xl-column-count);
     --grid-column-gap: var(--grid-xl-column-gap);

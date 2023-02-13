@@ -13,7 +13,7 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: PartialRecord<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
-  cssClassGenerator: (className: string, customPropertyName: string, specialPropertyName?: string, isLast?: boolean) => string,
+  cssClassGenerator: (className: string, customProperty: { name: string, value?: string }, auxCustomProperty?: { name: string, value?: string }, isLast?: boolean) => string,
   colorVariantList?: string[],
 ): Promise<void> {
   if (designTokens) {
@@ -27,20 +27,31 @@ export default async function (
       ? tokenNameFilter(Object.keys(designTokens))
       : Object.keys(designTokens);
     let prevCustomPropertyName = '';
+    let prevCustomPropertyValue = '';
     tokenVariantNameList?.forEach((tokenVariantName, index) => {
       const className = prepareCssClassName(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
       const customPropertyName = `--${designTokenConfig.NAME}-${tokenVariantName}`;
+      const customPropertyValue = designTokens[tokenVariantName]?.value;
+
       if (colorVariantList?.length) {
         const { extractedWord: colorVariantName } = getNakedName(customPropertyName, colorVariantList)
         const colorCustomPropertyName = `--${config.TOKENS.COLOR_SCHEME.NAME}-${colorVariantName}-${designTokenConfig.NAME}`
-        cssClassStringList.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName)); // TODO: add options{}
+        cssClassStringList.push(cssClassGenerator(
+          className,
+          { name: customPropertyName, value: customPropertyValue },
+          { name: colorCustomPropertyName },
+        )); // TODO: add options{}
         return;
       } else {
         cssClassStringList.push(cssClassGenerator(
-          className, customPropertyName, prevCustomPropertyName, index === tokenVariantNameList.length - 1
+          className,
+          { name: customPropertyName, value: customPropertyValue },
+          { name: prevCustomPropertyName, value: prevCustomPropertyValue },
+          index === tokenVariantNameList.length - 1
         )); // TODO: add options{}
       }
       prevCustomPropertyName = customPropertyName;
+      prevCustomPropertyValue = customPropertyValue;
     })
 
     await writeFile(
