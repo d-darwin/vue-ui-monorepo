@@ -18,6 +18,7 @@ export default function(
     --grid-column-count: var(${prevPropPrefix}-column-count);
     --grid-column-gap: var(${prevPropPrefix}-column-gap);
     --grid-column-offset: var(${prevPropPrefix}-column-offset);
+    --grid-max-width: var(${prevPropPrefix}-max-width);
   }
 }
 \n@media (min-width: var(${customPropertyName})) {
@@ -25,6 +26,7 @@ export default function(
     --grid-column-count: var(${propPrefix}-column-count);
     --grid-column-gap: var(${propPrefix}-column-gap);
     --grid-column-offset: var(${propPrefix}-column-offset);
+    --grid-max-width: var(${propPrefix}-max-width);
   }
 }`;
   }
@@ -34,6 +36,7 @@ export default function(
     --grid-column-count: var(${prevPropPrefix}-column-count);
     --grid-column-gap: var(${prevPropPrefix}-column-gap);
     --grid-column-offset: var(${prevPropPrefix}-column-offset);
+    --grid-max-width: var(${prevPropPrefix}-max-width);
   }
 }`;
 }

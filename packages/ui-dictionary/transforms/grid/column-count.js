@@ -9,5 +9,6 @@ module.exports = {
   transformer: token =>
     `${token.value?.count || token.original?.value?.count};
   --${token.name}-column-gap: ${token.value?.gutterSize || token.original?.value?.gutterSize}px;
-  --${token.name}-column-offset: ${token.value?.offset || token.original?.value?.offset}px`,
+  --${token.name}-column-offset: ${token.value?.offset || token.original?.value?.offset}px;
+  --${token.name}-max-width: 100%`, // TODO
 };

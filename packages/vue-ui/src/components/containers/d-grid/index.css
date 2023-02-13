@@ -1,0 +1,23 @@
+@import "~@darwin-studio/ui-codegen/dist/styles/breakpoints.css";
+
+.dGrid {
+  display: grid;
+  min-width: 320px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  padding-left: var(--grid-column-offset);
+  padding-right: var(--grid-column-offset);
+  width: 100%;
+  max-width: var(--grid-max-width);
+
+  grid-template-columns: repeat(var(--grid-column-count), 1fr);
+}
+/*// TODO*/
+.dGrid:not(.__no-column-gap) {
+ grid-column-gap: var(--grid-column-gap);
+}
+/*// TODO*/
+.dGrid:not(.__no-raw-gap) {
+ /*grid-row-gap: var(--grid-raw-gap);*/
+}
