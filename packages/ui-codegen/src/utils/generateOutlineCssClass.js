@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 // TODO: naming ???
-function default_1(className, customProperty, colorCustomProperty) {
+function default_1(className, customProperty, prevClassName, colorCustomProperty) {
     // TODO: add .${className}[data-focus-visible-added] ???
     // TODO: different outline colors for hover/active/disabled???
     // TODO: move \n to the caller

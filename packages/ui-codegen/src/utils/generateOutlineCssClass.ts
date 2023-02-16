@@ -1,7 +1,8 @@
 // TODO: naming ???
 export default function (
   className: string,
-  customProperty: { name: string, value?: string },
+  customProperty: { name: string, value?: string | Record<string, unknown> },
+  prevClassName?: string,
   colorCustomProperty?: { name: string, value?: string },
 ): string {
   // TODO: add .${className}[data-focus-visible-added] ???

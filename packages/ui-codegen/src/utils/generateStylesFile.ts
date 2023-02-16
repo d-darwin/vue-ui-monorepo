@@ -13,12 +13,17 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: PartialRecord<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
-  cssClassGenerator: (className: string, customProperty: { name: string, value?: string }, auxCustomProperty?: { name: string, value?: string }, isLast?: boolean) => string,
+  cssClassGenerator: (
+    className: string,
+    customProperty: { name: string, value?: string | Record<string, unknown> },
+    auxClassName: string,
+    auxCustomProperty?: { name: string, value?: string },
+    isLast?: boolean
+  ) => string,
   colorVariantList?: string[],
 ): Promise<void> {
   if (designTokens) {
     const cssClassStringList: string[] = [];
-
     cssClassStringList.push(
       `@import '${config.CSS_VARIABLES_SOURCE}';`
     );
@@ -26,6 +31,8 @@ export default async function (
     const tokenVariantNameList = tokenNameFilter
       ? tokenNameFilter(Object.keys(designTokens))
       : Object.keys(designTokens);
+
+    let prevClassName = '';
     let prevCustomPropertyName = '';
     let prevCustomPropertyValue = '';
     tokenVariantNameList?.forEach((tokenVariantName, index) => {
@@ -39,6 +46,7 @@ export default async function (
         cssClassStringList.push(cssClassGenerator(
           className,
           { name: customPropertyName, value: customPropertyValue },
+          prevClassName,
           { name: colorCustomPropertyName },
         )); // TODO: add options{}
         return;
@@ -46,10 +54,12 @@ export default async function (
         cssClassStringList.push(cssClassGenerator(
           className,
           { name: customPropertyName, value: customPropertyValue },
+          prevClassName,
           { name: prevCustomPropertyName, value: prevCustomPropertyValue },
           index === tokenVariantNameList.length - 1
         )); // TODO: add options{}
       }
+      prevClassName = className;
       prevCustomPropertyName = customPropertyName;
       prevCustomPropertyValue = customPropertyValue;
     })

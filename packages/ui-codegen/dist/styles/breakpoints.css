@@ -1,5 +1,6 @@
 @import '~@darwin-studio/ui-dictionary/build/variables.css';
 
+
 @media (min-width: 360px) and (max-width: calc(600px - 1px)) {
   :root {
     --grid-column-count: var(--grid-xs-column-count);

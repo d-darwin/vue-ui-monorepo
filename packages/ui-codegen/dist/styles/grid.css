@@ -1,0 +1,180 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
+
+@media (min-width: 360px) and (max-width: calc(600px - 1px)) {
+  .gridXsColSpan1 {
+      grid-column-end: span 1;
+  }
+
+  .gridXsColSpan2 {
+      grid-column-end: span 2;
+  }
+
+  .gridXsColSpan3 {
+      grid-column-end: span 3;
+  }
+
+  .gridXsColSpan4 {
+      grid-column-end: span 4;
+  }
+}
+
+@media (min-width: 600px) and (max-width: calc(960px - 1px)) {
+  .gridSmColSpan1 {
+      grid-column-end: span 1;
+  }
+
+  .gridSmColSpan2 {
+      grid-column-end: span 2;
+  }
+
+  .gridSmColSpan3 {
+      grid-column-end: span 3;
+  }
+
+  .gridSmColSpan4 {
+      grid-column-end: span 4;
+  }
+
+  .gridSmColSpan5 {
+      grid-column-end: span 5;
+  }
+
+  .gridSmColSpan6 {
+      grid-column-end: span 6;
+  }
+}
+
+@media (min-width: 960px) and (max-width: calc(1264px - 1px)) {
+  .gridMdColSpan1 {
+      grid-column-end: span 1;
+  }
+
+  .gridMdColSpan2 {
+      grid-column-end: span 2;
+  }
+
+  .gridMdColSpan3 {
+      grid-column-end: span 3;
+  }
+
+  .gridMdColSpan4 {
+      grid-column-end: span 4;
+  }
+
+  .gridMdColSpan5 {
+      grid-column-end: span 5;
+  }
+
+  .gridMdColSpan6 {
+      grid-column-end: span 6;
+  }
+
+  .gridMdColSpan7 {
+      grid-column-end: span 7;
+  }
+
+  .gridMdColSpan8 {
+      grid-column-end: span 8;
+  }
+}
+
+@media (min-width: 1264px) and (max-width: calc(1904px - 1px)) {
+  .gridLgColSpan1 {
+      grid-column-end: span 1;
+  }
+
+  .gridLgColSpan2 {
+      grid-column-end: span 2;
+  }
+
+  .gridLgColSpan3 {
+      grid-column-end: span 3;
+  }
+
+  .gridLgColSpan4 {
+      grid-column-end: span 4;
+  }
+
+  .gridLgColSpan5 {
+      grid-column-end: span 5;
+  }
+
+  .gridLgColSpan6 {
+      grid-column-end: span 6;
+  }
+
+  .gridLgColSpan7 {
+      grid-column-end: span 7;
+  }
+
+  .gridLgColSpan8 {
+      grid-column-end: span 8;
+  }
+
+  .gridLgColSpan9 {
+      grid-column-end: span 9;
+  }
+
+  .gridLgColSpan10 {
+      grid-column-end: span 10;
+  }
+
+  .gridLgColSpan11 {
+      grid-column-end: span 11;
+  }
+
+  .gridLgColSpan12 {
+      grid-column-end: span 12;
+  }
+}
+
+@media (min-width: 1904px) {
+  .gridXlColSpan1 {
+    grid-column-end: span 1;
+  }
+
+  .gridXlColSpan2 {
+    grid-column-end: span 2;
+  }
+
+  .gridXlColSpan3 {
+    grid-column-end: span 3;
+  }
+
+  .gridXlColSpan4 {
+    grid-column-end: span 4;
+  }
+
+  .gridXlColSpan5 {
+    grid-column-end: span 5;
+  }
+
+  .gridXlColSpan6 {
+    grid-column-end: span 6;
+  }
+
+  .gridXlColSpan7 {
+    grid-column-end: span 7;
+  }
+
+  .gridXlColSpan8 {
+    grid-column-end: span 8;
+  }
+
+  .gridXlColSpan9 {
+    grid-column-end: span 9;
+  }
+
+  .gridXlColSpan10 {
+    grid-column-end: span 10;
+  }
+
+  .gridXlColSpan11 {
+    grid-column-end: span 11;
+  }
+
+  .gridXlColSpan12 {
+    grid-column-end: span 12;
+  }
+}

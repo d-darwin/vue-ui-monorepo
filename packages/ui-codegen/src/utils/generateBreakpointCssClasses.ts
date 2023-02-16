@@ -1,7 +1,8 @@
 // TODO: descr
 export default function(
   className: string,
-  customProperty: { name: string, value?: string },
+  customProperty: { name: string, value?: string | Record<string, unknown> },
+  prevClassName?: string,
   prevCustomProperty?: { name: string, value?: string },
   isLast?: boolean,
 ): string {
@@ -9,8 +10,6 @@ export default function(
   if (!prevCustomProperty?.value) {
     return '';
   }
-
-  console.log(customProperty, prevCustomProperty);
 
   const prevPropPrefix = prevCustomProperty.name.replace('breakpoints', 'grid');
   if (isLast) {
