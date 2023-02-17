@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 13 Feb 2023 06:40:59 GMT
+ * Generated on Fri, 17 Feb 2023 06:57:22 GMT
  */
 
 :root {
@@ -161,23 +161,23 @@
   --grid-xs-column-count: 4;
   --grid-xs-column-gap: 16px;
   --grid-xs-column-offset: 20px;
-  --grid-xs-max-width: 100%;
+  --grid-xs-max-width:  400px;
   --grid-sm-column-count: 6;
   --grid-sm-column-gap: 16px;
   --grid-sm-column-offset: 20px;
-  --grid-sm-max-width: 100%;
+  --grid-sm-max-width:  760px;
   --grid-md-column-count: 8;
   --grid-md-column-gap: 20px;
   --grid-md-column-offset: 24px;
-  --grid-md-max-width: 100%;
+  --grid-md-max-width:  1024px;
   --grid-lg-column-count: 12;
   --grid-lg-column-gap: 24px;
   --grid-lg-column-offset: 32px;
-  --grid-lg-max-width: 100%;
+  --grid-lg-max-width:  1600px;
   --grid-xl-column-count: 12;
   --grid-xl-column-gap: 24px;
   --grid-xl-column-offset: 32px;
-  --grid-xl-max-width: 100%;
+  --grid-xl-max-width:  2400px;
   --font-tiny: 400 12px/12px Arial, Helvetica, sans-serif;
   --font-small: 400 13px/20px Arial, Helvetica, sans-serif;
   --font-medium: 400 15px/22px Arial, Helvetica, sans-serif;

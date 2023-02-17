@@ -12,8 +12,8 @@ import generateSizeCssClass from "../utils/generateSizeCssClass";
 import type { DesignTokens } from "../types";
 import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
 import generateTransitionCssClass from "../utils/generateTransitionCssClass";
-import generateBreakpointCssClasses from "../utils/generateBreakpointCssClasses";
 import generateGridCssClasses from "../utils/generateGridCssClasses";
+import parseMaxWidth from "../utils/parseMaxWidth";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -112,29 +112,22 @@ export default async () => {
     generateTransitionCssClass, // TODO: move to config ???
   )
 
-  // TODO: Generates media queries with grid-dependent custom properties
-  const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
-  const breakpointTokens = designTokens[breakpointTokenConfig.NAME];
-  await generateStylesFile(
-    breakpointTokens,
-    breakpointTokenConfig,
-    null, // TODO: move to config ???
-    generateBreakpointCssClasses, // TODO: move to config ???
-  )
-  // TODO: Generates max grid width :arrow_up:
-
-  // TODO: implement :arrow_up: in the :arrow_down:
-
-  // TODO: Generates colSpan classes base on grid tokens
+  // TODO: Generates max grid width :arrow_down:
   const gridTokenConfig = config.TOKENS.GRID ;
   const gridTokens: DesignTokens = designTokens[gridTokenConfig.NAME];
+  const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+  const breakpointTokens = designTokens[breakpointTokenConfig.NAME];
   const preparedGridTokens: DesignTokens = {};
     Object.keys(gridTokens).forEach((breakpointName: string) => {
+      const gridToken = gridTokens[breakpointName];
+      if (!gridToken) { return; }
+
       preparedGridTokens[breakpointName] = {
-      ...gridTokens[breakpointName],
+      ...gridToken,
       value: {
-        ...gridTokens[breakpointName]?.value,
-        breakpoint: breakpointTokens[breakpointName]?.value
+        ...gridToken?.value,
+        breakpoint: breakpointTokens[breakpointName]?.value,
+        maxWidth: parseMaxWidth(gridToken.description),
       }
     };
   });
@@ -143,7 +136,6 @@ export default async () => {
     gridTokenConfig,
     null, // TODO: move to config ???
     generateGridCssClasses, // TODO: move to config ???
-    // TODO: we need breakpoint values
   )
 
 }

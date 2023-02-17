@@ -9,36 +9,32 @@ export default function(
   if (!prevCustomProperty || typeof prevCustomProperty.value !== "object"  || typeof customProperty.value !== "object" ) {
     return '';
   }
-  const prevColumnCount = Number(prevCustomProperty.value?.count);
-  const columnCount = Number(customProperty.value?.count);
-  if (!prevColumnCount || !columnCount) {
-    return '';
-  }
 
-  let prevColSpanClassStrings = '';
-  for(let i = 1; i <= prevColumnCount; i++) {
-    prevColSpanClassStrings += `  .${prevClassName}ColSpan${i} {
-      grid-column-end: span ${i};
-  }${i < prevColumnCount ? '\n\n' : ''}`
-  }
+  const prevGridClassStrings = `  :root {
+    --grid-column-count: var(${prevCustomProperty.name}-column-count);
+    --grid-column-gap: var(${prevCustomProperty.name}-column-gap);
+    --grid-column-offset: var(${prevCustomProperty.name}-column-offset);
+    --grid-max-width: var(${prevCustomProperty.name}-max-width);
+  }`
 
   if (isLast) {
-    let colSpanClassStrings = '';
-    for(let i = 1; i <= columnCount; i++) {
-      colSpanClassStrings += `  .${className}ColSpan${i} {
-    grid-column-end: span ${i};
-  }${i < columnCount ? '\n\n' : ''}`
-  }
+    const gridClassStrings = `  :root {
+    --grid-column-count: var(${customProperty.name}-column-count);
+    --grid-column-gap: var(${customProperty.name}-column-gap);
+    --grid-column-offset: var(${customProperty.name}-column-offset);
+    --grid-max-width: var(${customProperty.name}-max-width);
+  }`;
+
     return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: calc(${customProperty.value.breakpoint}px - 1px)) {
-${prevColSpanClassStrings}
+${prevGridClassStrings}
 }
 
 @media (min-width: ${customProperty.value.breakpoint}px) {
-${colSpanClassStrings}
+${gridClassStrings}
 }`;
   }
 
   return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: calc(${customProperty.value.breakpoint}px - 1px)) {
-${prevColSpanClassStrings}
+${prevGridClassStrings}
 }`;
 }
