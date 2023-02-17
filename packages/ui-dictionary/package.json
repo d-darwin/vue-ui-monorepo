@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/ui-dictionary",
-  "version": "0.24.3",
+  "version": "0.24.5",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
