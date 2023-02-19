@@ -7,7 +7,8 @@ export default async function (
   designTokens: DesignTokens,
   designTokenConfig: Record<ConfigKey, string>,
   tokenNameFilter: ((tokenNames: string[]) => string[]) | null,
-  tokenNameTransformer: ((tokenNames: string[]) => string[]) | null
+  tokenNameTransformer: ((tokenNames: string[]) => string[]) | null,
+  generateValues?: boolean,
 ): Promise<void> {
   if (designTokens) {
     const constantStringList: string[] = [];
@@ -28,6 +29,17 @@ export default async function (
       constantStringList.push(prepareConstantString(tokenVariantName));
     })
     constantStringList.push("} as const;");
+
+    if (generateValues) {
+      constantStringList.push(`export const ${designTokenConfig.CONSTANT_NAME}_VALUE = {`);
+      tokenVariantNameList.forEach((tokenVariantName) => {
+        constantStringList.push(prepareConstantString(
+          tokenVariantName,
+          designTokens[tokenVariantName]?.value
+        ));
+      })
+      constantStringList.push("} as const;");
+    }
 
     await writeFile(
       constantStringList,

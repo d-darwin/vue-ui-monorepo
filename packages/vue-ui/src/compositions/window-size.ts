@@ -10,7 +10,6 @@ export const DEFAULT_THROTTLE_DURATION = 100;
  * @returns {{height: number, width: number, size: string}}
  */
 export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
-  //TODO: refactor
   const height: Ref = ref(0);
   const width: Ref = ref(0);
   const size: Ref = ref("");

@@ -112,17 +112,17 @@ export default async () => {
     generateTransitionCssClass, // TODO: move to config ???
   )
 
-  // TODO: Generates max grid width :arrow_down:
   const gridTokenConfig = config.TOKENS.GRID ;
   const gridTokens: DesignTokens = designTokens[gridTokenConfig.NAME];
   const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
   const breakpointTokens = designTokens[breakpointTokenConfig.NAME];
   const preparedGridTokens: DesignTokens = {};
-    Object.keys(gridTokens).forEach((breakpointName: string) => {
-      const gridToken = gridTokens[breakpointName];
-      if (!gridToken) { return; }
+  // TODO: sort by breakpointTokens[breakpointName]?.value
+  Object.keys(gridTokens).forEach((breakpointName: string) => {
+    const gridToken = gridTokens[breakpointName];
+    if (!gridToken) { return; }
 
-      preparedGridTokens[breakpointName] = {
+    preparedGridTokens[breakpointName] = {
       ...gridToken,
       value: {
         ...gridToken?.value,

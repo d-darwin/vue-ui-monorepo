@@ -102,7 +102,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
             case 9:
                 _b.sent();
                 breakpointTokenConfig = config.TOKENS.BREAKPOINT;
-                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig, null, null)];
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig, null, null, true)];
             case 10:
                 _b.sent();
                 return [2 /*return*/];

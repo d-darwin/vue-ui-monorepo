@@ -130,9 +130,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 _b.sent();
                 transitionTokenConfig = config.TOKENS.TRANSITION;
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, // TODO: move to config ???
-                    generateTransitionCssClass_1["default"])
-                    // TODO: Generates max grid width :arrow_down:
-                ];
+                    generateTransitionCssClass_1["default"])];
             case 12:
                 _b.sent();
                 gridTokenConfig = config.TOKENS.GRID;
@@ -140,6 +138,7 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 breakpointTokenConfig = config.TOKENS.BREAKPOINT;
                 breakpointTokens = designTokens[breakpointTokenConfig.NAME];
                 preparedGridTokens = {};
+                // TODO: sort by breakpointTokens[breakpointName]?.value
                 Object.keys(gridTokens).forEach(function (breakpointName) {
                     var _a;
                     var gridToken = gridTokens[breakpointName];
