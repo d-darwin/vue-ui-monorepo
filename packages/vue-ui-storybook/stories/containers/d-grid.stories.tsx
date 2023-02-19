@@ -6,6 +6,11 @@ export default {
   component: DGrid,
   argTypes: {},
   args: {
+    // TODO: use constants for breakpoint names
+    colSpan: {
+      xs: 4,
+      sm: 2,
+    },
     tag: "div",
   },
 };

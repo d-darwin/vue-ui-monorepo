@@ -194,9 +194,7 @@ export default defineComponent({
     const { scrollOffsetX, scrollOffsetY } = useScrollOffset(
       config.throttleDuration
     );
-    const { windowWidth, windowHeight } = useWindowSize(
-      config.throttleDuration
-    );
+    const { width, height } = useWindowSize(config.throttleDuration);
 
     // To manipulate get getBoundingClientRect and adjust tooltip position
     // It's a bit of magic - use the same refs name in the render function and return they from the setup()
@@ -219,8 +217,8 @@ export default defineComponent({
       const adjustedPosition = getAdjustedPosition(
         containerRef,
         contentRef,
-        windowWidth,
-        windowHeight,
+        width,
+        height,
         defaultHorizontalPosition,
         defaultVerticalPosition
       );
@@ -233,8 +231,8 @@ export default defineComponent({
     const watchableList = [
       scrollOffsetX,
       scrollOffsetY,
-      windowWidth,
-      windowHeight,
+      width,
+      height,
       props, // TODO: use more specific ones
     ];
     watchableList.forEach((watchable) =>
@@ -242,8 +240,8 @@ export default defineComponent({
         const adjustedPosition = getAdjustedPosition(
           containerRef,
           contentRef,
-          windowWidth,
-          windowHeight,
+          width,
+          height,
           defaultHorizontalPosition,
           defaultVerticalPosition
         );

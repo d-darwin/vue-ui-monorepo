@@ -2,23 +2,63 @@ import { ref, onMounted, onUnmounted, Ref } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
 
+export const DEFAULT_THROTTLE_DURATION = 100;
+
 /**
- * Watches for resize and change windowHeight, windowWidth and deviceWidth
- * if any breakpoint was crossed.
+ * Watches for resize and change height, width and size if any breakpoint was crossed.
  * @param ms throttle duration
- * @returns {{deviceWidth: number, windowHeight: number, windowWidth: string}}
+ * @returns {{height: number, width: number, size: string}}
  */
-export default function useWindowSize(ms: number) {
+export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
   //TODO: refactor
-  const windowHeight: Ref = ref(0);
-  const windowWidth: Ref = ref(0);
+  const height: Ref = ref(0);
+  const width: Ref = ref(0);
+  const size: Ref = ref("");
+
+  // TODO: get from codegen
+  const breakpointList = {
+    sm: 320,
+    md: 640,
+    lg: 768,
+    xl: 1024,
+    xxl: 1200,
+  };
 
   let throttledOnResize: (() => void) | null = null;
 
   function onResize() {
     if (typeof window !== "undefined") {
-      windowHeight.value = document?.documentElement?.clientHeight;
-      windowWidth.value = document?.documentElement?.clientWidth;
+      height.value = document?.documentElement?.clientHeight;
+      width.value = document?.documentElement?.clientWidth; // TODO: safari fix
+
+      // todo: arrange it while codegen
+      if (width.value < breakpointList.sm) {
+        // smallest
+        size.value = "xs";
+      } else if (
+        width.value >= breakpointList.sm &&
+        width.value < breakpointList.md
+      ) {
+        size.value = "sm";
+      } else if (
+        width.value >= breakpointList.md &&
+        width.value < breakpointList.lg
+      ) {
+        size.value = "md";
+      } else if (
+        width.value >= breakpointList.lg &&
+        width.value < breakpointList.xl
+      ) {
+        size.value = "lg";
+      } else if (
+        width.value >= breakpointList.xl &&
+        width.value < breakpointList.xxl
+      ) {
+        size.value = "xl";
+      } else if (width.value >= breakpointList.xxl) {
+        // biggest
+        size.value = "xxl";
+      }
     }
   }
 
@@ -38,5 +78,5 @@ export default function useWindowSize(ms: number) {
     }
   });
 
-  return { windowHeight, windowWidth };
+  return { height, width, size };
 }
