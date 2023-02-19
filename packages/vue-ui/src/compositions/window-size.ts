@@ -1,6 +1,10 @@
 import { ref, onMounted, onUnmounted, Ref } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
+import {
+  BREAKPOINTS,
+  BREAKPOINTS_VALUE,
+} from "@darwin-studio/ui-codegen/dist/constants/breakpoints";
 
 export const DEFAULT_THROTTLE_DURATION = 100;
 
@@ -14,15 +18,6 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
   const width: Ref = ref(0);
   const size: Ref = ref("");
 
-  // TODO: get from codegen
-  const breakpointList = {
-    sm: 320,
-    md: 640,
-    lg: 768,
-    xl: 1024,
-    xxl: 1200,
-  };
-
   let throttledOnResize: (() => void) | null = null;
 
   function onResize() {
@@ -30,34 +25,17 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
       height.value = document?.documentElement?.clientHeight;
       width.value = document?.documentElement?.clientWidth; // TODO: safari fix
 
-      // todo: arrange it while codegen
-      if (width.value < breakpointList.sm) {
-        // smallest
-        size.value = "xs";
-      } else if (
-        width.value >= breakpointList.sm &&
-        width.value < breakpointList.md
-      ) {
-        size.value = "sm";
-      } else if (
-        width.value >= breakpointList.md &&
-        width.value < breakpointList.lg
-      ) {
-        size.value = "md";
-      } else if (
-        width.value >= breakpointList.lg &&
-        width.value < breakpointList.xl
-      ) {
-        size.value = "lg";
-      } else if (
-        width.value >= breakpointList.xl &&
-        width.value < breakpointList.xxl
-      ) {
-        size.value = "xl";
-      } else if (width.value >= breakpointList.xxl) {
-        // biggest
-        size.value = "xxl";
-      }
+      const breakpointList = Object.entries(BREAKPOINTS_VALUE).sort(
+        (a, b) => Number(b[1]) - Number(a[1])
+      );
+      breakpointList.some((item) => {
+        if (width.value >= Number(item[1])) {
+          size.value = BREAKPOINTS[item[0] as keyof typeof BREAKPOINTS]; // TODO: try to avoid such casting
+          console.log(size.value);
+          return true;
+        }
+        return false;
+      });
     }
   }
 
