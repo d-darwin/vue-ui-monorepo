@@ -9,11 +9,12 @@ import generateOutlineCssClass from "../utils/generateOutlineCssClass";
 import generatePaddingCssClass from "../utils/generatePaddingCssClass";
 import generateRoundingCssClass from "../utils/generateRoundingCssClass";
 import generateSizeCssClass from "../utils/generateSizeCssClass";
-import type { DesignTokens } from "../types";
-import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
 import generateTransitionCssClass from "../utils/generateTransitionCssClass";
 import generateGridCssClasses from "../utils/generateGridCssClasses";
 import parseMaxWidth from "../utils/parseMaxWidth";
+import type { DesignTokens } from "../types";
+import { COLOR_SCHEME } from "../../dist/constants/color-scheme";
+import { BREAKPOINTS_VALUE } from "../../dist/constants/breakpoints";
 
 export default async () => {
   // TODO: move to helpers ???
@@ -117,20 +118,25 @@ export default async () => {
   const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
   const breakpointTokens = designTokens[breakpointTokenConfig.NAME];
   const preparedGridTokens: DesignTokens = {};
-  // TODO: sort by breakpointTokens[breakpointName]?.value
-  Object.keys(gridTokens).forEach((breakpointName: string) => {
-    const gridToken = gridTokens[breakpointName];
-    if (!gridToken) { return; }
+  Object.keys(gridTokens)
+    .sort((a, b) => {
+      const aBreakpointValue = Number(BREAKPOINTS_VALUE[a?.toUpperCase() as keyof typeof BREAKPOINTS_VALUE]); // TODO: try to avoid such casting
+      const bBreakpointValue = Number(BREAKPOINTS_VALUE[b?.toUpperCase() as keyof typeof BREAKPOINTS_VALUE]); // TODO: try to avoid such casting
+      return aBreakpointValue - bBreakpointValue;
+    })
+    .forEach((breakpointName: string) => {
+      const gridToken = gridTokens[breakpointName];
+      if (!gridToken) { return; }
 
-    preparedGridTokens[breakpointName] = {
-      ...gridToken,
-      value: {
-        ...gridToken?.value,
-        breakpoint: breakpointTokens[breakpointName]?.value,
-        maxWidth: parseMaxWidth(gridToken.description),
-      }
-    };
-  });
+      preparedGridTokens[breakpointName] = {
+        ...gridToken,
+        value: {
+          ...gridToken?.value,
+          breakpoint: breakpointTokens[breakpointName]?.value,
+          maxWidth: parseMaxWidth(gridToken.description),
+        }
+      };
+    });
   await generateStylesFile(
     preparedGridTokens,
     gridTokenConfig,

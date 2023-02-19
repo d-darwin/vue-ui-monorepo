@@ -62,6 +62,7 @@ var color_scheme_1 = require("../../dist/constants/color-scheme");
 var generateTransitionCssClass_1 = require("../utils/generateTransitionCssClass");
 var generateGridCssClasses_1 = require("../utils/generateGridCssClasses");
 var parseMaxWidth_1 = require("../utils/parseMaxWidth");
+var breakpoints_1 = require("../../dist/constants/breakpoints");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
     var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig, gridTokenConfig, gridTokens, breakpointTokenConfig, breakpointTokens, preparedGridTokens;
     return __generator(this, function (_b) {
@@ -138,8 +139,13 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 breakpointTokenConfig = config.TOKENS.BREAKPOINT;
                 breakpointTokens = designTokens[breakpointTokenConfig.NAME];
                 preparedGridTokens = {};
-                // TODO: sort by breakpointTokens[breakpointName]?.value
-                Object.keys(gridTokens).forEach(function (breakpointName) {
+                Object.keys(gridTokens)
+                    .sort(function (a, b) {
+                    var aBreakpointValue = Number(breakpoints_1.BREAKPOINTS_VALUE[a === null || a === void 0 ? void 0 : a.toUpperCase()]); // TODO: try to avoid such casting
+                    var bBreakpointValue = Number(breakpoints_1.BREAKPOINTS_VALUE[b === null || b === void 0 ? void 0 : b.toUpperCase()]); // TODO: try to avoid such casting
+                    return aBreakpointValue - bBreakpointValue;
+                })
+                    .forEach(function (breakpointName) {
                     var _a;
                     var gridToken = gridTokens[breakpointName];
                     if (!gridToken) {
