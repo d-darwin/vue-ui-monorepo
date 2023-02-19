@@ -5,6 +5,7 @@ import {
   PropType,
   VNode,
 } from "vue";
+import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
@@ -19,15 +20,13 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    /** TODO
+    /**
      * Contains number of columns which should take every child node for specific device width.<br>
-     * Expected format: { xs: 2, sm: 3, ..., xxl: 4 }.<br>
-     * If no column count presented for any breakpoint, nodes will take one cell of the container.
+     * Expected format: number or { xs: 2, sm: 3, ..., xxl: 4 }.<br>
+     * By default children will take one column.
      */
     colSpan: {
-      // TODO: more specific type
-      type: [Number, Object],
-      default: () => ({}), // TODO: generate and use Type and CONSTANT
+      type: [Number, Object] as PropType<number | Record<Breakpoints, number>>,
     },
     /**
      * Defines container element type of the component
@@ -45,8 +44,9 @@ export default defineComponent({
   computed: {
     childComponentsStyles(): CSSProperties {
       let colSpan = config.defaultColSpan;
-      if (typeof this.colSpan === "object" && this.colSpan[this.size]) {
-        colSpan = this.colSpan[this.size];
+      const deviceSize = this.size as Breakpoints; // TODO: how to avoid casting ??
+      if (typeof this.colSpan === "object" && this.colSpan[deviceSize]) {
+        colSpan = this.colSpan[deviceSize];
       } else if (typeof this.colSpan === "number" && this.colSpan) {
         colSpan = this.colSpan;
       }
