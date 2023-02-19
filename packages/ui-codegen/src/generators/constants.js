@@ -42,7 +42,7 @@ var generateConstantsFile_1 = require("@darwin-studio/ui-codegen/src/utils/gener
 var getNakedName_1 = require("@darwin-studio/ui-codegen/src/utils/getNakedName");
 var size_1 = require("../../dist/constants/size");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig, roundingTokenConfig, transitionTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, sizeTokenConfig, paddingTokenConfig, roundingTokenConfig, transitionTokenConfig, breakpointTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -100,6 +100,10 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 transitionTokenConfig = config.TOKENS.TRANSITION;
                 return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, null)];
             case 9:
+                _b.sent();
+                breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+                return [4 /*yield*/, (0, generateConstantsFile_1["default"])(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig, null, null)];
+            case 10:
                 _b.sent();
                 return [2 /*return*/];
         }

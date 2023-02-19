@@ -19,7 +19,7 @@ export default defineComponent({
      */
     colSpan: {
       // TODO: more specific type
-      type: Object,
+      type: [String, Object],
       default: () => ({}), // TODO: generate and use Type and CONSTANT
     },
     /**
@@ -33,6 +33,7 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
+    const colSpanStyle = `grid-column-end: span ${this.colSpan || 1};`;
 
     return (
       <Tag class={styles[config.className]}>{this.$slots.default?.()}</Tag>

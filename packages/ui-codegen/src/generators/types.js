@@ -40,7 +40,7 @@ var config = require("@darwin-studio/ui-codegen/config.json");
 var log_1 = require("../utils/log");
 var generateTypesFile_1 = require("../utils/generateTypesFile");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
+    var designTokens, _a, colorSchemeTokenConfig, fontTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig, breakpointTokenConfig;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -77,6 +77,10 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 transitionTokenConfig = config.TOKENS.TRANSITION;
                 return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig)];
             case 9:
+                _b.sent();
+                breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+                return [4 /*yield*/, (0, generateTypesFile_1["default"])(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig)];
+            case 10:
                 _b.sent();
                 return [2 /*return*/];
         }
