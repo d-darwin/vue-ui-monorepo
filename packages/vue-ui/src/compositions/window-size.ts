@@ -23,7 +23,10 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
   function onResize() {
     if (typeof window !== "undefined") {
       height.value = document?.documentElement?.clientHeight;
-      width.value = document?.documentElement?.clientWidth; // TODO: safari fix
+      width.value = Math.min(
+        window?.innerWidth,
+        document?.documentElement?.clientWidth
+      );
 
       const breakpointList = Object.entries(BREAKPOINTS_VALUE).sort(
         (a, b) => Number(b[1]) - Number(a[1])
@@ -31,7 +34,6 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
       breakpointList.some((item) => {
         if (width.value >= Number(item[1])) {
           size.value = BREAKPOINTS[item[0] as keyof typeof BREAKPOINTS]; // TODO: try to avoid such casting
-          console.log(size.value);
           return true;
         }
         return false;
