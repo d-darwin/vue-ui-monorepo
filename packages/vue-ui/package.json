@@ -16,7 +16,7 @@
     "@darwin-studio/ui-dictionary": "^0.24.5",
     "core-js": "^3.22.0",
     "uuid": "^8.3.2",
-    "vue": "^3.2.33"
+    "vue": "^3.2.47"
   },
   "peerDependencies": {
     "vue": "^3.2.33"

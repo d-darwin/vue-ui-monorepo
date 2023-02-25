@@ -25,7 +25,7 @@ export default function(
     --grid-max-width: var(${customProperty.name}-max-width);
   }`;
 
-    return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: calc(${customProperty.value.breakpoint}px - 1px)) {
+    return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: ${customProperty.value.breakpoint}px) {
 ${prevGridClassStrings}
 }
 
@@ -34,7 +34,7 @@ ${gridClassStrings}
 }`;
   }
 
-  return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: calc(${customProperty.value.breakpoint}px - 1px)) {
+  return `\n@media (min-width: ${prevCustomProperty.value.breakpoint}px) and (max-width: ${customProperty.value.breakpoint}px) {
 ${prevGridClassStrings}
 }`;
 }

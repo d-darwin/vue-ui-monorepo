@@ -1,10 +1,4 @@
-import {
-  CSSProperties,
-  defineComponent,
-  mergeProps,
-  PropType,
-  VNode,
-} from "vue";
+import { defineComponent, mergeProps, PropType, VNode } from "vue";
 import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -42,7 +36,7 @@ export default defineComponent({
   },
 
   computed: {
-    childComponentsStyles(): CSSProperties {
+    preparedColSpan(): number {
       let colSpan = config.defaultColSpan;
       const deviceSize = this.size as Breakpoints; // TODO: how to avoid casting ??
       if (typeof this.colSpan === "object" && this.colSpan[deviceSize]) {
@@ -51,30 +45,31 @@ export default defineComponent({
         colSpan = this.colSpan;
       }
 
-      return { gridColumnEnd: `span ${colSpan}` };
+      return colSpan;
     },
 
-    renderContent(): VNode[] | null {
-      if (!this.$slots.default) {
-        return null;
-      }
-
-      return this.$slots.default?.()?.map((child) => {
-        const childProps = child.props || {};
-        child.props = mergeProps(childProps, {
-          style: {
-            ...childProps.style,
-            ...this.childComponentsStyles,
-          },
-        });
-        return child;
-      });
+    preparedRowGap(): string {
+      // TODO
+      return "10px";
     },
   },
 
   render(): VNode {
     const Tag = this.tag;
 
-    return <Tag class={styles[config.className]}>{this.renderContent}</Tag>;
+    return (
+      <Tag
+        class={styles[config.className]}
+        style={{
+          "--grid-col-span": this.preparedColSpan,
+          "--grid-row-gap": this.preparedRowGap,
+        }}
+      >
+        {this.$slots.default?.()?.map((child) => {
+          child.props = mergeProps(child.props || {}, { class: styles.child });
+          return child;
+        })}
+      </Tag>
+    );
   },
 });
