@@ -1,10 +1,15 @@
 import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
+import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import config from "./config";
 import styles from "./index.css?module";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 // TODO: descr, naming
 export default defineComponent({
@@ -39,6 +44,14 @@ export default defineComponent({
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+    /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    // TODO: other props ???
   },
 
   setup() {
@@ -48,9 +61,8 @@ export default defineComponent({
   computed: {
     preparedColSpan(): number {
       let colSpan = config.defaultColSpan;
-      const deviceSize = this.size;
-      if (typeof this.colSpan === "object" && this.colSpan[deviceSize]) {
-        colSpan = this.colSpan[deviceSize];
+      if (typeof this.colSpan === "object" && this.colSpan[this.size]) {
+        colSpan = this.colSpan[this.size];
       } else if (typeof this.colSpan === "number" && this.colSpan) {
         colSpan = this.colSpan;
       }
@@ -60,14 +72,31 @@ export default defineComponent({
 
     preparedRowGap(): string {
       let rowGap = config.defaultRowGap;
-      const deviceSize = this.size;
-      if (typeof this.rowGap === "object" && this.rowGap[deviceSize]) {
-        rowGap = this.rowGap[deviceSize];
+      if (typeof this.rowGap === "object" && this.rowGap[this.size]) {
+        rowGap = this.rowGap[this.size];
       } else if (typeof this.rowGap === "string" && this.rowGap) {
         rowGap = this.rowGap;
       }
 
       return rowGap;
+    },
+
+    bindings(): Record<string, string[] | Record<string, string | number>> {
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return {
+        class: [
+          styles[config.className],
+          transitionStyles[transitionClassName],
+        ],
+        style: {
+          "--grid-col-span": this.preparedColSpan,
+          "--grid-row-gap": this.preparedRowGap,
+        },
+      };
     },
   },
 
@@ -75,13 +104,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag
-        class={styles[config.className]}
-        style={{
-          "--grid-col-span": this.preparedColSpan,
-          "--grid-row-gap": this.preparedRowGap,
-        }}
-      >
+      <Tag {...this.bindings}>
         {this.$slots.default?.()?.map((child) => {
           child.props = mergeProps(child.props || {}, { class: styles.child });
           return child;
