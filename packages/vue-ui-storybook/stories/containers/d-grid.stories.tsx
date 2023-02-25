@@ -1,6 +1,7 @@
 import { Story } from "@storybook/vue3";
 import DGrid from "@darwin-studio/vue-ui/src/components/containers/d-grid";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { BREAKPOINTS } from "@darwin-studio/ui-codegen/dist/constants/breakpoints";
 import styles from "./d-grid.css";
 
 export default {
@@ -13,18 +14,12 @@ export default {
     },
   },
   args: {
-    // TODO: use constants for breakpoint names
-    colSpan: {
-      xs: 4,
-      sm: 3,
-      md: 2,
-      lg: 3,
-      xl: 3,
-    },
+    colSpan: Object.fromEntries(
+      Object.values(BREAKPOINTS).map((bp) => [bp, 2])
+    ),
     rowGap: "8px",
     tag: "div",
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    // TODO: TRAnsition
   },
 };
 
