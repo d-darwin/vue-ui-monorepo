@@ -11,9 +11,12 @@ export default {
     // TODO: use constants for breakpoint names
     colSpan: {
       xs: 4,
-      sm: 2,
+      sm: 3,
+      md: 4,
+      lg: 4,
+      xl: 4,
     },
-    // TODO: add string variant
+    rowGap: "8px",
     tag: "div",
   },
 };
@@ -26,7 +29,7 @@ const SlotTemplate: Story = (args) => ({
   },
   template: `
     <DGrid v-bind="args">
-      <div :class="styles.item" style="border: 1px solid red;">cell 1</div>
+      <div :class="styles.item">cell 1</div>
       <div :class="styles.item">cell 2</div>
       <div :class="styles.item">cell 3</div>
       <div :class="styles.item">cell 4</div>

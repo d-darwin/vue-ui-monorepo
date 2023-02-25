@@ -23,6 +23,12 @@ export default defineComponent({
       type: [Number, Object] as PropType<number | Record<Breakpoints, number>>,
     },
     /**
+     * TODO
+     */
+    rowGap: {
+      type: [String, Object] as PropType<string | Record<Breakpoints, string>>,
+    },
+    /**
      * Defines container element type of the component
      */
     tag: {
@@ -49,8 +55,15 @@ export default defineComponent({
     },
 
     preparedRowGap(): string {
-      // TODO
-      return "10px";
+      let rowGap = "var(--grid-column-gap)";
+      const deviceSize = this.size as Breakpoints; // TODO: how to avoid casting ??
+      if (typeof this.rowGap === "object" && this.rowGap[deviceSize]) {
+        rowGap = this.rowGap[deviceSize];
+      } else if (typeof this.rowGap === "string" && this.rowGap) {
+        rowGap = this.rowGap;
+      }
+
+      return rowGap;
     },
   },
 
