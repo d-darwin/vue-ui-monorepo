@@ -105,6 +105,7 @@ export default defineComponent({
 
     return (
       <Tag {...this.bindings}>
+        {/*TODO: description*/}
         {this.$slots.default?.()?.map((child) => {
           child.props = mergeProps(child.props || {}, { class: styles.child });
           return child;

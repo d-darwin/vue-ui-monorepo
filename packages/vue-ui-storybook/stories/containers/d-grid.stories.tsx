@@ -1,22 +1,30 @@
 import { Story } from "@storybook/vue3";
 import DGrid from "@darwin-studio/vue-ui/src/components/containers/d-grid";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import styles from "./d-grid.css";
 
 export default {
   title: "containers/DGrid",
   component: DGrid,
-  argTypes: {},
+  argTypes: {
+    transition: {
+      control: { type: "select" },
+      options: Object.values(TRANSITION),
+    },
+  },
   args: {
     // TODO: use constants for breakpoint names
     colSpan: {
       xs: 4,
       sm: 3,
-      md: 4,
-      lg: 4,
-      xl: 4,
+      md: 2,
+      lg: 3,
+      xl: 3,
     },
     rowGap: "8px",
     tag: "div",
+    transition: TRANSITION.SLOW, // TODO: don't hardcode values
+    // TODO: TRAnsition
   },
 };
 
