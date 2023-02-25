@@ -5,6 +5,7 @@ import {
   BREAKPOINTS,
   BREAKPOINTS_VALUE,
 } from "@darwin-studio/ui-codegen/dist/constants/breakpoints";
+import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 
 export const DEFAULT_THROTTLE_DURATION = 100;
 
@@ -14,9 +15,9 @@ export const DEFAULT_THROTTLE_DURATION = 100;
  * @returns {{height: number, width: number, size: string}}
  */
 export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
-  const height: Ref = ref(0);
-  const width: Ref = ref(0);
-  const size: Ref = ref("");
+  const height: Ref<number> = ref(0);
+  const width: Ref<number> = ref(0);
+  const size: Ref<Breakpoints | ""> = ref("");
 
   let throttledOnResize: (() => void) | null = null;
 

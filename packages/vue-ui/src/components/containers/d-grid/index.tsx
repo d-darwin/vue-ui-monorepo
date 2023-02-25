@@ -7,26 +7,30 @@ import config from "./config";
 import styles from "./index.css?module";
 
 // TODO: descr, naming
-//  add grid-column-end: span [col_count]; to the child component styles
-//  or add: grid-column-end: span [col_count]; automatic base on child component attr="colCount"???
-//  -> via what? scopedSlot ant style, other way and class ???
 export default defineComponent({
   name: config.name,
 
   props: {
+    // TODO: content to use instead of $slots.default ???
     /**
      * Contains number of columns which should take every child node for specific device width.<br>
-     * Expected format: number or { xs: 2, sm: 3, ..., xxl: 4 }.<br>
+     * Expected format: number or { xs: 2, sm: 3, ..., xl: 4 }.<br>
      * By default children will take one column.
      */
     colSpan: {
-      type: [Number, Object] as PropType<number | Record<Breakpoints, number>>,
+      type: [Number, Object] as PropType<
+        number | Record<Breakpoints | "", number>
+      >,
     },
     /**
-     * TODO
+     * Contains row gap between cells.<br>
+     * Expected format: '16px' or { xs: '10px', sm: '16px', ..., xl: '24px' }.<br>
+     * By default equals to column gap of the grid.
      */
     rowGap: {
-      type: [String, Object] as PropType<string | Record<Breakpoints, string>>,
+      type: [String, Object] as PropType<
+        string | Record<Breakpoints | "", string>
+      >,
     },
     /**
      * Defines container element type of the component
@@ -44,7 +48,7 @@ export default defineComponent({
   computed: {
     preparedColSpan(): number {
       let colSpan = config.defaultColSpan;
-      const deviceSize = this.size as Breakpoints; // TODO: how to avoid casting ??
+      const deviceSize = this.size;
       if (typeof this.colSpan === "object" && this.colSpan[deviceSize]) {
         colSpan = this.colSpan[deviceSize];
       } else if (typeof this.colSpan === "number" && this.colSpan) {
@@ -55,8 +59,8 @@ export default defineComponent({
     },
 
     preparedRowGap(): string {
-      let rowGap = "var(--grid-column-gap)";
-      const deviceSize = this.size as Breakpoints; // TODO: how to avoid casting ??
+      let rowGap = config.defaultRowGap;
+      const deviceSize = this.size;
       if (typeof this.rowGap === "object" && this.rowGap[deviceSize]) {
         rowGap = this.rowGap[deviceSize];
       } else if (typeof this.rowGap === "string" && this.rowGap) {

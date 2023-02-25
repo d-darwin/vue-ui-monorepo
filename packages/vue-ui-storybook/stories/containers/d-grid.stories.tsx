@@ -7,7 +7,6 @@ export default {
   component: DGrid,
   argTypes: {},
   args: {
-    // TODO: content ???
     // TODO: use constants for breakpoint names
     colSpan: {
       xs: 4,
@@ -21,7 +20,6 @@ export default {
   },
 };
 
-// TODO: add some card
 const SlotTemplate: Story = (args) => ({
   components: { DGrid },
   setup() {
