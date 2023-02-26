@@ -121,10 +121,6 @@ export default defineComponent({
 
       if (this.content) {
         return this.content.map((child) => {
-          if (this.enableHtml && typeof child === "string") {
-            return <template v-html={child} class={styles.child} />;
-          }
-
           if (typeof child !== "string") {
             child.props = mergeProps(child.props || {}, {
               class: styles.child,
@@ -143,6 +139,10 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    return <Tag {...this.bindings}>{this.renderContent}</Tag>;
+    if (!this.enableHtml || !this.content) {
+      return <Tag {...this.bindings}>{this.renderContent}</Tag>;
+    }
+
+    return <Tag {...this.bindings} v-html={this.content.join("")} />;
   },
 });

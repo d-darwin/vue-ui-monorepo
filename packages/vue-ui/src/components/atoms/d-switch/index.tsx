@@ -394,7 +394,6 @@ export default defineComponent({
       const value = checked
         ? this.values?.truthy || (event.target as HTMLInputElement).value
         : this.values?.falsy;
-      console.log(checked, value, this.values);
 
       /**
        * Emits on click with checked and value payload

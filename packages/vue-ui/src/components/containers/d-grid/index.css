@@ -16,6 +16,7 @@
   --grid-col-span: 1;
 }
 
-.child {
+.child,
+.dGrid > * {
   grid-column-end: span var(--grid-col-span);
 }

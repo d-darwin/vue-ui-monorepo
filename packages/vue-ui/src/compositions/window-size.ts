@@ -26,8 +26,6 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
       height.value = window.innerHeight;
       width.value = window.innerWidth; // TODO: check safari
 
-      console.log(width.value);
-
       const breakpointList = Object.entries(BREAKPOINTS_VALUE).sort(
         (a, b) => Number(b[1]) - Number(a[1])
       );
