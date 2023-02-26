@@ -16,7 +16,12 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    // TODO: content to use instead of $slots.default ???
+    /**
+     * An array of VNodes or HTML strings if props.enableHtml is true
+     */
+    content: {
+      type: Array as PropType<(string | VNode)[]>,
+    },
     /**
      * Contains number of columns which should take every child node for specific device width.<br>
      * Expected format: number or { xs: 2, sm: 3, ..., xl: 4 }.<br>
@@ -51,7 +56,13 @@ export default defineComponent({
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
-    // TODO: other props ???
+    /**
+     * Enables html string rendering passed in props.content.<br>
+     * ⚠️ Use only on trusted content and never on user-provided content.
+     */
+    enableHtml: {
+      type: Boolean,
+    },
   },
 
   setup() {
@@ -98,19 +109,40 @@ export default defineComponent({
         },
       };
     },
+
+    renderContent(): (VNode | string)[] | undefined {
+      if (this.$slots.default) {
+        /*TODO: slot description*/
+        return this.$slots.default()?.map((child) => {
+          child.props = mergeProps(child.props || {}, { class: styles.child });
+          return child;
+        });
+      }
+
+      if (this.content) {
+        return this.content.map((child) => {
+          if (this.enableHtml && typeof child === "string") {
+            return <template v-html={child} class={styles.child} />;
+          }
+
+          if (typeof child !== "string") {
+            child.props = mergeProps(child.props || {}, {
+              class: styles.child,
+            });
+            return child;
+          }
+
+          return child;
+        });
+      }
+
+      return undefined;
+    },
   },
 
   render(): VNode {
     const Tag = this.tag;
 
-    return (
-      <Tag {...this.bindings}>
-        {/*TODO: description*/}
-        {this.$slots.default?.()?.map((child) => {
-          child.props = mergeProps(child.props || {}, { class: styles.child });
-          return child;
-        })}
-      </Tag>
-    );
+    return <Tag {...this.bindings}>{this.renderContent}</Tag>;
   },
 });

@@ -99,7 +99,7 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * Enables html string rendering passed in props.label.<br>
+     * Enables html string rendering passed in props.tabs and props.tabpanels.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {
