@@ -114,7 +114,9 @@ export default defineComponent({
       if (this.$slots.default) {
         /*TODO: slot description*/
         return this.$slots.default()?.map((child) => {
-          child.props = mergeProps(child.props || {}, { class: styles.child });
+          child.props = mergeProps(child.props || {}, {
+            class: styles[config.childClassName],
+          });
           return child;
         });
       }
@@ -123,7 +125,7 @@ export default defineComponent({
         return this.content.map((child) => {
           if (typeof child !== "string") {
             child.props = mergeProps(child.props || {}, {
-              class: styles.child,
+              class: styles[config.childClassName],
             });
             return child;
           }
