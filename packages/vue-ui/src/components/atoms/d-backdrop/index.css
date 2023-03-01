@@ -1,0 +1,13 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
+.dBackdrop {
+  --opacity: 0.2;
+  --background-color: var(--color-primary-background);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  opacity: var(--opacity);
+  background-color: var(--background-color);
+  top: 0;
+  left: 0;
+}
