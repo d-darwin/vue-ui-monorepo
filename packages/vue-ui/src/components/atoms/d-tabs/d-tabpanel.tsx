@@ -75,7 +75,7 @@ export default defineComponent({
       default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
-     * Enables html string rendering passed in props.label.<br>
+     * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {

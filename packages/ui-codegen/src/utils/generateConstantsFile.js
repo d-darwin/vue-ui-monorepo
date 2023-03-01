@@ -40,7 +40,7 @@ var config = require("@darwin-studio/ui-codegen/config.json");
 var prepareConstantString_1 = require("../utils/prepareConstantString");
 var writeFile_1 = require("./writeFile");
 // TODO: descr
-function default_1(designTokens, designTokenConfig, tokenNameFilter, tokenNameTransformer) {
+function default_1(designTokens, designTokenConfig, tokenNameFilter, tokenNameTransformer, generateValues) {
     return __awaiter(this, void 0, void 0, function () {
         var constantStringList_1, tokenVariantNameList;
         return __generator(this, function (_a) {
@@ -60,6 +60,14 @@ function default_1(designTokens, designTokenConfig, tokenNameFilter, tokenNameTr
                         constantStringList_1.push((0, prepareConstantString_1["default"])(tokenVariantName));
                     });
                     constantStringList_1.push("} as const;");
+                    if (generateValues) {
+                        constantStringList_1.push("export const ".concat(designTokenConfig.CONSTANT_NAME, "_VALUE = {"));
+                        tokenVariantNameList.forEach(function (tokenVariantName) {
+                            var _a;
+                            constantStringList_1.push((0, prepareConstantString_1["default"])(tokenVariantName, (_a = designTokens[tokenVariantName]) === null || _a === void 0 ? void 0 : _a.value));
+                        });
+                        constantStringList_1.push("} as const;");
+                    }
                     return [4 /*yield*/, (0, writeFile_1["default"])(constantStringList_1, config.OUT_DIR + designTokenConfig.CONSTANT_FILE_PATH + config.CONSTANT_FILE_EXT)];
                 case 1:
                     _a.sent();

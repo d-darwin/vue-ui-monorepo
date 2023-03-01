@@ -20,9 +20,9 @@ export function propContentCase(wrapper: VueWrapper) {
 
 export function contentHtmlCase(wrapper: VueWrapper) {
   return it("Renders props.content as HTML string", async () => {
-    const contentHtml = `<div>some <b>html</b> content</div>`;
-    await wrapper.setProps({ content: contentHtml, enableHtml: true });
-    expect(wrapper.html()).toMatch(contentHtml);
+    const content = `<div>some <b>html</b> content</div>`;
+    await wrapper.setProps({ content, enableHtml: true });
+    expect(wrapper.html()).toMatch(content);
   });
 }
 

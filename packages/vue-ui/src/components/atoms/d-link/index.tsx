@@ -57,7 +57,7 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * Enables html string rendering passed in props.label and props.error.<br>
+     * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {

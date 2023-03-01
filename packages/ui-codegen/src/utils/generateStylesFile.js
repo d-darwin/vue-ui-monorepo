@@ -44,28 +44,36 @@ var getNakedName_1 = require("./getNakedName");
 // TODO: try to reduce args
 function default_1(designTokens, designTokenConfig, tokenNameFilter, cssClassGenerator, colorVariantList) {
     return __awaiter(this, void 0, void 0, function () {
-        var cssClassStringList_1, tokenVariantNameList;
+        var cssClassStringList_1, tokenVariantNameList_1, prevClassName_1, prevCustomPropertyName_1, prevCustomPropertyValue_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!designTokens) return [3 /*break*/, 2];
                     cssClassStringList_1 = [];
                     cssClassStringList_1.push("@import '".concat(config.CSS_VARIABLES_SOURCE, "';"));
-                    tokenVariantNameList = tokenNameFilter
+                    tokenVariantNameList_1 = tokenNameFilter
                         ? tokenNameFilter(Object.keys(designTokens))
                         : Object.keys(designTokens);
-                    tokenVariantNameList === null || tokenVariantNameList === void 0 ? void 0 : tokenVariantNameList.forEach(function (tokenVariantName) {
+                    prevClassName_1 = '';
+                    prevCustomPropertyName_1 = '';
+                    prevCustomPropertyValue_1 = '';
+                    tokenVariantNameList_1 === null || tokenVariantNameList_1 === void 0 ? void 0 : tokenVariantNameList_1.forEach(function (tokenVariantName, index) {
+                        var _a;
                         var className = (0, prepareCssClassName_1["default"])(designTokenConfig.CSS_CLASS_PREFIX, tokenVariantName);
                         var customPropertyName = "--".concat(designTokenConfig.NAME, "-").concat(tokenVariantName);
+                        var customPropertyValue = (_a = designTokens[tokenVariantName]) === null || _a === void 0 ? void 0 : _a.value;
                         if (colorVariantList === null || colorVariantList === void 0 ? void 0 : colorVariantList.length) {
                             var colorVariantName = (0, getNakedName_1["default"])(customPropertyName, colorVariantList).extractedWord;
                             var colorCustomPropertyName = "--".concat(config.TOKENS.COLOR_SCHEME.NAME, "-").concat(colorVariantName, "-").concat(designTokenConfig.NAME);
-                            cssClassStringList_1.push(cssClassGenerator(className, customPropertyName, colorCustomPropertyName));
+                            cssClassStringList_1.push(cssClassGenerator(className, { name: customPropertyName, value: customPropertyValue }, prevClassName_1, { name: colorCustomPropertyName })); // TODO: add options{}
                             return;
                         }
                         else {
-                            cssClassStringList_1.push(cssClassGenerator(className, customPropertyName));
+                            cssClassStringList_1.push(cssClassGenerator(className, { name: customPropertyName, value: customPropertyValue }, prevClassName_1, { name: prevCustomPropertyName_1, value: prevCustomPropertyValue_1 }, index === tokenVariantNameList_1.length - 1)); // TODO: add options{}
                         }
+                        prevClassName_1 = className;
+                        prevCustomPropertyName_1 = customPropertyName;
+                        prevCustomPropertyValue_1 = customPropertyValue;
                     });
                     return [4 /*yield*/, (0, writeFile_1["default"])(cssClassStringList_1, config.OUT_DIR + designTokenConfig.CSS_FILE_PATH + config.STYLES_FILE_EXT)];
                 case 1:

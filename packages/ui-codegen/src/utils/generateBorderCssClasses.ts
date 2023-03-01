@@ -1,30 +1,31 @@
 // TODO: descr
 export default function(
   className: string,
-  customPropertyName: string,
-  colorCustomPropertyName?: string,
+  customProperty: { name: string, value?: string | Record<string, unknown> },
+  prevClassName?: string,
+  colorCustomProperty?: { name: string, value?: string },
 ): string {
   // TODO: move \n to the caller
-  if (colorCustomPropertyName) {
+  if (colorCustomProperty?.name) {
     return `\n.${className} {
-  border: var(${customPropertyName}) var(${colorCustomPropertyName});
+  border: var(${customProperty.name}) var(${colorCustomProperty.name});
 }
 
 .${className}:hover {
-  border-color: var(${colorCustomPropertyName}-hover);
+  border-color: var(${colorCustomProperty.name}-hover);
 }
 
 .${className}:active {
-  border-color: var(${colorCustomPropertyName}-active);
+  border-color: var(${colorCustomProperty.name}-active);
 }
 
 .${className}:disabled {
-  border-color: var(${colorCustomPropertyName}-disabled);
+  border-color: var(${colorCustomProperty.name}-disabled);
 }`;
   }
 
   // TODO: move \n to the caller
   return `\n.${className} {
-  border: var(${customPropertyName});
+  border: var(${customProperty.name});
 }`;
 }

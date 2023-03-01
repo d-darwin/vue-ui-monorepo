@@ -1,14 +1,15 @@
 {
   "name": "@darwin-studio/ui-codegen",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "scripts": {
     "build": "node index.js",
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
   },
   "main": "index.js",
   "dependencies": {
-    "@darwin-studio/ui-dictionary": "^0.24.0",
-    "camel-case": "^4.1.2"
+    "@darwin-studio/ui-dictionary": "^0.25.0",
+    "camel-case": "^4.1.2",
+    "typescript-plugin-css-modules": "^4.1.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.19.0",

@@ -421,7 +421,7 @@ export default defineComponent({
        * @event update:value
        * @type {value: Text | undefined}
        */
-      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
+      this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
       this.whenInput?.(checked ? value : undefined);
     },
   },

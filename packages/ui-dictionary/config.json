@@ -16,7 +16,10 @@
         "spacing/pixel",
         "border/pixel/style",
         "font/string",
-        "motion/transition"
+        "motion/transition",
+        "breakpoint/pixel",
+        "grid/column-count",
+        "grid/column-count-name"
       ]
     }
   }

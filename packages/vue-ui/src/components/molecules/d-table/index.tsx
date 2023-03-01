@@ -120,7 +120,7 @@ export default defineComponent({
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
-     * Enables html string rendering passed in props.label.<br>
+     * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {

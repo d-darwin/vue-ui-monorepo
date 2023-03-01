@@ -234,7 +234,10 @@ describe("DRadio", () => {
   it("Should emit onInput event with value payload", async () => {
     const value = "some value";
     const checked = false;
-    const wrapper = shallowMount(DRadio, { props: { name, value, checked } });
+    const disabled = false;
+    const wrapper = shallowMount(DRadio, {
+      props: { name, value, checked, disabled },
+    });
     const inputEl = wrapper.find("input");
     await inputEl.trigger("click");
     await inputEl.trigger("input");

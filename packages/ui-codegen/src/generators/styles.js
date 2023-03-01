@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -49,8 +60,11 @@ var generateRoundingCssClass_1 = require("../utils/generateRoundingCssClass");
 var generateSizeCssClass_1 = require("../utils/generateSizeCssClass");
 var color_scheme_1 = require("../../dist/constants/color-scheme");
 var generateTransitionCssClass_1 = require("../utils/generateTransitionCssClass");
+var generateGridCssClasses_1 = require("../utils/generateGridCssClasses");
+var parseMaxWidth_1 = require("../utils/parseMaxWidth");
+var breakpoints_1 = require("../../dist/constants/breakpoints");
 exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig;
+    var designTokens, _a, borderTokenConfig, colorSchemeTokenConfig, fontTokenConfig, minControlWidthConfig, outlineTokenConfig, paddingTokenConfig, roundingTokenConfig, sizeTokenConfig, transitionTokenConfig, gridTokenConfig, gridTokens, breakpointTokenConfig, breakpointTokens, preparedGridTokens;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -119,6 +133,29 @@ exports["default"] = (function () { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, (0, generateStylesFile_1["default"])(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, // TODO: move to config ???
                     generateTransitionCssClass_1["default"])];
             case 12:
+                _b.sent();
+                gridTokenConfig = config.TOKENS.GRID;
+                gridTokens = designTokens[gridTokenConfig.NAME];
+                breakpointTokenConfig = config.TOKENS.BREAKPOINT;
+                breakpointTokens = designTokens[breakpointTokenConfig.NAME];
+                preparedGridTokens = {};
+                Object.keys(gridTokens)
+                    .sort(function (a, b) {
+                    var aBreakpointValue = Number(breakpoints_1.BREAKPOINTS_VALUE[a === null || a === void 0 ? void 0 : a.toUpperCase()]); // TODO: try to avoid such casting
+                    var bBreakpointValue = Number(breakpoints_1.BREAKPOINTS_VALUE[b === null || b === void 0 ? void 0 : b.toUpperCase()]); // TODO: try to avoid such casting
+                    return aBreakpointValue - bBreakpointValue;
+                })
+                    .forEach(function (breakpointName) {
+                    var _a;
+                    var gridToken = gridTokens[breakpointName];
+                    if (!gridToken) {
+                        return;
+                    }
+                    preparedGridTokens[breakpointName] = __assign(__assign({}, gridToken), { value: __assign(__assign({}, gridToken === null || gridToken === void 0 ? void 0 : gridToken.value), { breakpoint: (_a = breakpointTokens[breakpointName]) === null || _a === void 0 ? void 0 : _a.value, maxWidth: (0, parseMaxWidth_1["default"])(gridToken.description) }) });
+                });
+                return [4 /*yield*/, (0, generateStylesFile_1["default"])(preparedGridTokens, gridTokenConfig, null, // TODO: move to config ???
+                    generateGridCssClasses_1["default"])];
+            case 13:
                 _b.sent();
                 return [2 /*return*/];
         }

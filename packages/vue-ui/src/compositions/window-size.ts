@@ -1,24 +1,41 @@
 import { ref, onMounted, onUnmounted, Ref } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
+import {
+  BREAKPOINTS,
+  BREAKPOINTS_VALUE,
+} from "@darwin-studio/ui-codegen/dist/constants/breakpoints";
+import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
+
+export const DEFAULT_THROTTLE_DURATION = 100;
 
 /**
- * Watches for resize and change windowHeight, windowWidth and deviceWidth
- * if any breakpoint was crossed.
+ * Watches for resize and change height, width and size if any breakpoint was crossed.
  * @param ms throttle duration
- * @returns {{deviceWidth: number, windowHeight: number, windowWidth: string}}
+ * @returns {{height: number, width: number, size: string}}
  */
-export default function useWindowSize(ms: number) {
-  //TODO: refactor
-  const windowHeight: Ref = ref(0);
-  const windowWidth: Ref = ref(0);
+export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
+  const height: Ref<number> = ref(0);
+  const width: Ref<number> = ref(0);
+  const size: Ref<Breakpoints | ""> = ref("");
 
   let throttledOnResize: (() => void) | null = null;
 
   function onResize() {
     if (typeof window !== "undefined") {
-      windowHeight.value = document?.documentElement?.clientHeight;
-      windowWidth.value = document?.documentElement?.clientWidth;
+      height.value = window.innerHeight;
+      width.value = window.innerWidth; // TODO: check safari
+
+      const breakpointList = Object.entries(BREAKPOINTS_VALUE).sort(
+        (a, b) => Number(b[1]) - Number(a[1])
+      );
+      breakpointList.some((item) => {
+        if (width.value >= Number(item[1])) {
+          size.value = BREAKPOINTS[item[0] as keyof typeof BREAKPOINTS]; // TODO: try to avoid such casting
+          return true;
+        }
+        return false;
+      });
     }
   }
 
@@ -38,5 +55,5 @@ export default function useWindowSize(ms: number) {
     }
   });
 
-  return { windowHeight, windowWidth };
+  return { height, width, size };
 }

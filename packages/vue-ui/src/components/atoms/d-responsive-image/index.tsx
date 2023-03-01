@@ -101,7 +101,7 @@ export default defineComponent({
     // TODO: preventDefault ???
     // TODO: caption gaps/spacing
     /**
-     * Enables html string rendering passed in props.label and props.error.<br>
+     * Enables html string rendering passed in props.caption.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
     enableHtml: {

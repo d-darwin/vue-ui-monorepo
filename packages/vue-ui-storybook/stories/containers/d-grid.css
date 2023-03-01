@@ -1,0 +1,16 @@
+@import '~@darwin-studio/ui-dictionary/build/variables.css';
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  color: white;
+}
+
+.item:nth-child(2n+1) {
+  background-color: var(--color-primary-background);
+}
+.item:nth-child(2n+2) {
+  background-color: var(--color-alternative-background);
+}

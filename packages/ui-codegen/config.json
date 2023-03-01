@@ -78,6 +78,24 @@
       "TYPE_FILE_PATH": "/types/transition",
       "CSS_CLASS_PREFIX": "transition",
       "CSS_FILE_PATH": "/styles/transition"
+    },
+    "BREAKPOINT": {
+      "NAME": "breakpoints",
+      "CONSTANT_NAME": "BREAKPOINTS",
+      "CONSTANT_FILE_PATH": "/constants/breakpoints",
+      "TYPE_NAME": "Breakpoints",
+      "TYPE_FILE_PATH": "/types/breakpoints",
+      "CSS_CLASS_PREFIX": "breakpoints",
+      "CSS_FILE_PATH": "/styles/breakpoints"
+    },
+    "GRID": {
+      "NAME": "grid",
+      "CONSTANT_NAME": "GRID",
+      "CONSTANT_FILE_PATH": "/constants/grid",
+      "TYPE_NAME": "Grid",
+      "TYPE_FILE_PATH": "/types/grid",
+      "CSS_CLASS_PREFIX": "grid",
+      "CSS_FILE_PATH": "/styles/grid"
     }
   }
 }
