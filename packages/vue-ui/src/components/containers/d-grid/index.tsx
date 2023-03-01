@@ -11,7 +11,10 @@ import styles from "./index.css?module";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
-// TODO: descr, naming
+/**
+ * The container provides you with an easy way to arrange child nodes in a grid template.
+ *
+ */
 export default defineComponent({
   name: config.name,
 
@@ -28,9 +31,7 @@ export default defineComponent({
      * By default children will take one column.
      */
     colSpan: {
-      type: [Number, Object] as PropType<
-        number | Record<Breakpoints | "", number>
-      >,
+      type: [Number, Object] as PropType<number | Record<Breakpoints, number>>,
     },
     /**
      * Contains row gap between cells.<br>
@@ -38,9 +39,7 @@ export default defineComponent({
      * By default equals to column gap of the grid.
      */
     rowGap: {
-      type: [String, Object] as PropType<
-        string | Record<Breakpoints | "", string>
-      >,
+      type: [String, Object] as PropType<string | Record<Breakpoints, string>>,
     },
     /**
      * Defines container element type of the component
@@ -72,7 +71,11 @@ export default defineComponent({
   computed: {
     preparedColSpan(): number {
       let colSpan = config.defaultColSpan;
-      if (typeof this.colSpan === "object" && this.colSpan[this.size]) {
+      if (
+        typeof this.colSpan === "object" &&
+        this.size &&
+        this.colSpan[this.size]
+      ) {
         colSpan = this.colSpan[this.size];
       } else if (typeof this.colSpan === "number" && this.colSpan) {
         colSpan = this.colSpan;
@@ -83,7 +86,11 @@ export default defineComponent({
 
     preparedRowGap(): string {
       let rowGap = config.defaultRowGap;
-      if (typeof this.rowGap === "object" && this.rowGap[this.size]) {
+      if (
+        typeof this.rowGap === "object" &&
+        this.size &&
+        this.rowGap[this.size]
+      ) {
         rowGap = this.rowGap[this.size];
       } else if (typeof this.rowGap === "string" && this.rowGap) {
         rowGap = this.rowGap;
@@ -112,7 +119,6 @@ export default defineComponent({
 
     renderContent(): (VNode | string)[] | undefined {
       if (this.$slots.default) {
-        /*TODO: slot description*/
         return this.$slots.default()?.map((child) => {
           child.props = mergeProps(child.props || {}, {
             class: styles[config.childClassName],
@@ -138,6 +144,11 @@ export default defineComponent({
     },
   },
 
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot $slots.default
+   * Put some children to align them with the grid
+   * */
   render(): VNode {
     const Tag = this.tag;
 

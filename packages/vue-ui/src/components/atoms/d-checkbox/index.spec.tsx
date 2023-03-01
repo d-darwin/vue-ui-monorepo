@@ -200,15 +200,20 @@ describe("DCheckbox", () => {
   it("Should emit onInput event with value payload", async () => {
     const value = "some value";
     const checked = true;
-    const wrapper = shallowMount(DCheckbox, { props: { value, checked } });
+    const disabled = false;
+    const wrapper = shallowMount(DCheckbox, {
+      props: { value, checked, disabled },
+    });
     const inputEl = wrapper.find("input");
     await inputEl.trigger("click");
     await inputEl.trigger("input");
 
+    console.log(wrapper.emitted("update:value"));
+
     expect(wrapper.emitted("input")?.[0]).toStrictEqual([
       !checked ? value : undefined,
     ]);
-    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual(
+    expect(wrapper.emitted("update:value")?.[0]?.[0]).toStrictEqual(
       !checked ? value : undefined
     );
   });
