@@ -14,8 +14,9 @@ import {
 
 describe("DGrid", () => {
   const itemClassName = "item";
+  const firstChildId = "11";
   const vNodes = [
-    <div class={itemClassName} />,
+    <div id={firstChildId} class={itemClassName} />,
     <div class={itemClassName} />,
     <div class={itemClassName} />,
     <div class={itemClassName} />,
@@ -31,22 +32,6 @@ describe("DGrid", () => {
   baseClassCase(wrapper, config.className);
 
   transitionClassCase(wrapper, `.${config.className}`);
-
-  it("Should add config.childClassName to the child elements for default slot", () => {
-    const child = wrapper.find(`.${itemClassName}`);
-    expect(child.classes()).toContain(styles[config.childClassName]);
-  });
-
-  it("Should add config.childClassName to the child elements for props.content", async () => {
-    const wrapper = await mount(DGrid, {
-      props: {
-        content: vNodes,
-      },
-    });
-
-    const child = wrapper.find(`.${itemClassName}`);
-    expect(child.classes()).toContain(styles[config.childClassName]);
-  });
 
   it("Should render style='--grid-col-span: <number>' if props.colSpan is <number>", async () => {
     const colSpan = 4;
@@ -110,7 +95,22 @@ describe("DGrid", () => {
     expect(wrapper.attributes("style")).toContain(`--grid-row-gap: ${rowGap}`);
   });
 
-  // TODO: content (string[])
+  it("Should add config.childClassName to the child elements if default slot passed", () => {
+    const child = wrapper.find(`.${itemClassName}`);
+    expect(child.classes()).toContain(styles[config.childClassName]);
+  });
+
+  it("Should add config.childClassName to the child elements if props.content is VNode[]", async () => {
+    const wrapper = await mount(DGrid, {
+      props: {
+        content: vNodes,
+      },
+    });
+
+    const child = wrapper.find(`.${itemClassName}`);
+    expect(child.classes()).toContain(styles[config.childClassName]);
+  });
+
   it("Should render html from prop.content if it is string[] and props.enableHtml is true", async () => {
     const content = [
       `<div class="${itemClassName}"></div>`,
@@ -125,7 +125,7 @@ describe("DGrid", () => {
         content,
       },
     });
-    console.log(wrapper.html());
+
     expect(
       wrapper
         .html()
@@ -135,13 +135,63 @@ describe("DGrid", () => {
     ).toContain(content.join(""));
   });
 
-  it("Should render plain strings if props.content is string[] and props.enableHtml is false", async () => {
-    expect(true).toBeFalsy();
+  it("Should render child elements with passed to them own props if default slot passed", () => {
+    const child = wrapper.find(`.${itemClassName}`);
+    expect(child.attributes().id).toBe(firstChildId);
   });
 
-  it("Shouldn't render anything it props.content and slots.default is empty", async () => {
-    expect(true).toBeFalsy();
+  it("Should render child elements with passed to them own props if props.content is VNode[]", async () => {
+    const wrapper = await mount(DGrid, {
+      props: {
+        content: vNodes,
+      },
+    });
+
+    const child = wrapper.find(`.${itemClassName}`);
+    expect(child.attributes().id).toBe(firstChildId);
+  });
+
+  it("Should render child elements with passed to them own props if props.content is string[] and props.enableHtml is true", async () => {
+    const content = [
+      `<div id="${firstChildId}" class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+    ];
+    const wrapper = await mount(DGrid, {
+      props: {
+        enableHtml: true,
+        content,
+      },
+    });
+
+    const child = wrapper.find(`.${itemClassName}`);
+    expect(child.attributes().id).toBe(firstChildId);
   });
 
   tagCase(wrapper);
+
+  it("Should render plain strings if props.content is string[] and props.enableHtml is false", async () => {
+    const content = [
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+      `<div class="${itemClassName}"></div>`,
+    ];
+    const wrapper = await mount(DGrid, {
+      props: {
+        enableHtml: false,
+        content,
+      },
+    });
+
+    expect(wrapper.text()).toContain(content.join(""));
+  });
+
+  it("Shouldn't render anything it props.content and slots.default is empty", async () => {
+    const wrapper = await mount(DGrid);
+    expect(wrapper.text()).toBeFalsy();
+  });
 });
