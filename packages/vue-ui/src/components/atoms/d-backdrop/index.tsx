@@ -14,18 +14,18 @@ export default defineComponent({
 
   props: {
     /**
-     * Defines appearance of the component
-     */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
      * Defines opacity of the component
      */
     opacity: {
       type: Number,
       default: config.defaultOpacity,
+    },
+    /**
+     * Defines appearance of the component
+     */
+    colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines container element type of the component
