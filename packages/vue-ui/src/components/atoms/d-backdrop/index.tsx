@@ -21,6 +21,13 @@ export default defineComponent({
       default: config.defaultOpacity,
     },
     /**
+     * Defines z-index of the component
+     */
+    zIndex: {
+      type: Number,
+      default: config.defaultZIndex,
+    },
+    /**
      * Defines appearance of the component
      */
     colorScheme: {
@@ -48,11 +55,11 @@ export default defineComponent({
       string,
       string | Record<string, number | string> | (() => void)
     > {
-      console.log();
       return {
         class: styles[config.className],
         style: {
           "--opacity": this.opacity,
+          "--z-index": this.zIndex,
           "--background-color": `var(--color-${this.colorScheme}-background)`,
         },
         onClick: this.clickHandler,

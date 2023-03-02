@@ -17,6 +17,7 @@ export default {
   },
   args: {
     opacity: config.defaultOpacity,
+    zIndex: config.defaultZIndex,
     colorScheme: COLOR_SCHEME.PRIMARY,
     tag: "div",
     whenClick: () => {

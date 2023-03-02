@@ -2,12 +2,14 @@
 
 .dBackdrop {
   --opacity: 0.2;
+  opacity: var(--opacity);
+  --z-index: 1000;
+  z-index: var(--z-index);
+  background-color: var(--background-color);
   --background-color: var(--color-primary-background);
   position: fixed;
   height: 100vh;
   width: 100vw;
-  opacity: var(--opacity);
-  background-color: var(--background-color);
   top: 0;
   left: 0;
 }
