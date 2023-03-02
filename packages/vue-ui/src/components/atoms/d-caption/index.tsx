@@ -46,6 +46,7 @@ export default defineComponent({
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
