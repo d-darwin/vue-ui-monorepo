@@ -2,41 +2,43 @@ import { shallowMount } from "@vue/test-utils";
 import {
   baseClassCase,
   callWhenClickCase,
-  colorSchemeClassCase,
+  emitClickEventCase,
   tagCase,
 } from "@/utils/test-case-factories";
 import DBackdrop from "@/components/atoms/d-backdrop";
 import config from "./config";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DBackdrop);
   baseClassCase(wrapper, config.className);
 
-  //TODO: opacity
-  it("Should render props.opacity to the component style as '--opacity: <number>'", async () => {
-    expect(true).toBeFalsy();
+  it("Should render props.opacity to the component style as '--opacity: props.opacity'", async () => {
+    const opacity = 0.33;
+    await wrapper.setProps({
+      opacity,
+    });
+    expect(wrapper.attributes("style")).toContain(`--opacity: ${opacity}`);
   });
 
-  //TODO: zIndex
-  it("Should render props.zIndex to the component style as '--z-index: <number>'", async () => {
-    expect(true).toBeFalsy();
+  it("Should render props.zIndex to the component style as '--z-index: props.zIndex'", async () => {
+    const zIndex = 0.33;
+    await wrapper.setProps({
+      zIndex,
+    });
+    expect(wrapper.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 
-  //TODO: colorScheme
-  //  "--background-color": `var(--color-${this.colorScheme}-background)`
-  colorSchemeClassCase(
-    wrapper,
-    `.${config.className}`,
-    COLOR_SCHEME.ALTERNATIVE
-  );
+  it("Should render props.colorScheme to the component style as '--background-color: `var(--color-${this.colorScheme}-background)`'", async () => {
+    const zIndex = 0.33;
+    await wrapper.setProps({
+      zIndex,
+    });
+    expect(wrapper.attributes("style")).toContain(`--z-index: ${zIndex}`);
+  });
 
-  //TODO: tag
   tagCase(wrapper);
 
-  //TODO: when\onClick
-  it("Should emit onClick event on click", async () => {
-    expect(true).toBeFalsy();
-  });
+  emitClickEventCase(wrapper);
+
   callWhenClickCase(wrapper);
 });
