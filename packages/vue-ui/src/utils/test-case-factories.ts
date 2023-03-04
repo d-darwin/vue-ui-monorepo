@@ -435,6 +435,16 @@ export function disabledControlCase(
   });
 }
 
+export function activeControlCase(wrapper: VueWrapper, targetSelector: string) {
+  return it(`${targetSelector} should have attrs.active and wrapper should have __active class if prop.disabled is passed`, async () => {
+    await wrapper.setProps({ active: true });
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl.attributes()?.disabled).toBeFalsy();
+    expect(wrapper.classes()).toContain("__active");
+  });
+}
+
 export function errorAbsenceCase(wrapper: VueWrapper, errorClassName: string) {
   return it("Shouldn't render error element if props.error isn't passed", async () => {
     await wrapper.setProps({ error: undefined });

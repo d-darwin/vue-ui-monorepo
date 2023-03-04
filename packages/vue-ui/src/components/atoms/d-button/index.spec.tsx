@@ -23,6 +23,7 @@ import {
   sizeClassCase,
   slotDefaultCase,
   transitionClassCase,
+  activeControlCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -77,4 +78,6 @@ describe("DButton", () => {
   preventDefaultCase(wrapper);
 
   disabledControlCase(wrapper, `.${config.className}`);
+
+  activeControlCase(wrapper, `.${config.className}`);
 });
