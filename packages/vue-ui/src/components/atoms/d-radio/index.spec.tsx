@@ -309,5 +309,13 @@ describe("DRadio", () => {
   });
 
   tagCase(wrapper);
-  // TODO: type and other radio specific
+
+  it("Should change innerChecked on props.checked change", async () => {
+    const checked = true;
+    await wrapper.setProps({ checked });
+    expect(wrapper.props().checked).toBe(checked);
+
+    await wrapper.setProps({ checked: !checked });
+    expect(wrapper.props().checked).toBe(!checked);
+  });
 });
