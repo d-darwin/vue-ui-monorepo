@@ -203,12 +203,12 @@ export default defineComponent({
     const contentRef: Ref<HTMLElement | null> = ref(null);
 
     const {
-      horizontal: defaultHorizontalPosition,
-      vertical: defaultVerticalPosition,
+      horizontal: desiredHorizontalPosition,
+      vertical: desiredVerticalPosition,
     } = parsePosition(props.position);
 
-    const horizontalPosition = ref(defaultHorizontalPosition);
-    const verticalPosition = ref(defaultVerticalPosition);
+    const horizontalPosition = ref(desiredHorizontalPosition);
+    const verticalPosition = ref(desiredVerticalPosition);
 
     onMounted(async () => {
       // We need to wait until children components will be mounted
@@ -219,8 +219,8 @@ export default defineComponent({
         contentRef,
         width,
         height,
-        defaultHorizontalPosition,
-        defaultVerticalPosition
+        desiredHorizontalPosition,
+        desiredVerticalPosition
       );
 
       horizontalPosition.value = adjustedPosition.horizontal;
@@ -242,8 +242,8 @@ export default defineComponent({
           contentRef,
           width,
           height,
-          defaultHorizontalPosition,
-          defaultVerticalPosition
+          desiredHorizontalPosition,
+          desiredVerticalPosition
         );
 
         horizontalPosition.value = adjustedPosition.horizontal;

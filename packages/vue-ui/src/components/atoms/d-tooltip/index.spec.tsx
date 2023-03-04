@@ -128,6 +128,10 @@ describe("DTooltip", () => {
     expect(wrapper.classes()).toContain(".right"); // TODO: avoid hardcode
   });*/
 
+  it("Should change set props.position if there is no enough space");
+
+  it("Shouldn't change set props.position if there is enough space");
+
   it("Should render props.offset to the content offset style", async () => {
     const offset = [10, 12];
     await wrapper.setProps({ offset });

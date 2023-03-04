@@ -50,14 +50,14 @@ export function parsePosition(position: Position): {
 
 //TODO: unit test
 /**
- * Adjust position of the tooltip component if there is no space for default (user defined) position
+ * Adjust position of the tooltip component if there is no space for desired (user defined) position
  *
  * @param elementContainer
  * @param element
  * @param windowWidth
  * @param windowHeight
- * @param defaultHorizontalPosition
- * @param defaultVerticalPosition
+ * @param desiredHorizontalPosition
+ * @param desiredVerticalPosition
  * @returns {{vertical: number, horizontal: number}}
  */
 export function getAdjustedPosition(
@@ -65,8 +65,8 @@ export function getAdjustedPosition(
   element: Ref<HTMLElement | null>,
   windowWidth: Ref<number>,
   windowHeight: Ref<number>,
-  defaultHorizontalPosition: PositionHorizontal | null,
-  defaultVerticalPosition: PositionVertical | null
+  desiredHorizontalPosition: PositionHorizontal | null,
+  desiredVerticalPosition: PositionVertical | null
 ): {
   horizontal: PositionHorizontal | null;
   vertical: PositionVertical | null;
@@ -105,13 +105,13 @@ export function getAdjustedPosition(
       adjustedPosition.vertical = getAdjustedAxePosition(
         elementContainerClientSpace,
         spaceForTooltip,
-        defaultVerticalPosition
+        desiredVerticalPosition
       ) as PositionVertical; // TODO: do not use casting
 
       adjustedPosition.horizontal = getAdjustedAxePosition(
         elementContainerClientSpace,
         spaceForTooltip,
-        defaultHorizontalPosition
+        desiredHorizontalPosition
       ) as PositionHorizontal; // TODO: do not use casting
     }
   }
@@ -134,7 +134,7 @@ function getAdjustedAxePosition(
       elementContainerClientSpace[axeDefaultPosition] >
       spaceForTooltip[axeDefaultPosition]
     ) {
-      // there is enough space in the default position (user defined)
+      // there is enough space in the desired position (user defined)
       return axeDefaultPosition;
     } else if (
       elementContainerClientSpace[oppositeAxePosition] >
