@@ -1,4 +1,5 @@
 import { defineComponent, PropType, VNode } from "vue";
+import { v4 as uuid } from "uuid";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
@@ -30,7 +31,7 @@ export default defineComponent({
      */
     name: {
       type: [String, Number] as PropType<Text>,
-      required: true, // TODO: autogenerate
+      default: () => uuid(),
     },
     /**
      * Array of the DRadio components, alternatively you can use default slot
@@ -190,11 +191,11 @@ export default defineComponent({
             typeof radio.props?.enableHtml === "undefined"
               ? this.enableHtml
               : radio.props?.enableHtml,
-          whenInput: (value: Text) => {
-            // TODO: find a better way to watch on checked item
+          whenChange: (value: Text) => {
+            // TODO: find out a better way to watch on checked item
             if (this.innerValue !== value) {
               this.changeHandler(value);
-              radio.props?.whenInput?.(value);
+              radio.props?.whenChange?.(value); // TODO: are they already merged ???
             }
           },
         });

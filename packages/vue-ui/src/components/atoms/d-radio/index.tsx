@@ -435,6 +435,7 @@ export default defineComponent({
     changeHandler(event: Event): void {
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
+      console.log("changeHandler", checked, value);
 
       /**
        * Emits on click with checked and value payload

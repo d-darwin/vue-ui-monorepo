@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
 import DRadioGroup from "@/components/molecules/d-radio-group";
 import DRadio from "@/components/atoms/d-radio";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -154,5 +154,35 @@ describe("DRadioGroup", () => {
 
   tagCase(wrapper);
 
-  // TODO: emits and whens
+  it("Should change innerValue on child change event", async () => {
+    const items = [
+      <DRadio label={"radio 1"} value={1} />,
+      <DRadio label={"radio 2"} value={2} />,
+      <DRadio label={"radio 3"} value={3} />,
+    ];
+    const wrapper = mount(DRadioGroup);
+    await wrapper.setProps({ items });
+
+    const firstRadio = wrapper.findComponent(DRadio);
+    const firstRadioValue = "some value";
+    await firstRadio.props("whenChange")(firstRadioValue);
+
+    expect(wrapper.vm.innerValue).toBe(firstRadioValue);
+  });
+
+  it("Should call radio.props?.whenInput?.(value) on child radio input", async () => {
+    const firstRadioWhenInput = jest.fn();
+    const items = [
+      <DRadio label={"radio 1"} value={1} whenInput={firstRadioWhenInput} />,
+      <DRadio label={"radio 2"} value={2} />,
+      <DRadio label={"radio 3"} value={3} />,
+    ];
+    const wrapper = mount(DRadioGroup);
+    await wrapper.setProps({ items });
+
+    const firstRadioInputEl = wrapper.find("input");
+    await firstRadioInputEl.trigger("input");
+
+    expect(firstRadioWhenInput).toBeCalled();
+  });
 });
