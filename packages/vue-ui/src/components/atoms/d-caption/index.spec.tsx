@@ -1,13 +1,13 @@
 import { shallowMount } from "@vue/test-utils";
-import DCaption from "@/components/atoms/d-caption";
 import {
   baseClassCase,
   contentHtmlCase,
   fontSizeClassCase,
   tagCase,
 } from "@/utils/test-case-factories";
+import DCaption from "@/components/atoms/d-caption";
 import config from "./config";
-import { TYPE } from "@/components/atoms/d-caption/constant";
+import { TYPE } from "./constant";
 import styles from "./styles.css";
 
 describe("DButton", () => {
