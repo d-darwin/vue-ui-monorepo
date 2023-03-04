@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import DTooltip from "@/components/atoms/d-tooltip";
 import config from "@/components/atoms/d-tooltip/config";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
@@ -19,6 +19,7 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { POSITION } from "@/constants/position";
 
 describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);
@@ -120,17 +121,28 @@ describe("DTooltip", () => {
     expect(contentEl.classes()).toContain(className);
   });
 
-  // TODO: emulate window size and typeof window !== "undefined"
-  /*  it("Should render props.position to the container position class", async () => {
+  it("Should render props.position to the container position class", async () => {
     const position = POSITION.BOTTOM_RIGHT;
-    await wrapper.setProps({ position });
-    expect(wrapper.classes()).toContain(".bottom"); // TODO: avoid hardcode
-    expect(wrapper.classes()).toContain(".right"); // TODO: avoid hardcode
-  });*/
+    const wrapper = mount(DTooltip, {
+      props: { position },
+    });
 
-  it("Should change set props.position if there is no enough space");
-
-  it("Shouldn't change set props.position if there is enough space");
+    const innerWidth = 1200;
+    const innerHeight = 960;
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      value: innerWidth,
+      writable: true,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: innerHeight,
+      writable: true,
+    });
+    window.dispatchEvent(new Event("resize"));
+    expect(wrapper.classes()).toContain("bottom"); // TODO: avoid hardcode
+    expect(wrapper.classes()).toContain("right"); // TODO: avoid hardcode
+  });
 
   it("Should render props.offset to the content offset style", async () => {
     const offset = [10, 12];
@@ -224,7 +236,20 @@ describe("DTooltip", () => {
     expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
+  it("Shouldn't emit onChange event on Space or keyup event if props.trigger is manual", async () => {
+    const wrapper = shallowMount(DTooltip, {
+      props: { trigger: TRIGGER.MANUAL },
+    });
+    const targetEl = wrapper.find(`.${config.targetClassName}`);
+
+    await targetEl.trigger("keyup", { key: "Enter" });
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    await targetEl.trigger("keyup", { key: " " });
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+  });
+
   it("Should toggle isShown class on the container on props.forceShow if props.trigger is 'manual'", async () => {
+    const wrapper = shallowMount(DTooltip);
     await wrapper.setProps({ trigger: TRIGGER.MANUAL, forceShow: true });
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
     await wrapper.setProps({ trigger: TRIGGER.MANUAL, forceShow: false });
