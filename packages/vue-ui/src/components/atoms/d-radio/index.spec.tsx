@@ -155,15 +155,15 @@ describe("DRadio", () => {
 
   transitionClassCase(wrapper, `.${config.iconContainerClassName}`);
 
-  errorStringCase(wrapper, config.errorClassName);
+  errorStringCase(wrapper, `.${config.errorClassName}`);
 
-  errorClassCase(wrapper, config.errorClassName);
+  errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorFontCase(wrapper, config.errorClassName);
+  errorSlotCase(DRadio, `.${config.errorClassName}`);
 
-  errorHtmlCase(wrapper, config.errorClassName);
+  errorClassCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DRadio, config.errorClassName);
+  errorFontCase(wrapper, `.${config.errorClassName}`);
 
   it("Should emit onChange event with checked and value payload", async () => {
     const value = "some value";

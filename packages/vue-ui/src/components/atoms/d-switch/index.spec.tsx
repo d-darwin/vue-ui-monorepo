@@ -187,17 +187,17 @@ describe("DSwitch", () => {
 
   transitionClassCase(wrapper, `.${config.thumbInnerClassName}`);
 
-  errorAbsenceCase(wrapper, config.errorClassName);
+  errorAbsenceCase(wrapper, `.${config.errorClassName}`);
 
-  errorStringCase(wrapper, config.errorClassName);
+  errorStringCase(wrapper, `.${config.errorClassName}`);
 
-  errorFontCase(wrapper, config.errorClassName);
+  errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorClassCase(wrapper, config.errorClassName);
+  errorSlotCase(DSwitch, `.${config.errorClassName}`);
 
-  errorHtmlCase(wrapper, config.errorClassName);
+  errorClassCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DSwitch, config.errorClassName);
+  errorFontCase(wrapper, `.${config.errorClassName}`);
 
   tagCase(wrapper);
 

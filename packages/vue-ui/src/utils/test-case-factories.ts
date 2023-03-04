@@ -445,36 +445,36 @@ export function activeControlCase(wrapper: VueWrapper, targetSelector: string) {
   });
 }
 
-export function errorAbsenceCase(wrapper: VueWrapper, errorClassName: string) {
+export function errorAbsenceCase(wrapper: VueWrapper, errorElSelector: string) {
   return it("Shouldn't render error element if props.error isn't passed", async () => {
     await wrapper.setProps({ error: undefined });
-    const labelEl = wrapper.find(`.${errorClassName}`);
+    const labelEl = wrapper.find(errorElSelector);
     expect(labelEl.exists()).toBeFalsy();
   });
 }
 
-export function errorStringCase(wrapper: VueWrapper, errorClassName: string) {
+export function errorStringCase(wrapper: VueWrapper, errorElSelector: string) {
   // TODO: error array ???
   // TODO: error via Tooltip ???
   return it("Should render error string if props.error if passed", async () => {
     const error = "Some error string";
     await wrapper.setProps({ error });
-    const errorEl = wrapper.find(`.${errorClassName}`);
+    const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.exists()).toBeTruthy();
     expect(errorEl.text()).toBe(error);
   });
 }
 
-export function errorClassCase(wrapper: VueWrapper, errorClassName: string) {
+export function errorClassCase(wrapper: VueWrapper, errorElSelector: string) {
   return it("Error element classes should contain props.errorClass if passed", async () => {
     const errorClass = "someCustomErrorClass";
     await wrapper.setProps({ error: "Some error", errorClass });
-    const errorEl = wrapper.find(`.${errorClassName}`);
+    const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.classes()).toContain(errorClass);
   });
 }
 
-export function errorFontCase(wrapper: VueWrapper, errorClassName: string) {
+export function errorFontCase(wrapper: VueWrapper, errorElSelector: string) {
   return it("Should render props.errorFont to the error font class", async () => {
     const errorFont = FONT.HUGE;
     await wrapper.setProps({ error: "Some error", errorFont });
@@ -482,23 +482,23 @@ export function errorFontCase(wrapper: VueWrapper, errorClassName: string) {
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       errorFont
     );
-    const errorEl = wrapper.find(`.${errorClassName}`);
+    const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.classes()).toContain(className);
   });
 }
 
-export function errorHtmlCase(wrapper: VueWrapper, errorClassName: string) {
+export function errorHtmlCase(wrapper: VueWrapper, errorElSelector: string) {
   return it("Should render prop.errorHtml to the error's v-html", async () => {
     const errorHtml = `<div>some label html</div>`;
     await wrapper.setProps({ error: errorHtml, enableHtml: true });
-    const errorEl = wrapper.find(`.${errorClassName}`);
+    const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.html()).toMatch(errorHtml);
   });
 }
 
 export function errorSlotCase(
   component: ReturnType<typeof defineComponent>,
-  errorClassName: string
+  errorElSelector: string
 ) {
   return it("Should render $slots.error instead of error content", async () => {
     const errorSlot = `<div>Some <b>error</b> content</div>`;
@@ -507,7 +507,7 @@ export function errorSlotCase(
         error: errorSlot,
       },
     });
-    const errorEl = wrapper.find(`.${errorClassName}`);
+    const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.html()).toMatch(errorSlot);
   });
 }

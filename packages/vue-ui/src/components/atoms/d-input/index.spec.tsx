@@ -117,15 +117,15 @@ describe("DInput", () => {
 
   transitionClassCase(wrapper, "input");
 
-  errorStringCase(wrapper, config.errorClassName);
+  errorStringCase(wrapper, `.${config.errorClassName}`);
 
-  errorClassCase(wrapper, config.errorClassName);
+  errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorFontCase(wrapper, config.errorClassName);
+  errorSlotCase(DInput, `.${config.errorClassName}`);
 
-  errorHtmlCase(wrapper, config.errorClassName);
+  errorClassCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DInput, config.errorClassName);
+  errorFontCase(wrapper, `.${config.errorClassName}`);
 
   // TODO: case factory
   it("Should emit onChange event with value payload", async () => {

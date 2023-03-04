@@ -46,12 +46,12 @@ describe("DRadioGroup", () => {
   labelClassCase(wrapper, "legend");
   labelFontCase(wrapper, "legend");
 
-  errorAbsenceCase(wrapper, config.errorClassName); // TODO: use selector, not className
-  errorStringCase(wrapper, config.errorClassName);
-  errorHtmlCase(wrapper, config.errorClassName);
-  errorSlotCase(DRadioGroup, config.errorClassName);
-  errorClassCase(wrapper, config.errorClassName);
-  errorFontCase(wrapper, config.errorClassName);
+  errorAbsenceCase(wrapper, `.${config.errorClassName}`);
+  errorStringCase(wrapper, `.${config.errorClassName}`);
+  errorHtmlCase(wrapper, `.${config.errorClassName}`);
+  errorSlotCase(DRadioGroup, `.${config.errorClassName}`);
+  errorClassCase(wrapper, `.${config.errorClassName}`);
+  errorFontCase(wrapper, `.${config.errorClassName}`);
 
   it("Should add config.radioClassName to the descendants", async () => {
     const firstRadioOwnClass = "some-own-class";
