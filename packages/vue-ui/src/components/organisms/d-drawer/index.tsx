@@ -313,7 +313,12 @@ export default defineComponent({
       return (
         <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
           <Trans {...this.backdropTransitionBindings}>
-            {this.isShown && <DBackdrop {...this.backdropBindings} />}
+            {this.isShown && (
+              <DBackdrop
+                {...this.backdropBindings}
+                whenClick={this.whenClose}
+              />
+            )}
           </Trans>
           <Trans {...this.transitionBindings}>
             {this.isShown && (
@@ -329,7 +334,9 @@ export default defineComponent({
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
         <Trans {...this.backdropTransitionBindings}>
-          {this.isShown && <DBackdrop {...this.backdropBindings} />}
+          {this.isShown && (
+            <DBackdrop {...this.backdropBindings} whenClick={this.whenClose} />
+          )}
         </Trans>
         <Trans {...this.transitionBindings}>
           {this.isShown && <Tag {...this.bindings} v-html={this.content} />}

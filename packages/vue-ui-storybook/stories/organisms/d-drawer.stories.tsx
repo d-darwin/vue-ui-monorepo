@@ -25,7 +25,7 @@ const Template: Story = (args) => ({
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDrawer v-bind="args" :isShown="isShown" />
+      <DDrawer v-bind="args" :isShown="isShown" :whenClose="clickHandler" />
     </div>
   `,
 });
