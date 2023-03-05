@@ -33,7 +33,12 @@
   /*TODO width*/
 }
 
-.transitionEnterActive,
-.transitionLeaveActive {
+.backdropTransitionEnterActive,
+.backdropTransitionLeaveActive {
   opacity: 0;
+}
+
+.transitionEnterActive.right,
+.transitionLeaveActive.right {
+  transform: translate3d(200px, 0, 0); /*// TODO: width*/
 }

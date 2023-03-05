@@ -68,6 +68,8 @@ export default defineComponent({
           ).includes(val)
         ),
     },
+    width: {},
+    height: {},
     /**
      * The component is mounted inside passed element.
      */
@@ -250,8 +252,8 @@ export default defineComponent({
       leaveActiveClass: string;
     } {
       return {
-        enterActiveClass: styles.transitionEnterActive,
-        leaveActiveClass: styles.transitionLeaveActive,
+        enterActiveClass: styles.backdropTransitionEnterActive,
+        leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
