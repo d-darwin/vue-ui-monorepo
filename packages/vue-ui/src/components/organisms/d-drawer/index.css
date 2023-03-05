@@ -1,8 +1,8 @@
 .dDrawer {
   --width: 25%;
-  width: var(--width);
   --height: 25%;
-  height: var(--height);
+  --border-width: 4px; /*TODO: make configurable*/
+  --border-style: solid; /*TODO: make configurable*/
   --z-index: 1001;
   z-index: var(--z-index);
   box-sizing: border-box;
@@ -13,28 +13,45 @@
   left: 0;
 }
 
+.dDrawer,
+.dDrawer:hover {
+  background: white; /*TODO: make it configurable*/
+}
+
 .top {
   bottom: auto;
-  width: 100vh;
-  /*TODO height*/
+  width: 100vw;
+  height: var(--height);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom: var(--border-width) var(--border-style) var(--background-color);
 }
 
 .right {
   left: auto;
+  width: var(--width);
   height: 100vh;
-  /*TODO width*/
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-left: var(--border-width) var(--border-style) var(--background-color);
 }
 
 .bottom {
   top: auto;
-  width: 100vh;
-  /*TODO height*/
+  width: 100vw;
+  height: var(--height);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top: var(--border-width) var(--border-style) var(--background-color);
 }
 
 .left {
   right: auto;
+  width: var(--width);
   height: 100vh;
-  /*TODO width*/
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-right: var(--border-width) var(--border-style) var(--background-color);
 }
 
 .backdropTransitionEnterActive,
