@@ -37,6 +37,7 @@ import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
+import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import config from "./config";
@@ -53,23 +54,23 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * Defines content of the <b>label</b> element.
+     * Defines content of the <b>title</b> element.
      */
-    label: {
-      type: [String, Number] as PropType<Text>,
+    title: {
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
-     * You can pass own class name to the <b>label</b> element.
+     * You can pass own class name to the <b>title</b> element.
      */
-    labelClass: {
+    titleClass: {
       type: String,
     },
     /**
-     * Defines font size of the <b>label</b> element. By default depends on props.size
+     * Defines font size of the <b>title</b> element. By default depends on props.size
      */
-    labelFont: {
+    titleFont: {
       type: String as PropType<Font>,
-      default: FONT.LARGE,
+      default: FONT.HUGE,
     },
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
@@ -133,7 +134,7 @@ export default defineComponent({
      */
     padding: {
       type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
+      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines corner rounding of the component
@@ -211,7 +212,7 @@ export default defineComponent({
 
   setup(props) {
     const { focusControlId } = useClosable(props);
-    return focusControlId;
+    return { focusControlId };
   },
 
   computed: {
@@ -291,7 +292,6 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
-        role: this.role,
         class: this.classes,
         style: this.styles,
       };
@@ -335,25 +335,54 @@ export default defineComponent({
 
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont
+        this.titleFont
       );
-      return this.$slots.header?.() || (
-        <div>
-          {this.label && (
-            <div class={[config.labelClassName, fontStyles[fontClassName]]}>{this.label}</div> // TODO: slot, enableHtml ....
-          )}
-        </div> // TODO: tag ???
-      )
+      return (
+        this.$slots.header?.() || (
+          // TODO: tag ???
+          <div class={styles.header}>
+            {this.title && (
+              <div
+                class={[
+                  styles[config.titleClassName],
+                  fontStyles[fontClassName],
+                  this.titleClass,
+                ]}
+              >
+                {this.title}
+              </div> // TODO: slot, enableHtml ....
+            )}
+            <DButton
+              /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+              // @ts-ignore: TODO: allow unknown attrs
+              id={this.focusControlId}
+              label={config.closeButtonContent}
+              colorScheme={this.colorScheme}
+              size={"small"}
+              padding={"equal"}
+              class={styles.closeButton}
+              whenClick={this.closeHandler}
+            />
+          </div>
+        )
+      );
     },
 
     renderContent(): VNode {
       const Tag = this.tag;
 
+      // TODO: get some classes from this.bindings
+      const bindings = {
+        role: this.role,
+        class: styles.content,
+        ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
+      };
+
       return !this.enableHtml ? (
-        <Tag>{this.$slots.default?.() || this.content}</Tag>
+        <Tag {...bindings}>{this.$slots.default?.() || this.content}</Tag>
       ) : (
-        <Tag v-html={this.content} />
-      )
+        <Tag {...bindings} v-html={this.content} />
+      );
     },
 
     renderFooter(): VNode[] | null {

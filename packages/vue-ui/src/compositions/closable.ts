@@ -13,6 +13,8 @@ export default function useClosable(props: { isShown?: boolean }) {
   const focusControlId = uuid(); // TODO: use control id ???
   let activeElement: Element | HTMLElement | null = null;
 
+  // TODO: esc key -> emit('close'), props.whenClose()
+
   watch(
     () => props.isShown,
     async (isShown) => {
