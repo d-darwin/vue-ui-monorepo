@@ -92,6 +92,8 @@
 
 .closeButton {
   margin-left: auto;
+  height: var(--size);
+  width: var(--size);
 }
 
 .content {
