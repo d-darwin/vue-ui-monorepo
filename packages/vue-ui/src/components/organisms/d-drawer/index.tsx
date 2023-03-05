@@ -37,6 +37,7 @@ import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
+import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -68,8 +69,20 @@ export default defineComponent({
           ).includes(val)
         ),
     },
-    width: {},
-    height: {},
+    /**
+     * Defines width of the component if props.position is "right" or "left"
+     */
+    width: {
+      type: [String, Number],
+      default: config.defaultWidth,
+    },
+    /**
+     * Defines height of the component if props.position is "top" or "bottom"
+     */
+    height: {
+      type: [String, Number],
+      default: config.defaultHeight,
+    },
     /**
      * The component is mounted inside passed element.
      */
@@ -212,6 +225,8 @@ export default defineComponent({
 
     styles(): CSSProperties {
       return {
+        "--width": prepareElementSize(this.width),
+        "--height": prepareElementSize(this.height),
         "--z-index": this.zIndex,
       };
     },
