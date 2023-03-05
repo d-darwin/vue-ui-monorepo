@@ -57,7 +57,7 @@ export default {
     },
   },
   args: {
-    isShown: false,
+    isShown: true,
     position: POSITION_HORIZONTAL.RIGHT,
     title: "Some drawer title",
     titleClass: "someTitleClass",
@@ -112,15 +112,14 @@ const Template: Story = (args) => ({
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDrawer v-bind="args" :isShown="isShown" :whenClose="closeHandler" />
+      <DDrawer v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler" />
     </div>
   `,
 });
 export const Default = Template.bind({});
 
-// TODO: content via props
-
-const HeaderSlotTemplate: Story = (args) => ({
+// TODO: content via props.content
+const SlotDefaultTemplate: Story = (args) => ({
   components: { DDrawer, DButton },
   setup() {
     return { args };
@@ -145,15 +144,48 @@ const HeaderSlotTemplate: Story = (args) => ({
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDrawer v-bind="args" :isShown="isShown" :whenClose="closeHandler">
+      <DDrawer v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
+        <b>Default slot</b>
+      </DDrawer>
+    </div>
+  `,
+});
+export const SlotDefault = SlotDefaultTemplate.bind({});
+
+const SlotHeaderTemplate: Story = (args) => ({
+  components: { DDrawer, DButton },
+  setup() {
+    return { args };
+  },
+  data() {
+    return {
+      isShown: false,
+    };
+  },
+  methods: {
+    clickHandler() {
+      this.isShown = !this.isShown;
+      if (!this.isShown) {
+        this.args.whenClose?.();
+      }
+    },
+    closeHandler() {
+      this.isShown = false;
+      this.args.whenClose?.();
+    },
+  },
+  template: `
+    <div>
+      <DButton :whenClick="clickHandler">Toggle</DButton>
+      <DDrawer v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
         <template v-slot:header><b>Header slot</b></template>
       </DDrawer>
     </div>
   `,
 });
-export const HeaderSlot = HeaderSlotTemplate.bind({});
+export const SlotHeader = SlotHeaderTemplate.bind({});
 
-const FooterSlotTemplate: Story = (args) => ({
+const SlotFooterTemplate: Story = (args) => ({
   components: { DDrawer, DButton },
   setup() {
     return { args };
@@ -178,10 +210,10 @@ const FooterSlotTemplate: Story = (args) => ({
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDrawer v-bind="args" :isShown="isShown" :whenClose="closeHandler">
+      <DDrawer v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
         <template v-slot:footer><b>Footer slot</b></template>
       </DDrawer>
     </div>
   `,
 });
-export const FooterSlot = FooterSlotTemplate.bind({});
+export const SlotFooter = SlotFooterTemplate.bind({});

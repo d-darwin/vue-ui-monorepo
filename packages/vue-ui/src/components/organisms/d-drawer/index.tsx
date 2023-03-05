@@ -48,7 +48,7 @@ export default defineComponent({
 
   props: {
     /**
-     * TODO
+     * Defines is component should be rendered
      */
     isShown: {
       type: Boolean,
@@ -77,7 +77,6 @@ export default defineComponent({
      * Plain string, VNode or HTML if props.enableHtml is true
      */
     content: {
-      // TODO: array of messages ???
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
@@ -92,6 +91,20 @@ export default defineComponent({
     contentFont: {
       type: String as PropType<Font>,
       default: FONT.HUGE,
+    },
+    /**
+     * Defines a11y role of the component's content
+     */
+    contentRole: {
+      type: String, // TODO: specify type,
+      default: config.defaultContentRole,
+    },
+    /**
+     * Defines content element type of the component
+     */
+    contentTag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.NAV,
     },
     /**
      * Positions on the component.
@@ -132,7 +145,6 @@ export default defineComponent({
      * Defines appearance of the component
      */
     colorScheme: {
-      // TODO: other colors ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
     },
@@ -173,25 +185,11 @@ export default defineComponent({
       default: config.defaultRole,
     },
     /**
-     * Defines a11y role of the component's content
-     */
-    contentRole: {
-      type: String, // TODO: specify type,
-      default: config.defaultContentRole,
-    },
-    /**
      * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.ASIDE,
-    },
-    /**
-     * Defines content element type of the component
-     */
-    contentTag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.NAV,
     },
     /**
      * Defines z-index of the component
@@ -461,7 +459,6 @@ export default defineComponent({
   /** @slot $slots.footer
    *  Use to insert footer
    */
-  // TODO: @slot $scopedSlots.closeButton\header (scoped to pass focusControlId) ???
   render(): VNode {
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
