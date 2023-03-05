@@ -148,7 +148,7 @@ export default defineComponent({
      */
     rounding: {
       type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+      default: ROUNDING.LARGE, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines size of the component
@@ -156,7 +156,7 @@ export default defineComponent({
     // TODO: fontSize and size separately ???
     size: {
       type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+      default: SIZE.LARGE, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines transition type of the component
