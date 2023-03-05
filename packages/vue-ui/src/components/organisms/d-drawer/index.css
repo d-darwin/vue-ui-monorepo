@@ -11,6 +11,8 @@
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .dDrawer,
@@ -100,4 +102,5 @@
   padding: var(--padding);
   padding-left: 0;
   padding-right: 0;
+  margin-bottom: auto;
 }

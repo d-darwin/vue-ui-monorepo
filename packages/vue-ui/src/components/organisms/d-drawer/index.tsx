@@ -141,7 +141,7 @@ export default defineComponent({
      */
     padding: {
       type: String as PropType<Padding>,
-      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
+      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines corner rounding of the component
@@ -164,12 +164,6 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
-     */
-    enableInline: {
-      type: Boolean,
     },
     /**
      * Defines a11y role of the component
@@ -210,6 +204,12 @@ export default defineComponent({
      * Hides header if you don't need it
      */
     hideHeader: {
+      type: Boolean,
+    },
+    /**
+     * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
+     */
+    enableInline: {
       type: Boolean,
     },
     // TODO: backdrop Props\Options

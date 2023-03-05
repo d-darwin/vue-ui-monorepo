@@ -2,6 +2,7 @@ export default {
   name: "DDrawer",
   className: "dDrawer",
   titleClassName: "title",
+  footerClassName: "footer",
   defaultTarget: "body",
   defaultRole: "complementary",
   defaultContentRole: "navigation",

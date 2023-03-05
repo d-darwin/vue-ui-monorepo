@@ -6,14 +6,34 @@ import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import {
+  POSITION_HORIZONTAL,
+  POSITION_VERTICAL,
+} from "@darwin-studio/vue-ui/src/constants/position";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "organisms/DDrawer",
   component: DDrawer,
   argTypes: {
+    position: {
+      control: { type: "select" },
+      options: Object.values(
+        Object.assign({}, POSITION_HORIZONTAL, POSITION_VERTICAL)
+      ),
+    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
+    },
+    titleFont: {
+      control: { type: "select" },
+      options: Object.values(FONT),
+    },
+    contentFont: {
+      control: { type: "select" },
+      options: Object.values(FONT),
     },
     padding: {
       control: { type: "select" },
@@ -37,6 +57,30 @@ export default {
     },
   },
   args: {
+    isShown: false,
+    position: POSITION_HORIZONTAL.RIGHT,
+    title: "Some drawer title",
+    titleClass: "someTitleClass",
+    titleFont: FONT.HUGE,
+    // TODO: content
+    contentClass: "someContentClass",
+    contentFont: FONT.MEDIUM,
+    width: "25%",
+    height: "25%",
+    target: "body",
+    colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
+    padding: PADDING.DEFAULT, // TODO: don't hardcode values
+    rounding: ROUNDING.LARGE, // TODO: don't hardcode values
+    size: SIZE.LARGE, // TODO: don't hardcode values
+    transition: TRANSITION.FAST, // TODO: don't hardcode values
+    role: "complementary",
+    contentRole: "navigation",
+    tag: TAG_NAME_DEFAULTS.ASIDE,
+    contentTag: TAG_NAME_DEFAULTS.NAV,
+    zIndex: 1001,
+    hideHeader: false,
+    enableInline: false,
+    enableHtml: false,
     whenClose: () => {
       console.log("close");
     },
@@ -76,6 +120,68 @@ export const Default = Template.bind({});
 
 // TODO: content via props
 
-// TODO: header slot
+const HeaderSlotTemplate: Story = (args) => ({
+  components: { DDrawer, DButton },
+  setup() {
+    return { args };
+  },
+  data() {
+    return {
+      isShown: false,
+    };
+  },
+  methods: {
+    clickHandler() {
+      this.isShown = !this.isShown;
+      if (!this.isShown) {
+        this.args.whenClose?.();
+      }
+    },
+    closeHandler() {
+      this.isShown = false;
+      this.args.whenClose?.();
+    },
+  },
+  template: `
+    <div>
+      <DButton :whenClick="clickHandler">Toggle</DButton>
+      <DDrawer v-bind="args" :isShown="isShown" :whenClose="closeHandler">
+        <template v-slot:header><b>Header slot</b></template>
+      </DDrawer>
+    </div>
+  `,
+});
+export const HeaderSlot = HeaderSlotTemplate.bind({});
 
-// TODO: footer slot
+const FooterSlotTemplate: Story = (args) => ({
+  components: { DDrawer, DButton },
+  setup() {
+    return { args };
+  },
+  data() {
+    return {
+      isShown: false,
+    };
+  },
+  methods: {
+    clickHandler() {
+      this.isShown = !this.isShown;
+      if (!this.isShown) {
+        this.args.whenClose?.();
+      }
+    },
+    closeHandler() {
+      this.isShown = false;
+      this.args.whenClose?.();
+    },
+  },
+  template: `
+    <div>
+      <DButton :whenClick="clickHandler">Toggle</DButton>
+      <DDrawer v-bind="args" :isShown="isShown" :whenClose="closeHandler">
+        <template v-slot:footer><b>Footer slot</b></template>
+      </DDrawer>
+    </div>
+  `,
+});
+export const FooterSlot = FooterSlotTemplate.bind({});
