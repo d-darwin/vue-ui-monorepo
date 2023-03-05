@@ -1,6 +1,7 @@
 export default {
   name: "DDrawer",
   className: "dDrawer",
+  labelClassName: "label",
   defaultTarget: "body",
   defaultRole: "complementary",
   defaultZIndex: 1001,

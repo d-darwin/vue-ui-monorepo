@@ -16,6 +16,7 @@
 .dDrawer,
 .dDrawer:hover {
   background: white; /*TODO: make it configurable*/
+  color: var(--color-text); /*TODO: make it configurable*/
 }
 
 .top {

@@ -6,11 +6,11 @@ import useSetBodyOverflow from "./set-body-overflow";
  * TODO
  *
  * @param props
- * @returns {{closeButtonId: string}}
+ * @returns {{focusControlId: string}}
  */
 export default function useClosable(props: { isShown?: boolean }) {
   const { setBodyOverflow } = useSetBodyOverflow();
-  const closeButtonId = uuid(); // TODO: use control id ???
+  const focusControlId = uuid(); // TODO: use control id ???
   let activeElement: Element | HTMLElement | null = null;
 
   watch(
@@ -20,8 +20,7 @@ export default function useClosable(props: { isShown?: boolean }) {
         setBodyOverflow();
         activeElement = document.activeElement;
         await nextTick(() => {
-          const closeButton = document.getElementById(closeButtonId);
-          closeButton?.focus?.();
+          document.getElementById(focusControlId)?.focus?.();
         });
       } else {
         setBodyOverflow(false);
@@ -35,5 +34,5 @@ export default function useClosable(props: { isShown?: boolean }) {
     setBodyOverflow(false);
   });
 
-  return { closeButtonId };
+  return { focusControlId };
 }

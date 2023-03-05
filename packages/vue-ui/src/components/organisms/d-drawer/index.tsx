@@ -46,8 +46,30 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    /**
+     *
+     */
     isShown: {
       type: Boolean,
+    },
+    /**
+     * Defines content of the <b>label</b> element.
+     */
+    label: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
+     * You can pass own class name to the <b>label</b> element.
+     */
+    labelClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>label</b> element. By default depends on props.size
+     */
+    labelFont: {
+      type: String as PropType<Font>,
+      default: FONT.LARGE,
     },
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
@@ -162,6 +184,12 @@ export default defineComponent({
       type: Number,
       default: config.defaultZIndex,
     },
+    /**
+     * Hides header if you don't need it
+     */
+    hideHeader: {
+      type: Boolean,
+    },
     // TODO: backdropProps\Options
     /**
      * Enables html string rendering passed in props.content.<br>
@@ -182,8 +210,8 @@ export default defineComponent({
   emits: [EVENT_NAME.CLOSE],
 
   setup(props) {
-    const { closeButtonId } = useClosable(props);
-    return closeButtonId;
+    const { focusControlId } = useClosable(props);
+    return focusControlId;
   },
 
   computed: {
@@ -300,24 +328,49 @@ export default defineComponent({
       );
     },
 
-    renderDrawer(): VNode {
-      const Tag = this.tag;
-
-      if (!this.enableHtml) {
-        return (
-          <Trans {...this.transitionBindings}>
-            {this.isShown && (
-              <Tag {...this.bindings}>
-                {this.$slots.default?.() || this.content}
-              </Tag>
-            )}
-          </Trans>
-        );
+    renderHeader(): VNode[] | VNode | null {
+      if (this.hideHeader) {
+        return null;
       }
 
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.labelFont
+      );
+      return this.$slots.header?.() || (
+        <div>
+          {this.label && (
+            <div class={[config.labelClassName, fontStyles[fontClassName]]}>{this.label}</div> // TODO: slot, enableHtml ....
+          )}
+        </div> // TODO: tag ???
+      )
+    },
+
+    renderContent(): VNode {
+      const Tag = this.tag;
+
+      return !this.enableHtml ? (
+        <Tag>{this.$slots.default?.() || this.content}</Tag>
+      ) : (
+        <Tag v-html={this.content} />
+      )
+    },
+
+    renderFooter(): VNode[] | null {
+      return this.$slots.footer?.() || null;
+    },
+
+    renderDrawer(): VNode {
       return (
         <Trans {...this.transitionBindings}>
-          {this.isShown && <Tag {...this.bindings} v-html={this.content} />}
+          {this.isShown && (
+            /*// TODO: tag ???*/
+            <div {...this.bindings}>
+              {this.renderHeader}
+              {this.renderContent}
+              {this.renderFooter}
+            </div>
+          )}
         </Trans>
       );
     },
@@ -338,9 +391,7 @@ export default defineComponent({
   /** @slot $slots.default
    *  Use instead of props.content to fully customize content
    */
-  // TODO: @slot $slots.header ???
-  // TODO: @slot $scopedSlots.closeButton (scoped to pass closeButtonId) ???
-  // TODO: @slot $slots.footer ???
+  // TODO: @slot $scopedSlots.closeButton\header (scoped to pass focusControlId) ???
   // TODO: @slot $slots.slides ???
   render(): VNode {
     return (
