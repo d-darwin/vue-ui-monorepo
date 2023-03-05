@@ -265,6 +265,7 @@ export default defineComponent({
     styles(): CSSProperties {
       const styles: CSSProperties = {};
 
+      // TODO: use css custom props
       if (typeof this.minWidth !== "undefined") {
         styles.minWidth = prepareSize(this.minWidth);
       }

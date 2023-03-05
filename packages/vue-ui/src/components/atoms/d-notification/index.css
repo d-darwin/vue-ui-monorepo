@@ -1,6 +1,7 @@
 @import '~@darwin-studio/ui-dictionary/build/variables.css';
 
 .dNotification {
+  --offset: 20px; /*TODO: make it configurable via css custom props*/
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -11,7 +12,6 @@
   position: absolute;
   margin: auto;
   cursor: pointer;
-  --offset: 20px; /*TODO: make it configurable*/
 }
 
 .top {

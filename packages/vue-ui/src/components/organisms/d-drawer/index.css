@@ -6,8 +6,31 @@
   top: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+}
+
+.top {
+  bottom: auto;
+  width: 100vh;
+  /*TODO height*/
+}
+
+.right {
   left: auto;
   height: 100vh;
+  /*TODO width*/
+}
+
+.bottom {
+  top: auto;
+  width: 100vh;
+  /*TODO height*/
+}
+
+.left {
+  right: auto;
+  height: 100vh;
+  /*TODO width*/
 }
 
 .transitionEnterActive,

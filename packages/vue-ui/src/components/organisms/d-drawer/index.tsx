@@ -28,7 +28,10 @@ import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?m
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
-import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
+import {
+  POSITION_HORIZONTAL,
+  POSITION_VERTICAL,
+} from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -57,9 +60,13 @@ export default defineComponent({
      */
     position: {
       type: String as PropType<PositionStrict>,
-      default: POSITION.RIGHT,
+      default: POSITION_HORIZONTAL.RIGHT,
       validator: (val: PositionStrict) =>
-        Boolean(Object.values(POSITION).includes(val)),
+        Boolean(
+          Object.values(
+            Object.assign({}, POSITION_HORIZONTAL, POSITION_VERTICAL)
+          ).includes(val)
+        ),
     },
     /**
      * The component is mounted inside passed element.
@@ -207,6 +214,23 @@ export default defineComponent({
       };
     },
 
+    backdropBindings(): Record<
+      string,
+      | string
+      | (string | undefined)[]
+      | CSSProperties
+      | ((event: MouseEvent) => void | Promise<void>)
+    > {
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return {
+        class: transitionStyles[transitionClassName],
+      };
+    },
+
     bindings(): Record<
       string,
       | string
@@ -221,6 +245,17 @@ export default defineComponent({
       };
     },
 
+    backdropTransitionBindings(): {
+      enterActiveClass: string;
+      leaveActiveClass: string;
+    } {
+      return {
+        enterActiveClass: styles.transitionEnterActive,
+        leaveActiveClass: styles.transitionLeaveActive,
+      };
+    },
+
+    // TODO
     transitionBindings(): {
       enterActiveClass: string;
       leaveActiveClass: string;
@@ -260,8 +295,8 @@ export default defineComponent({
     if (!this.enableHtml) {
       return (
         <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
-          <Trans {...this.transitionBindings}>
-            {this.isShown && <DBackdrop />}
+          <Trans {...this.backdropTransitionBindings}>
+            {this.isShown && <DBackdrop {...this.backdropBindings} />}
           </Trans>
           <Trans {...this.transitionBindings}>
             {this.isShown && (
@@ -276,8 +311,8 @@ export default defineComponent({
 
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
-        <Trans {...this.transitionBindings}>
-          {this.isShown && <DBackdrop />}
+        <Trans {...this.backdropTransitionBindings}>
+          {this.isShown && <DBackdrop {...this.backdropBindings} />}
         </Trans>
         <Trans {...this.transitionBindings}>
           {this.isShown && <Tag {...this.bindings} v-html={this.content} />}
