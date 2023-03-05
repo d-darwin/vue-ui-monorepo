@@ -48,10 +48,11 @@ export default defineComponent({
 
   props: {
     /**
-     *
+     * TODO
      */
     isShown: {
       type: Boolean,
+      required: true,
     },
     /**
      * Defines content of the <b>title</b> element.
@@ -172,11 +173,25 @@ export default defineComponent({
       default: config.defaultRole,
     },
     /**
+     * Defines a11y role of the component's content
+     */
+    contentRole: {
+      type: String, // TODO: specify type,
+      default: config.defaultContentRole,
+    },
+    /**
      * Defines container element type of the component
      */
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.ASIDE,
+    },
+    /**
+     * Defines content element type of the component
+     */
+    contentTag: {
+      type: String as PropType<TagName>,
+      default: TAG_NAME_DEFAULTS.NAV,
     },
     /**
      * Defines z-index of the component
@@ -191,7 +206,8 @@ export default defineComponent({
     hideHeader: {
       type: Boolean,
     },
-    // TODO: backdropProps\Options
+    // TODO: backdrop Props\Options
+    // TODO: closeButton Props\Options
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -205,6 +221,7 @@ export default defineComponent({
      */
     whenClose: {
       type: Function as PropType<() => void | Promise<void>>,
+      required: true,
     },
   },
 
@@ -281,6 +298,7 @@ export default defineComponent({
 
       return {
         class: transitionStyles[transitionClassName],
+        whenClick: this.whenClose,
       };
     },
 
@@ -292,6 +310,7 @@ export default defineComponent({
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
+        role: this.role,
         class: this.classes,
         style: this.styles,
       };
@@ -307,7 +326,6 @@ export default defineComponent({
       };
     },
 
-    // TODO
     transitionBindings(): {
       enterActiveClass: string;
       leaveActiveClass: string;
@@ -321,10 +339,45 @@ export default defineComponent({
     renderBackdrop(): VNode {
       return (
         <Trans {...this.backdropTransitionBindings}>
-          {this.isShown && (
-            <DBackdrop {...this.backdropBindings} whenClick={this.whenClose} />
-          )}
+          {this.isShown && <DBackdrop {...this.backdropBindings} />}
         </Trans>
+      );
+    },
+
+    renderTitle(): VNode | null {
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.titleFont
+      );
+
+      // TODO: slot, tag, enableHtml ... (like label in other components)
+      return this.title ? (
+        <div
+          class={[
+            styles[config.titleClassName],
+            fontStyles[fontClassName],
+            this.titleClass,
+          ]}
+        >
+          {this.title}
+        </div>
+      ) : null;
+    },
+
+    renderCloseButton(): VNode {
+      // TODO: slot, tag, enableHtml ... (like label in other components)
+      return (
+        <DButton
+          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+          // @ts-ignore: TODO: allow unknown attrs
+          id={this.focusControlId}
+          label={config.closeButtonContent}
+          colorScheme={this.colorScheme}
+          size={"small"}
+          padding={"equal"}
+          class={styles.closeButton}
+          whenClick={this.closeHandler}
+        />
       );
     },
 
@@ -332,48 +385,24 @@ export default defineComponent({
       if (this.hideHeader) {
         return null;
       }
-
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.titleFont
-      );
+      // TODO: this.enableHtml...
       return (
         this.$slots.header?.() || (
           // TODO: tag ???
           <div class={styles.header}>
-            {this.title && (
-              <div
-                class={[
-                  styles[config.titleClassName],
-                  fontStyles[fontClassName],
-                  this.titleClass,
-                ]}
-              >
-                {this.title}
-              </div> // TODO: slot, enableHtml ....
-            )}
-            <DButton
-              /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-              // @ts-ignore: TODO: allow unknown attrs
-              id={this.focusControlId}
-              label={config.closeButtonContent}
-              colorScheme={this.colorScheme}
-              size={"small"}
-              padding={"equal"}
-              class={styles.closeButton}
-              whenClick={this.closeHandler}
-            />
+            {this.renderTitle}
+            {this.renderCloseButton}
           </div>
         )
       );
     },
 
     renderContent(): VNode {
-      const Tag = this.tag;
+      const Tag = this.contentTag;
 
       // TODO: get some classes from this.bindings
       const bindings = {
-        role: this.role,
+        role: this.contentRole,
         class: styles.content,
         ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
       };
@@ -390,15 +419,16 @@ export default defineComponent({
     },
 
     renderDrawer(): VNode {
+      const Tag = this.tag;
+
       return (
         <Trans {...this.transitionBindings}>
           {this.isShown && (
-            /*// TODO: tag ???*/
-            <div {...this.bindings}>
+            <Tag {...this.bindings}>
               {this.renderHeader}
               {this.renderContent}
               {this.renderFooter}
-            </div>
+            </Tag>
           )}
         </Trans>
       );
@@ -420,8 +450,13 @@ export default defineComponent({
   /** @slot $slots.default
    *  Use instead of props.content to fully customize content
    */
+  /** @slot $slots.header
+   *  Use instead of default header to fully customize content
+   */
+  /** @slot $slots.footer
+   *  Use to insert footer
+   */
   // TODO: @slot $scopedSlots.closeButton\header (scoped to pass focusControlId) ???
-  // TODO: @slot $slots.slides ???
   render(): VNode {
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
