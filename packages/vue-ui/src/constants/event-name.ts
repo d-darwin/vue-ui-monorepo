@@ -11,4 +11,4 @@ export const EVENT_NAME = {
   UPDATE_CHECKED: "update:checked",
   UPDATE_VALUE: "update:value",
   UPDATE_SHOW: "update:show",
-};
+} as const;

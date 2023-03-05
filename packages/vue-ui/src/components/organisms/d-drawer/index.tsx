@@ -38,6 +38,7 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -161,6 +162,7 @@ export default defineComponent({
       type: Number,
       default: config.defaultZIndex,
     },
+    // TODO: backdropProps\Options
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -178,6 +180,11 @@ export default defineComponent({
   },
 
   emits: [EVENT_NAME.CLOSE],
+
+  setup(props) {
+    const { closeButtonId } = useClosable(props);
+    return closeButtonId;
+  },
 
   computed: {
     classes(): (string | undefined)[] {
@@ -300,7 +307,7 @@ export default defineComponent({
    *  Use instead of props.content to fully customize content
    */
   // TODO: @slot $slots.header ???
-  // TODO: @slot $slots.closeButton ???
+  // TODO: @slot $scopedSlots.closeButton (scoped to pass closeButtonId) ???
   // TODO: @slot $slots.footer ???
   // TODO: @slot $slots.slides ???
   render(): VNode {
