@@ -289,6 +289,38 @@ export default defineComponent({
         leaveActiveClass: styles.transitionLeaveActive,
       };
     },
+
+    renderBackdrop(): VNode {
+      return (
+        <Trans {...this.backdropTransitionBindings}>
+          {this.isShown && (
+            <DBackdrop {...this.backdropBindings} whenClick={this.whenClose} />
+          )}
+        </Trans>
+      );
+    },
+
+    renderDrawer(): VNode {
+      const Tag = this.tag;
+
+      if (!this.enableHtml) {
+        return (
+          <Trans {...this.transitionBindings}>
+            {this.isShown && (
+              <Tag {...this.bindings}>
+                {this.$slots.default?.() || this.content}
+              </Tag>
+            )}
+          </Trans>
+        );
+      }
+
+      return (
+        <Trans {...this.transitionBindings}>
+          {this.isShown && <Tag {...this.bindings} v-html={this.content} />}
+        </Trans>
+      );
+    },
   },
 
   methods: {
@@ -311,43 +343,10 @@ export default defineComponent({
   // TODO: @slot $slots.footer ???
   // TODO: @slot $slots.slides ???
   render(): VNode {
-    const Tag = this.tag;
-
-    // TODO: aria-labelledby="open-menu"
-    // TODO: tabindex="0" ???
-
-    if (!this.enableHtml) {
-      return (
-        <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
-          <Trans {...this.backdropTransitionBindings}>
-            {this.isShown && (
-              <DBackdrop
-                {...this.backdropBindings}
-                whenClick={this.whenClose}
-              />
-            )}
-          </Trans>
-          <Trans {...this.transitionBindings}>
-            {this.isShown && (
-              <Tag {...this.bindings}>
-                {this.$slots.default?.() || this.content}
-              </Tag>
-            )}
-          </Trans>
-        </Teleport>
-      );
-    }
-
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
-        <Trans {...this.backdropTransitionBindings}>
-          {this.isShown && (
-            <DBackdrop {...this.backdropBindings} whenClick={this.whenClose} />
-          )}
-        </Trans>
-        <Trans {...this.transitionBindings}>
-          {this.isShown && <Tag {...this.bindings} v-html={this.content} />}
-        </Trans>
+        {this.renderBackdrop}
+        {this.renderDrawer}
       </Teleport>
     );
   },
