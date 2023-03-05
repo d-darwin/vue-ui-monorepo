@@ -1,3 +1,16 @@
 .dDrawer {
-  /*TODO*/
+  --z-index: 1001;
+  z-index: var(--z-index);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  height: 100vh;
+}
+
+.transitionEnterActive,
+.transitionLeaveActive {
+  opacity: 0;
 }

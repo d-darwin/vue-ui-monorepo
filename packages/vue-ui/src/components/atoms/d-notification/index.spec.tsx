@@ -20,7 +20,7 @@ describe("DNotification", () => {
   const content = "Some content";
   const wrapper = mount(DNotification, {
     props: {
-      disabled: true, // Turn of the Teleport
+      enableInline: true, // Turn of the Teleport
       content,
       duration: 0, // Do not hide automatically
     },
@@ -44,7 +44,7 @@ describe("DNotification", () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true,
+        enableInline: true,
       },
       slots: {
         default: slotContent,
@@ -103,7 +103,7 @@ describe("DNotification", () => {
   it("Should close manually on click if props.closable is true", async () => {
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true,
+        enableInline: true,
         closable: true,
       },
     });
@@ -129,7 +129,7 @@ describe("DNotification", () => {
     const duration = 0;
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true,
+        enableInline: true,
         duration,
       },
     });
@@ -142,11 +142,11 @@ describe("DNotification", () => {
     const duration = 0.1;
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true,
+        enableInline: true,
         duration,
       },
     });
-    const closeSpy = jest.spyOn(wrapper.vm, "close");
+    const closeSpy = jest.spyOn(wrapper.vm, "closeHandler");
 
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.timeoutId).toBeTruthy();
@@ -209,7 +209,7 @@ describe("DNotification", () => {
   it("Should emits close event on close", async () => {
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true, // Turn of the Teleport
+        enableInline: true, // Turn of the Teleport
         content,
         duration: 0, // Do not hide automatically
       },
@@ -225,7 +225,7 @@ describe("DNotification", () => {
     const whenClose = jest.fn();
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true, // Turn of the Teleport
+        enableInline: true, // Turn of the Teleport
         content,
         duration: 0, // Do not hide automatically
         whenClose,
@@ -241,7 +241,7 @@ describe("DNotification", () => {
   it("The content of the component should appear on nextTick when using props.content", async () => {
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true, // Turn of the Teleport
+        enableInline: true, // Turn of the Teleport
         content,
         duration: 0, // Do not hide automatically
       },
@@ -257,7 +257,7 @@ describe("DNotification", () => {
   it("The content of the component should appear on nextTick when using default slot", async () => {
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true, // Turn of the Teleport
+        enableInline: true, // Turn of the Teleport
         duration: 0, // Do not hide automatically
       },
       slots: {
@@ -276,7 +276,7 @@ describe("DNotification", () => {
     window.clearTimeout = jest.fn();
     const wrapper = mount(DNotification, {
       props: {
-        disabled: true,
+        enableInline: true,
       },
     });
     await wrapper.unmount();

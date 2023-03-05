@@ -7,4 +7,5 @@ export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> = {
   UL: "ul",
   LI: "li",
   FIELDSET: "fieldset",
+  ASIDE: "aside",
 } as const;
