@@ -81,6 +81,19 @@ export default defineComponent({
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
+     * You can pass own class name to the <b>content</b> element.
+     */
+    contentClass: {
+      type: String,
+    },
+    /**
+     * Defines font size of the <b>content</b> element. By default depends on props.size
+     */
+    contentFont: {
+      type: String as PropType<Font>,
+      default: FONT.HUGE,
+    },
+    /**
      * Positions on the component.
      * Takes values: 'top', 'right', 'bottom', 'left'.
      */
@@ -122,13 +135,6 @@ export default defineComponent({
       // TODO: other colors ???
       type: String as PropType<ColorScheme>,
       default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
-    /**
-     * Defines font size of the component. By default, depends on props.size
-     */
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM,
     },
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
@@ -234,10 +240,6 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
       const colorSchemeClassName = prepareCssClassName(
         codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
@@ -267,7 +269,6 @@ export default defineComponent({
         styles[config.className],
         styles[this.position],
         colorSchemeStyles[colorSchemeClassName],
-        fontStyles[fontClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
         roundingStyles[roundingClassName],
@@ -297,6 +298,7 @@ export default defineComponent({
       );
 
       return {
+        colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.whenClose,
       };
@@ -304,13 +306,14 @@ export default defineComponent({
 
     bindings(): Record<
       string,
-      | string
+      | (string | undefined)
       | (string | undefined)[]
       | CSSProperties
       | ((event: MouseEvent) => void | Promise<void>)
     > {
       return {
         role: this.role,
+        ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
         class: this.classes,
         style: this.styles,
       };
@@ -369,7 +372,7 @@ export default defineComponent({
       return (
         <DButton
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          // @ts-ignore: TODO: allow unknown attrs
+          // @ts-ignore: TODO: allow unknown props\attrs
           id={this.focusControlId}
           label={config.closeButtonContent}
           colorScheme={this.colorScheme}
@@ -385,10 +388,9 @@ export default defineComponent({
       if (this.hideHeader) {
         return null;
       }
-      // TODO: this.enableHtml...
+      // TODO: slot, tag, enableHtml ... (like label in other components)
       return (
         this.$slots.header?.() || (
-          // TODO: tag ???
           <div class={styles.header}>
             {this.renderTitle}
             {this.renderCloseButton}
@@ -400,11 +402,14 @@ export default defineComponent({
     renderContent(): VNode {
       const Tag = this.contentTag;
 
-      // TODO: get some classes from this.bindings
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.contentFont
+      );
+
       const bindings = {
         role: this.contentRole,
-        class: styles.content,
-        ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
+        class: [styles.content, fontStyles[fontClassName], this.contentClass],
       };
 
       return !this.enableHtml ? (
