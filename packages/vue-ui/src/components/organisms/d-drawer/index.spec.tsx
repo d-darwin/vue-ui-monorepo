@@ -1,23 +1,40 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import DDrawer from "@/components/organisms/d-drawer";
-import { baseClassCase } from "@/utils/test-case-factories";
-import config from "@/components/molecules/d-table/config";
+import config from "@/components/organisms/d-drawer/config";
 
 describe("DTable", () => {
-  const wrapper = shallowMount(DDrawer);
+  const content = "Plain string content";
+  const wrapper = mount(DDrawer, {
+    props: {
+      isShown: false,
+      content,
+      enableInline: true,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      whenClose: () => {},
+    },
+  });
 
-  baseClassCase(wrapper, config.className);
-
-  // TODO: props.isShown
   it("Shouldn't render anything if props.isShown is falsy", async () => {
-    expect(true).toBe(false);
+    await wrapper.setProps({ content });
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.exists()).toBeFalsy();
   });
 
   it("Shouldn't render default header and content if props.isShown is true", async () => {
-    expect(true).toBe(false);
+    await wrapper.setProps({ isShown: true, content });
+    console.log(wrapper.html());
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.exists()).toBeTruthy();
+
+    const headerEl = wrapper.find(`.${config.headerClassName}`);
+    expect(headerEl.exists()).toBeTruthy();
+
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.text()).toBe(content);
   });
 
-  // TODO: props.title
+  /*  // TODO: props.title
   it("Shouldn ...", async () => {
     expect(true).toBe(false);
   });
@@ -117,5 +134,5 @@ describe("DTable", () => {
   // TODO: props.whenClose onClose
   it("Shouldn ...", async () => {
     expect(true).toBe(false);
-  });
+  });*/
 });

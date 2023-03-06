@@ -394,7 +394,7 @@ export default defineComponent({
       // TODO: slot, tag, enableHtml ... (like label in other components)
       return (
         this.$slots.header?.() || (
-          <div class={styles.header}>
+          <div class={styles[config.headerClassName]}>
             {this.renderTitle}
             {this.renderCloseButton}
           </div>
@@ -412,7 +412,11 @@ export default defineComponent({
 
       const bindings = {
         role: this.contentRole,
-        class: [styles.content, fontStyles[fontClassName], this.contentClass],
+        class: [
+          styles[config.contentClassName],
+          fontStyles[fontClassName],
+          this.contentClass,
+        ],
       };
 
       return !this.enableHtml ? (
