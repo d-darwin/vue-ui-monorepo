@@ -43,6 +43,9 @@ import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import config from "./config";
 import styles from "./index.css?module";
 
+/**
+ * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
+ */
 export default defineComponent({
   name: config.name,
 
@@ -73,6 +76,8 @@ export default defineComponent({
       type: String as PropType<Font>,
       default: FONT.HUGE,
     },
+    // TODO: header
+    // TODO: footer
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
@@ -372,7 +377,7 @@ export default defineComponent({
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
           id={this.focusControlId}
-          label={config.closeButtonContent}
+          label={config.closeButtonContent} // TODO: slots.closeButtonContent
           colorScheme={this.colorScheme}
           size={"small"}
           padding={"equal"}
