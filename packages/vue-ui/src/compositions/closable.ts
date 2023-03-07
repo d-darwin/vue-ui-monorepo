@@ -1,16 +1,23 @@
 import { watch, nextTick, onBeforeUnmount } from "vue";
-import { v4 as uuid } from "uuid";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import useSetBodyOverflow from "./set-body-overflow";
+import useControlId from "./control-id";
 
 /**
- * TODO
+ * Blocks body scroll, move focus to the props.focusId (or close button by default) and emits 'close' event by 'Esc' key.
  *
  * @param props
  * @returns {{focusControlId: string}}
  */
-export default function useClosable(props: { isShown?: boolean }) {
+export default function useClosable(props: {
+  isShown?: boolean;
+  focusId?: Text;
+}) {
+  const { controlId: focusControlId } = useControlId({
+    ...props,
+    id: props.focusId,
+  });
   const { setBodyOverflow } = useSetBodyOverflow();
-  const focusControlId = uuid(); // TODO: use control id ???
   let activeElement: Element | HTMLElement | null = null;
 
   // TODO: esc key -> emit('close'), props.whenClose()
@@ -22,7 +29,7 @@ export default function useClosable(props: { isShown?: boolean }) {
         setBodyOverflow();
         activeElement = document.activeElement;
         await nextTick(() => {
-          document.getElementById(focusControlId)?.focus?.();
+          document.getElementById(focusControlId.value)?.focus?.();
         });
       } else {
         setBodyOverflow(false);

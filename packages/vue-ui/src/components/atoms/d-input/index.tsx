@@ -424,6 +424,7 @@ export default defineComponent({
     },
 
     keyupHandler(event: KeyboardEvent) {
+      // TODO: add or find KEYS
       if (event.key === "Enter") {
         const value = (event.target as HTMLInputElement).value;
         /**

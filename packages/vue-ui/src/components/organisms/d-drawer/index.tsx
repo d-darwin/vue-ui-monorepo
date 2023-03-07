@@ -204,6 +204,12 @@ export default defineComponent({
       default: config.defaultZIndex,
     },
     /**
+     * TODO
+     */
+    focusId: {
+      type: [String, Number] as PropType<Text>,
+    },
+    /**
      * Hides header if you don't need it
      */
     hideHeader: {
@@ -376,8 +382,8 @@ export default defineComponent({
         <DButton
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
-          id={this.focusControlId}
-          label={config.closeButtonContent} // TODO: slots.closeButtonContent
+          id={this.focusControlId} // TODO: remove if props.focusId
+          label={config.closeButtonContent} // TODO: slots.closeButtonContent ???
           colorScheme={this.colorScheme}
           size={"small"}
           padding={"equal"}
@@ -477,3 +483,4 @@ export default defineComponent({
     );
   },
 });
+// TODO: long enough

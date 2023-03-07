@@ -167,14 +167,19 @@ describe("DTable", () => {
         isShown: true,
         content,
         target,
+        focusId: "why-not",
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         whenClose: () => {},
       },
     });
     await wrapper.vm.$nextTick();
 
-    // TODO: close button id
     expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
+  });
+
+  // TODO: айдишники кнопки закрытия, авто и свои
+  it("Should ...", async () => {
+    expect(true).toBe(false);
   });
 
   /*
