@@ -4,6 +4,16 @@ import config from "@/components/organisms/d-drawer/config";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { POSITION } from "@/constants/position";
+import DNotification from "@/components/atoms/d-notification";
+import {
+  colorSchemeClassCase,
+  paddingEqualClassesCase,
+  roundingClassCase,
+  sizeClassCase,
+  transitionClassCase,
+} from "@/utils/test-case-factories";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DTable", () => {
   const content = "Plain string content";
@@ -112,45 +122,62 @@ describe("DTable", () => {
     expect(contentEl.element.tagName).toEqual(contentTag.toLocaleUpperCase());
   });
 
+  it("Should render props.position to the container position class", async () => {
+    const position = POSITION.BOTTOM;
+    await wrapper.setProps({ isShown: true, position });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.classes()).toContain("bottom");
+  });
+
+  it("Should props.width to the component style as '--width: props.width'", async () => {
+    const width = "45vw";
+    await wrapper.setProps({ isShown: true, width });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.attributes("style")).toContain(`--width: ${width}`);
+  });
+
+  it("Should props.height to the component style as '--height: props.height'", async () => {
+    const height = "45vw";
+    await wrapper.setProps({ isShown: true, height });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.attributes("style")).toContain(`--height: ${height}`);
+  });
+
+  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+
+  paddingEqualClassesCase(wrapper, `.${config.className}`);
+
+  roundingClassCase(wrapper, `.${config.className}`);
+
+  sizeClassCase(wrapper, `.${config.className}`);
+
+  transitionClassCase(wrapper, `.${config.className}`);
+
+  it("Should append the container to the props.target", async () => {
+    const target = document.createElement("div");
+    target.id = "custom-target";
+    document.body.appendChild(target);
+
+    const wrapper = mount(DDrawer, {
+      attachTo: document.body,
+      props: {
+        isShown: true,
+        content,
+        target,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        whenClose: () => {},
+      },
+    });
+    await wrapper.vm.$nextTick();
+
+    // TODO: close button id
+    expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
+  });
+
   /*
-  // TODO: props.position
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.width
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.height
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.target
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-
-  // TODO: props.colorScheme
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.padding
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.rounding
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.size
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.transition
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-
   // TODO: props.role
   it("Should ...", async () => {
     expect(true).toBe(false);

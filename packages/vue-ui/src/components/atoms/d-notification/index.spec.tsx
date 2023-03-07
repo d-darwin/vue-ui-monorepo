@@ -169,14 +169,15 @@ describe("DNotification", () => {
     const target = document.createElement("div");
     target.id = "custom-target";
     document.body.appendChild(target);
+
     const wrapper = mount(DNotification, {
       attachTo: document.body,
       props: {
         target,
       },
     });
-
     await wrapper.vm.$nextTick();
+
     expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
   });
 
