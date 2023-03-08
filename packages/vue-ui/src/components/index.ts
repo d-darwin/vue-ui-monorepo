@@ -22,6 +22,7 @@ import DCheckboxGroup from "./molecules/d-checkbox-group";
 import DRadioGroup from "./molecules/d-radio-group";
 import DTable from "./molecules/d-table";
 /** organisms **/
+import DDialog from "./organisms/d-dialog";
 import DDrawer from "./organisms/d-drawer";
 
 // TODO: add all the components
@@ -47,6 +48,7 @@ export default {
     Vue.component(DCheckboxGroup.name, DCheckboxGroup);
     Vue.component(DRadioGroup.name, DRadioGroup);
     Vue.component(DTable.name, DTable);
+    Vue.component(DDialog.name, DDialog);
     Vue.component(DDrawer.name, DDrawer);
   },
 } as Plugin;
@@ -72,5 +74,6 @@ export {
   DCheckboxGroup,
   DRadioGroup,
   DTable,
+  DDialog,
   DDrawer,
 };

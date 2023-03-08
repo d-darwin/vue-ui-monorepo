@@ -138,7 +138,7 @@ export default defineComponent({
      */
     padding: {
       type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
+      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines corner rounding of the component

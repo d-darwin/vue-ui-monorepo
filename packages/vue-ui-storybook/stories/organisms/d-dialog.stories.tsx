@@ -62,7 +62,7 @@ export default {
     maxHeight: "25%",
     target: "body",
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
-    padding: PADDING.DEFAULT, // TODO: don't hardcode values
+    padding: PADDING.EQUAL, // TODO: don't hardcode values
     rounding: ROUNDING.LARGE, // TODO: don't hardcode values
     size: SIZE.LARGE, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
