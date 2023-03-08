@@ -103,19 +103,30 @@ const Template: Story = (args) => ({
   methods: {
     clickHandler() {
       this.isShown = !this.isShown;
-      if (!this.isShown) {
-        this.args.whenClose?.();
-      }
     },
     closeHandler() {
       this.isShown = false;
       this.args.whenClose?.();
     },
+    cancelHandler() {
+      this.args.whenCancel?.();
+      this.closeHandler();
+    },
+    acceptHandler() {
+      this.args.whenAccept?.();
+      this.closeHandler();
+    },
   },
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDialog v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler" />
+      <DDialog
+        v-bind="args"
+        :isShown="isShown && this.args.isShown"
+        :whenClose="closeHandler"
+        :whenCancel="cancelHandler"
+        :whenAccept="acceptHandler"
+      />
     </div>
   `,
 });
@@ -143,11 +154,25 @@ const SlotDefaultTemplate: Story = (args) => ({
       this.isShown = false;
       this.args.whenClose?.();
     },
+    cancelHandler() {
+      this.args.whenCancel?.();
+      this.closeHandler();
+    },
+    acceptHandler() {
+      this.args.whenAccept?.();
+      this.closeHandler();
+    },
   },
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDialog v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
+      <DDialog
+        v-bind="args"
+        :isShown="isShown && this.args.isShown"
+        :whenClose="closeHandler"
+        :whenCancel="cancelHandler"
+        :whenAccept="acceptHandler"
+      >
         <b>Default slot</b>
       </DDialog>
     </div>
@@ -176,11 +201,25 @@ const SlotHeaderTemplate: Story = (args) => ({
       this.isShown = false;
       this.args.whenClose?.();
     },
+    cancelHandler() {
+      this.args.whenCancel?.();
+      this.closeHandler();
+    },
+    acceptHandler() {
+      this.args.whenAccept?.();
+      this.closeHandler();
+    },
   },
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDialog v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
+      <DDialog
+        v-bind="args"
+        :isShown="isShown && this.args.isShown"
+        :whenClose="closeHandler"
+        :whenCancel="cancelHandler"
+        :whenAccept="acceptHandler"
+      >
         <template v-slot:header><b>Header slot</b></template>
       </DDialog>
     </div>
@@ -209,11 +248,25 @@ const SlotFooterTemplate: Story = (args) => ({
       this.isShown = false;
       this.args.whenClose?.();
     },
+    cancelHandler() {
+      this.args.whenCancel?.();
+      this.closeHandler();
+    },
+    acceptHandler() {
+      this.args.whenAccept?.();
+      this.closeHandler();
+    },
   },
   template: `
     <div>
       <DButton :whenClick="clickHandler">Toggle</DButton>
-      <DDialog v-bind="args" :isShown="isShown && this.args.isShown" :whenClose="closeHandler">
+      <DDialog
+        v-bind="args"
+        :isShown="isShown && this.args.isShown"
+        :whenClose="closeHandler"
+        :whenCancel="cancelHandler"
+        :whenAccept="acceptHandler"
+      >
         <template v-slot:footer><b>Footer slot</b></template>
       </DDialog>
     </div>
