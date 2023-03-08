@@ -20,11 +20,8 @@ describe("DDrawer", () => {
   const content = "Plain string content";
   const wrapper = mount(DDrawer, {
     props: {
-      isShown: false,
       enableInline: true,
       content,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      whenClose: () => {},
     },
   });
 
@@ -171,9 +168,7 @@ describe("DDrawer", () => {
         isShown: true,
         content,
         target,
-        focusId: "why-not", // for snapshot
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        whenClose: () => {},
+        focusId: "customFocusId", // for snapshot
       },
     });
     await wrapper.vm.$nextTick();
@@ -195,8 +190,6 @@ describe("DDrawer", () => {
         content,
         target,
         focusId: "why-not", // for snapshot
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        whenClose: () => {},
       },
     });
     await wrapper.vm.$nextTick();
@@ -254,8 +247,6 @@ describe("DDrawer", () => {
         isShown: true,
         enableInline: true,
         content,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        whenClose: () => {},
       },
     });
 
@@ -288,8 +279,6 @@ describe("DDrawer", () => {
         isShown: true,
         enableInline: true,
         content,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        whenClose: () => {},
       },
     });
 
@@ -322,8 +311,6 @@ describe("DDrawer", () => {
         isShown: true,
         enableInline: true,
         content,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        whenClose: () => {},
       },
     });
 

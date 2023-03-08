@@ -61,7 +61,7 @@ export default defineComponent({
      */
     isShown: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     /**
      * Defines if block scroll and backdrop presence
@@ -217,7 +217,7 @@ export default defineComponent({
       default: config.defaultZIndex,
     },
     /**
-     * TODO
+     * Defines component id to be focused on show
      */
     focusId: {
       type: [String, Number] as PropType<Text>,
@@ -261,7 +261,6 @@ export default defineComponent({
      */
     whenClose: {
       type: Function as PropType<() => void | Promise<void>>,
-      required: true,
     },
   },
 

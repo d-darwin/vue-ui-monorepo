@@ -49,10 +49,8 @@ import {
 import config from "./config";
 import styles from "./index.css?module";
 
-/** TODO
- * This is widely customizable modal component.
- * You can easily create standard modal with heading, text, cancel and accept buttons and customize these elements.
- * Also you can construct your own modal content by using default slot.
+/**
+ * Renders dialog with accept and cancel buttons. It's especially useful for modals, but default slot may receive any content.
  */
 export default defineComponent({
   name: config.name,
@@ -63,7 +61,7 @@ export default defineComponent({
      */
     isShown: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     /**
      * Defines if block scroll and backdrop presence
@@ -99,6 +97,7 @@ export default defineComponent({
     content: {
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
+    // TODO: contentOptions instead of contentClass and contentFont ???
     /**
      * You can pass own class name to the <b>content</b> element.
      */
@@ -205,7 +204,7 @@ export default defineComponent({
       default: config.defaultZIndex,
     },
     /**
-     * TODO
+     * Defines component id to be focused on show
      */
     focusId: {
       type: [String, Number] as PropType<Text>,
@@ -269,21 +268,18 @@ export default defineComponent({
      */
     whenClose: {
       type: Function as PropType<() => void | Promise<void>>,
-      required: true,
     },
     /**
      * Alternative way to catch cancel event
      */
     whenCancel: {
       type: Function as PropType<() => void | Promise<void>>,
-      required: true,
     },
     /**
      * Alternative way to catch confirm event
      */
     whenAccept: {
       type: Function as PropType<() => void | Promise<void>>,
-      required: true,
     },
   },
 
@@ -375,7 +371,7 @@ export default defineComponent({
       if (this.hideHeader) {
         return null;
       }
-      // TODO: slot, tag, enableHtml ... (like label in other components)
+
       return (
         this.$slots.header?.() || (
           <div class={styles[config.headerClassName]}>
@@ -562,7 +558,7 @@ export default defineComponent({
    *  Use instead of default header to fully customize content
    */
   /** @slot $slots.footer
-   *  Use to insert footer
+   *  Use instead of default footer to fully customize content
    */
   render(): VNode {
     return (

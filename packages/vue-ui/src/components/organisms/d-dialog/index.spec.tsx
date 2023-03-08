@@ -7,11 +7,8 @@ describe("DDialog", () => {
   const content = "Plain string content";
   const wrapper = mount(DDialog, {
     props: {
-      isShown: false,
       enableInline: true,
       content,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      whenClose: () => {},
     },
   });
 

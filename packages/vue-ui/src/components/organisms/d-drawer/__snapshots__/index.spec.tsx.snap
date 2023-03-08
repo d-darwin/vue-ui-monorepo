@@ -5,7 +5,7 @@ exports[`DDrawer Should append the container to the props.target 1`] = `
     <div class="dBackdrop transitionFast" style="--opacity: 0.5; --z-index: 1000; --background-color: var(--color-primary-background);"></div>
   </transition-stub><transition-stub enteractiveclass="transitionEnterActive" leaveactiveclass="transitionLeaveActive" appear="false" persisted="false" css="true">
     <aside role="complementary" class="dDrawer right colorSchemePrimary paddingDefaultLarge paddingDefault roundingLarge sizeLarge transitionFast" style="--width: 25%; --height: 25%; --z-index: 1001;">
-      <div class="header"><!----><button class="dButton borderPrimarySmall colorSchemePrimary fontSmall outlinePrimarySmall paddingEqualSmall paddingEqual roundingMedium sizeSmall transitionFast closeButton" id="why-not">⛌</button></div>
+      <div class="header"><!----><button class="dButton borderPrimarySmall colorSchemePrimary fontSmall outlinePrimarySmall paddingEqualSmall paddingEqual roundingMedium sizeSmall transitionFast closeButton" id="customFocusId">⛌</button></div>
       <nav role="navigation" class="content fontHuge">Plain string content</nav><!---->
     </aside>
   </transition-stub></div>
