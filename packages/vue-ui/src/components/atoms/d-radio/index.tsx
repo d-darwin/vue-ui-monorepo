@@ -7,9 +7,12 @@ import {
   Transition as Trans,
   Ref,
   watch,
+  mergeProps,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import DButton, {
+  DButtonProps,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -37,7 +40,7 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Type } from "./types";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TYPE, BASE_COLOR_SCHEME } from "./constants";
+import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
 
@@ -181,6 +184,13 @@ export default defineComponent({
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
+     * Pass any DButton.props to customize button, f.e. { colorScheme: "danger" }
+     */
+    buttonOptions: {
+      type: Object as PropType<DButtonProps>,
+      default: () => BUTTON_DEFAULTS,
     },
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
@@ -376,8 +386,8 @@ export default defineComponent({
           rounding={this.rounding}
           size={this.size}
           transition={this.transition}
-          class={styles[config.buttonClass]}
           whenClick={this.buttonClickHandler}
+          {...mergeProps(BUTTON_DEFAULTS, this.buttonOptions)}
         />
       );
     },
@@ -435,7 +445,6 @@ export default defineComponent({
     changeHandler(event: Event): void {
       const checked = (event.target as HTMLInputElement).checked;
       const value = (event.target as HTMLInputElement).value;
-      console.log("changeHandler", checked, value);
 
       /**
        * Emits on click with checked and value payload

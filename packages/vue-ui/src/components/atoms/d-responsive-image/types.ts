@@ -18,11 +18,11 @@ export interface PictureSource {
 
 export type Source = PictureSource[] | PictureSource | string;
 
-export type SourceType = typeof SOURCE_TYPE[keyof typeof SOURCE_TYPE];
+export type SourceType = (typeof SOURCE_TYPE)[keyof typeof SOURCE_TYPE];
 
-export type Loading = typeof LOADING[keyof typeof LOADING];
+export type Loading = (typeof LOADING)[keyof typeof LOADING];
 
-export type ObjectFit = typeof OBJECT_FIT[keyof typeof OBJECT_FIT];
+export type ObjectFit = (typeof OBJECT_FIT)[keyof typeof OBJECT_FIT];
 
 export interface PreparedSource {
   src: string;

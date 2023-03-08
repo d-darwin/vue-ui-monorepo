@@ -8,7 +8,7 @@ import {
   baseClassCase,
   propContentCase,
   contentHtmlCase,
-  slotDefaultCase,
+  slotCase,
   tagCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
@@ -22,7 +22,7 @@ describe("DTypography", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTypography);
+  slotCase(DTypography, `.${config.className}`);
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {

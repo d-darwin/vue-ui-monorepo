@@ -8,6 +8,8 @@ export const EVENT_NAME = {
   RESIZE: "resize",
   SCROLL: "scroll",
   CLOSE: "close",
+  CANCEL: "cancel",
+  ACCEPT: "accept",
   UPDATE_CHECKED: "update:checked",
   UPDATE_VALUE: "update:value",
   UPDATE_SHOW: "update:show",

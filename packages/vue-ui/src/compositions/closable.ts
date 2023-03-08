@@ -16,6 +16,7 @@ import useControlId from "./control-id";
 export default function useClosable(
   props: {
     isShown?: boolean;
+    isModal?: boolean;
     focusId?: Text;
     whenClose?: () => void;
   },
@@ -32,8 +33,7 @@ export default function useClosable(
   onMounted(() => {
     if (typeof window !== "undefined") {
       keyupHandler = (event: KeyboardEvent) => {
-        console.log("keyup");
-        if (event.key === "Escape") {
+        if (event.key === "Escape" && props.isShown && props.isModal) {
           emit("close");
           props.whenClose?.();
         }
@@ -50,13 +50,19 @@ export default function useClosable(
     () => props.isShown,
     async (isShown) => {
       if (isShown) {
-        setBodyOverflow();
+        if (props.isModal) {
+          // TODO: make other body children inert
+          setBodyOverflow();
+        }
         activeElement = document.activeElement;
         await nextTick(() => {
           document.getElementById(focusControlId.value)?.focus?.();
         });
       } else {
-        setBodyOverflow(false);
+        if (props.isModal) {
+          // TODO: make other body children uninert
+          setBodyOverflow(false);
+        }
         (activeElement as HTMLElement)?.focus?.();
       }
     }

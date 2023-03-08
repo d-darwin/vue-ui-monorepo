@@ -7,6 +7,8 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import config from "./config";
 import styles from "./index.css?module";
 
+export { DBackdropProps } from "./types";
+
 /**
  * The component renders simple backdrop, intended to be used with Drawers, Modals, etc.
  */

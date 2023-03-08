@@ -1,15 +1,13 @@
 import {
-  defineComponent,
-  VNode,
-  Transition as Trans,
-  Teleport,
-  PropType,
   CSSProperties,
+  defineComponent,
   mergeProps,
+  PropType,
+  Teleport,
+  VNode,
 } from "vue";
-import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import type { RendererElement } from "@vue/runtime-core";
+import { Transition as Trans } from "@vue/runtime-dom";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
@@ -20,6 +18,8 @@ import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -28,29 +28,29 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
-import {
-  POSITION_HORIZONTAL,
-  POSITION_VERTICAL,
-} from "@darwin-studio/vue-ui/src/constants/position";
-import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop, {
   DBackdropProps,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
 import DButton, {
   DButtonProps,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
-import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
+import {
+  BACKDROP_DEFAULTS,
+  CLOSE_BUTTON_DEFAULTS,
+  CANCEL_BUTTON_DEFAULTS,
+  ACCEPT_BUTTON_DEFAULTS,
+} from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
+ * Renders dialog with accept and cancel buttons. It's especially useful for modals, but default slot may receive any content.
  */
 export default defineComponent({
   name: config.name,
@@ -97,6 +97,7 @@ export default defineComponent({
     content: {
       type: [String, Number, Object] as PropType<Text | VNode>,
     },
+    // TODO: contentOptions instead of contentClass and contentFont ???
     /**
      * You can pass own class name to the <b>content</b> element.
      */
@@ -111,53 +112,39 @@ export default defineComponent({
       default: FONT.HUGE,
     },
     /**
-     * Defines a11y role of the component's content
-     */
-    contentRole: {
-      type: String, // TODO: specify type,
-      default: config.defaultContentRole,
-    },
-    /**
-     * Defines content element type of the component
-     */
-    contentTag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.NAV,
-    },
-    /**
-     * Positions on the component.
-     * Takes values: 'top', 'right', 'bottom', 'left'.
-     */
-    position: {
-      type: String as PropType<PositionStrict>,
-      default: POSITION_HORIZONTAL.RIGHT,
-      validator: (val: PositionStrict) =>
-        Boolean(
-          Object.values(
-            Object.assign({}, POSITION_HORIZONTAL, POSITION_VERTICAL)
-          ).includes(val)
-        ),
-    },
-    /**
-     * Defines width of the component if props.position is "right" or "left"
-     */
-    width: {
-      type: [String, Number],
-      default: config.defaultWidth,
-    },
-    /**
-     * Defines height of the component if props.position is "top" or "bottom"
-     */
-    height: {
-      type: [String, Number],
-      default: config.defaultHeight,
-    },
-    /**
      * The component is mounted inside passed element.
      */
     target: {
       type: [String, Object] as PropType<string | RendererElement>,
       default: config.defaultTarget,
+    },
+    /**
+     * Min width of the component.
+     */
+    minWidth: {
+      type: [String, Number],
+      default: config.defaultMinWidth,
+    },
+    /**
+     * Max width of the component.
+     */
+    maxWidth: {
+      type: [String, Number],
+      default: config.defaultMaxWidth,
+    },
+    /**
+     * Min height of the component.
+     */
+    minHeight: {
+      type: [String, Number],
+      default: config.defaultMinHeight,
+    },
+    /**
+     * Max height of the component.
+     */
+    maxHeight: {
+      type: [String, Number],
+      default: config.defaultMaxHeight,
     },
     /**
      * Defines appearance of the component
@@ -171,7 +158,7 @@ export default defineComponent({
      */
     padding: {
       type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
+      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
      * Defines corner rounding of the component
@@ -207,7 +194,7 @@ export default defineComponent({
      */
     tag: {
       type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.ASIDE,
+      default: TAG_NAME_DEFAULTS.DIALOG,
     },
     /**
      * Defines z-index of the component
@@ -229,11 +216,31 @@ export default defineComponent({
       type: Boolean,
     },
     /**
+     * Hides footer if you don't need it
+     */
+    hideFooter: {
+      type: Boolean,
+    },
+    /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
     closeButtonOptions: {
       type: Object as PropType<DButtonProps>,
       default: () => CLOSE_BUTTON_DEFAULTS,
+    },
+    /**
+     * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
+     */
+    cancelButtonOptions: {
+      type: Object as PropType<DButtonProps>,
+      default: () => CANCEL_BUTTON_DEFAULTS,
+    },
+    /**
+     * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
+     */
+    acceptButtonOptions: {
+      type: Object as PropType<DButtonProps>,
+      default: () => ACCEPT_BUTTON_DEFAULTS,
     },
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
@@ -262,9 +269,21 @@ export default defineComponent({
     whenClose: {
       type: Function as PropType<() => void | Promise<void>>,
     },
+    /**
+     * Alternative way to catch cancel event
+     */
+    whenCancel: {
+      type: Function as PropType<() => void | Promise<void>>,
+    },
+    /**
+     * Alternative way to catch confirm event
+     */
+    whenAccept: {
+      type: Function as PropType<() => void | Promise<void>>,
+    },
   },
 
-  emits: [EVENT_NAME.CLOSE],
+  emits: [EVENT_NAME.CLOSE, EVENT_NAME.CANCEL, EVENT_NAME.ACCEPT],
 
   setup(props, { emit }) {
     const { focusControlId } = useClosable(props, emit);
@@ -338,9 +357,9 @@ export default defineComponent({
       // TODO: slot, tag, enableHtml ... (like label in other components)
       return (
         <DButton
-          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          // @ts-ignore: TODO: allow unknown props\attrs
-          id={this.focusControlId} // TODO: remove if props.focusId ???
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
           {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
@@ -362,15 +381,12 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
-      const Tag = this.contentTag;
-
       const fontClassName = prepareCssClassName(
         codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
         this.contentFont
       );
 
       const bindings = {
-        role: this.contentRole,
         class: [
           styles[config.contentClassName],
           fontStyles[fontClassName],
@@ -379,20 +395,31 @@ export default defineComponent({
       };
 
       return !this.enableHtml ? (
-        <Tag {...bindings}>{this.$slots.default?.() || this.content}</Tag>
+        <div {...bindings}>{this.$slots.default?.() || this.content}</div>
       ) : (
-        <Tag {...bindings} v-html={this.content} />
+        <div {...bindings} v-html={this.content} />
       );
     },
 
     renderFooter(): VNode | null {
-      if (!this.$slots.footer) {
+      if (this.hideFooter) {
         return null;
       }
 
       // TODO: footer, tag, enableHtml ... (like label in other components)
       return (
-        <div class={styles[config.footerClassName]}>{this.$slots.footer()}</div>
+        <div class={styles[config.footerClassName]}>
+          {this.$slots.footer?.() || [
+            <DButton
+              whenClick={this.cancelHandler}
+              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
+            />,
+            <DButton
+              whenClick={this.acceptHandler}
+              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
+            />,
+          ]}
+        </div>
       );
     },
 
@@ -407,6 +434,7 @@ export default defineComponent({
     },
 
     classes(): (string | undefined)[] {
+      // TODO: make common class names generator
       const colorSchemeClassName = prepareCssClassName(
         codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme
@@ -434,7 +462,6 @@ export default defineComponent({
 
       return [
         styles[config.className],
-        styles[this.position],
         colorSchemeStyles[colorSchemeClassName],
         paddingStyles[paddingSizeClassName],
         paddingStyles[paddingClassName],
@@ -446,8 +473,10 @@ export default defineComponent({
 
     styles(): CSSProperties {
       return {
-        "--width": prepareElementSize(this.width),
-        "--height": prepareElementSize(this.height),
+        "--min-width": prepareElementSize(this.minWidth),
+        "--max-width": prepareElementSize(this.maxWidth),
+        "--min-height": prepareElementSize(this.minHeight),
+        "--max-height": prepareElementSize(this.maxHeight),
         "--z-index": this.zIndex,
       };
     },
@@ -466,9 +495,10 @@ export default defineComponent({
       };
     },
 
-    renderDrawer(): VNode {
+    renderModal(): VNode {
       const Tag = this.tag;
       /* TODO
+       *  .showModal() or .show()
        *   inert others ???
        *   autofocus
        *   aria-labelledby="dialog1Title"
@@ -497,6 +527,24 @@ export default defineComponent({
       this.$emit(EVENT_NAME.CLOSE);
       this.whenClose?.();
     },
+
+    cancelHandler(): void {
+      /**
+       * Emits on the component cancel
+       * @event cancel
+       */
+      this.$emit(EVENT_NAME.CANCEL);
+      this.whenCancel?.();
+    },
+
+    acceptHandler(): void {
+      /**
+       * Emits on the component confirmation
+       * @event confirm
+       */
+      this.$emit(EVENT_NAME.ACCEPT);
+      this.whenAccept?.();
+    },
   },
 
   /*TODO: why vue-docgen cant' detect not default slots ???*/
@@ -507,13 +555,13 @@ export default defineComponent({
    *  Use instead of default header to fully customize content
    */
   /** @slot $slots.footer
-   *  Use to insert footer
+   *  Use instead of default footer to fully customize content
    */
   render(): VNode {
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
         {this.renderBackdrop}
-        {this.renderDrawer}
+        {this.renderModal}
       </Teleport>
     );
   },

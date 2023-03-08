@@ -1,11 +1,8 @@
 import { mount } from "@vue/test-utils";
-import DDrawer from "@/components/organisms/d-drawer";
+import DDialog from "@/components/organisms/d-dialog";
+import config from "@/components/organisms/d-dialog/config";
 import DBackdrop from "@/components/atoms/d-backdrop";
-import DButton from "@/components/atoms/d-button";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import { POSITION } from "@/constants/position";
-import config from "@/components/organisms/d-drawer/config";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
@@ -16,10 +13,11 @@ import {
   slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
-describe("DDrawer", () => {
+describe("DDialog", () => {
   const content = "Plain string content";
-  const wrapper = mount(DDrawer, {
+  const wrapper = mount(DDialog, {
     props: {
       enableInline: true,
       content,
@@ -28,8 +26,8 @@ describe("DDrawer", () => {
 
   it("Shouldn't render anything if props.isShown is falsy", async () => {
     await wrapper.setProps({ isShown: false });
-    const drawerEl = wrapper.find(`.${config.className}`);
-    expect(drawerEl.exists()).toBeFalsy();
+    const dialogEl = wrapper.find(`.${config.className}`);
+    expect(dialogEl.exists()).toBeFalsy();
   });
 
   it("Should render backdrop, container, default header and content if props.isShown is true", async () => {
@@ -115,44 +113,40 @@ describe("DDrawer", () => {
     expect(contentEl.classes()).toContain(className);
   });
 
-  it("Should props.contentRole to the content role attr", async () => {
-    const contentRole = "composite";
-    await wrapper.setProps({ isShown: true, contentRole });
-
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl.attributes().role).toBe(contentRole);
-  });
-
-  it("Should props.contentTag to the content tag", async () => {
-    const contentTag = "section";
-    await wrapper.setProps({ isShown: true, contentTag });
-
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl.element.tagName).toEqual(contentTag.toLocaleUpperCase());
-  });
-
-  it("Should render props.position to the container position class", async () => {
-    const position = POSITION.BOTTOM;
-    await wrapper.setProps({ isShown: true, position });
+  it("Should props.minWidth to the component style as '--min-width: props.minWidth'", async () => {
+    const minWidth = "45vw";
+    await wrapper.setProps({ isShown: true, minWidth });
 
     const drawerEl = wrapper.find(`.${config.className}`);
-    expect(drawerEl.classes()).toContain("bottom");
+    expect(drawerEl.attributes("style")).toContain(`--min-width: ${minWidth}`);
   });
 
-  it("Should props.width to the component style as '--width: props.width'", async () => {
-    const width = "45vw";
-    await wrapper.setProps({ isShown: true, width });
+  it("Should props.maxWidth to the component style as '--max-width: props.maxWidth'", async () => {
+    const maxWidth = "45vw";
+    await wrapper.setProps({ isShown: true, maxWidth });
 
     const drawerEl = wrapper.find(`.${config.className}`);
-    expect(drawerEl.attributes("style")).toContain(`--width: ${width}`);
+    expect(drawerEl.attributes("style")).toContain(`--max-width: ${maxWidth}`);
   });
 
-  it("Should props.height to the component style as '--height: props.height'", async () => {
-    const height = "45vw";
-    await wrapper.setProps({ isShown: true, height });
+  it("Should props.minHeight to the component style as '--min-height: props.minHeight'", async () => {
+    const minHeight = "45vw";
+    await wrapper.setProps({ isShown: true, minHeight });
 
     const drawerEl = wrapper.find(`.${config.className}`);
-    expect(drawerEl.attributes("style")).toContain(`--height: ${height}`);
+    expect(drawerEl.attributes("style")).toContain(
+      `--min-height: ${minHeight}`
+    );
+  });
+
+  it("Should props.maxHeight to the component style as '--max-height: props.maxHeight'", async () => {
+    const maxHeight = "45vw";
+    await wrapper.setProps({ isShown: true, maxHeight });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.attributes("style")).toContain(
+      `--max-height: ${maxHeight}`
+    );
   });
 
   colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
@@ -170,7 +164,7 @@ describe("DDrawer", () => {
     target.id = "custom-target";
     document.body.appendChild(target);
 
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       attachTo: document.body,
       props: {
         isShown: true,
@@ -190,7 +184,7 @@ describe("DDrawer", () => {
     target.id = "custom-target";
     document.body.appendChild(target);
 
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       attachTo: document.body,
       props: {
         isShown: true,
@@ -239,6 +233,14 @@ describe("DDrawer", () => {
     expect(headerEl.exists()).toBeFalsy();
   });
 
+  it("Shouldn't render footer if props.hideFooter is true", async () => {
+    await wrapper.setProps({ hideFooter: true });
+
+    const footerEl = wrapper.find(`.${config.footerClassName}`);
+    expect(footerEl.exists()).toBeFalsy();
+    await wrapper.setProps({ hideFooter: false });
+  });
+
   it("Should render props.content as HTML string if props.enableHtml is true", async () => {
     const content = `<div>some <b>html</b> string</div>`;
     await wrapper.setProps({ isShown: true, content, enableHtml: true });
@@ -250,7 +252,7 @@ describe("DDrawer", () => {
   // TODO: props.enableHtml for header, footer (?)
 
   it("Should emit close event on backdrop click", async () => {
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -266,7 +268,7 @@ describe("DDrawer", () => {
 
   it("Should call props.whenClose on backdrop click", async () => {
     const whenClose = jest.fn();
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -282,7 +284,7 @@ describe("DDrawer", () => {
   });
 
   it("Should emit close event on close button click", async () => {
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -290,15 +292,15 @@ describe("DDrawer", () => {
       },
     });
 
-    const closeButton = wrapper.findComponent(DButton);
-    await closeButton.trigger("click");
+    const closeEl = wrapper.find(`.${config.closeButtonClassName}`);
+    await closeEl.trigger("click");
 
     expect(wrapper.emitted("close")).toBeTruthy();
   });
 
   it("Should call props.whenClose on close button click", async () => {
     const whenClose = jest.fn();
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -307,14 +309,14 @@ describe("DDrawer", () => {
       },
     });
 
-    const closeButton = wrapper.findComponent(DButton);
-    await closeButton.trigger("click");
+    const closeEl = wrapper.find(`.${config.closeButtonClassName}`);
+    await closeEl.trigger("click");
 
     expect(whenClose).toBeCalled();
   });
 
   it("Should emit close event on Escape button click", async () => {
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -334,7 +336,7 @@ describe("DDrawer", () => {
 
   it("Should call props.whenClose on Escape button click", async () => {
     const whenClose = jest.fn();
-    const wrapper = mount(DDrawer, {
+    const wrapper = mount(DDialog, {
       props: {
         isShown: true,
         enableInline: true,
@@ -353,28 +355,83 @@ describe("DDrawer", () => {
     expect(whenClose).toBeCalled();
   });
 
-  slotCase(DDrawer, `.${config.className}`, "default", {
-    isShown: true,
-    enableInline: true,
-  });
-
-  slotCase(DDrawer, `.${config.headerClassName}`, "header", {
-    isShown: true,
-    enableInline: true,
-  });
-
-  slotCase(DDrawer, `.${config.footerClassName}`, "footer", {
-    isShown: true,
-    enableInline: true,
-  });
-
-  it("Shouldn't render footer if no slots.footer", async () => {
-    const wrapper = mount(DDrawer, {
-      props: { isShown: true, enableInline: true },
+  it("Should emit cancel event on cancel button click", async () => {
+    const wrapper = mount(DDialog, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+      },
     });
 
-    const footerEl = wrapper.find(`.${config.footerClassName}`);
-    expect(footerEl.exists()).toBeFalsy();
+    const cancelEl = wrapper.find(`.${config.cancelButtonClassName}`);
+    await cancelEl.trigger("click");
+
+    expect(wrapper.emitted("cancel")).toBeTruthy();
+  });
+
+  it("Should call props.whenCancel on cancel button click", async () => {
+    const whenCancel = jest.fn();
+    const wrapper = mount(DDialog, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        whenCancel,
+      },
+    });
+
+    const cancelEl = wrapper.find(`.${config.cancelButtonClassName}`);
+    await cancelEl.trigger("click");
+
+    expect(whenCancel).toBeCalled();
+  });
+
+  it("Should emit accept event on accept button click", async () => {
+    const wrapper = mount(DDialog, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+      },
+    });
+
+    const acceptEl = wrapper.find(`.${config.acceptButtonClassName}`);
+    await acceptEl.trigger("click");
+
+    expect(wrapper.emitted("accept")).toBeTruthy();
+  });
+
+  it("Should call props.whenAccept on accept button click", async () => {
+    const whenAccept = jest.fn();
+    const wrapper = mount(DDialog, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        whenAccept,
+      },
+    });
+
+    const acceptEl = wrapper.find(`.${config.acceptButtonClassName}`);
+    await acceptEl.trigger("click");
+
+    expect(whenAccept).toBeCalled();
+  });
+
+  slotCase(DDialog, `.${config.className}`, "default", {
+    isShown: true,
+    enableInline: true,
+  });
+
+  slotCase(DDialog, `.${config.headerClassName}`, "header", {
+    isShown: true,
+    enableInline: true,
+  });
+
+  slotCase(DDialog, `.${config.footerClassName}`, "footer", {
+    isShown: true,
+    enableInline: true,
   });
 
   // TODO: props. ...Options cases

@@ -335,4 +335,6 @@ describe("DResponsiveImage", () => {
     const imgEl = wrapper.find("img");
     expect(imgEl.attributes()?.srcset).toBe(srcsetOutput);
   });
+
+  // TODO: props. ...Options cases
 });

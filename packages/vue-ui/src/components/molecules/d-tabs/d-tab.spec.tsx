@@ -7,7 +7,7 @@ import {
   paddingEqualClassesCase,
   propContentCase,
   sizeClassCase,
-  slotDefaultCase,
+  slotCase,
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
@@ -62,7 +62,7 @@ describe("DTab", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTab);
+  slotCase(DTab, `.${config.tabClassName}`);
 
   fontSizeClassCase(wrapper, `.${config.tabClassName}`);
 

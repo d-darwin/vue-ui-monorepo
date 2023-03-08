@@ -1,10 +1,12 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, mergeProps, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import DAspectRatio, {
+  DAspectRatioProps,
+} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type {
@@ -16,7 +18,12 @@ import type {
   ObjectFit,
 } from "./types";
 import { prepareSource } from "./utils";
-import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
+import {
+  ASPECT_RATIO_DEFAULTS,
+  LOADING,
+  OBJECT_FIT,
+  SOURCE_TYPE,
+} from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -59,6 +66,13 @@ export default defineComponent({
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       validator: aspectRationValidator,
+    },
+    /**
+     * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
+     */
+    aspectRatioOptions: {
+      type: Object as PropType<DAspectRatioProps>,
+      default: () => ASPECT_RATIO_DEFAULTS,
     },
     /**
      * Renders to the <i>object-fit</i> attr of the <b>img</b> element
@@ -214,7 +228,7 @@ export default defineComponent({
         return (
           <DAspectRatio
             aspectRatio={this.aspectRatio}
-            class={styles[config.className]}
+            {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
           >
             {this.imgVNode}
           </DAspectRatio>
