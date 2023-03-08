@@ -5,7 +5,6 @@ import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { POSITION } from "@/constants/position";
-import DNotification from "@/components/atoms/d-notification";
 import {
   colorSchemeClassCase,
   paddingEqualClassesCase,
@@ -15,7 +14,7 @@ import {
 } from "@/utils/test-case-factories";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
-describe("DTable", () => {
+describe("DDrawer", () => {
   const content = "Plain string content";
   const wrapper = mount(DDrawer, {
     props: {
@@ -33,7 +32,7 @@ describe("DTable", () => {
     expect(drawerEl.exists()).toBeFalsy();
   });
 
-  it("Shouldn't render container, default header and content if props.isShown is true", async () => {
+  it("Should render container, default header and content if props.isShown is true", async () => {
     await wrapper.setProps({ isShown: true, content });
 
     const drawerEl = wrapper.find(`.${config.className}`);
@@ -177,29 +176,37 @@ describe("DTable", () => {
     expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
   });
 
-  // TODO: айдишники кнопки закрытия, авто и свои
-  it("Should ...", async () => {
-    expect(true).toBe(false);
+  it("Should render props.role to the container role attr", async () => {
+    const role = "composite";
+    await wrapper.setProps({ isShown: true, content, role });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.attributes().role).toBe(role);
+  });
+
+  it("Should props.tag to the container tag", async () => {
+    const tag = "article";
+    await wrapper.setProps({ isShown: true, content, tag });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.element.tagName).toEqual(tag.toLocaleUpperCase());
+  });
+
+  it("Should render props.zIndex to the container style as '--z-index: props.zIndex'", async () => {
+    const zIndex = 0.33;
+    await wrapper.setProps({
+      zIndex,
+    });
+
+    const drawerEl = wrapper.find(`.${config.className}`);
+    expect(drawerEl.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 
   /*
-  // TODO: props.role
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.tag
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.zIndex
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
   // TODO: props.hideHeader
   it("Should ...", async () => {
     expect(true).toBe(false);
   });
-
   // TODO: props.enableInline
   it("Should ...", async () => {
     expect(true).toBe(false);
@@ -208,8 +215,14 @@ describe("DTable", () => {
   it("Should ...", async () => {
     expect(true).toBe(false);
   });
+
   // TODO: props.whenClose onClose
   it("Should ...", async () => {
     expect(true).toBe(false);
   });*/
+  // TODO: айдишники кнопки закрытия, авто и свои
+  // TODO: айшидники кастомные, авто и свои ?????
+  it("Should ...", async () => {
+    expect(true).toBe(false);
+  });
 });

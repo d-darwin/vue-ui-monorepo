@@ -255,7 +255,7 @@ export function colorSchemeClassCase(
   targetSelector: string,
   colorScheme: ColorScheme
 ) {
-  return it(`Renders props.colorScheme to the ${targetSelector}'s color scheme class`, async () => {
+  return it(`Should render props.colorScheme to the ${targetSelector}'s color scheme class`, async () => {
     await wrapper.setProps({ colorScheme });
     const className = prepareCssClassName(
       codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
