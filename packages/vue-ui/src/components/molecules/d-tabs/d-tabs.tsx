@@ -8,14 +8,13 @@ import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: 
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
+import type { Text } from "@/types/text";
+import type { TagName } from "@/types/tag-name";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
-// TODO: is it a container or a molecule ???
 // TODO: description
 export default defineComponent({
   name: config.tabsName,
