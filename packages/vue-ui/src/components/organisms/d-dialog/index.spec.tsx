@@ -424,5 +424,7 @@ describe("DDialog", () => {
     enableInline: true,
   });
 
+  // TODO: header\footer slots
+
   // TODO: props. ...Options cases
 });
