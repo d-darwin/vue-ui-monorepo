@@ -449,14 +449,12 @@ export default defineComponent({
 
     bindings(): Record<
       string,
-      | (string | undefined)
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
+      (string | undefined) | (string | undefined)[] | boolean | CSSProperties
     > {
       return {
         role: this.role,
         ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
+        ariaModal: this.isModal,
         class: this.classes,
         style: this.styles,
       };
