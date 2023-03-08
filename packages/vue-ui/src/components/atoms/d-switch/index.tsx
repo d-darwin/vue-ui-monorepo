@@ -298,6 +298,7 @@ export default defineComponent({
       );
 
       return (
+        // TODO: props.aspectRatioOptions
         <DAspectRatio
           aspectRatio={config.trackAspectRatio}
           class={[

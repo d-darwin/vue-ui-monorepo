@@ -17,7 +17,7 @@ import {
   labelStringCase,
   contentHtmlCase,
   routerLinkComponentCase,
-  slotDefaultCase,
+  slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
@@ -31,7 +31,7 @@ describe("DLink", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DLink, `.${config.className}`);
+  slotCase(DLink, `.${config.className}`);
 
   it("Renders font class name", async () => {
     const font = FONT.SMALL;

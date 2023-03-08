@@ -10,16 +10,15 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
   labelStringCase,
-  labelSlotCase,
   tagCase,
   labelHtmlCase,
   errorAbsenceCase,
+  slotCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -42,14 +41,14 @@ describe("DRadioGroup", () => {
   labelAbsenceCase(wrapper, "legend");
   labelStringCase(wrapper, "legend");
   labelHtmlCase(wrapper, "legend");
-  labelSlotCase(DRadioGroup, "legend");
+  slotCase(DRadioGroup, "legend", "label");
   labelClassCase(wrapper, "legend");
   labelFontCase(wrapper, "legend");
 
   errorAbsenceCase(wrapper, `.${config.errorClassName}`);
   errorStringCase(wrapper, `.${config.errorClassName}`);
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
-  errorSlotCase(DRadioGroup, `.${config.errorClassName}`);
+  slotCase(DRadioGroup, `.${config.errorClassName}`, "error");
   errorClassCase(wrapper, `.${config.errorClassName}`);
   errorFontCase(wrapper, `.${config.errorClassName}`);
 

@@ -212,6 +212,7 @@ export default defineComponent({
       /* has aspectRation container */
       if (this.aspectRatio && !this.caption) {
         return (
+          // TODO: props.aspectRatioOptions
           <DAspectRatio
             aspectRatio={this.aspectRatio}
             class={styles[config.className]}

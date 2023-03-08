@@ -18,7 +18,6 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   fontSizeClassCase,
   inputAttrsCase,
@@ -29,12 +28,12 @@ import {
   labelFontCase,
   labelHtmlCase,
   labelStringCase,
-  labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
   paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
+  slotCase,
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
@@ -83,7 +82,7 @@ describe("DInput", () => {
 
   labelHtmlCase(wrapper);
 
-  labelSlotCase(DInput);
+  slotCase(DInput, `.${config.labelClassName}`, "label");
 
   controlIdPresenceCase(wrapper);
 
@@ -121,7 +120,7 @@ describe("DInput", () => {
 
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DInput, `.${config.errorClassName}`);
+  slotCase(DInput, `.${config.errorClassName}`, "error");
 
   errorClassCase(wrapper, `.${config.errorClassName}`);
 

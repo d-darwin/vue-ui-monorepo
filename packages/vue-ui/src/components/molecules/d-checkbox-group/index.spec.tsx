@@ -10,16 +10,15 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
   labelStringCase,
-  labelSlotCase,
   tagCase,
   labelHtmlCase,
   errorAbsenceCase,
+  slotCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -42,14 +41,14 @@ describe("DCheckboxGroup", () => {
   labelAbsenceCase(wrapper, "legend");
   labelStringCase(wrapper, "legend");
   labelHtmlCase(wrapper, "legend");
-  labelSlotCase(DCheckboxGroup, "legend");
+  slotCase(DCheckboxGroup, "legend", "label");
   labelClassCase(wrapper, "legend");
   labelFontCase(wrapper, "legend");
 
   errorAbsenceCase(wrapper, `.${config.errorClassName}`);
   errorStringCase(wrapper, `.${config.errorClassName}`);
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
-  errorSlotCase(DCheckboxGroup, `.${config.errorClassName}`);
+  slotCase(DCheckboxGroup, `.${config.errorClassName}`, "error");
   errorClassCase(wrapper, `.${config.errorClassName}`);
   errorFontCase(wrapper, `.${config.errorClassName}`);
 

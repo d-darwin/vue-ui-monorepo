@@ -4,7 +4,7 @@ import {
   baseClassCase,
   contentHtmlCase,
   propContentCase,
-  slotDefaultCase,
+  slotCase,
   tagCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
@@ -25,7 +25,7 @@ describe("DTypography", () => {
 
   contentHtmlCase(wrapperWithFullCSSSupport);
 
-  slotDefaultCase(DAspectRatio, `.${config.className}`);
+  slotCase(DAspectRatio, `.${config.className}`);
 
   const aspectRatioValidator = DAspectRatio.props.aspectRatio.validator;
 

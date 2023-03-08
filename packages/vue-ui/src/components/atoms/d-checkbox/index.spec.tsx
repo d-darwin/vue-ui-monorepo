@@ -16,7 +16,6 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   iconSlotCase,
   inputAttrsCase,
@@ -27,12 +26,12 @@ import {
   labelFontCase,
   labelHtmlCase,
   labelStringCase,
-  labelSlotCase,
   minControlWidthCase,
   outlineClassCase,
   paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
+  slotCase,
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
@@ -85,7 +84,7 @@ describe("DCheckbox", () => {
 
   labelHtmlCase(wrapper);
 
-  labelSlotCase(DCheckbox);
+  slotCase(DCheckbox, `.${config.labelInnerClassName}`, "label");
 
   labelDisabledClassCase(wrapper);
 
@@ -125,7 +124,7 @@ describe("DCheckbox", () => {
 
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DCheckbox, `.${config.errorClassName}`);
+  slotCase(DCheckbox, `.${config.errorClassName}`, "error");
 
   errorClassCase(wrapper, `.${config.errorClassName}`);
 
@@ -207,8 +206,6 @@ describe("DCheckbox", () => {
     const inputEl = wrapper.find("input");
     await inputEl.trigger("click");
     await inputEl.trigger("input");
-
-    console.log(wrapper.emitted("update:value"));
 
     expect(wrapper.emitted("input")?.[0]).toStrictEqual([
       !checked ? value : undefined,

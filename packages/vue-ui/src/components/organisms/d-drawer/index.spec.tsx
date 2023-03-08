@@ -13,7 +13,7 @@ import {
   paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
-  slotDefaultCase,
+  slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
 
@@ -353,7 +353,7 @@ describe("DDrawer", () => {
     expect(whenClose).toBeCalled();
   });
 
-  slotDefaultCase(DDrawer, `.${config.className}`, {
+  slotCase(DDrawer, `.${config.className}`, "default", {
     isShown: true,
     enableInline: true,
   });

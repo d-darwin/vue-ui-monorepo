@@ -10,7 +10,7 @@ import {
   paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
-  slotDefaultCase,
+  slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -419,7 +419,7 @@ describe("DDialog", () => {
     expect(whenAccept).toBeCalled();
   });
 
-  slotDefaultCase(DDialog, `.${config.className}`, {
+  slotCase(DDialog, `.${config.className}`, "default", {
     isShown: true,
     enableInline: true,
   });

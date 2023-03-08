@@ -21,7 +21,7 @@ import {
   roundingClassCase,
   routerLinkComponentCase,
   sizeClassCase,
-  slotDefaultCase,
+  slotCase,
   transitionClassCase,
   activeControlCase,
 } from "@/utils/test-case-factories";
@@ -36,7 +36,7 @@ describe("DButton", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DButton, `.${config.className}`);
+  slotCase(DButton, `.${config.className}`);
 
   borderClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
 

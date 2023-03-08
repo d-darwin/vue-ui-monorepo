@@ -26,17 +26,18 @@ export function contentHtmlCase(wrapper: VueWrapper) {
   });
 }
 
-export function slotDefaultCase(
+export function slotCase(
   component: ReturnType<typeof defineComponent>,
   targetSelector: string,
+  slotName = "default",
   props?: Record<string, unknown>
 ) {
-  return it("Should render $slots.default", async () => {
+  return it(`Should render $slots.${slotName}`, async () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;
     const wrapper = mount(component, {
       props,
       slots: {
-        default: slotContent,
+        [slotName]: slotContent,
       },
     });
 
@@ -154,22 +155,6 @@ export function labelHtmlCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
-export function labelSlotCase(
-  component: ReturnType<typeof defineComponent>,
-  labelSelector = "label"
-) {
-  return it("Should render $slots.label instead of label content", async () => {
-    const labelSlot = `<div>Some <b>slot</b> content</div>`;
-    const wrapper = shallowMount(component, {
-      slots: {
-        label: labelSlot,
-      },
-    });
-    const labelEl = wrapper.find(labelSelector);
-    expect(labelEl.html()).toMatch(labelSlot);
-  });
-}
-
 export function labelDisabledClassCase(
   wrapper: VueWrapper,
   labelSelector = "label"
@@ -183,13 +168,15 @@ export function labelDisabledClassCase(
 
 export function iconSlotCase(
   component: ReturnType<typeof defineComponent>,
-  config: Record<string, string | number>
+  config: Record<string, string | number>,
+  props?: Record<string, unknown>
 ) {
   return it("Should render icon slot instead of default icon", () => {
     const slotIconClass = "slotAfter";
     const slotIcon = `<div class="${slotIconClass}">icon slot content</div>`;
     const wrapper = shallowMount(component, {
       props: {
+        ...props,
         checked: true,
       },
       slots: {
@@ -500,22 +487,6 @@ export function errorHtmlCase(wrapper: VueWrapper, errorElSelector: string) {
     await wrapper.setProps({ error: errorHtml, enableHtml: true });
     const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.html()).toMatch(errorHtml);
-  });
-}
-
-export function errorSlotCase(
-  component: ReturnType<typeof defineComponent>,
-  errorElSelector: string
-) {
-  return it("Should render $slots.error instead of error content", async () => {
-    const errorSlot = `<div>Some <b>error</b> content</div>`;
-    const wrapper = shallowMount(component, {
-      slots: {
-        error: errorSlot,
-      },
-    });
-    const errorEl = wrapper.find(errorElSelector);
-    expect(errorEl.html()).toMatch(errorSlot);
   });
 }
 

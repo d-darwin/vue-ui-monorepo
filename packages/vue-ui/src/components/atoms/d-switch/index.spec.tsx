@@ -8,12 +8,12 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   inputClassCase,
   labelFontCase,
   roundingClassCase,
   sizeClassCase,
+  slotCase,
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
@@ -193,7 +193,7 @@ describe("DSwitch", () => {
 
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DSwitch, `.${config.errorClassName}`);
+  slotCase(DSwitch, `.${config.errorClassName}`, "error");
 
   errorClassCase(wrapper, `.${config.errorClassName}`);
 

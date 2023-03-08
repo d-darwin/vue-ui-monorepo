@@ -18,7 +18,6 @@ import {
   errorClassCase,
   errorFontCase,
   errorHtmlCase,
-  errorSlotCase,
   errorStringCase,
   iconSlotCase,
   inputAttrsCase,
@@ -36,6 +35,7 @@ import {
   sizeClassCase,
   transitionClassCase,
   tagCase,
+  slotCase,
 } from "@/utils/test-case-factories";
 
 describe("DRadio", () => {
@@ -64,7 +64,7 @@ describe("DRadio", () => {
 
   defaultCheckMarkCase(wrapper, config);
 
-  iconSlotCase(DRadio, config);
+  iconSlotCase(DRadio, config, { name, value });
 
   // TODO: make check target class factory ???
   it("Icon container classes should contain props.iconContainerClass if passed", async () => {
@@ -110,6 +110,11 @@ describe("DRadio", () => {
   labelFontCase(wrapper);
 
   labelHtmlCase(wrapper);
+
+  slotCase(DRadio, `.${config.labelInnerClassName}`, "label", {
+    name,
+    value,
+  });
 
   labelDisabledClassCase(wrapper);
 
@@ -159,7 +164,10 @@ describe("DRadio", () => {
 
   errorHtmlCase(wrapper, `.${config.errorClassName}`);
 
-  errorSlotCase(DRadio, `.${config.errorClassName}`);
+  slotCase(DRadio, `.${config.errorClassName}`, "error", {
+    name,
+    value,
+  });
 
   errorClassCase(wrapper, `.${config.errorClassName}`);
 

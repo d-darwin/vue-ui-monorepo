@@ -5,7 +5,7 @@ import {
   outlineClassCase,
   paddingEqualClassesCase,
   propContentCase,
-  slotDefaultCase,
+  slotCase,
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
@@ -67,7 +67,7 @@ describe("DTabpanel", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTabpanel, `.${config.tabpanelClassName}`);
+  slotCase(DTabpanel, `.${config.tabpanelClassName}`);
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
