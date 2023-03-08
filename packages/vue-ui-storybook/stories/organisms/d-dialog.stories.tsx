@@ -79,7 +79,7 @@ export default {
     hideFooter: false,
     // TODO: argTypes
     closeButtonOptions: {
-      colorScheme: "danger",
+      colorScheme: COLOR_SCHEME.DANGER,
     },
     cancelButtonOptions: {
       label: "Cancel",

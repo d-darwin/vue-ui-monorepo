@@ -81,6 +81,9 @@ export default {
     contentTag: TAG_NAME_DEFAULTS.NAV,
     zIndex: 1001,
     hideHeader: false,
+    closeButtonOptions: {
+      colorScheme: COLOR_SCHEME.ALTERNATIVE,
+    },
     enableInline: false,
     enableHtml: false,
     whenClose: () => {

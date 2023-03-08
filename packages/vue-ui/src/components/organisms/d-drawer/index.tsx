@@ -5,6 +5,7 @@ import {
   Teleport,
   PropType,
   CSSProperties,
+  mergeProps,
 } from "vue";
 import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -37,9 +38,12 @@ import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import DButton, {
+  DButtonProps,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
+import { CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -223,6 +227,13 @@ export default defineComponent({
       type: Boolean,
     },
     /**
+     * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
+     */
+    closeButtonOptions: {
+      type: Object as PropType<DButtonProps>,
+      default: () => CLOSE_BUTTON_DEFAULTS,
+    },
+    /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: {
@@ -322,12 +333,9 @@ export default defineComponent({
         <DButton
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
-          id={this.focusControlId} // TODO: remove if props.focusId
-          label={config.closeButtonContent} // TODO: slots.closeButtonContent ???
+          id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
-          size={"small"}
-          padding={"equal"}
-          class={styles[config.closeButtonClassName]}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
           whenClick={this.closeHandler}
         />
       );
