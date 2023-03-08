@@ -33,8 +33,7 @@ export default function useClosable(
   onMounted(() => {
     if (typeof window !== "undefined") {
       keyupHandler = (event: KeyboardEvent) => {
-        console.log("keyup");
-        if (event.key === "Escape") {
+        if (event.key === "Escape" && props.isShown) {
           emit("close");
           props.whenClose?.();
         }
