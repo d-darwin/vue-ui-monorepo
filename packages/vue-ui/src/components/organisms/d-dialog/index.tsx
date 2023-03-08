@@ -206,6 +206,20 @@ export default defineComponent({
       type: Boolean,
     },
     /**
+     * Defines label of the default footer cancel button
+     */
+    cancelLabel: {
+      type: [String, Number] as PropType<Text>,
+      default: config.cancelButtonContent,
+    },
+    /**
+     * Defines label of the default footer accept button
+     */
+    acceptLabel: {
+      type: [String, Number] as PropType<Text>,
+      default: config.cancelButtonContent,
+    },
+    /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: {
@@ -378,14 +392,14 @@ export default defineComponent({
             {/*TODO: cancel/acceptClass*/}
             {/*TODO: cancel/acceptFont*/}
             <DButton
-              label={config.cancelButtonContent}
+              label={this.cancelLabel}
               colorScheme={COLOR_SCHEME.SECONDARY}
               size={"medium"}
               class={styles.footerButton}
               whenClick={this.cancelHandler}
             />
             <DButton
-              label={config.acceptButtonContent}
+              label={this.acceptLabel}
               size={"medium"}
               class={styles.footerButton}
               whenClick={this.acceptHandler}
@@ -539,3 +553,4 @@ export default defineComponent({
     );
   },
 });
+// TODO: long enough

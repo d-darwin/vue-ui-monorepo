@@ -76,6 +76,9 @@ export default {
     tag: TAG_NAME_DEFAULTS.DIALOG,
     zIndex: 1001,
     hideHeader: false,
+    hideFooter: false,
+    cancelLabel: "Cancel",
+    acceptLabel: "Accept",
     enableInline: false,
     enableHtml: false,
     whenClose: () => {
