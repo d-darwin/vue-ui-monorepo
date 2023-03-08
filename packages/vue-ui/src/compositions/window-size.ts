@@ -7,6 +7,8 @@ import {
 } from "@darwin-studio/ui-codegen/dist/constants/breakpoints";
 import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 
+// TODO: tests
+
 export const DEFAULT_THROTTLE_DURATION = 100;
 
 /**
@@ -45,7 +47,10 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
       onResize();
 
       throttledOnResize = throttle(onResize, ms);
-      window.addEventListener(EVENT_NAME.RESIZE, throttledOnResize);
+      // use passive mode to notify browser that it can perform default action immediately
+      window.addEventListener(EVENT_NAME.RESIZE, throttledOnResize, {
+        passive: true,
+      });
     }
   });
 

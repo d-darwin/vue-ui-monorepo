@@ -1,3 +1,5 @@
+// TODO: tests
+
 /**
  * Simple implementation of the debounce technique
  *  which allows us to “group” multiple sequential calls in a single one after X milliseconds of “silence“.

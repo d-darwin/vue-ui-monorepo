@@ -3,5 +3,6 @@ export default function(className: string, customProperty: { name: string, value
   // TODO: move \n to the caller
   return `\n.${className} {
   padding: var(${customProperty.name});
+  --padding: var(${customProperty.name});
 }`;
 }

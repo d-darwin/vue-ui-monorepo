@@ -2,6 +2,8 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import throttle from "@darwin-studio/vue-ui/src/utils/throttle";
 
+// TODO: tests
+
 /**
  * Watches on current scroll offset.
  * @param ms throttle duration

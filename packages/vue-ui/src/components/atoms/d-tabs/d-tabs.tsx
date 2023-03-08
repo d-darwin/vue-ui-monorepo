@@ -15,7 +15,8 @@ import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
-// TODO: is it a container ???
+// TODO: is it a container or a molecule ???
+// TODO: description
 export default defineComponent({
   name: config.tabsName,
 

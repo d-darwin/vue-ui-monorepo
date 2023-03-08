@@ -1,5 +1,6 @@
 import chalk from "chalk";
 
+// TODO: tests
 const PACKAGE_NAME = "DARWIN VUE UI"; // TODO: use package.json ???
 
 export const LOG_TYPE = {
@@ -8,7 +9,7 @@ export const LOG_TYPE = {
   WARN: "warn",
 } as const;
 
-type LogType = typeof LOG_TYPE[keyof typeof LOG_TYPE];
+type LogType = (typeof LOG_TYPE)[keyof typeof LOG_TYPE];
 
 // TODO: descr
 export default function (message: string, type: LogType = LOG_TYPE.INFO): void {

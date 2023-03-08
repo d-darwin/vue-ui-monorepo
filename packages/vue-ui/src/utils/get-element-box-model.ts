@@ -1,5 +1,7 @@
 import type { BoxModel } from "@darwin-studio/vue-ui/src/types/box-model";
 
+// TODO: tests
+
 /**
  * Return current sizes and margins of the tooltipElement.
  * @param element

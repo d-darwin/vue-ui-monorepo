@@ -1,6 +1,7 @@
-// TODO: description
 import config from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/config";
+// TODO: tests
 
+// TODO: description, move to the AspectRatio
 const aspectRationValidator = (val: string | number): boolean => {
   if (!isNaN(Number(val))) {
     return Boolean(val);

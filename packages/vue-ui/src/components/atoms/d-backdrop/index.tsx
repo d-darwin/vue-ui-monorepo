@@ -3,6 +3,7 @@ import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -50,6 +51,8 @@ export default defineComponent({
     },
   },
 
+  emits: [EVENT_NAME.CLICK],
+
   computed: {
     bindings(): Record<
       string,
@@ -75,7 +78,7 @@ export default defineComponent({
        * @event click
        * @type {undefined}
        */
-      this.$emit("click");
+      this.$emit(EVENT_NAME.CLICK);
       this.whenClick?.();
     },
   },

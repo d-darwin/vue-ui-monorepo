@@ -8,7 +8,6 @@ import {
   ref,
 } from "vue";
 import { RendererElement } from "@vue/runtime-core";
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
@@ -22,6 +21,7 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: s
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -34,7 +34,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { prepareSize } from "./utils";
+import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
@@ -47,6 +47,7 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    // TODO: isShown ???
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
@@ -175,6 +176,12 @@ export default defineComponent({
       default: TAG_NAME_DEFAULTS.DIV,
     },
     /**
+     * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
+     */
+    enableInline: {
+      type: Boolean,
+    },
+    /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
@@ -258,17 +265,18 @@ export default defineComponent({
     styles(): CSSProperties {
       const styles: CSSProperties = {};
 
+      // TODO: use css custom props
       if (typeof this.minWidth !== "undefined") {
-        styles.minWidth = prepareSize(this.minWidth);
+        styles.minWidth = prepareElementSize(this.minWidth);
       }
       if (typeof this.maxWidth !== "undefined") {
-        styles.maxWidth = prepareSize(this.maxWidth);
+        styles.maxWidth = prepareElementSize(this.maxWidth);
       }
       if (typeof this.minHeight !== "undefined") {
-        styles.minHeight = prepareSize(this.minHeight);
+        styles.minHeight = prepareElementSize(this.minHeight);
       }
       if (typeof this.maxHeight !== "undefined") {
-        styles.maxHeight = prepareSize(this.maxHeight);
+        styles.maxHeight = prepareElementSize(this.maxHeight);
       }
 
       return styles;
@@ -285,7 +293,7 @@ export default defineComponent({
         role: config.role,
         class: this.classes,
         style: this.styles,
-        onClick: this.close,
+        onClick: this.closeHandler,
       };
     },
 
@@ -314,11 +322,11 @@ export default defineComponent({
 
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
-        this.close();
+        this.closeHandler();
       }, this.duration * 1000);
     },
 
-    close(): void {
+    closeHandler(): void {
       if (!this.closable) {
         return;
       }
@@ -342,7 +350,7 @@ export default defineComponent({
 
     if (!this.enableHtml) {
       return (
-        <Teleport to={this.target} disabled={Boolean(this.$attrs.disabled)}>
+        <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
           <Trans {...this.transitionBindings}>
             {this.shown && (
               <Tag {...this.bindings}>
@@ -357,7 +365,7 @@ export default defineComponent({
     }
 
     return (
-      <Teleport to={this.target} disabled={Boolean(this.$attrs.disabled)}>
+      <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
         <Trans {...this.transitionBindings}>
           {this.shown && (
             <Tag

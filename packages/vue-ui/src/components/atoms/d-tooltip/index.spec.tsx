@@ -40,7 +40,7 @@ describe("DTooltip", () => {
     const target = `<div>HTML <b>string</b> target</div>`;
     await wrapper.setProps({ target, enableHtml: true });
     const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
+    expect(targetEl.exists()).toBeTruthy();
     expect(targetEl.html()).toContain(target);
   });
 
