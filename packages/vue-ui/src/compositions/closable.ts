@@ -51,6 +51,7 @@ export default function useClosable(
     async (isShown) => {
       if (isShown) {
         if (props.isModal) {
+          // TODO: make other body children inert
           setBodyOverflow();
         }
         activeElement = document.activeElement;
@@ -59,6 +60,7 @@ export default function useClosable(
         });
       } else {
         if (props.isModal) {
+          // TODO: make other body children uninert
           setBodyOverflow(false);
         }
         (activeElement as HTMLElement)?.focus?.();

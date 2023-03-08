@@ -452,6 +452,7 @@ export default defineComponent({
       (string | undefined) | (string | undefined)[] | boolean | CSSProperties
     > {
       return {
+        open: this.isShown,
         role: this.role,
         ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
         ariaModal: this.isModal,
@@ -463,10 +464,10 @@ export default defineComponent({
     renderDrawer(): VNode {
       const Tag = this.tag;
       /* TODO
+       *   inert others ???
+       *   autofocus
        *   aria-labelledby="dialog1Title"
        *   aria-describedby="dialog1Desc"
-       *   open
-       *   autofocus
        * */
       return (
         <Trans {...this.transitionBindings}>
