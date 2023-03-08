@@ -3,6 +3,7 @@ export default {
   className: "dDrawer",
   headerClassName: "header",
   titleClassName: "title",
+  closeButtonClassName: "closeButton",
   contentClassName: "content",
   footerClassName: "footer",
   defaultTarget: "body",

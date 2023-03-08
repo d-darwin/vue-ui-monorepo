@@ -45,7 +45,10 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
       onResize();
 
       throttledOnResize = throttle(onResize, ms);
-      window.addEventListener(EVENT_NAME.RESIZE, throttledOnResize);
+      // use passive mode to notify browser that it can perform default action immediately
+      window.addEventListener(EVENT_NAME.RESIZE, throttledOnResize, {
+        passive: true,
+      });
     }
   });
 

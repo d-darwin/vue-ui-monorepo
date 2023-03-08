@@ -11,7 +11,7 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 export function propContentCase(wrapper: VueWrapper) {
-  return it("Renders props.content", async () => {
+  return it("Should render props.content", async () => {
     const content = "some text content";
     await wrapper.setProps({ content });
     expect(wrapper.html()).toMatch(content);
@@ -19,15 +19,15 @@ export function propContentCase(wrapper: VueWrapper) {
 }
 
 export function contentHtmlCase(wrapper: VueWrapper) {
-  return it("Renders props.content as HTML string", async () => {
-    const content = `<div>some <b>html</b> content</div>`;
+  return it("Should render props.content as HTML string if props.enableHtml is true", async () => {
+    const content = `<div>some <b>html</b> string</div>`;
     await wrapper.setProps({ content, enableHtml: true });
     expect(wrapper.html()).toMatch(content);
   });
 }
 
 export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
-  return it("Renders $slots.default", async () => {
+  return it("Should render $slots.default", async () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;
     const wrapper = shallowMount(component, {
       slots: {
@@ -368,7 +368,7 @@ export function transitionClassCase(
 }
 
 export function routerLinkComponentCase(wrapper: VueWrapper) {
-  return it("Renders as 'router-link' component if 'to' is passed", async () => {
+  return it("Should render as 'router-link' component if 'to' is passed", async () => {
     await wrapper.setProps({
       to: { path: "/some-relative-path" },
       href: undefined,

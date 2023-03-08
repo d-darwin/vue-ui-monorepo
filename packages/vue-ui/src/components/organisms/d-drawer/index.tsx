@@ -242,8 +242,8 @@ export default defineComponent({
 
   emits: [EVENT_NAME.CLOSE],
 
-  setup(props) {
-    const { focusControlId } = useClosable(props);
+  setup(props, { emit }) {
+    const { focusControlId } = useClosable(props, emit);
     return { focusControlId };
   },
 
@@ -309,7 +309,7 @@ export default defineComponent({
       return {
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
-        whenClick: this.whenClose,
+        whenClick: this.closeHandler,
       };
     },
 
@@ -387,7 +387,7 @@ export default defineComponent({
           colorScheme={this.colorScheme}
           size={"small"}
           padding={"equal"}
-          class={styles.closeButton}
+          class={styles[config.closeButtonClassName]}
           whenClick={this.closeHandler}
         />
       );

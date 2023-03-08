@@ -1,10 +1,13 @@
 import { mount } from "@vue/test-utils";
 import DDrawer from "@/components/organisms/d-drawer";
-import config from "@/components/organisms/d-drawer/config";
+import DBackdrop from "@/components/atoms/d-backdrop";
+import DButton from "@/components/atoms/d-button";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { POSITION } from "@/constants/position";
+import config from "@/components/organisms/d-drawer/config";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import { POSITION } from "@/constants/position";
 import {
   colorSchemeClassCase,
   paddingEqualClassesCase,
@@ -12,15 +15,14 @@ import {
   sizeClassCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DDrawer", () => {
   const content = "Plain string content";
   const wrapper = mount(DDrawer, {
     props: {
       isShown: false,
-      content,
       enableInline: true,
+      content,
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       whenClose: () => {},
     },
@@ -32,8 +34,11 @@ describe("DDrawer", () => {
     expect(drawerEl.exists()).toBeFalsy();
   });
 
-  it("Should render container, default header and content if props.isShown is true", async () => {
+  it("Should render backdrop, container, default header and content if props.isShown is true", async () => {
     await wrapper.setProps({ isShown: true, content });
+
+    const backdrop = wrapper.findComponent(DBackdrop);
+    expect(backdrop.exists()).toBeTruthy();
 
     const drawerEl = wrapper.find(`.${config.className}`);
     expect(drawerEl.exists()).toBeTruthy();
@@ -166,7 +171,7 @@ describe("DDrawer", () => {
         isShown: true,
         content,
         target,
-        focusId: "why-not",
+        focusId: "why-not", // for snapshot
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         whenClose: () => {},
       },
@@ -174,6 +179,30 @@ describe("DDrawer", () => {
     await wrapper.vm.$nextTick();
 
     expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
+    document.body.innerHTML = "";
+  });
+
+  it("Shouldn't move the container to the props.target if props.enableInline is true", async () => {
+    const target = document.createElement("div");
+    target.id = "custom-target";
+    document.body.appendChild(target);
+
+    const wrapper = mount(DDrawer, {
+      attachTo: document.body,
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        target,
+        focusId: "why-not", // for snapshot
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        whenClose: () => {},
+      },
+    });
+    await wrapper.vm.$nextTick();
+
+    expect(document.body.innerHTML).toMatchSnapshot(); // TODO: find a better way
+    document.body.innerHTML = "";
   });
 
   it("Should render props.role to the container role attr", async () => {
@@ -202,27 +231,135 @@ describe("DDrawer", () => {
     expect(drawerEl.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 
-  /*
-  // TODO: props.hideHeader
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.enableInline
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
-  // TODO: props.enableHtml
-  it("Should ...", async () => {
-    expect(true).toBe(false);
+  it("Shouldn't render header if props.hideHeader is true", async () => {
+    await wrapper.setProps({ hideHeader: true });
+
+    const headerEl = wrapper.find(`.${config.headerClassName}`);
+    expect(headerEl.exists()).toBeFalsy();
   });
 
-  // TODO: props.whenClose onClose
-  it("Should ...", async () => {
+  it("Should render props.content as HTML string if props.enableHtml is true", async () => {
+    const content = `<div>some <b>html</b> string</div>`;
+    await wrapper.setProps({ isShown: true, content, enableHtml: true });
+
+    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    expect(contentEl.html()).toMatch(content);
+  });
+
+  // TODO: props.enableHtml for other header, footer, closeButton (?)
+
+  it("Should emit close event on backdrop click", async () => {
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        whenClose: () => {},
+      },
+    });
+
+    const backdrop = wrapper.findComponent(DBackdrop);
+    await backdrop.trigger("click");
+
+    expect(wrapper.emitted("close")).toBeTruthy();
+  });
+
+  it("Should call props.whenClose on backdrop click", async () => {
+    const whenClose = jest.fn();
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        whenClose,
+      },
+    });
+
+    const backdrop = wrapper.findComponent(DBackdrop);
+    await backdrop.trigger("click");
+
+    expect(whenClose).toBeCalled();
+  });
+
+  it("Should emit close event on close button click", async () => {
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        whenClose: () => {},
+      },
+    });
+
+    const closeButton = wrapper.findComponent(DButton);
+    await closeButton.trigger("click");
+
+    expect(wrapper.emitted("close")).toBeTruthy();
+  });
+
+  it("Should call props.whenClose on close button click", async () => {
+    const whenClose = jest.fn();
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        whenClose,
+      },
+    });
+
+    const closeButton = wrapper.findComponent(DButton);
+    await closeButton.trigger("click");
+
+    expect(whenClose).toBeCalled();
+  });
+
+  it("Should emit close event on Escape button click", async () => {
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        whenClose: () => {},
+      },
+    });
+
+    window.dispatchEvent(
+      new KeyboardEvent("keyup", {
+        key: "Escape",
+      })
+    );
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.emitted("close")).toBeTruthy();
+  });
+
+  it("Should call props.whenClose on Escape button click", async () => {
+    const whenClose = jest.fn();
+    const wrapper = mount(DDrawer, {
+      props: {
+        isShown: true,
+        enableInline: true,
+        content,
+        whenClose,
+      },
+    });
+
+    window.dispatchEvent(
+      new KeyboardEvent("keyup", {
+        key: "Escape",
+      })
+    );
+    await wrapper.vm.$nextTick();
+
+    expect(whenClose).toBeCalled();
+  });
+
+  // TODO
+  /*it("Should ... props.focusId", async () => {
     expect(true).toBe(false);
   });*/
-  // TODO: айдишники кнопки закрытия, авто и свои
-  // TODO: айшидники кастомные, авто и свои ?????
-  it("Should ...", async () => {
-    expect(true).toBe(false);
-  });
 });
