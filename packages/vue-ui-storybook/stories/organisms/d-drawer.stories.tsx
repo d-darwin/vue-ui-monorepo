@@ -81,6 +81,9 @@ export default {
     contentTag: TAG_NAME_DEFAULTS.NAV,
     zIndex: 1001,
     hideHeader: false,
+    backdropOptions: {
+      colorScheme: COLOR_SCHEME.PRIMARY,
+    },
     closeButtonOptions: {
       colorScheme: COLOR_SCHEME.ALTERNATIVE,
     },

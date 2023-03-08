@@ -28,7 +28,9 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
+import DBackdrop, {
+  DBackdropProps,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
 import DButton, {
   DButtonProps,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-button";
@@ -39,9 +41,10 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import {
-  ACCEPT_BUTTON_DEFAULTS,
-  CANCEL_BUTTON_DEFAULTS,
+  BACKDROP_DEFAULTS,
   CLOSE_BUTTON_DEFAULTS,
+  CANCEL_BUTTON_DEFAULTS,
+  ACCEPT_BUTTON_DEFAULTS,
 } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -241,13 +244,18 @@ export default defineComponent({
       default: () => ACCEPT_BUTTON_DEFAULTS,
     },
     /**
+     * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
+     */
+    backdropOptions: {
+      type: Object as PropType<DBackdropProps>,
+      default: () => BACKDROP_DEFAULTS,
+    },
+    /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: {
       type: Boolean,
     },
-    // TODO: backdrop Props\Options
-    // TODO: closeButton Props\Options
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -313,6 +321,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
       };
     },
 
@@ -356,8 +365,8 @@ export default defineComponent({
           // @ts-ignore TODO
           id={this.focusControlId}
           colorScheme={this.colorScheme}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
           whenClick={this.closeHandler}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },
@@ -407,12 +416,12 @@ export default defineComponent({
         this.$slots.footer?.() || (
           <div class={styles[config.footerClassName]}>
             <DButton
-              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
               whenClick={this.cancelHandler}
+              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
             />
             <DButton
-              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
               whenClick={this.acceptHandler}
+              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
             />
           </div>
         )

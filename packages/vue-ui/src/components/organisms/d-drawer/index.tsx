@@ -37,13 +37,15 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
-import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
+import DBackdrop, {
+  DBackdropProps,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
 import DButton, {
   DButtonProps,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
-import { CLOSE_BUTTON_DEFAULTS } from "./constants";
+import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -234,13 +236,18 @@ export default defineComponent({
       default: () => CLOSE_BUTTON_DEFAULTS,
     },
     /**
+     * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
+     */
+    backdropOptions: {
+      type: Object as PropType<DBackdropProps>,
+      default: () => BACKDROP_DEFAULTS,
+    },
+    /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: {
       type: Boolean,
     },
-    // TODO: backdrop Props\Options
-    // TODO: closeButton Props\Options
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -292,6 +299,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
       };
     },
 
@@ -335,8 +343,8 @@ export default defineComponent({
           // @ts-ignore: TODO: allow unknown props\attrs
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
           whenClick={this.closeHandler}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },

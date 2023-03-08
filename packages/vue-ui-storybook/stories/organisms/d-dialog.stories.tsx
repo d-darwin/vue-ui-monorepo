@@ -78,6 +78,9 @@ export default {
     hideHeader: false,
     hideFooter: false,
     // TODO: argTypes
+    backdropOptions: {
+      colorScheme: COLOR_SCHEME.PRIMARY,
+    },
     closeButtonOptions: {
       colorScheme: COLOR_SCHEME.DANGER,
     },
