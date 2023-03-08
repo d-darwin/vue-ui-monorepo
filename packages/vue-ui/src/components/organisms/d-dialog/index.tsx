@@ -107,24 +107,28 @@ export default defineComponent({
      */
     minWidth: {
       type: [String, Number],
+      default: config.defaultMinWidth,
     },
     /**
      * Max width of the component.
      */
     maxWidth: {
       type: [String, Number],
+      default: config.defaultMaxWidth,
     },
     /**
      * Min height of the component.
      */
     minHeight: {
       type: [String, Number],
+      default: config.defaultMinHeight,
     },
     /**
      * Max height of the component.
      */
     maxHeight: {
       type: [String, Number],
+      default: config.defaultMaxHeight,
     },
     /**
      * Defines appearance of the component
