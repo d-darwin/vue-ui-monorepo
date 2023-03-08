@@ -14,4 +14,6 @@ export default {
   defaultMinHeight: "25%",
   defaultMaxHeight: "25%",
   closeButtonContent: "⛌",
+  cancelButtonContent: "🛇",
+  acceptButtonContent: "🗸",
 };

@@ -374,24 +374,22 @@ export default defineComponent({
       return (
         this.$slots.footer?.() || (
           <div class={styles[config.footerClassName]}>
-            {/*TODO: content*/}
-            {/*TODO: size*/}
-            {/*TODO: hideConfirmButton \ hideDeclineButton */}
+            {/*TODO: cancel/acceptLabel*/}
+            {/*TODO: cancel/acceptClass*/}
+            {/*TODO: cancel/acceptFont*/}
             <DButton
-              size={"medium"}
+              label={config.cancelButtonContent}
               colorScheme={COLOR_SCHEME.SECONDARY}
+              size={"medium"}
               class={styles.footerButton}
               whenClick={this.cancelHandler}
-            >
-              🛇
-            </DButton>
+            />
             <DButton
+              label={config.acceptButtonContent}
               size={"medium"}
               class={styles.footerButton}
               whenClick={this.acceptHandler}
-            >
-              🗸
-            </DButton>
+            />
           </div>
         )
       );
