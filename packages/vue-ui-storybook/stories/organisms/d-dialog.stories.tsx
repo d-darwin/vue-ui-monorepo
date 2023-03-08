@@ -41,7 +41,6 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    // TODO: why doesnt display on actions tab ???
     onClose: {
       action: "close",
     },
