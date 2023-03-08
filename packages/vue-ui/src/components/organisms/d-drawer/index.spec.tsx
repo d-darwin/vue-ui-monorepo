@@ -26,13 +26,13 @@ describe("DDrawer", () => {
   });
 
   it("Shouldn't render anything if props.isShown is falsy", async () => {
-    await wrapper.setProps({ isShown: false, content });
+    await wrapper.setProps({ isShown: false });
     const drawerEl = wrapper.find(`.${config.className}`);
     expect(drawerEl.exists()).toBeFalsy();
   });
 
   it("Should render backdrop, container, default header and content if props.isShown is true", async () => {
-    await wrapper.setProps({ isShown: true, content });
+    await wrapper.setProps({ isShown: true });
 
     const backdrop = wrapper.findComponent(DBackdrop);
     expect(backdrop.exists()).toBeTruthy();
@@ -45,6 +45,13 @@ describe("DDrawer", () => {
 
     const contentEl = wrapper.find(`.${config.contentClassName}`);
     expect(contentEl.text()).toBe(content);
+  });
+
+  it("Shouldn't render backdrop if props.isModal is false", async () => {
+    await wrapper.setProps({ isShown: true, isModal: false });
+
+    const backdrop = wrapper.findComponent(DBackdrop);
+    expect(backdrop.exists()).toBeFalsy();
   });
 
   it("Should render passed props.title in the default header", async () => {
@@ -88,7 +95,7 @@ describe("DDrawer", () => {
 
   it("Should render props.contentClass to the content class list", async () => {
     const contentClass = "someContentClass";
-    await wrapper.setProps({ isShown: true, content, contentClass });
+    await wrapper.setProps({ isShown: true, contentClass });
 
     const contentEl = wrapper.find(`.${config.contentClassName}`);
     expect(contentEl.classes()).toContain(contentClass);
@@ -96,7 +103,7 @@ describe("DDrawer", () => {
 
   it("Should render props.contentFont to the content font class", async () => {
     const contentFont = FONT.HUGE;
-    await wrapper.setProps({ isShown: true, content, contentFont });
+    await wrapper.setProps({ isShown: true, contentFont });
 
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -109,7 +116,7 @@ describe("DDrawer", () => {
 
   it("Should props.contentRole to the content role attr", async () => {
     const contentRole = "composite";
-    await wrapper.setProps({ isShown: true, content, contentRole });
+    await wrapper.setProps({ isShown: true, contentRole });
 
     const contentEl = wrapper.find(`.${config.contentClassName}`);
     expect(contentEl.attributes().role).toBe(contentRole);
@@ -117,7 +124,7 @@ describe("DDrawer", () => {
 
   it("Should props.contentTag to the content tag", async () => {
     const contentTag = "section";
-    await wrapper.setProps({ isShown: true, content, contentTag });
+    await wrapper.setProps({ isShown: true, contentTag });
 
     const contentEl = wrapper.find(`.${config.contentClassName}`);
     expect(contentEl.element.tagName).toEqual(contentTag.toLocaleUpperCase());
@@ -200,7 +207,7 @@ describe("DDrawer", () => {
 
   it("Should render props.role to the container role attr", async () => {
     const role = "composite";
-    await wrapper.setProps({ isShown: true, content, role });
+    await wrapper.setProps({ isShown: true, role });
 
     const drawerEl = wrapper.find(`.${config.className}`);
     expect(drawerEl.attributes().role).toBe(role);
@@ -208,7 +215,7 @@ describe("DDrawer", () => {
 
   it("Should props.tag to the container tag", async () => {
     const tag = "article";
-    await wrapper.setProps({ isShown: true, content, tag });
+    await wrapper.setProps({ isShown: true, tag });
 
     const drawerEl = wrapper.find(`.${config.className}`);
     expect(drawerEl.element.tagName).toEqual(tag.toLocaleUpperCase());

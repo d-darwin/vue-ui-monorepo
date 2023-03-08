@@ -454,8 +454,8 @@ export default defineComponent({
       return {
         open: this.isShown,
         role: this.role,
-        ariaLabel: this.title?.toString(), // TODO: what if this.title is VNode ???
-        ariaModal: this.isModal,
+        ["aria-label"]: this.title?.toString(), // TODO: what if this.title is VNode ???
+        ["aria-modal"]: this.isModal,
         class: this.classes,
         style: this.styles,
       };
