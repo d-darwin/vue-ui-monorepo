@@ -71,6 +71,7 @@
   margin-top: auto;
 }
 
-.footerButton {
+.cancelButton,
+.acceptButton {
   flex: auto;
 }

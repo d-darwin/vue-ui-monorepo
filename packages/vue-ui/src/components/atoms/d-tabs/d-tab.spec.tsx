@@ -62,7 +62,7 @@ describe("DTab", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTab);
+  slotDefaultCase(DTab, `.${config.tabClassName}`);
 
   fontSizeClassCase(wrapper, `.${config.tabClassName}`);
 

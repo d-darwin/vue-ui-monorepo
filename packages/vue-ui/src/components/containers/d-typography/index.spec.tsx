@@ -22,7 +22,7 @@ describe("DTypography", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTypography);
+  slotDefaultCase(DTypography, `.${config.className}`);
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {

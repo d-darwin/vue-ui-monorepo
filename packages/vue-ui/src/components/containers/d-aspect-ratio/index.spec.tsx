@@ -25,7 +25,7 @@ describe("DTypography", () => {
 
   contentHtmlCase(wrapperWithFullCSSSupport);
 
-  slotDefaultCase(DAspectRatio);
+  slotDefaultCase(DAspectRatio, `.${config.className}`);
 
   const aspectRatioValidator = DAspectRatio.props.aspectRatio.validator;
 

@@ -19,11 +19,11 @@ export const CANCEL_BUTTON_DEFAULTS: DButtonProps = {
   label: config.cancelButtonContent,
   colorScheme: COLOR_SCHEME.SECONDARY,
   size: SIZE.MEDIUM,
-  class: styles[config.footerButtonClassName],
+  class: styles[config.cancelButtonClassName],
 };
 
 export const ACCEPT_BUTTON_DEFAULTS: DButtonProps = {
   label: config.acceptButtonContent,
   size: SIZE.MEDIUM,
-  class: styles[config.footerButtonClassName],
+  class: styles[config.acceptButtonClassName],
 };

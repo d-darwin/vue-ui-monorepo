@@ -1,4 +1,4 @@
-import { DOMWrapper, shallowMount, VueWrapper } from "@vue/test-utils";
+import { DOMWrapper, shallowMount, VueWrapper, mount } from "@vue/test-utils";
 import { defineComponent } from "vue";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
@@ -26,15 +26,22 @@ export function contentHtmlCase(wrapper: VueWrapper) {
   });
 }
 
-export function slotDefaultCase(component: ReturnType<typeof defineComponent>) {
+export function slotDefaultCase(
+  component: ReturnType<typeof defineComponent>,
+  targetSelector: string,
+  props?: Record<string, unknown>
+) {
   return it("Should render $slots.default", async () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;
-    const wrapper = shallowMount(component, {
+    const wrapper = mount(component, {
+      props,
       slots: {
         default: slotContent,
       },
     });
-    expect(wrapper.html()).toMatch(slotContent);
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl?.html()).toMatch(slotContent);
   });
 }
 

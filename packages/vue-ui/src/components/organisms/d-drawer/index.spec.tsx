@@ -13,6 +13,7 @@ import {
   paddingEqualClassesCase,
   roundingClassCase,
   sizeClassCase,
+  slotDefaultCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
 
@@ -246,7 +247,7 @@ describe("DDrawer", () => {
     expect(contentEl.html()).toMatch(content);
   });
 
-  // TODO: props.enableHtml for other header, footer, closeButton (?)
+  // TODO: props.enableHtml for header, footer (?)
 
   it("Should emit close event on backdrop click", async () => {
     const wrapper = mount(DDrawer, {
@@ -351,4 +352,11 @@ describe("DDrawer", () => {
 
     expect(whenClose).toBeCalled();
   });
+
+  slotDefaultCase(DDrawer, `.${config.className}`, {
+    isShown: true,
+    enableInline: true,
+  });
+
+  // TODO: props. ...Options cases
 });

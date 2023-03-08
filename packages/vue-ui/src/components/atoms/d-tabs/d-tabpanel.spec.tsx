@@ -67,7 +67,7 @@ describe("DTabpanel", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DTabpanel);
+  slotDefaultCase(DTabpanel, `.${config.tabpanelClassName}`);
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,

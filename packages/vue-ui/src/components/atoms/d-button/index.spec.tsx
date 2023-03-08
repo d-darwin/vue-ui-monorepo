@@ -36,7 +36,7 @@ describe("DButton", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DButton);
+  slotDefaultCase(DButton, `.${config.className}`);
 
   borderClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
 

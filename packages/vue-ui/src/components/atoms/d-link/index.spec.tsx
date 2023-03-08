@@ -31,7 +31,7 @@ describe("DLink", () => {
 
   contentHtmlCase(wrapper);
 
-  slotDefaultCase(DLink);
+  slotDefaultCase(DLink, `.${config.className}`);
 
   it("Renders font class name", async () => {
     const font = FONT.SMALL;
