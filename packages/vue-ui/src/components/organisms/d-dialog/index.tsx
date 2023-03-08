@@ -49,7 +49,7 @@ export default defineComponent({
       required: true,
     },
     /**
-     * TODO
+     * Defines if block scroll and backdrop presence
      */
     isModal: {
       type: Boolean,
@@ -261,7 +261,11 @@ export default defineComponent({
       };
     },
 
-    renderBackdrop(): VNode {
+    renderBackdrop(): VNode | null {
+      if (!this.isModal) {
+        return null;
+      }
+
       return (
         <Trans {...this.backdropTransitionBindings}>
           {this.isShown && <DBackdrop {...this.backdropBindings} />}

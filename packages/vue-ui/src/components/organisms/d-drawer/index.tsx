@@ -58,6 +58,13 @@ export default defineComponent({
       required: true,
     },
     /**
+     * Defines if block scroll and backdrop presence
+     */
+    isModal: {
+      type: Boolean,
+      default: true,
+    },
+    /**
      * Defines content of the <b>title</b> element.
      */
     title: {
@@ -277,7 +284,11 @@ export default defineComponent({
       };
     },
 
-    renderBackdrop(): VNode {
+    renderBackdrop(): VNode | null {
+      if (!this.isModal) {
+        return null;
+      }
+
       return (
         <Trans {...this.backdropTransitionBindings}>
           {this.isShown && <DBackdrop {...this.backdropBindings} />}

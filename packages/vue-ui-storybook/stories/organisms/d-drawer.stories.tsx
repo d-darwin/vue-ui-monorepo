@@ -58,12 +58,14 @@ export default {
   },
   args: {
     isShown: true,
+    isModal: true,
     position: POSITION_HORIZONTAL.RIGHT,
     title: "Some drawer title",
     titleClass: "someTitleClass",
     titleFont: FONT.HUGE,
     // TODO: header
     // TODO: footer
+    content: "Plain string content",
     contentClass: "someContentClass",
     contentFont: FONT.MEDIUM,
     width: "25%",

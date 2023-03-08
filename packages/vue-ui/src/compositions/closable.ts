@@ -16,6 +16,7 @@ import useControlId from "./control-id";
 export default function useClosable(
   props: {
     isShown?: boolean;
+    isModal?: boolean;
     focusId?: Text;
     whenClose?: () => void;
   },
@@ -50,13 +51,17 @@ export default function useClosable(
     () => props.isShown,
     async (isShown) => {
       if (isShown) {
-        setBodyOverflow();
+        if (props.isModal) {
+          setBodyOverflow();
+        }
         activeElement = document.activeElement;
         await nextTick(() => {
           document.getElementById(focusControlId.value)?.focus?.();
         });
       } else {
-        setBodyOverflow(false);
+        if (props.isModal) {
+          setBodyOverflow(false);
+        }
         (activeElement as HTMLElement)?.focus?.();
       }
     }

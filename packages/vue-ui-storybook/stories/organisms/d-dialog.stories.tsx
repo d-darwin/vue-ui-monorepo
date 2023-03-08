@@ -54,6 +54,7 @@ export default {
     titleFont: FONT.HUGE,
     // TODO: header
     // TODO: footer
+    content: "Plain string content",
     contentClass: "someContentClass",
     contentFont: FONT.MEDIUM,
     minWidth: "25%",
