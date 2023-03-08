@@ -2,6 +2,8 @@ import { Ref, ref, watchEffect } from "vue";
 import { v4 as uuid } from "uuid";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 
+// TODO: tests
+
 /**
  * Uses passed id prop or generates custom UUID.
  * See example usage in '@dariwn-studio/vue-ui/components/atoms/d-input'.

@@ -1,2 +1,3 @@
+// TODO: tests
 // TODO: descr
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

@@ -4,6 +4,8 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useSetBodyOverflow from "./set-body-overflow";
 import useControlId from "./control-id";
 
+// TODO: tests
+
 /**
  * Blocks body scroll, move focus to the props.focusId (or close button by default) and emits 'close' event by 'Escape' key.
  *

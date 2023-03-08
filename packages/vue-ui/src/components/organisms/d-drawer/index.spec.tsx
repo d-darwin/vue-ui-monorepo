@@ -357,9 +357,4 @@ describe("DDrawer", () => {
 
     expect(whenClose).toBeCalled();
   });
-
-  // TODO
-  /*it("Should ... props.focusId", async () => {
-    expect(true).toBe(false);
-  });*/
 });

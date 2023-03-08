@@ -1,5 +1,6 @@
+// TODO: tests
 /**
- * TOOD
+ * TODO: description
  * @returns {function}
  */
 export default function useSetBodyOverflow() {
