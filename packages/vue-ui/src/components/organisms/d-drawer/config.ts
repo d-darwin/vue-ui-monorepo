@@ -5,7 +5,6 @@ export default {
   titleClassName: "title",
   closeButtonClassName: "closeButton",
   contentClassName: "content",
-  footerClassName: "footer",
   defaultTarget: "body",
   defaultRole: "complementary",
   defaultContentRole: "navigation",

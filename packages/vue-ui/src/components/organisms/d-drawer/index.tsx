@@ -450,9 +450,11 @@ export default defineComponent({
     renderDrawer(): VNode {
       const Tag = this.tag;
       /* TODO
-      *   aria-labelledby="dialog1Title"
-          aria-describedby="dialog1Desc"
-      * */
+       *   aria-labelledby="dialog1Title"
+       *   aria-describedby="dialog1Desc"
+       *   open
+       *   autofocus
+       * */
       return (
         <Trans {...this.transitionBindings}>
           {this.isShown && (

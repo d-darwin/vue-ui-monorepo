@@ -56,11 +56,21 @@
 }
 
 .content {
-  padding: var(--padding);
-  padding-left: 0;
-  padding-right: 0;
-  margin-bottom: auto;
+  margin: var(--padding);
+  margin-left: 0;
+  margin-right: 0;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--grid-column-gap);
+  margin-top: auto;
+}
+
+.footerButton {
+  width: 100%;
 }

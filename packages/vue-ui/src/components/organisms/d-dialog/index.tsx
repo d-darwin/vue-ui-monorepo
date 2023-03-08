@@ -200,6 +200,12 @@ export default defineComponent({
       type: Boolean,
     },
     /**
+     * Hides footer if you don't need it
+     */
+    hideFooter: {
+      type: Boolean,
+    },
+    /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: {
@@ -222,9 +228,23 @@ export default defineComponent({
       type: Function as PropType<() => void | Promise<void>>,
       required: true,
     },
+    /**
+     * Alternative way to catch cancel event
+     */
+    whenCancel: {
+      type: Function as PropType<() => void | Promise<void>>,
+      required: true,
+    },
+    /**
+     * Alternative way to catch confirm event
+     */
+    whenAccept: {
+      type: Function as PropType<() => void | Promise<void>>,
+      required: true,
+    },
   },
 
-  emits: [EVENT_NAME.CLOSE],
+  emits: [EVENT_NAME.CLOSE, EVENT_NAME.CANCEL, EVENT_NAME.ACCEPT],
 
   setup(props, { emit }) {
     const { focusControlId } = useClosable(props, emit);
@@ -346,8 +366,35 @@ export default defineComponent({
       );
     },
 
-    renderFooter(): VNode[] | null {
-      return this.$slots.footer?.() || null;
+    renderFooter(): VNode[] | VNode | null {
+      if (this.hideFooter) {
+        return null;
+      }
+
+      return (
+        this.$slots.footer?.() || (
+          <div class={styles[config.footerClassName]}>
+            {/*TODO: content*/}
+            {/*TODO: size*/}
+            {/*TODO: hideConfirmButton \ hideDeclineButton */}
+            <DButton
+              size={"medium"}
+              colorScheme={COLOR_SCHEME.SECONDARY}
+              class={styles.footerButton}
+              whenClick={this.cancelHandler}
+            >
+              🛇
+            </DButton>
+            <DButton
+              size={"medium"}
+              class={styles.footerButton}
+              whenClick={this.acceptHandler}
+            >
+              🗸
+            </DButton>
+          </div>
+        )
+      );
     },
 
     transitionBindings(): {
@@ -424,12 +471,14 @@ export default defineComponent({
 
     renderModal(): VNode {
       const Tag = this.tag;
-
       /* TODO
-      *   aria-labelledby="dialog1Title"
-          aria-describedby="dialog1Desc"
-      * */
-
+       *  .showModal() or .show()
+       *   aria-modal="true",
+       *   aria-labelledby="dialog1Title"
+       *   aria-describedby="dialog1Desc"
+       *   open
+       *   autofocus
+       * */
       return (
         <Trans {...this.transitionBindings}>
           {this.isShown && (
@@ -452,6 +501,24 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.CLOSE);
       this.whenClose?.();
+    },
+
+    cancelHandler(): void {
+      /**
+       * Emits on the component cancel
+       * @event cancel
+       */
+      this.$emit(EVENT_NAME.CANCEL);
+      this.whenCancel?.();
+    },
+
+    acceptHandler(): void {
+      /**
+       * Emits on the component confirmation
+       * @event confirm
+       */
+      this.$emit(EVENT_NAME.ACCEPT);
+      this.whenAccept?.();
     },
   },
 

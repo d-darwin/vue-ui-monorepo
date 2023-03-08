@@ -44,6 +44,12 @@ export default {
     onClose: {
       action: "close",
     },
+    onCancel: {
+      action: "cancel",
+    },
+    onAccept: {
+      action: "accept",
+    },
   },
   args: {
     isShown: true,
@@ -74,6 +80,12 @@ export default {
     enableHtml: false,
     whenClose: () => {
       console.log("close");
+    },
+    whenCancel: () => {
+      console.log("cancel");
+    },
+    whenAccept: () => {
+      console.log("accept");
     },
   },
 };
