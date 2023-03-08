@@ -348,18 +348,16 @@ export default defineComponent({
       );
     },
 
-    renderHeader(): VNode[] | VNode | null {
+    renderHeader(): VNode | null {
       if (this.hideHeader) {
         return null;
       }
-      // TODO: slot, tag, enableHtml ... (like label in other components)
+
+      // TODO: header, tag, enableHtml ... (like label in other components)
       return (
-        this.$slots.header?.() || (
-          <div class={styles[config.headerClassName]}>
-            {this.renderTitle}
-            {this.renderCloseButton}
-          </div>
-        )
+        <div class={styles[config.headerClassName]}>
+          {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
+        </div>
       );
     },
 
@@ -387,8 +385,15 @@ export default defineComponent({
       );
     },
 
-    renderFooter(): VNode[] | null {
-      return this.$slots.footer?.() || null;
+    renderFooter(): VNode | null {
+      if (!this.$slots.footer) {
+        return null;
+      }
+
+      // TODO: footer, tag, enableHtml ... (like label in other components)
+      return (
+        <div class={styles[config.footerClassName]}>{this.$slots.footer()}</div>
+      );
     },
 
     transitionBindings(): {

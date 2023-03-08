@@ -367,18 +367,16 @@ export default defineComponent({
       );
     },
 
-    renderHeader(): VNode[] | VNode | null {
+    renderHeader(): VNode | null {
       if (this.hideHeader) {
         return null;
       }
 
+      // TODO: header, tag, enableHtml ... (like label in other components)
       return (
-        this.$slots.header?.() || (
-          <div class={styles[config.headerClassName]}>
-            {this.renderTitle}
-            {this.renderCloseButton}
-          </div>
-        )
+        <div class={styles[config.headerClassName]}>
+          {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
+        </div>
       );
     },
 
@@ -403,24 +401,25 @@ export default defineComponent({
       );
     },
 
-    renderFooter(): VNode[] | VNode | null {
+    renderFooter(): VNode | null {
       if (this.hideFooter) {
         return null;
       }
 
+      // TODO: footer, tag, enableHtml ... (like label in other components)
       return (
-        this.$slots.footer?.() || (
-          <div class={styles[config.footerClassName]}>
+        <div class={styles[config.footerClassName]}>
+          {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
               {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
-            />
+            />,
             <DButton
               whenClick={this.acceptHandler}
               {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
-            />
-          </div>
-        )
+            />,
+          ]}
+        </div>
       );
     },
 

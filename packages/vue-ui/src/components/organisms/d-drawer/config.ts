@@ -2,6 +2,7 @@ export default {
   name: "DDrawer",
   className: "dDrawer",
   headerClassName: "header",
+  footerClassName: "footer",
   titleClassName: "title",
   closeButtonClassName: "closeButton",
   contentClassName: "content",

@@ -424,7 +424,15 @@ describe("DDialog", () => {
     enableInline: true,
   });
 
-  // TODO: header\footer slots
+  slotCase(DDialog, `.${config.headerClassName}`, "header", {
+    isShown: true,
+    enableInline: true,
+  });
+
+  slotCase(DDialog, `.${config.footerClassName}`, "footer", {
+    isShown: true,
+    enableInline: true,
+  });
 
   // TODO: props. ...Options cases
 });

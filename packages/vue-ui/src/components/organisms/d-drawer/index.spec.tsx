@@ -358,7 +358,24 @@ describe("DDrawer", () => {
     enableInline: true,
   });
 
-  // TODO: header\footer slots
+  slotCase(DDrawer, `.${config.headerClassName}`, "header", {
+    isShown: true,
+    enableInline: true,
+  });
+
+  slotCase(DDrawer, `.${config.footerClassName}`, "footer", {
+    isShown: true,
+    enableInline: true,
+  });
+
+  it("Shouldn't render footer if no slots.footer", async () => {
+    const wrapper = mount(DDrawer, {
+      props: { isShown: true, enableInline: true },
+    });
+
+    const footerEl = wrapper.find(`.${config.footerClassName}`);
+    expect(footerEl.exists()).toBeFalsy();
+  });
 
   // TODO: props. ...Options cases
 });
