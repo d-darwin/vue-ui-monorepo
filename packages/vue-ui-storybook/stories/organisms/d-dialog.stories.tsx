@@ -78,6 +78,9 @@ export default {
     hideHeader: false,
     hideFooter: false,
     // TODO: argTypes
+    closeButtonOptions: {
+      colorScheme: "danger",
+    },
     cancelButtonOptions: {
       label: "Cancel",
     },

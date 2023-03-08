@@ -5,7 +5,6 @@ import {
   PropType,
   Teleport,
   VNode,
-  VNodeProps,
 } from "vue";
 import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
@@ -30,17 +29,22 @@ import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?m
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import DButton, {
+  DButtonProps,
+} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
-import { ACCEPT_BUTTON_DEFAULTS, CANCEL_BUTTON_DEFAULTS } from "./constants";
+import {
+  ACCEPT_BUTTON_DEFAULTS,
+  CANCEL_BUTTON_DEFAULTS,
+  CLOSE_BUTTON_DEFAULTS,
+} from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-import { ComponentPropsOptions } from "@vue/runtime-core";
 
 /** TODO
  * This is widely customizable modal component.
@@ -216,37 +220,25 @@ export default defineComponent({
       type: Boolean,
     },
     /**
+     * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
+     */
+    closeButtonOptions: {
+      type: Object as PropType<DButtonProps>,
+      default: () => CLOSE_BUTTON_DEFAULTS,
+    },
+    /**
      * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
      */
     cancelButtonOptions: {
-      type: Object as PropType<InstanceType<typeof DButton>["$props"]>,
+      type: Object as PropType<DButtonProps>,
       default: () => CANCEL_BUTTON_DEFAULTS,
     },
     /**
      * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
      */
     acceptButtonOptions: {
-      type: Object as PropType<InstanceType<typeof DButton>["$props"]>,
+      type: Object as PropType<DButtonProps>,
       default: () => ACCEPT_BUTTON_DEFAULTS,
-    },
-    /**
-     * Defines label of the default footer accept button
-     */
-    acceptLabel: {
-      type: [String, Number] as PropType<Text>,
-      default: config.cancelButtonContent,
-    },
-    /**
-     * Defines class of the default footer accept button
-     */
-    acceptClass: {
-      type: String,
-    },
-    /**
-     * Defines font class of the default footer accept button
-     */
-    acceptFont: {
-      type: String as PropType<Font>,
     },
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
@@ -360,14 +352,7 @@ export default defineComponent({
       // TODO: slot, tag, enableHtml ... (like label in other components)
       return (
         <DButton
-          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          // @ts-ignore: TODO: allow unknown props\attrs
-          id={this.focusControlId} // TODO: remove if props.focusId
-          label={config.closeButtonContent} // TODO: slots.closeButtonContent ???
-          colorScheme={this.colorScheme}
-          size={"small"}
-          padding={"equal"}
-          class={styles[config.closeButtonClassName]}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
           whenClick={this.closeHandler}
         />
       );
