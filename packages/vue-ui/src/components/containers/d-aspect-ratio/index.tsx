@@ -7,6 +7,8 @@ import { parseWidthHeight } from "./utils";
 import config from "./config";
 import styles from "./index.css?module";
 
+export { DAspectRatioProps } from "./types";
+
 /**
  * The component uses padding-bottom / zero-height hack to simulate aspect-ratio CSS property if it is not supported.
  */

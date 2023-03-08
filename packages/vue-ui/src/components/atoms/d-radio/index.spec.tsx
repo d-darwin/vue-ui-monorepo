@@ -326,4 +326,6 @@ describe("DRadio", () => {
     await wrapper.setProps({ checked: !checked });
     expect(wrapper.props().checked).toBe(!checked);
   });
+
+  // TODO: props. ...Options cases
 });

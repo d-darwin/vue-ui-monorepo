@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, mergeProps, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -22,8 +22,11 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import DAspectRatio from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import DAspectRatio, {
+  DAspectRatioProps,
+} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
 import type { Values, Value } from "./types";
+import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -144,6 +147,13 @@ export default defineComponent({
     tag: {
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
+    },
+    /**
+     * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
+     */
+    aspectRatioOptions: {
+      type: Object as PropType<DAspectRatioProps>,
+      default: () => ASPECT_RATIO_DEFAULTS,
     },
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
@@ -298,9 +308,10 @@ export default defineComponent({
       );
 
       return (
-        // TODO: props.aspectRatioOptions
         <DAspectRatio
-          aspectRatio={config.trackAspectRatio}
+          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+          /* @ts-ignore TODO */
+          for={this.controlId}
           class={[
             styles[config.trackClassName],
             this.disabled ? styles.__disabled : undefined,
@@ -312,10 +323,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
-          tag="label"
-          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          /* @ts-ignore TODO */
-          for={this.controlId}
+          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
         >
           <input
             id={this.controlId}

@@ -409,4 +409,6 @@ describe("DSwitch", () => {
     await inputEl.trigger("input");
     expect(whenInput).not.toHaveBeenCalled();
   });
+
+  // TODO: props. ...Options cases
 });

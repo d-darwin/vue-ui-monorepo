@@ -184,7 +184,7 @@ describe("DTable", () => {
       })
     );
   });
-  // TODO: props.bodyCellAttrs
+
   it("Should render props.bodyCellAttrs as td elements inside the tbody attrs", async () => {
     const bodyCellAttrsArr = [
       [
