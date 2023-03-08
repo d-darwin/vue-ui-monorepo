@@ -6,6 +6,7 @@ export default {
   closeButtonClassName: "closeButton",
   contentClassName: "content",
   footerClassName: "footer",
+  footerButtonClassName: "footerButton",
   defaultTarget: "body",
   defaultRole: "dialog",
   defaultZIndex: 1001,

@@ -1,4 +1,12 @@
-import { CSSProperties, defineComponent, PropType, Teleport, VNode } from "vue";
+import {
+  CSSProperties,
+  defineComponent,
+  mergeProps,
+  PropType,
+  Teleport,
+  VNode,
+  VNodeProps,
+} from "vue";
 import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
@@ -29,8 +37,10 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
+import { ACCEPT_BUTTON_DEFAULTS, CANCEL_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+import { ComponentPropsOptions } from "@vue/runtime-core";
 
 /** TODO
  * This is widely customizable modal component.
@@ -206,11 +216,18 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * Defines label of the default footer cancel button
+     * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
      */
-    cancelLabel: {
-      type: [String, Number] as PropType<Text>,
-      default: config.cancelButtonContent,
+    cancelButtonOptions: {
+      type: Object as PropType<InstanceType<typeof DButton>["$props"]>,
+      default: () => CANCEL_BUTTON_DEFAULTS,
+    },
+    /**
+     * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
+     */
+    acceptButtonOptions: {
+      type: Object as PropType<InstanceType<typeof DButton>["$props"]>,
+      default: () => ACCEPT_BUTTON_DEFAULTS,
     },
     /**
      * Defines label of the default footer accept button
@@ -218,6 +235,18 @@ export default defineComponent({
     acceptLabel: {
       type: [String, Number] as PropType<Text>,
       default: config.cancelButtonContent,
+    },
+    /**
+     * Defines class of the default footer accept button
+     */
+    acceptClass: {
+      type: String,
+    },
+    /**
+     * Defines font class of the default footer accept button
+     */
+    acceptFont: {
+      type: String as PropType<Font>,
     },
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
@@ -388,20 +417,12 @@ export default defineComponent({
       return (
         this.$slots.footer?.() || (
           <div class={styles[config.footerClassName]}>
-            {/*TODO: cancel/acceptLabel*/}
-            {/*TODO: cancel/acceptClass*/}
-            {/*TODO: cancel/acceptFont*/}
             <DButton
-              label={this.cancelLabel}
-              colorScheme={COLOR_SCHEME.SECONDARY}
-              size={"medium"}
-              class={styles.footerButton}
+              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
               whenClick={this.cancelHandler}
             />
             <DButton
-              label={this.acceptLabel}
-              size={"medium"}
-              class={styles.footerButton}
+              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
               whenClick={this.acceptHandler}
             />
           </div>
@@ -420,6 +441,7 @@ export default defineComponent({
     },
 
     classes(): (string | undefined)[] {
+      // TODO: make common class names generator
       const colorSchemeClassName = prepareCssClassName(
         codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
         this.colorScheme

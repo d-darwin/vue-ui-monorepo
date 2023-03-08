@@ -77,8 +77,13 @@ export default {
     zIndex: 1001,
     hideHeader: false,
     hideFooter: false,
-    cancelLabel: "Cancel",
-    acceptLabel: "Accept",
+    // TODO: argTypes
+    cancelButtonOptions: {
+      label: "Cancel",
+    },
+    acceptButtonOptions: {
+      label: "Accept",
+    },
     enableInline: false,
     enableHtml: false,
     whenClose: () => {
