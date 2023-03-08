@@ -352,6 +352,10 @@ export default defineComponent({
       // TODO: slot, tag, enableHtml ... (like label in other components)
       return (
         <DButton
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          id={this.focusControlId}
+          colorScheme={this.colorScheme}
           {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
           whenClick={this.closeHandler}
         />
