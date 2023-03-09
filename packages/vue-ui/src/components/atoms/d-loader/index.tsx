@@ -1,0 +1,118 @@
+import { defineComponent, PropType, render, VNode } from "vue";
+import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
+import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
+import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
+import config from "./config";
+import styles from "./index.css?module";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
+
+export default defineComponent({
+  name: config.name,
+
+  props: {
+    /**
+     * Defines appearance of the component
+     */
+    colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines size of the component
+     */
+    // TODO: fontSize and size separately ???
+    font: {
+      type: String as PropType<Font>,
+      default: FONT.HUGE, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines corner rounding of the component
+     */
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines size of the component
+     */
+    // TODO: fontSize and size separately ???
+    size: {
+      type: String as PropType<Size>,
+      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * TODO
+     */
+    fillAvailable: {
+      type: Boolean,
+      default: true,
+    },
+  },
+
+  computed: {
+    classes(): string[] {
+      const colorSchemeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        this.colorScheme
+      );
+      // TODO: font and size separately
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.font
+      );
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return [
+        styles[config.className],
+        colorSchemeStyles[colorSchemeClassName],
+        fontStyles[fontClassName],
+        roundingStyles[roundingClassName],
+        sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
+      ];
+    },
+  },
+
+  render(): VNode {
+    const loader = <div class={this.classes}>{config.defaultContent}</div>;
+
+    if (this.fillAvailable) {
+      return <div class={styles[config.wrapperClassName]}>{loader}</div>;
+    }
+
+    // TODO: .content, enableHtml default slot
+    // TODO: transition ???
+    return loader;
+  },
+});

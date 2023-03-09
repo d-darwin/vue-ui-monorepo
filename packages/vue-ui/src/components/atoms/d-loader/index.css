@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-primary-background);
+  opacity: 0.5;
+  /*TODO: backdrop ???*/
+}
+
+.dLoader {
+  height: var(--size);
+  width: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: rotation 2s infinite linear; /*TODO: how to use --transform ???*/
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); /*TODO: make it configurable*/
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
