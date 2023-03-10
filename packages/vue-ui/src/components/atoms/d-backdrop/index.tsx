@@ -17,6 +17,13 @@ export default defineComponent({
 
   props: {
     /**
+     * Defines appearance of the component
+     */
+    colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
      * Defines opacity of the component
      */
     opacity: {
@@ -31,11 +38,11 @@ export default defineComponent({
       default: config.defaultZIndex,
     },
     /**
-     * Defines appearance of the component
+     * TODO: descr, tests
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
+    position: {
+      type: String as PropType<"fixed" | "absolute">, // TODO: make a type
+      default: "fixed", // TODO: make a const
     },
     /**
      * Defines container element type of the component
@@ -63,9 +70,10 @@ export default defineComponent({
       return {
         class: styles[config.className],
         style: {
+          "--background-color": `var(--color-${this.colorScheme}-background)`,
           "--opacity": this.opacity,
           "--z-index": this.zIndex,
-          "--background-color": `var(--color-${this.colorScheme}-background)`,
+          "--position": this.position,
         },
         onClick: this.clickHandler,
       };
