@@ -29,7 +29,6 @@ import DBackdrop, {
 import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-import prepareElementSize from "@/utils/prepare-element-size";
 
 export default defineComponent({
   name: config.name,

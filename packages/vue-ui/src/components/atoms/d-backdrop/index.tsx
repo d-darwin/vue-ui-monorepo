@@ -4,6 +4,7 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { CssPosition } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -31,18 +32,18 @@ export default defineComponent({
       default: config.defaultOpacity,
     },
     /**
-     * Defines z-index of the component
+     * Defines z-index attr of the component
      */
     zIndex: {
       type: Number,
       default: config.defaultZIndex,
     },
     /**
-     * TODO: descr, tests
+     * Defines position attr of the component
      */
     position: {
-      type: String as PropType<"fixed" | "absolute">, // TODO: make a type
-      default: "fixed", // TODO: make a const
+      type: String as PropType<CssPosition>,
+      default: config.defaultPosition,
     },
     /**
      * Defines container element type of the component
