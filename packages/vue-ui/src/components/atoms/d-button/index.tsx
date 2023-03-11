@@ -21,6 +21,7 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
+import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Tag } from "./types";
@@ -88,6 +89,13 @@ export default defineComponent({
     disabled: {
       type: Boolean,
     },
+    /**
+     * TODO
+     */
+    loading: {
+      type: Boolean,
+    },
+    // TODO: loaderOptions
     /**
      * Pass true to make the button active // TODO: test, story
      */
@@ -168,7 +176,7 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
 
-      if (this.disabled) {
+      if (this.disabled || this.loading) {
         classes.push(styles["__disabled"]); // TODO: const
         classes.push(colorSchemeStyles["__disabled"]); // TODO: const
       }
@@ -201,6 +209,25 @@ export default defineComponent({
         onClick: this.clickHandler,
       };
     },
+
+    content(): (Text | VNode | undefined)[] {
+      if (this.loading) {
+        return [
+          <DLoader
+            colorScheme={this.colorScheme}
+            size={this.size}
+            font={this.size}
+            class={[
+              styles[config.loaderClassName],
+              colorSchemeStyles.__disabled,
+            ]}
+          />,
+          this.label,
+        ];
+      }
+
+      return [this.label];
+    },
   },
 
   methods: {
@@ -209,7 +236,7 @@ export default defineComponent({
         event.preventDefault();
       }
 
-      if (!this.disabled) {
+      if (!this.disabled && !this.loading) {
         /**
          * Emits on click with MouseEvent payload
          * @event click
@@ -227,10 +254,10 @@ export default defineComponent({
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
       return (
-        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
+        <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
       );
     }
 
-    return <Tag {...this.bindings} v-html={this.label} />;
+    return <Tag {...this.bindings} v-html={this.content} />;
   },
 });

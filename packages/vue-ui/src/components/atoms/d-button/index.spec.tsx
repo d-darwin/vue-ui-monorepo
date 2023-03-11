@@ -1,5 +1,6 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import DButton from "@/components/atoms/d-button";
+import { DLoaderAsync as DLoader } from "@/components/atoms/d-loader/async";
 // TODO: get @darwin-studio/ui-codegen paths from config.json
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
@@ -80,4 +81,11 @@ describe("DButton", () => {
   disabledControlCase(wrapper, `.${config.className}`);
 
   activeControlCase(wrapper, `.${config.className}`);
+
+  it("Should render DLoader if props.loading is true", async () => {
+    const wrapper = mount(DButton);
+    await wrapper.setProps({ loading: true });
+    const loader = wrapper.findComponent(DLoader);
+    expect(loader.exists()).toBeTruthy();
+  });
 });

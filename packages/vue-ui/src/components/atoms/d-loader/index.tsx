@@ -207,8 +207,8 @@ export default defineComponent({
       return (
         <Trans {...this.transitionBindings} appear>
           <div class={this.classes} style={this.styles}>
-            {this.content}
             {/*TODO: default slot, enable html*/}
+            {this.content}
           </div>
         </Trans>
       );
