@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, mergeProps, PropType, VNode } from "vue";
 // TODO: add import order rule
 // TODO: add import/index ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
@@ -22,8 +22,10 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
+import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { LOADER_DEFAULTS } from "./constants";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -90,12 +92,19 @@ export default defineComponent({
       type: Boolean,
     },
     /**
-     * TODO
+     * Defines if DLoader element should be displayed.
      */
     loading: {
       type: Boolean,
+      default: false,
     },
-    // TODO: loaderOptions
+    /**
+     * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
+     */
+    loaderOptions: {
+      type: Object as PropType<DLoaderProps>,
+      default: LOADER_DEFAULTS,
+    },
     /**
      * Pass true to make the button active // TODO: test, story
      */
@@ -217,10 +226,7 @@ export default defineComponent({
             colorScheme={this.colorScheme}
             size={this.size}
             font={this.size}
-            class={[
-              styles[config.loaderClassName],
-              colorSchemeStyles.__disabled,
-            ]}
+            {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
           />,
           this.label,
         ];

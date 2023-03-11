@@ -109,6 +109,7 @@ export default defineComponent({
       type: String as PropType<Loading>,
       default: LOADING.LAZY,
     },
+    // TODO: use DLoader???
     // TODO: preventDefault ???
     // TODO: caption gaps/spacing
     /**

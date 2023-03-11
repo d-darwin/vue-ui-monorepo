@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import { baseClassCase } from "@/utils/test-case-factories";
 import DTable from "./index";
 import config from "./config";
@@ -7,6 +7,8 @@ import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import DButton from "@/components/atoms/d-button";
+import { DLoaderAsync as DLoader } from "@/components/atoms/d-loader/async";
 
 const headLabel0 = "head 1";
 const headLabel1 = "head 2";
@@ -306,5 +308,13 @@ describe("DTable", () => {
     expect(headTdContentElement.html()).toBe(headHtmlString);
     const bodyTdContentElement = wrapper.find("tbody > tr > td > i");
     expect(bodyTdContentElement.html()).toBe(bodyHtmlString);
+  });
+
+  // TODO: move to the factories
+  it("Should render DLoader if props.loading is true", async () => {
+    const wrapper = mount(DButton);
+    await wrapper.setProps({ loading: true });
+    const loader = wrapper.findComponent(DLoader);
+    expect(loader.exists()).toBeTruthy();
   });
 });

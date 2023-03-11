@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, mergeProps, PropType, VNode } from "vue";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -12,8 +12,11 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
+import { LOADER_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+import { DLoaderProps } from "@/components/atoms/d-loader/types";
 
 /**
  * Simply renders <b>table</b> element with passed head and body rows.
@@ -118,6 +121,20 @@ export default defineComponent({
     transition: {
       type: String as PropType<Transition>,
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines if DLoader element should be displayed.
+     */
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
+     */
+    loaderOptions: {
+      type: Object as PropType<DLoaderProps>,
+      default: LOADER_DEFAULTS,
     },
     /**
      * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
@@ -243,6 +260,9 @@ export default defineComponent({
   render(): VNode {
     return (
       <table class={styles[config.className]}>
+        {this.loading && (
+          <DLoader {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)} />
+        )}
         {this.renderHead}
         {this.renderBody}
       </table>

@@ -82,6 +82,7 @@ describe("DButton", () => {
 
   activeControlCase(wrapper, `.${config.className}`);
 
+  // TODO: move to the factories
   it("Should render DLoader if props.loading is true", async () => {
     const wrapper = mount(DButton);
     await wrapper.setProps({ loading: true });
