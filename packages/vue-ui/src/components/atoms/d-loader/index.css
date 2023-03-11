@@ -15,10 +15,10 @@
   --animation-duration: 1s;
   height: var(--size);
   width: var(--size);
-  font-size: 180%;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
   animation: rotation var(--animation-duration) infinite linear;
 }
 
