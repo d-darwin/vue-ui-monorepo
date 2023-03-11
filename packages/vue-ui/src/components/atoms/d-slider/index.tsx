@@ -4,8 +4,12 @@ import {
   mergeProps,
   PropType,
   VNode,
+  Transition as Trans,
 } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
+import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
@@ -16,6 +20,8 @@ import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d
 import { CAPTION_DEFAULTS } from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 /**
  * Implements ["slider"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role) and ["spinbutton"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/spinbutton_role) input widget roles.<br />
@@ -89,6 +95,14 @@ export default defineComponent({
       type: Object as PropType<DCaptionProps>,
       default: () => CAPTION_DEFAULTS,
     },
+    // TODO: colorScheme and others
+    /**
+     * Defines transition type of the component
+     */
+    transition: {
+      type: String as PropType<Transition>,
+      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
+    },
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
@@ -141,6 +155,31 @@ export default defineComponent({
     EVENT_NAME.UPDATE_VALUE, // TODO: implement
   ],
 
+  computed: {
+    renderCaption(): VNode {
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return (
+        <Trans
+          enterActiveClass={styles.captionTransitionEnterActive}
+          leaveActiveClass={styles.captionTransitionLeaveActive}
+          appear={true}
+        >
+          {this.caption && (
+            <DCaption
+              label={this.caption}
+              class={transitionStyles[transitionClassName]}
+              {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
+            />
+          )}
+        </Trans>
+      );
+    },
+  },
+
   methods: {
     changeHandler(event: Event) {
       const value = (event.target as HTMLInputElement).value;
@@ -190,13 +229,7 @@ export default defineComponent({
     return (
       <div class={styles[config.className]}>
         <input type={config.inputType} value={this.value} />
-        {/*// TODO: transition*/}
-        {this.caption && (
-          <DCaption
-            label={this.caption}
-            {...mergeProps(CAPTION_DEFAULTS, this.captionOptions || {})}
-          />
-        )}
+        {this.renderCaption}
       </div>
     );
   },
