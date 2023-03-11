@@ -1,4 +1,5 @@
 .dButton {
+  position: relative;
   box-sizing: border-box;
   display: inline-block;
   cursor: pointer;
@@ -8,4 +9,10 @@
 .dButton:disabled,
 .dButton.__disabled {
   cursor: not-allowed;
+}
+
+.loader {
+  position: absolute;
+  top: calc(50% - var(--size) / 2);
+  left: calc(50% - var(--size) / 2);
 }

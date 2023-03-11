@@ -26,6 +26,7 @@ import DDialog from "./organisms/d-dialog";
 import DDrawer from "./organisms/d-drawer";
 
 // TODO: add all the components
+// TODO: add async versions???
 export default {
   install(Vue: App) {
     Vue.component(DButton.name, DButton);

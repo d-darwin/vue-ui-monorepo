@@ -1,6 +1,6 @@
 import { mount, shallowMount } from "@vue/test-utils";
 import DResponsiveImage from "@/components/atoms/d-responsive-image";
-import DAspectRatio from "@/components/containers/d-aspect-ratio";
+import { DAspectRatioAsync as DAspectRatio } from "@/components/containers/d-aspect-ratio/async";
 import { baseClassCase } from "@/utils/test-case-factories";
 import config from "./config";
 import {

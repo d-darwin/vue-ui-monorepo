@@ -34,15 +34,13 @@ import {
   POSITION_VERTICAL,
 } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
-import DBackdrop, {
-  DBackdropProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton, {
-  DButtonProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
+import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
@@ -298,7 +296,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
       };
     },
 

@@ -4,9 +4,8 @@ import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; 
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio, {
-  DAspectRatioProps,
-} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
+import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type {
@@ -228,7 +227,10 @@ export default defineComponent({
         return (
           <DAspectRatio
             aspectRatio={this.aspectRatio}
-            {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
+            {...mergeProps(
+              ASPECT_RATIO_DEFAULTS,
+              this.aspectRatioOptions || {}
+            )}
           >
             {this.imgVNode}
           </DAspectRatio>

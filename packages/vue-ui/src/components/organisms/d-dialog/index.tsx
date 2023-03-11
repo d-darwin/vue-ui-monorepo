@@ -28,12 +28,10 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import DBackdrop, {
-  DBackdropProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton, {
-  DButtonProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
+import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -317,7 +315,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
       };
     },
 

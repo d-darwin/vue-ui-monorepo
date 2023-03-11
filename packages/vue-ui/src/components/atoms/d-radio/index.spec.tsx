@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import DRadio from "@/components/atoms/d-radio";
 import config from "@/components/atoms/d-radio/config";
-import DButton from "@/components/atoms/d-button";
+import { DButtonAsync as DButton } from "@/components/atoms/d-button/async";
 import { BASE_COLOR_SCHEME, TYPE } from "@/components/atoms/d-radio/constants";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
@@ -88,7 +88,7 @@ describe("DRadio", () => {
     });
     const button = wrapper.findComponent(DButton);
     expect(button).toBeTruthy();
-    expect(button.props().label).toBe(label);
+    expect(button.attributes().label).toBe(label);
   });
 
   it("Should trigger input events on DButton click", async () => {
@@ -96,8 +96,8 @@ describe("DRadio", () => {
       props: { type: TYPE.BUTTON, name, value },
     });
     const button = wrapper.findComponent(DButton);
-    button.props().whenClick();
-    // TODO
+    await button.trigger("click");
+
     expect(wrapper.emitted("change")?.[0]).toBeFalsy();
     expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
     expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
@@ -147,7 +147,7 @@ describe("DRadio", () => {
     });
     const button = wrapper.findComponent(DButton);
     expect(button).toBeTruthy();
-    expect(button.props().padding).toBe(padding);
+    expect(button.attributes().padding).toBe(padding);
   });
 
   roundingClassCase(wrapper, `.${config.iconContainerClassName}`);
@@ -326,6 +326,8 @@ describe("DRadio", () => {
     await wrapper.setProps({ checked: !checked });
     expect(wrapper.props().checked).toBe(!checked);
   });
+
+  // TODO: 488-490
 
   // TODO: props. ...Options cases
 });

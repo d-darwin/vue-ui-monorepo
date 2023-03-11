@@ -22,9 +22,8 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import DAspectRatio, {
-  DAspectRatioProps,
-} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
+import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
@@ -323,7 +322,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
-          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
+          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions || {})}
         >
           <input
             id={this.controlId}
