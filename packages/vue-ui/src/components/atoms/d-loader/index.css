@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  animation: rotation var(--animation-duration) infinite normal;
+  animation: rotation var(--animation-duration) infinite normal; /*TODO: make whole animation configurable ???*/
 }
 
 @keyframes rotation {
