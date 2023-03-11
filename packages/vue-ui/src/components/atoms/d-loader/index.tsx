@@ -23,6 +23,7 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
+import { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DBackdrop, {
   DBackdropProps,
 } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
@@ -34,7 +35,13 @@ export default defineComponent({
   name: config.name,
 
   props: {
-    // TODO: content
+    /**
+     * Plain string, VNode or HTML if props.enableHtml is true
+     */
+    content: {
+      type: [String, Number, Object] as PropType<Text | VNode>,
+      default: config.defaultContent,
+    },
     /**
      * Defines appearance of the component
      */
@@ -201,8 +208,8 @@ export default defineComponent({
       return (
         <Trans {...this.transitionBindings} appear>
           <div class={this.classes} style={this.styles}>
-            {config.defaultContent}{" "}
-            {/*TODO: content, default slot, enable html*/}
+            {this.content}
+            {/*TODO: default slot, enable html*/}
           </div>
         </Trans>
       );

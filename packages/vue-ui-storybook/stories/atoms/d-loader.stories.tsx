@@ -4,6 +4,10 @@ import DLoader from "@darwin-studio/vue-ui/src/components/atoms/d-loader";
 export default {
   title: "atoms/DLoader",
   component: DLoader,
+  argTypes: {
+    // TODO
+  },
+  args: {},
 };
 
 const Template: Story = (args) => ({
