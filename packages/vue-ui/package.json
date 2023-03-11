@@ -18,7 +18,7 @@
     "vue": "^3.2.47"
   },
   "peerDependencies": {
-    "vue": "^3.2.33"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
@@ -32,7 +32,7 @@
     "@vue/cli-service": "~5.0.4",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-0",
-    "@vue/vue3-jest": "^27.0.0-alpha.4",
+    "@vue/vue3-jest": "^27.0.0",
     "babel-jest": "^27.5.1",
     "chalk": "^5.1.2",
     "eslint": "^8.13.0",

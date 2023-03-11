@@ -1,7 +1,7 @@
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
-import { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import config from "./config";
 import styles from "./index.css?module";
 
