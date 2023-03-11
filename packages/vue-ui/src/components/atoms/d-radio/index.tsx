@@ -8,7 +8,6 @@ import {
   Ref,
   watch,
   mergeProps,
-  defineAsyncComponent,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
@@ -36,18 +35,13 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Type } from "./types";
 import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
-
-const DButton = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-button' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
-  );
-});
 
 export default defineComponent({
   name: config.name,

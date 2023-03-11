@@ -4,7 +4,6 @@ import {
   mergeProps,
   PropType,
   VNode,
-  defineAsyncComponent,
 } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
@@ -26,15 +25,10 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-
-const DBackdrop = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-backdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
-  );
-});
 
 export default defineComponent({
   name: config.name,

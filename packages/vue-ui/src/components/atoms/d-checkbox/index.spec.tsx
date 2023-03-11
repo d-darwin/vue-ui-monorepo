@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
-import DCheckbox from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox";
-import config from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/config";
-import { BASE_COLOR_SCHEME } from "@darwin-studio/vue-ui/src/components/atoms/d-checkbox/constants";
+import DCheckbox from "@/components/atoms/d-checkbox";
+import config from "@/components/atoms/d-checkbox/config";
+import { BASE_COLOR_SCHEME } from "@/components/atoms/d-checkbox/constants";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???

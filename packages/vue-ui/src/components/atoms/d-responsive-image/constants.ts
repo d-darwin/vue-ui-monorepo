@@ -1,4 +1,4 @@
-import { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import config from "./config";
 import styles from "./index.css?module";
 

@@ -1,6 +1,5 @@
 import {
   CSSProperties,
-  defineAsyncComponent,
   defineComponent,
   mergeProps,
   PropType,
@@ -30,7 +29,9 @@ import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?m
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -45,17 +46,6 @@ import {
 } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-
-const DBackdrop = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-backdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
-  );
-});
-const DButton = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-button' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
-  );
-});
 
 /**
  * Renders dialog with accept and cancel buttons. It's especially useful for modals, but default slot may receive any content.

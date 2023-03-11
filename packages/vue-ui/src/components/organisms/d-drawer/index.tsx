@@ -6,7 +6,6 @@ import {
   PropType,
   CSSProperties,
   mergeProps,
-  defineAsyncComponent,
 } from "vue";
 import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -39,23 +38,14 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
+import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-
-const DBackdrop = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-backdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
-  );
-});
-const DButton = defineAsyncComponent(() => {
-  return import(
-    /* webpackChunkName: 'atoms/d-button' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
-  );
-});
 
 /**
  * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
