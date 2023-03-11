@@ -72,6 +72,13 @@ export default defineComponent({
       default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
     },
     /**
+     * Defines animation duration
+     */
+    animationDuration: {
+      type: String,
+      default: config.defaultAnimationDuration,
+    },
+    /**
      * Defines z-index of the component
      */
     zIndex: {
@@ -79,7 +86,7 @@ export default defineComponent({
       default: config.defaultZIndex,
     },
     /**
-     * TODO
+     * Adds DBackdrop to fill all available space
      */
     fillAvailable: {
       type: Boolean,
@@ -131,9 +138,11 @@ export default defineComponent({
     styles(): CSSProperties {
       return {
         "--z-index": this.zIndex,
+        "--animation-duration": this.animationDuration,
       };
     },
 
+    // TODO: add to the css
     backdropTransitionBindings(): {
       enterActiveClass: string;
       leaveActiveClass: string;
@@ -199,7 +208,6 @@ export default defineComponent({
     }
 
     // TODO: .content, enableHtml default slot
-    // TODO: transition ???
     return this.renderLoader;
   },
 });

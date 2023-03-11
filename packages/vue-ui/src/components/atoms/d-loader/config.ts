@@ -3,6 +3,7 @@ export default {
   className: "dLoader",
   wrapperClassName: "wrapper",
   backdropClassName: "backdrop",
+  defaultAnimationDuration: "500ms",
   defaultZIndex: 1001,
-  defaultContent: "☯", // TODO: choose ☣ ☢ ⚛ ☯ 🌀 🪄 ⚙️ 🎱 ♾️
+  defaultContent: "☯",
 } as const;
