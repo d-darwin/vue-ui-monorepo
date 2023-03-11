@@ -1,6 +1,15 @@
 import { shallowMount } from "@vue/test-utils";
 import DLoader from "@/components/atoms/d-loader";
+import { DBackdropAsync as DBackdrop } from "@/components/atoms/d-backdrop/async";
 import config from "./config";
+import {
+  colorSchemeClassCase,
+  fontClassCase,
+  roundingClassCase,
+  sizeClassCase,
+  transitionClassCase,
+} from "@/utils/test-case-factories";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DLoader", () => {
   const wrapper = shallowMount(DLoader);
@@ -10,40 +19,57 @@ describe("DLoader", () => {
     expect(loaderEl.exists()).toBeTruthy();
   });
 
-  it("Should render props.content ...", async () => {
-    expect(false).toBeTruthy();
+  it("Should render props.content", async () => {
+    const content = <div>...</div>;
+    await wrapper.setProps({ content });
+
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it("Should render props.colorScheme ...", async () => {
-    expect(false).toBeTruthy();
+  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+
+  fontClassCase(wrapper, `.${config.className}`);
+
+  roundingClassCase(wrapper, `.${config.className}`);
+
+  sizeClassCase(wrapper, `.${config.className}`);
+
+  transitionClassCase(wrapper, `.${config.className}`);
+
+  it("Should render props.animationDuration to the .dLoader style as '--animation-duration: props.animationDuration'", async () => {
+    const animationDuration = "333ms";
+    await wrapper.setProps({
+      animationDuration,
+    });
+
+    const loaderEl = wrapper.find(`.${config.className}`);
+    expect(loaderEl.attributes("style")).toContain(
+      `--animation-duration: ${animationDuration}`
+    );
   });
 
-  it("Should render props.font ...", async () => {
-    expect(false).toBeTruthy();
+  it("Should render props.zIndex to the .dLoader style as '--z-index: props.zIndex'", async () => {
+    const zIndex = 0.33;
+    await wrapper.setProps({
+      zIndex,
+    });
+
+    const loaderEl = wrapper.find(`.${config.className}`);
+    expect(loaderEl.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 
-  it("Should render props.rounding ...", async () => {
-    expect(false).toBeTruthy();
+  it("Should render DBackdrop if props.fillAvailable is true", async () => {
+    await wrapper.setProps({ fillAvailable: true });
+
+    const backdrop = wrapper.findComponent(DBackdrop);
+    expect(backdrop.exists()).toBeTruthy();
   });
 
-  it("Should render props.size ...", async () => {
-    expect(false).toBeTruthy();
-  });
+  it("Shouldn.t render DBackdrop if props.fillAvailable is false", async () => {
+    await wrapper.setProps({ fillAvailable: false });
 
-  it("Should render props.transition ...", async () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should render props.animationDuration ...", async () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should render props.zIndex ...", async () => {
-    expect(false).toBeTruthy();
-  });
-
-  it("Should render .wrapper, .backdrop and .dLoader elements if props.fillAvailable is true", async () => {
-    expect(false).toBeTruthy();
+    const backdrop = wrapper.findComponent(DBackdrop);
+    expect(backdrop.exists()).toBeFalsy();
   });
 
   // TODO: props.backdropOptions

@@ -261,6 +261,20 @@ export function colorSchemeClassCase(
   });
 }
 
+export function fontClassCase(wrapper: VueWrapper, targetSelector: string) {
+  return it(`Should render props.size to ${targetSelector} font class`, async () => {
+    const font = FONT.SMALL;
+    await wrapper.setProps({ font });
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      font
+    );
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl?.classes()).toContain(className);
+  });
+}
+
 export function fontSizeClassCase(wrapper: VueWrapper, targetSelector: string) {
   return it(`Should render props.size to ${targetSelector} font class`, async () => {
     const size = SIZE.SMALL;

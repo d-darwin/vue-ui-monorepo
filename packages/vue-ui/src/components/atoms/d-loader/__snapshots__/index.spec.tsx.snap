@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DLoader Should render props.content 1`] = `
+<transition-stub enteractiveclass="transitionEnterActive" leaveactiveclass="transitionLeaveActive" appear="true" persisted="false" css="true">
+  <div class="dLoader colorSchemePrimary fontHuge roundingFull sizeMedium transitionFast" style="--z-index: 1001; --animation-duration: 500ms;">
+    <div>...</div>
+  </div>
+</transition-stub>
+`;
