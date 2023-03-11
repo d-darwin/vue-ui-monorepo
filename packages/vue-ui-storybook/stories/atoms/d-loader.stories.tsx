@@ -14,3 +14,15 @@ const Template: Story = (args) => ({
   template: `<DLoader v-bind="args" />`,
 });
 export const Default = Template.bind({});
+
+const FillAvailableTemplate: Story = (args) => ({
+  components: { DLoader },
+  setup() {
+    return { args };
+  },
+  template: `<DLoader v-bind="args" />`,
+});
+export const FillAvailable = FillAvailableTemplate.bind({});
+FillAvailable.args = {
+  fillAvailable: true,
+};

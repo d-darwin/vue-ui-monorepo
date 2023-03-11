@@ -34,6 +34,7 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    // TODO: content
     /**
      * Defines appearance of the component
      */
@@ -90,7 +91,7 @@ export default defineComponent({
      */
     fillAvailable: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
@@ -102,47 +103,6 @@ export default defineComponent({
   },
 
   computed: {
-    classes(): string[] {
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
-      return [
-        styles[config.className],
-        colorSchemeStyles[colorSchemeClassName],
-        fontStyles[fontClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
-      ];
-    },
-
-    styles(): CSSProperties {
-      return {
-        "--z-index": this.zIndex,
-        "--animation-duration": this.animationDuration,
-      };
-    },
-
-    // TODO: add to the css
     backdropTransitionBindings(): {
       enterActiveClass: string;
       leaveActiveClass: string;
@@ -187,11 +147,64 @@ export default defineComponent({
       );
     },
 
+    classes(): string[] {
+      const colorSchemeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
+        this.colorScheme
+      );
+      // TODO: font and size separately
+      const fontClassName = prepareCssClassName(
+        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+        this.font
+      );
+      const roundingClassName = prepareCssClassName(
+        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
+        this.rounding
+      );
+      const sizeClassName = prepareCssClassName(
+        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
+        this.size
+      );
+      const transitionClassName = prepareCssClassName(
+        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+        this.transition
+      );
+
+      return [
+        styles[config.className],
+        colorSchemeStyles[colorSchemeClassName],
+        fontStyles[fontClassName],
+        roundingStyles[roundingClassName],
+        sizeStyles[sizeClassName],
+        transitionStyles[transitionClassName],
+      ];
+    },
+
+    styles(): CSSProperties {
+      return {
+        "--z-index": this.zIndex,
+        "--animation-duration": this.animationDuration,
+      };
+    },
+
+    transitionBindings(): {
+      enterActiveClass: string;
+      leaveActiveClass: string;
+    } {
+      return {
+        enterActiveClass: styles.transitionEnterActive,
+        leaveActiveClass: styles.transitionLeaveActive,
+      };
+    },
+
     renderLoader(): VNode {
       return (
-        <div class={this.classes} style={this.styles}>
-          {config.defaultContent}
-        </div>
+        <Trans {...this.transitionBindings} appear>
+          <div class={this.classes} style={this.styles}>
+            {config.defaultContent}{" "}
+            {/*TODO: content, default slot, enable html*/}
+          </div>
+        </Trans>
       );
     },
   },

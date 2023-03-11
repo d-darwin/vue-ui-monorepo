@@ -18,8 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: rotation 1s infinite linear; /*TODO: how to use --transform ???*/
-  animation-duration: var(--animation-duration);
+  animation: rotation var(--animation-duration) infinite linear;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); /*TODO: make it configurable*/
 }
 
@@ -30,4 +29,17 @@
   to {
     transform: rotate(359deg);
   }
+}
+
+.backdropTransitionEnterActive,
+.backdropTransitionLeaveActive {
+  opacity: 0;
+}
+
+.transitionEnterActive,
+.transitionLeaveActive {
+  font-size: 0;
+  --size: 0;
+  min-width: var(--size);
+  min-height: var(--size);
 }
