@@ -186,8 +186,13 @@ export default defineComponent({
       ];
 
       if (this.disabled) {
+        // TODO: use css custom props instead?
         classes.push(styles["__disabled"]); // TODO: const
         classes.push(colorSchemeStyles["__disabled"]); // TODO: const
+      }
+
+      if (this.loading) {
+        classes.push(styles["__loading"]); // TODO: const, test
       }
 
       if (this.active) {
@@ -218,22 +223,6 @@ export default defineComponent({
         onClick: this.clickHandler,
       };
     },
-
-    content(): (Text | VNode | undefined)[] {
-      if (this.loading) {
-        return [
-          <DLoader
-            colorScheme={this.colorScheme}
-            size={this.size}
-            font={this.size}
-            {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
-          />,
-          this.label,
-        ];
-      }
-
-      return [this.label];
-    },
   },
 
   methods: {
@@ -260,10 +249,21 @@ export default defineComponent({
     if (!this.enableHtml) {
       /** @slot Use instead of props.label to fully customize content */
       return (
-        <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+        <Tag {...this.bindings}>
+          {this.$slots.default?.() || this.label}
+          {this.loading && (
+            <DLoader
+              key={"loader"}
+              colorScheme={this.colorScheme}
+              size={this.size}
+              font={this.size}
+              {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
+            />
+          )}
+        </Tag>
       );
     }
 
-    return <Tag {...this.bindings} v-html={this.content} />;
+    return <Tag {...this.bindings} v-html={this.label} />;
   },
 });

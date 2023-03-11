@@ -3,7 +3,8 @@ import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * The components renders custom <b>input</b> element with <i>type="range"</i>
+ * Implements ["slider"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role) and ["spinbutton"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/spinbutton_role) input widget roles.<br />
+ * Renders custom <b>input</b> element with <i>type="range"</i> and <i>role="slider | spinbutton"</i>
  */
 export default defineComponent({
   name: config.name,

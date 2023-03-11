@@ -40,7 +40,7 @@ export default {
     transition: TRANSITION.FAST,
     zIndex: 1001,
     fillAvailable: false,
-    animationDuration: "500ms",
+    animationDuration: "650ms",
   },
 };
 

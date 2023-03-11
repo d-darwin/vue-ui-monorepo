@@ -142,13 +142,9 @@ export default defineComponent({
     },
 
     renderBackdrop(): VNode | null {
-      if (!this.fillAvailable) {
-        return null;
-      }
-
       return (
         <Trans {...this.backdropTransitionBindings} appear>
-          <DBackdrop {...this.backdropBindings} />
+          <DBackdrop key={"backdrop"} {...this.backdropBindings} />
         </Trans>
       );
     },
@@ -206,7 +202,7 @@ export default defineComponent({
     renderLoader(): VNode {
       return (
         <Trans {...this.transitionBindings} appear>
-          <div class={this.classes} style={this.styles}>
+          <div key={"loader"} class={this.classes} style={this.styles}>
             {/*TODO: default slot, enable html*/}
             {this.content}
           </div>
@@ -216,15 +212,11 @@ export default defineComponent({
   },
 
   render(): VNode {
-    if (this.fillAvailable) {
-      return (
-        <div class={styles[config.wrapperClassName]}>
-          {this.renderBackdrop}
-          {this.renderLoader}
-        </div>
-      );
-    }
-
-    return this.renderLoader;
+    return (
+      <div class={styles[config.wrapperClassName]}>
+        {this.fillAvailable && this.renderBackdrop}
+        {this.renderLoader}
+      </div>
+    );
   },
 });

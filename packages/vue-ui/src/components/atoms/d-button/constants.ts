@@ -3,6 +3,5 @@ import config from "./config";
 import styles from "./index.css?module";
 
 export const LOADER_DEFAULTS: DLoaderProps = {
-  fillAvailable: true,
-  class: [styles[config.loaderClassName]],
+  class: styles[config.loaderClassName],
 };

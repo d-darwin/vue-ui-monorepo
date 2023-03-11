@@ -3,7 +3,7 @@ export default {
   className: "dLoader",
   wrapperClassName: "wrapper",
   backdropClassName: "backdrop",
-  defaultAnimationDuration: "500ms",
+  defaultAnimationDuration: "650ms",
   defaultZIndex: 1001,
   defaultContent: "☯",
 } as const;

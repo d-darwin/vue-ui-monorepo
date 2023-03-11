@@ -8,7 +8,8 @@
 }
 
 .dButton:disabled,
-.dButton.__disabled {
+.dButton.__disabled,
+.dButton.__loading {
   cursor: not-allowed;
 }
 
