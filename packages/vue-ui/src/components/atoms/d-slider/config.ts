@@ -4,6 +4,7 @@ export default {
   labelClassName: "label",
   inputClassName: "input",
   captionClassName: "caption",
+  defaultLabelOffset: "4px",
   defaultCaptionOffset: "-4px",
   inputType: "range",
 };

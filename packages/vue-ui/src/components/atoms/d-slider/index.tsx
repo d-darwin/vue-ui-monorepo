@@ -5,6 +5,7 @@ import {
   PropType,
   VNode,
   Transition as Trans,
+  LabelHTMLAttributes,
 } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
@@ -20,7 +21,7 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import { CAPTION_DEFAULTS } from "./contants";
+import { CAPTION_DEFAULTS, LABEL_DEFAULTS } from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -74,8 +75,15 @@ export default defineComponent({
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
     labelOptions: {
-      type: Object as PropType<DCaptionProps>, // TODO: what really type ???
-      default: () => CAPTION_DEFAULTS,
+      type: Object as PropType<LabelHTMLAttributes>,
+      default: () => LABEL_DEFAULTS,
+    },
+    /**
+     Defines offset of .label
+     */
+    labelOffset: {
+      types: [String, Number] as PropType<Text>,
+      default: config.defaultLabelOffset,
     },
     /**
      * If not empty renders DCaption below the <b>input</b> element.
@@ -159,7 +167,15 @@ export default defineComponent({
 
   computed: {
     renderLabel(): VNode {
-      return <div>TODO: label</div>;
+      return (
+        <label
+          for={this.controlId}
+          style={`--offset: ${this.labelOffset}`}
+          {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions)}
+        >
+          TODO: label
+        </label>
+      );
     },
 
     renderInput(): VNode {

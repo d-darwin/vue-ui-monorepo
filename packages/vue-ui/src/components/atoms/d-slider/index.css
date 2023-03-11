@@ -3,6 +3,12 @@
   width: fit-content;
 }
 
+.label {
+  --offset: -4px;
+  margin-bottom: var(--offset);
+  display: block;
+}
+
 .caption {
   --offset: -4px;
   position: absolute;
