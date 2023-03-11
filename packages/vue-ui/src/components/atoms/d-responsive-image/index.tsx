@@ -33,7 +33,7 @@ import styles from "./index.css?module";
 
 const DAspectRatio = defineAsyncComponent(() => {
   return import(
-    /* webpackChunkName: 'DAspectRatio' */ "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"
+    /* webpackChunkName: 'containers/d-aspect-ratio' */ "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"
   );
 });
 

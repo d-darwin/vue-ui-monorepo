@@ -45,7 +45,7 @@ import config from "./config";
 
 const DButton = defineAsyncComponent(() => {
   return import(
-    /* webpackChunkName: 'DButton' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
+    /* webpackChunkName: 'atoms/d-button' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
   );
 });
 

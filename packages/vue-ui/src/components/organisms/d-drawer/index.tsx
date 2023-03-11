@@ -48,12 +48,12 @@ import styles from "./index.css?module";
 
 const DBackdrop = defineAsyncComponent(() => {
   return import(
-    /* webpackChunkName: 'DBackdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
+    /* webpackChunkName: 'atoms/d-backdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
   );
 });
 const DButton = defineAsyncComponent(() => {
   return import(
-    /* webpackChunkName: 'DButton' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
+    /* webpackChunkName: 'atoms/d-button' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
   );
 });
 
