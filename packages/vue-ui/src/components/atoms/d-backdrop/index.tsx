@@ -4,11 +4,9 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { CssPosition } from "./types";
+import type { CssPosition } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
-
-export { DBackdropProps } from "./types";
 
 /**
  * The component renders simple backdrop, intended to be used with Drawers, Modals, etc.

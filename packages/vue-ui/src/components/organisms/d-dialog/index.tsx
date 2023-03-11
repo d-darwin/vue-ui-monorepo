@@ -1,5 +1,6 @@
 import {
   CSSProperties,
+  defineAsyncComponent,
   defineComponent,
   mergeProps,
   PropType,
@@ -28,12 +29,8 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import DBackdrop, {
-  DBackdropProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton, {
-  DButtonProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
@@ -48,6 +45,17 @@ import {
 } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+
+const DBackdrop = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DBackdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
+  );
+});
+const DButton = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DButton' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
+  );
+});
 
 /**
  * Renders dialog with accept and cancel buttons. It's especially useful for modals, but default slot may receive any content.
@@ -317,7 +325,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
       };
     },
 

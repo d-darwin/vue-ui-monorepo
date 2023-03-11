@@ -1,12 +1,16 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import {
+  defineAsyncComponent,
+  defineComponent,
+  mergeProps,
+  PropType,
+  VNode,
+} from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
-import DAspectRatio, {
-  DAspectRatioProps,
-} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type {
@@ -26,6 +30,12 @@ import {
 } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+
+const DAspectRatio = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DAspectRatio' */ "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"
+  );
+});
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
 // TODO: is it a molecule, not an atom ???
@@ -228,7 +238,10 @@ export default defineComponent({
         return (
           <DAspectRatio
             aspectRatio={this.aspectRatio}
-            {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
+            {...mergeProps(
+              ASPECT_RATIO_DEFAULTS,
+              this.aspectRatioOptions || {}
+            )}
           >
             {this.imgVNode}
           </DAspectRatio>

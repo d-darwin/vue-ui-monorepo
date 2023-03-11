@@ -1,4 +1,10 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import {
+  defineAsyncComponent,
+  defineComponent,
+  mergeProps,
+  PropType,
+  VNode,
+} from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -22,13 +28,17 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import DAspectRatio, {
-  DAspectRatioProps,
-} from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio";
+import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+
+const DAspectRatio = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DAspectRatio' */ "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio"
+  );
+});
 
 /**
  * The components renders switch (has true / false value) or toggle (has custom values).
@@ -323,7 +333,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
-          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
+          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions || {})}
         >
           <input
             id={this.controlId}

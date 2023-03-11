@@ -6,6 +6,7 @@ import {
   PropType,
   CSSProperties,
   mergeProps,
+  defineAsyncComponent,
 } from "vue";
 import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -34,20 +35,27 @@ import {
   POSITION_VERTICAL,
 } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
-import DBackdrop, {
-  DBackdropProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
-import DButton, {
-  DButtonProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-button";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
+import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+
+const DBackdrop = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DBackdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
+  );
+});
+const DButton = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DButton' */ "@darwin-studio/vue-ui/src/components/atoms/d-button"
+  );
+});
 
 /**
  * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
@@ -298,7 +306,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
+        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
       };
     },
 

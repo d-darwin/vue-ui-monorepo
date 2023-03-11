@@ -27,8 +27,6 @@ import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
 
-export { DButtonProps } from "./types";
-
 /**
  * A clickable component which renders as <b>button</b> element, <b>router-link</b> component or <b>a</b> element depending on props.
  */

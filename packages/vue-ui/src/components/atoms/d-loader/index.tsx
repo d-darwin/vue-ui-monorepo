@@ -4,6 +4,7 @@ import {
   mergeProps,
   PropType,
   VNode,
+  defineAsyncComponent,
 } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
@@ -23,13 +24,17 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
-import DBackdrop, {
-  DBackdropProps,
-} from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+
+const DBackdrop = defineAsyncComponent(() => {
+  return import(
+    /* webpackChunkName: 'DBackdrop' */ "@darwin-studio/vue-ui/src/components/atoms/d-backdrop"
+  );
+});
 
 export default defineComponent({
   name: config.name,
@@ -221,13 +226,11 @@ export default defineComponent({
       return (
         <div class={styles[config.wrapperClassName]}>
           {this.renderBackdrop}
-          {/*TODO: transition*/}
           {this.renderLoader}
         </div>
       );
     }
 
-    // TODO: .content, enableHtml default slot
     return this.renderLoader;
   },
 });
