@@ -185,7 +185,7 @@ export default defineComponent({
         transitionStyles[transitionClassName],
       ];
 
-      if (this.disabled || this.loading) {
+      if (this.disabled) {
         classes.push(styles["__disabled"]); // TODO: const
         classes.push(colorSchemeStyles["__disabled"]); // TODO: const
       }
