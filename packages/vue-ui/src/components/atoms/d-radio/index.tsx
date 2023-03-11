@@ -484,6 +484,7 @@ export default defineComponent({
     },
 
     buttonClickHandler(): void {
+      // TODO: test case
       const inputEl = this.inputRef;
       if (inputEl) {
         inputEl.click();
