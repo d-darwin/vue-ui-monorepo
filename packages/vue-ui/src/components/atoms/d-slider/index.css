@@ -1,3 +1,10 @@
 .dSlider {
-  /*TODO*/
+  position: relative;
+  width: fit-content;
+}
+
+.caption {
+  --gap: -4px; /*TODO: make configurable*/
+  position: absolute;
+  top: calc(100% + var(--gap));
 }

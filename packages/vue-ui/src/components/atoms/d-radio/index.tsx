@@ -386,7 +386,7 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
-          {...mergeProps(BUTTON_DEFAULTS, this.buttonOptions || {})}
+          {...mergeProps({}, BUTTON_DEFAULTS, this.buttonOptions || {})}
         />
       );
     },

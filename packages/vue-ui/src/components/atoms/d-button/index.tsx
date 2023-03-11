@@ -103,7 +103,7 @@ export default defineComponent({
      */
     loaderOptions: {
       type: Object as PropType<DLoaderProps>,
-      default: LOADER_DEFAULTS,
+      default: () => LOADER_DEFAULTS,
     },
     /**
      * Pass true to make the button active // TODO: test, story
@@ -257,7 +257,7 @@ export default defineComponent({
               colorScheme={this.colorScheme}
               size={this.size}
               font={this.size}
-              {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
+              {...mergeProps({}, LOADER_DEFAULTS, this.loaderOptions)}
             />
           )}
         </Tag>

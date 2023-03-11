@@ -296,7 +296,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
+        ...mergeProps({}, BACKDROP_DEFAULTS, this.backdropOptions || {}),
       };
     },
 
@@ -341,7 +341,7 @@ export default defineComponent({
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
+          {...mergeProps({}, CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },

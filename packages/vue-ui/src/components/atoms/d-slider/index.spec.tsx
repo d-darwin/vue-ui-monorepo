@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
-import DSlider from "@/components/atoms/d-slider";
-import { baseClassCase } from "@/utils/test-case-factories";
+import DSlider from "@darwin-studio/vue-ui/src/components/atoms/d-slider";
+import { baseClassCase } from "@darwin-studio/vue-ui/src/utils/test-case-factories";
 import config from "./config";
 
 describe("DSlider", () => {

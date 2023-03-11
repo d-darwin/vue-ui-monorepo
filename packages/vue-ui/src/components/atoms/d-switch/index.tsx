@@ -322,7 +322,11 @@ export default defineComponent({
             sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
-          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions || {})}
+          {...mergeProps(
+            {},
+            ASPECT_RATIO_DEFAULTS,
+            this.aspectRatioOptions || {}
+          )}
         >
           <input
             id={this.controlId}

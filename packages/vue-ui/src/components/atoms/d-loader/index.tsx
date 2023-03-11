@@ -137,7 +137,7 @@ export default defineComponent({
           styles[config.backdropClassName],
           transitionStyles[transitionClassName],
         ],
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions),
+        ...mergeProps({}, BACKDROP_DEFAULTS, this.backdropOptions),
       };
     },
 

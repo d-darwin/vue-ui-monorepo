@@ -227,6 +227,7 @@ export default defineComponent({
           <DAspectRatio
             aspectRatio={this.aspectRatio}
             {...mergeProps(
+              {},
               ASPECT_RATIO_DEFAULTS,
               this.aspectRatioOptions || {}
             )}

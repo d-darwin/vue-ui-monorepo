@@ -8,7 +8,7 @@ export default {
     // TODO
   },
   args: {
-    // TODO
+    caption: "Error string",
   },
 };
 

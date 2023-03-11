@@ -6,6 +6,7 @@ import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: s
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { Type } from "./types";
 import { TYPE } from "./constant";
 import config from "./config";

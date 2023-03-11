@@ -134,7 +134,7 @@ export default defineComponent({
      */
     loaderOptions: {
       type: Object as PropType<DLoaderProps>,
-      default: LOADER_DEFAULTS,
+      default: () => LOADER_DEFAULTS,
     },
     /**
      * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
@@ -261,7 +261,7 @@ export default defineComponent({
     return (
       <table class={styles[config.className]}>
         {this.loading && (
-          <DLoader {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)} />
+          <DLoader {...mergeProps({}, LOADER_DEFAULTS, this.loaderOptions)} />
         )}
         {this.renderHead}
         {this.renderBody}
