@@ -10,9 +10,12 @@ import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
@@ -20,8 +23,6 @@ import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d
 import { CAPTION_DEFAULTS } from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 /**
  * Implements ["slider"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role) and ["spinbutton"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/spinbutton_role) input widget roles.<br />
@@ -66,21 +67,15 @@ export default defineComponent({
     /**
      * Defines content of the <b>label</b> element.
      */
-    // TODO: labelOptions
     label: {
-      type: [String, Number] as PropType<Text>,
+      type: [String, Number, Object] as PropType<Text | VNode>,
     },
     /**
-     * You can pass own class name to the <b>label</b> element.
+     * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelClass: {
-      type: String,
-    },
-    /**
-     * Defines font size of the <b>label</b> element. By default depends on props.size
-     */
-    labelFont: {
-      type: String as PropType<Font>,
+    labelOptions: {
+      type: Object as PropType<DCaptionProps>, // TODO: what really type ???
+      default: () => CAPTION_DEFAULTS,
     },
     /**
      * If not empty renders DCaption below the <b>input</b> element.
@@ -94,6 +89,13 @@ export default defineComponent({
     captionOptions: {
       type: Object as PropType<DCaptionProps>,
       default: () => CAPTION_DEFAULTS,
+    },
+    /**
+     * Defines offset of DCaption
+     */
+    captionOffset: {
+      types: [String, Number] as PropType<Text>,
+      default: config.defaultCaptionOffset,
     },
     // TODO: colorScheme and others
     /**
@@ -156,6 +158,22 @@ export default defineComponent({
   ],
 
   computed: {
+    renderLabel(): VNode {
+      return <div>TODO: label</div>;
+    },
+
+    renderInput(): VNode {
+      return (
+        <input
+          type={config.inputType}
+          value={this.value}
+          class={styles[config.inputClassName]}
+          onChange={this.changeHandler}
+          onInput={this.inputHandler}
+        />
+      );
+    },
+
     renderCaption(): VNode {
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
@@ -172,6 +190,7 @@ export default defineComponent({
             <DCaption
               label={this.caption}
               class={transitionStyles[transitionClassName]}
+              style={`--offset: ${prepareElementSize(this.captionOffset)}`}
               {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
             />
           )}
@@ -225,12 +244,14 @@ export default defineComponent({
   },
 
   render(): VNode {
-    // TODO: use DCaptionAsync with zero size for errors
+    const Tag = this.tag;
+
     return (
-      <div class={styles[config.className]}>
-        <input type={config.inputType} value={this.value} />
+      <Tag class={styles[config.className]}>
+        {this.renderLabel}
+        {this.renderInput}
         {this.renderCaption}
-      </div>
+      </Tag>
     );
   },
 });

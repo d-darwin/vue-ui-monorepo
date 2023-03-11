@@ -4,9 +4,9 @@
 }
 
 .caption {
-  --gap: -4px; /*TODO: make configurable*/
+  --offset: -4px;
   position: absolute;
-  top: calc(100% + var(--gap));
+  top: calc(100% + var(--offset));
 }
 
 .captionTransitionEnterActive,

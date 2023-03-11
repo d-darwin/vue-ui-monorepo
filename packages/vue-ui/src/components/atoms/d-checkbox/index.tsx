@@ -291,7 +291,7 @@ export default defineComponent({
 
       return (
         <input
-          type="checkbox"
+          type={config.inputType}
           id={this.label || this.id ? this.controlId : undefined}
           checked={this.checked}
           value={this.value}
