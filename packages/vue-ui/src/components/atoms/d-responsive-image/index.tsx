@@ -35,8 +35,6 @@ import styles from "./index.css?module";
 export default defineComponent({
   name: config.name,
 
-  components: { DAspectRatio },
-
   props: {
     /**
      * Expected formats:<br>

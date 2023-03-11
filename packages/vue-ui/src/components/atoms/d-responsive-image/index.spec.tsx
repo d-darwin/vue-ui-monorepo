@@ -11,7 +11,6 @@ import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: shorter path, default export ???
 
-// TODO: case descriptions
 describe("DResponsiveImage", () => {
   const wrapper = mount(DResponsiveImage);
 
