@@ -34,7 +34,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareHtmlSize from "@/utils/prepare-html-size";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";

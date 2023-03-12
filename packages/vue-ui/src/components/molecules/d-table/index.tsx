@@ -5,7 +5,7 @@ import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: 
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -13,10 +13,10 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
+import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { LOADER_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-import { DLoaderProps } from "@/components/atoms/d-loader/types";
 
 /**
  * Simply renders <b>table</b> element with passed head and body rows.

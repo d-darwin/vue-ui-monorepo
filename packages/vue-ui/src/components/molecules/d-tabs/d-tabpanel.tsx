@@ -12,8 +12,8 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import type { TagName } from "@/types/tag-name";
-import type { Text } from "@/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tabpanel.css?module";
 

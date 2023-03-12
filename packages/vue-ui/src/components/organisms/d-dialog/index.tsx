@@ -36,7 +36,7 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareHtmlSize from "@/utils/prepare-html-size";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import {
   BACKDROP_DEFAULTS,

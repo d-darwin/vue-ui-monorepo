@@ -12,8 +12,8 @@ import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import config from "./config";
 import styles from "./d-tab.css?module";
 

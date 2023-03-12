@@ -41,7 +41,7 @@ import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
-import prepareHtmlSize from "@/utils/prepare-html-size";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";

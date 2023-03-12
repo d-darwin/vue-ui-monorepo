@@ -146,10 +146,10 @@ export default defineComponent({
   },
 
   emits: [
-    EVENT_NAME.CHANGE, // TODO: implement
-    EVENT_NAME.INPUT, // TODO: implement
-    EVENT_NAME.SUBMIT, // TODO: implement
-    EVENT_NAME.UPDATE_VALUE, // TODO: implement
+    EVENT_NAME.CHANGE,
+    EVENT_NAME.INPUT,
+    EVENT_NAME.SUBMIT,
+    EVENT_NAME.UPDATE_VALUE,
   ],
 
   computed: {
@@ -158,7 +158,8 @@ export default defineComponent({
         <label
           for={this.controlId}
           style={`--offset: ${this.labelOffset}`}
-          {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions)}
+          class={getCommonClass(TOKEN_NAME.FONT, this.size)}
+          {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions || {})}
         >
           TODO: label
         </label>
@@ -172,7 +173,7 @@ export default defineComponent({
           value={this.value}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
-          {...Object.assign({}, INPUT_DEFAULTS, this.inputOptions)}
+          {...Object.assign({}, INPUT_DEFAULTS, this.inputOptions || {})}
         />
       );
     },
