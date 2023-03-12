@@ -22,8 +22,8 @@ import config from "./config";
 import styles from "./index.css?module";
 
 /**
- * Implements ["slider"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role) and ["spinbutton"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/spinbutton_role) input widget roles.<br />
- * Renders custom <b>input</b> element with <i>type="range"</i> and <i>role="slider | spinbutton"</i>
+ * Renders custom <b>input</b> element with <i>type="range"</i> and <i>role="slider"</i>.<br />
+ * Implements ["slider"](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role).
  */
 export default defineComponent({
   name: config.name,
@@ -146,6 +146,19 @@ export default defineComponent({
       );
     },
 
+    renderTrack(): VNode {
+      // TODO: options / slot / step marks /
+      return (
+        <div
+          class={[
+            styles[config.trackClassName],
+            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+          ]}
+        />
+      );
+    },
+
     renderInput(): VNode {
       return (
         <input
@@ -161,6 +174,10 @@ export default defineComponent({
             getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
             getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+            getCommonCssClass(
+              TOKEN_NAME.OUTLINE,
+              `${this.colorScheme}-${this.size}`
+            ),
           ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
@@ -238,6 +255,7 @@ export default defineComponent({
     return (
       <Tag class={this.classes}>
         {this.renderLabel}
+        {this.renderTrack}
         {this.renderInput}
         {this.renderCaption}
       </Tag>

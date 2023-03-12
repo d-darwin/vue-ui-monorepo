@@ -4,36 +4,29 @@
 }
 
 .label {
+  display: block;
   --offset: -4px;
   margin-bottom: var(--offset);
-  display: block;
 }
 
-.caption {
-  --offset: -4px;
+.track {
   position: absolute;
-  top: calc(100% + var(--offset));
-}
-
-.captionTransitionEnterActive,
-.captionTransitionEnterActive {
-  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
-  opacity: 0.65;
-}
-
-.input {
-  --height: calc(var(--size) * 0.1);
-  --opacity: aa;
-  appearance: none;
-  box-sizing: border-box;
   width: 100%;
-  height: var(--height);
-  min-height: var(--height);
-  margin: calc((var(--size) - var(--height)) / 2) 0;
+  bottom: calc(var(--size) * 0.55 / 2);
+  height: calc(var(--size) * 0.1);
   background-color: var(--background-color);
   background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5));
   border-radius: var(--border-radius);
+}
 
+.input {
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background: transparent !important;
 }
 
 .input::-webkit-slider-thumb {
@@ -66,4 +59,16 @@
 
 .input:disabled {
   cursor: not-allowed;
+}
+
+.caption {
+  --offset: -4px;
+  position: absolute;
+  top: calc(100% + var(--offset));
+}
+
+.captionTransitionEnterActive,
+.captionTransitionEnterActive {
+  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
+  opacity: 0.65;
 }

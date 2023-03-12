@@ -43,9 +43,9 @@ export default {
     max: 100,
     step: 1,
     label: "Label",
-    labelOffset: "-4px",
+    labelOffset: "2px",
     caption: "Error string",
-    captionOffset: "0px",
+    captionOffset: "2px",
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     rounding: ROUNDING.FULL, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
