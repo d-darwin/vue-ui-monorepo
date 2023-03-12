@@ -6,6 +6,7 @@ import {
   Transition as Trans,
   LabelHTMLAttributes,
   InputHTMLAttributes,
+  HTMLAttributes,
 } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
@@ -17,7 +18,12 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import { CAPTION_DEFAULTS, INPUT_DEFAULTS, LABEL_DEFAULTS } from "./contants";
+import {
+  CAPTION_DEFAULTS,
+  INPUT_DEFAULTS,
+  LABEL_DEFAULTS,
+  TRACK_DEFAULTS,
+} from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -50,8 +56,14 @@ export default defineComponent({
      * Defines step attr of the input
      */
     step: generateProp.number(config.defaultStep),
-    // TODO: dataset
-    // TODO: range? from, to ?
+    // TODO: dataset (not just step)
+    // TODO: marks
+    // TODO: mark labels
+    // TODO: range from => to ?
+    /**
+     * Pass any track attrs you want
+     */
+    trackOptions: generateProp.options<HTMLAttributes>(TRACK_DEFAULTS),
     /**
      * Pass any input attrs you want
      */
@@ -150,10 +162,10 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles[config.trackClassName],
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
           ]}
+          {...Object.assign({}, TRACK_DEFAULTS, this.trackOptions || {})}
         >
           {this.$slots.track?.()}
         </div>
@@ -246,7 +258,6 @@ export default defineComponent({
    * @slot $slots.label
    * Use instead of props.label to fully customize label
    * */
-
   /**
    * @slot $slots.track
    * Use instead of props.track to fully customize track
