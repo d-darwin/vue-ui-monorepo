@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/ui-codegen",
-  "version": "0.29.8",
+  "version": "0.29.9",
   "scripts": {
     "build": "node index.js",
     "rebuild": "tsc index.ts --resolveJsonModule && node index.js"
