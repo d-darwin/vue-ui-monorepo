@@ -105,11 +105,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -170,6 +165,7 @@ export default defineComponent({
           max={this.max}
           step={this.step}
           role={config.defaultRole}
+          disabled={this.disabled}
           class={[
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
