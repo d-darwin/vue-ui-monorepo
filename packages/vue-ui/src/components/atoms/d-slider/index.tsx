@@ -8,15 +8,19 @@ import {
   LabelHTMLAttributes,
 } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
+import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import getCommonClass from "@darwin-studio/vue-ui/src/utils/get-common-class";
+import generateTransitionProp from "@darwin-studio/vue-ui/src/utils/prop-factories/transition";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
@@ -105,14 +109,32 @@ export default defineComponent({
       types: [String, Number] as PropType<Text>,
       default: config.defaultCaptionOffset,
     },
-    // TODO: colorScheme and others
+    /**
+     * Defines appearance of the component
+     */
+    colorScheme: {
+      type: String as PropType<ColorScheme>,
+      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines corner rounding of the icon container element
+     */
+    rounding: {
+      type: String as PropType<Rounding>,
+      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
+    },
+    /**
+     * Defines size of the component
+     */
+    // TODO: fontSize and size separately ???
+    size: {
+      type: String as PropType<Size>,
+      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
+    },
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateTransitionProp(),
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
@@ -126,6 +148,7 @@ export default defineComponent({
       type: String as PropType<TagName>,
       default: TAG_NAME_DEFAULTS.DIV,
     },
+    // TODO: range? from, to ?
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -181,6 +204,7 @@ export default defineComponent({
     renderInput(): VNode {
       return (
         <input
+          id={this.controlId}
           type={config.inputType}
           value={this.value}
           class={styles[config.inputClassName]}
@@ -191,11 +215,6 @@ export default defineComponent({
     },
 
     renderCaption(): VNode {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return (
         <Trans
           enterActiveClass={styles.captionTransitionEnterActive}
@@ -205,7 +224,7 @@ export default defineComponent({
           {this.caption && (
             <DCaption
               label={this.caption}
-              class={transitionStyles[transitionClassName]}
+              class={getCommonClass("TRANSITION", this.transition)} // TODO: const
               style={`--offset: ${prepareElementSize(this.captionOffset)}`}
               {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
             />
