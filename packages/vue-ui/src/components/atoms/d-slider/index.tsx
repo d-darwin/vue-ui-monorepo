@@ -11,8 +11,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import generateCommonProp from "@darwin-studio/vue-ui/src/utils/prop-factories/generate-common-prop";
-import generateOptionsProp from "@darwin-studio/vue-ui/src/utils/prop-factories/generate-options-prop";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
@@ -35,55 +34,69 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: [String, Number] as PropType<Text>,
+    id: generateProp.primitive<Text>(),
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    value: [String, Number] as PropType<Text>,
+    value: generateProp.primitive<Text>(),
+    /**
+     * Defines min attr of the input
+     */
+    min: generateProp.primitive<number>(config.defaultMin),
+    /**
+     * Defines max attr of the input
+     */
+    max: generateProp.primitive<number>(config.defaultMax),
+    /**
+     * Defines step attr of the input
+     */
+    step: generateProp.primitive<number>(config.defaultStep),
+    // TODO: dataset
+    // TODO: range? from, to ?
     /**
      * Pass any input attrs you want
      */
-    inputOptions: generateOptionsProp<InputHTMLAttributes>(INPUT_DEFAULTS),
+    inputOptions: generateProp.options<InputHTMLAttributes>(INPUT_DEFAULTS),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: generateCommonProp.content(),
+    label: generateProp.content(),
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelOptions: generateOptionsProp<LabelHTMLAttributes>(LABEL_DEFAULTS),
+    labelOptions: generateProp.options<LabelHTMLAttributes>(LABEL_DEFAULTS),
     /**
      Defines offset of .label
      */
-    labelOffset: generateCommonProp.htmlSize(config.defaultLabelOffset),
+    labelOffset: generateProp.htmlSize(config.defaultLabelOffset),
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
-    caption: generateCommonProp.content(),
+    caption: generateProp.content(),
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
-    captionOptions: generateOptionsProp<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateCommonProp.htmlSize(config.defaultCaptionOffset),
+    captionOffset: generateProp.htmlSize(config.defaultCaptionOffset),
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateCommonProp.colorScheme(),
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines rounding of the component
      */
-    rounding: generateCommonProp.rounding(ROUNDING.FULL),
+    rounding: generateProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
-    size: generateCommonProp.size(),
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: generateCommonProp.transaction(),
+    transition: generateProp.transaction(),
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
@@ -91,8 +104,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateCommonProp.tag(),
-    // TODO: range? from, to ?
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
@@ -154,6 +166,9 @@ export default defineComponent({
         <input
           id={this.controlId}
           value={this.value}
+          min={this.min}
+          max={this.max}
+          step={this.step}
           class={[
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),

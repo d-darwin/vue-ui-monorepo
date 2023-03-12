@@ -14,7 +14,7 @@ import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"
 /**
  *
  */
-const generateCommonProp = {
+const generateProp = {
   colorScheme: (
     defaultValue: ColorScheme = COLOR_SCHEME.PRIMARY // TODO: avoid hardcode figma values
   ) => ({
@@ -55,6 +55,16 @@ const generateCommonProp = {
     type: String as PropType<Transition>,
     default: defaultValue, // TODO: gent defaults base on actual values, not hardcoded
   }),
+
+  primitive: <T>(defaultValue?: T) => ({
+    type: Object as PropType<T>,
+    default: defaultValue,
+  }),
+
+  options: <T>(defaultValue?: T) => ({
+    type: Object as PropType<T>,
+    default: () => defaultValue,
+  }),
 } as const;
 
-export default generateCommonProp;
+export default generateProp;
