@@ -125,6 +125,13 @@ export default defineComponent({
   ],
 
   computed: {
+    classes(): (string | undefined)[] {
+      return [
+        styles[config.className],
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+      ];
+    },
+
     renderLabel(): VNode | null {
       if (!this.$slots.label?.() && !this.label) {
         return null;
@@ -231,12 +238,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag
-        class={[
-          styles[config.className],
-          getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        ]}
-      >
+      <Tag class={this.classes}>
         {this.renderLabel}
         {this.renderInput}
         {this.renderCaption}
