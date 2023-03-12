@@ -14,12 +14,13 @@ import { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
-import getCommonClass from "@darwin-studio/vue-ui/src/utils/get-common-class";
+import getCommonClass, {
+  TOKEN_NAME,
+} from "@darwin-studio/vue-ui/src/utils/get-common-class";
 import generateTransitionProp from "@darwin-studio/vue-ui/src/utils/prop-factories/transition";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
@@ -224,7 +225,7 @@ export default defineComponent({
           {this.caption && (
             <DCaption
               label={this.caption}
-              class={getCommonClass("TRANSITION", this.transition)} // TODO: const
+              class={getCommonClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareElementSize(this.captionOffset)}`}
               {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
             />
