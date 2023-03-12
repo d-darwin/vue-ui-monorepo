@@ -29,7 +29,7 @@ export const TOKEN_NAME: Record<TokenName, TokenName> = Object.fromEntries(
   Object.keys(codegenConfig.TOKENS).map((tokenKey) => [tokenKey, tokenKey])
 ) as Record<TokenName, TokenName>;
 
-const getCommonClass = (tokenName: TokenName, tokenVariant: string) => {
+const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
   const classPrefix = codegenConfig.TOKENS[tokenName]?.CSS_CLASS_PREFIX;
   if (!classPrefix || !tokenVariant) {
     return;
@@ -66,4 +66,4 @@ const getCommonClass = (tokenName: TokenName, tokenVariant: string) => {
   }
 };
 
-export default getCommonClass;
+export default getCommonCssClass;

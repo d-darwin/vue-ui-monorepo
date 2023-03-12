@@ -9,6 +9,7 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: s
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
@@ -193,19 +194,19 @@ export default defineComponent({
       const tabId = (event.target as HTMLElement).getAttribute("id");
       const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
 
-      if (event.key === "ArrowLeft") {
+      if (event.key === EVENT_KEY.ArrowLeft) {
         event.preventDefault();
         const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
         // TODO: find out more elegant way
         tabs?.[prevIndex]?.el?.focus?.();
       }
-      if (event.key === "ArrowRight") {
+      if (event.key === EVENT_KEY.ArrowRight) {
         event.preventDefault();
         const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
         // TODO: find out more elegant way
         tabs?.[nextIndex]?.el?.focus?.();
       }
-      if (event.key === "Enter") {
+      if (event.key === EVENT_KEY.Enter) {
         event.preventDefault();
         // TODO: find out more elegant way
         tabs?.[tabIndex]?.props?.whenClick?.();

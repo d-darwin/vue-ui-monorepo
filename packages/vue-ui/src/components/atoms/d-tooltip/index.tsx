@@ -31,6 +31,7 @@ import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
@@ -417,10 +418,10 @@ export default defineComponent({
         return;
       }
 
-      if (["Enter", " "].includes(event.key)) {
+      if (event.key === EVENT_KEY.Enter || event.key === EVENT_KEY.Space) {
         this.isShown = true;
         this.emitShown();
-      } else if (event.key === "Escape") {
+      } else if (event.key === EVENT_KEY.Escape) {
         this.isShown = false;
         this.emitShown();
       }

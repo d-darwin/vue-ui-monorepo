@@ -27,6 +27,7 @@ import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { InputTypes } from "./types";
@@ -424,8 +425,7 @@ export default defineComponent({
     },
 
     keyupHandler(event: KeyboardEvent) {
-      // TODO: add or find KEYS
-      if (event.key === "Enter") {
+      if (event.key === EVENT_KEY.Enter) {
         const value = (event.target as HTMLInputElement).value;
         /**
          * Emits on Enter keyup with value payload

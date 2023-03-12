@@ -8,12 +8,13 @@ import {
   InputHTMLAttributes,
 } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
+import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import getCommonClass, {
-  TOKEN_NAME,
-} from "@darwin-studio/vue-ui/src/utils/get-common-class";
+import getCommonCssClass, {
+  TOKEN_NAME, // TODO: move to the constants
+} from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import {
   generateColorSchemeProp,
   generateContentOptionsProp,
@@ -163,7 +164,7 @@ export default defineComponent({
         <label
           for={this.controlId}
           style={`--offset: ${this.labelOffset}`}
-          class={getCommonClass(TOKEN_NAME.FONT, this.size)}
+          class={getCommonCssClass(TOKEN_NAME.FONT, this.size)}
           {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions || {})}
         >
           {this.$slots.label?.() || this.label}
@@ -177,10 +178,10 @@ export default defineComponent({
           id={this.controlId}
           value={this.value}
           class={[
-            getCommonClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
-            getCommonClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonClass(TOKEN_NAME.TRANSITION, this.transition),
+            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+            getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
           ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
@@ -199,7 +200,7 @@ export default defineComponent({
           {this.caption && (
             <DCaption
               label={this.caption}
-              class={getCommonClass(TOKEN_NAME.TRANSITION, this.transition)}
+              class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
               {...mergeProps(
                 { font: this.size },
@@ -243,8 +244,7 @@ export default defineComponent({
     },
 
     keyupHandler(event: KeyboardEvent) {
-      // TODO: add or find KEYS
-      if (event.key === "Enter") {
+      if (event.key === EVENT_KEY.Enter) {
         const value = (event.target as HTMLInputElement).value;
         /**
          * Emits on Enter keyup with value payload
@@ -264,7 +264,7 @@ export default defineComponent({
       <Tag
         class={[
           styles[config.className],
-          getCommonClass(TOKEN_NAME.SIZE, this.size),
+          getCommonCssClass(TOKEN_NAME.SIZE, this.size),
         ]}
       >
         {this.renderLabel}
