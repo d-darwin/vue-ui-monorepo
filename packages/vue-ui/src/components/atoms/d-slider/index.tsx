@@ -11,15 +11,13 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import {
-  generateColorSchemeProp,
-  generateContentOptionsProp,
-  generateContentProp,
-  generateRoundingProp,
-  generateSizeProp,
-  generateTagProp,
-  generateTransitionProp,
-} from "@darwin-studio/vue-ui/src/utils/prop-factories/index";
+import generateColorSchemeProp from "@darwin-studio/vue-ui/src/utils/prop-factories/color-scheme";
+import generateContentProp from "@darwin-studio/vue-ui/src/utils/prop-factories/content";
+import generateContentOptionsProp from "@darwin-studio/vue-ui/src/utils/prop-factories/content-options";
+import generateRoundingProp from "@darwin-studio/vue-ui/src/utils/prop-factories/rounding";
+import generateSizeProp from "@darwin-studio/vue-ui/src/utils/prop-factories/size";
+import generateTagProp from "@darwin-studio/vue-ui/src/utils/prop-factories/tag";
+import generateTransitionProp from "@darwin-studio/vue-ui/src/utils/prop-factories/transition";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
