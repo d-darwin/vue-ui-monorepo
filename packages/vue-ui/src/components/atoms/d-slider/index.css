@@ -38,9 +38,9 @@
 
 .input::-webkit-slider-thumb {
   appearance: none;
-  width: calc(var(--size) * 0.65);
-  height: calc(var(--size) * 0.65);
-  outline: calc(var(--size) * 0.35) solid rgba(255,255,255,0.65);
+  width: calc(var(--size) * 0.66);
+  height: calc(var(--size) * 0.66);
+  outline: calc(var(--size) * 0.17) solid rgba(255,255,255,0.66);
   cursor: pointer;
   background: var(--background-color);
   border-radius: var(--border-radius);
@@ -49,10 +49,9 @@
 
 .input::-moz-range-thumb {
   appearance: none;
-  box-sizing: border-box;
-  width: calc(var(--size) * 0.65);
-  height: calc(var(--size) * 0.65);
-  outline: calc(var(--size) * 0.35) solid rgba(255,255,255,0.65);
+  width: calc(var(--size) * 0.66);
+  height: calc(var(--size) * 0.66);
+  outline: calc(var(--size) * 0.17) solid rgba(255,255,255,0.66);
   cursor: pointer;
   background: var(--background-color);
   border-radius: var(--border-radius);
