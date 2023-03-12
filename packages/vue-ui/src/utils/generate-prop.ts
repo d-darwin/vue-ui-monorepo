@@ -56,8 +56,18 @@ const generateProp = {
     default: defaultValue, // TODO: gent defaults base on actual values, not hardcoded
   }),
 
-  primitive: <T>(defaultValue?: T) => ({
-    type: Object as PropType<T>,
+  number: (defaultValue?: number) => ({
+    type: Number,
+    default: defaultValue,
+  }),
+
+  string: (defaultValue?: string) => ({
+    type: String,
+    default: defaultValue,
+  }),
+
+  boolean: (defaultValue?: boolean) => ({
+    type: Boolean,
     default: defaultValue,
   }),
 

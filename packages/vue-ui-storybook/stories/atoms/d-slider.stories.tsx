@@ -4,6 +4,7 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "atoms/DSlider",
@@ -25,16 +26,38 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    // TODO
+    onChange: {
+      action: "change",
+    },
+    onInput: {
+      action: "input",
+    },
+    "onUpdate:value": {
+      action: "update:value",
+    },
   },
   args: {
+    id: "some-id",
+    value: 50,
+    min: 0,
+    max: 100,
+    step: 1,
     label: "Label",
+    labelOffset: "-4px",
     caption: "Error string",
+    captionOffset: "0px",
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     rounding: ROUNDING.FULL, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
-    // TODO
+    disabled: false,
+    tag: TAG_NAME_DEFAULTS.DIV,
+    whenChange: (value: Text) => {
+      console.log("change", value);
+    },
+    whenInput: (value: Text) => {
+      console.log("input", value);
+    },
   },
 };
 

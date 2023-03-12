@@ -14,7 +14,6 @@ import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-cl
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
@@ -34,23 +33,23 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.primitive<Text>(),
+    id: [String, Number] as PropType<Text>,
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    value: generateProp.primitive<Text>(),
+    value: generateProp.number(),
     /**
      * Defines min attr of the input
      */
-    min: generateProp.primitive<number>(config.defaultMin),
+    min: generateProp.number(config.defaultMin),
     /**
      * Defines max attr of the input
      */
-    max: generateProp.primitive<number>(config.defaultMax),
+    max: generateProp.number(config.defaultMax),
     /**
      * Defines step attr of the input
      */
-    step: generateProp.primitive<number>(config.defaultStep),
+    step: generateProp.number(config.defaultStep),
     // TODO: dataset
     // TODO: range? from, to ?
     /**
@@ -114,22 +113,13 @@ export default defineComponent({
      * Alternative way to catch input event
      */
     whenInput: Function as PropType<(value: string) => void | Promise<void>>,
-    /**
-     * Alternative way to catch submit event
-     */
-    whenSubmit: Function as PropType<(value: string) => void | Promise<void>>,
   },
 
   setup(props) {
     return useControlId(props);
   },
 
-  emits: [
-    EVENT_NAME.CHANGE,
-    EVENT_NAME.INPUT,
-    EVENT_NAME.SUBMIT,
-    EVENT_NAME.UPDATE_VALUE,
-  ],
+  emits: [EVENT_NAME.CHANGE, EVENT_NAME.INPUT, EVENT_NAME.UPDATE_VALUE],
 
   computed: {
     classes(): (string | undefined)[] {
@@ -231,19 +221,6 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.INPUT, value);
       this.whenInput?.(value);
-    },
-
-    keyupHandler(event: KeyboardEvent) {
-      if (event.key === EVENT_KEY.Enter) {
-        const value = (event.target as HTMLInputElement).value;
-        /**
-         * Emits on Enter keyup with value payload
-         * @event submit
-         * @type {value: Text}
-         */
-        this.$emit(EVENT_NAME.SUBMIT, value);
-        this.whenSubmit?.(value);
-      }
     },
   },
 
