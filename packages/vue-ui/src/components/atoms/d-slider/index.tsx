@@ -176,7 +176,7 @@ export default defineComponent({
     renderInput(): VNode {
       return (
         <input
-          id={this.controlId}
+          id={this.$slots.label?.() || this.label ? this.controlId : undefined}
           value={this.value}
           min={this.min}
           max={this.max}
@@ -206,7 +206,7 @@ export default defineComponent({
           leaveActiveClass={styles.captionTransitionLeaveActive}
           appear={true}
         >
-          {this.caption && (
+          {(this.$slots.caption?.() || this.caption) && (
             <DCaption
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}

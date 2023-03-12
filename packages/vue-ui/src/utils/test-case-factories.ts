@@ -55,12 +55,14 @@ export function baseClassCase(
   });
 }
 
-export function inputValueCase(wrapper: VueWrapper) {
+export function inputValueCase(
+  wrapper: VueWrapper,
+  value: string | number = "some value"
+) {
   return it("Input element's value attr should contain props.value", async () => {
-    const value = "external value";
     await wrapper.setProps({ value });
     const inputEl = wrapper.find("input");
-    expect(inputEl.element?.value).toBe(value);
+    expect(inputEl.element?.value).toBe(String(value));
   });
 }
 
@@ -116,11 +118,36 @@ export function labelStringCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
+export function captionStringCase(
+  wrapper: VueWrapper,
+  captionSelector = "caption"
+) {
+  return it("Should render caption element with props.caption content if passed", async () => {
+    const caption = "Some caption";
+    await wrapper.setProps({ caption });
+
+    const captionEl = wrapper.find(captionSelector);
+    expect(captionEl.exists()).toBeTruthy();
+    expect(captionEl.text()).toBe(caption);
+  });
+}
+
 export function labelAbsenceCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Shouldn't render label element if props.label isn't passed", async () => {
     await wrapper.setProps({ label: undefined });
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeFalsy();
+  });
+}
+
+export function captionAbsenceCase(
+  wrapper: VueWrapper,
+  captionSelector = "caption"
+) {
+  return it("Shouldn't render caption element if props.caption isn't passed", async () => {
+    await wrapper.setProps({ caption: undefined });
+    const captionEl = wrapper.find(captionSelector);
+    expect(captionEl.exists()).toBeFalsy();
   });
 }
 
