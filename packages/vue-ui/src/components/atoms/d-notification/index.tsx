@@ -34,7 +34,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import prepareHtmlSize from "@/utils/prepare-html-size";
 import { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
@@ -267,16 +267,16 @@ export default defineComponent({
 
       // TODO: use css custom props
       if (typeof this.minWidth !== "undefined") {
-        styles.minWidth = prepareElementSize(this.minWidth);
+        styles.minWidth = prepareHtmlSize(this.minWidth);
       }
       if (typeof this.maxWidth !== "undefined") {
-        styles.maxWidth = prepareElementSize(this.maxWidth);
+        styles.maxWidth = prepareHtmlSize(this.maxWidth);
       }
       if (typeof this.minHeight !== "undefined") {
-        styles.minHeight = prepareElementSize(this.minHeight);
+        styles.minHeight = prepareHtmlSize(this.minHeight);
       }
       if (typeof this.maxHeight !== "undefined") {
-        styles.maxHeight = prepareElementSize(this.maxHeight);
+        styles.maxHeight = prepareHtmlSize(this.maxHeight);
       }
 
       return styles;

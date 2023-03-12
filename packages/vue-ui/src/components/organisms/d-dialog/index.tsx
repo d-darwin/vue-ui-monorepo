@@ -36,7 +36,7 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import prepareHtmlSize from "@/utils/prepare-html-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import {
   BACKDROP_DEFAULTS,
@@ -479,10 +479,10 @@ export default defineComponent({
 
     styles(): CSSProperties {
       return {
-        "--min-width": prepareElementSize(this.minWidth),
-        "--max-width": prepareElementSize(this.maxWidth),
-        "--min-height": prepareElementSize(this.minHeight),
-        "--max-height": prepareElementSize(this.maxHeight),
+        "--min-width": prepareHtmlSize(this.minWidth),
+        "--max-width": prepareHtmlSize(this.maxWidth),
+        "--min-height": prepareHtmlSize(this.minHeight),
+        "--max-height": prepareHtmlSize(this.maxHeight),
         "--z-index": this.zIndex,
       };
     },

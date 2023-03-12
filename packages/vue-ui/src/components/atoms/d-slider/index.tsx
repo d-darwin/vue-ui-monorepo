@@ -1,32 +1,31 @@
 import {
   defineComponent,
-  InputHTMLAttributes,
   mergeProps,
   PropType,
   VNode,
   Transition as Trans,
   LabelHTMLAttributes,
+  InputHTMLAttributes,
 } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import getCommonClass, {
   TOKEN_NAME,
 } from "@darwin-studio/vue-ui/src/utils/get-common-class";
-import generateTransitionProp from "@darwin-studio/vue-ui/src/utils/prop-factories/transition";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import {
+  generateColorSchemeProp,
+  generateContentOptionsProp,
+  generateContentProp,
+  generateRoundingProp,
+  generateSizeProp,
+  generateTagProp,
+  generateTransitionProp,
+} from "@darwin-studio/vue-ui/src/utils/prop-factories/index";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import { CAPTION_DEFAULTS, LABEL_DEFAULTS } from "./contants";
+import { CAPTION_DEFAULTS, INPUT_DEFAULTS, LABEL_DEFAULTS } from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -39,12 +38,6 @@ export default defineComponent({
 
   props: {
     /**
-     * Defines initial <i>value</i> attr of the <b>input</b> element
-     */
-    value: {
-      type: [String, Number] as PropType<Text>,
-    },
-    /**
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
@@ -52,37 +45,25 @@ export default defineComponent({
       type: [String, Number] as PropType<Text>,
     },
     /**
-     * You can pass own class name to the <b>input</b> element.
+     * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    // TODO: inputOptions
-    inputClass: {
-      type: String,
+    value: {
+      type: [String, Number] as PropType<Text>,
     },
     /**
-     * Defines font size of the <b>input</b> element. By default depends on props.size
+     * Pass any input attrs you want
      */
-    inputFont: {
-      type: String as PropType<Font>,
-    },
-    /**
-     * You can pass any attributes to the <b>input</b> element.
-     */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
+    inputOptions:
+      generateContentOptionsProp<InputHTMLAttributes>(INPUT_DEFAULTS),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateContentProp(),
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelOptions: {
-      type: Object as PropType<LabelHTMLAttributes>,
-      default: () => LABEL_DEFAULTS,
-    },
+    labelOptions:
+      generateContentOptionsProp<LabelHTMLAttributes>(LABEL_DEFAULTS),
     /**
      Defines offset of .label
      */
@@ -93,16 +74,11 @@ export default defineComponent({
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
-    caption: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    caption: generateContentProp(),
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
-    captionOptions: {
-      type: Object as PropType<DCaptionProps>,
-      default: () => CAPTION_DEFAULTS,
-    },
+    captionOptions: generateContentOptionsProp<DCaptionProps>(CAPTION_DEFAULTS),
     /**
      * Defines offset of DCaption
      */
@@ -113,25 +89,15 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateColorSchemeProp(),
     /**
-     * Defines corner rounding of the icon container element
+     * Defines rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateRoundingProp(),
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateSizeProp(),
     /**
      * Defines transition type of the component
      */
@@ -145,10 +111,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateTagProp(),
     // TODO: range? from, to ?
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
@@ -206,11 +169,10 @@ export default defineComponent({
       return (
         <input
           id={this.controlId}
-          type={config.inputType}
           value={this.value}
-          class={styles[config.inputClassName]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
+          {...Object.assign({}, INPUT_DEFAULTS, this.inputOptions)}
         />
       );
     },
@@ -226,7 +188,7 @@ export default defineComponent({
             <DCaption
               label={this.caption}
               class={getCommonClass(TOKEN_NAME.TRANSITION, this.transition)}
-              style={`--offset: ${prepareElementSize(this.captionOffset)}`}
+              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
               {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
             />
           )}
