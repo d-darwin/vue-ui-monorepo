@@ -22,7 +22,7 @@
 }
 
 .input {
-  --height: calc(var(--size) / 10);
+  --height: calc(var(--size) * 0.1);
   --opacity: aa;
   appearance: none;
   box-sizing: border-box;
@@ -38,9 +38,9 @@
 
 .input::-webkit-slider-thumb {
   appearance: none;
-  box-sizing: border-box;
-  width: var(--size);
-  height: var(--size);
+  width: calc(var(--size) * 0.65);
+  height: calc(var(--size) * 0.65);
+  outline: calc(var(--size) * 0.35) solid rgba(255,255,255,0.65);
   cursor: pointer;
   background: var(--background-color);
   border-radius: var(--border-radius);
@@ -50,8 +50,9 @@
 .input::-moz-range-thumb {
   appearance: none;
   box-sizing: border-box;
-  width: var(--size);
-  height: var(--size);
+  width: calc(var(--size) * 0.65);
+  height: calc(var(--size) * 0.65);
+  outline: calc(var(--size) * 0.35) solid rgba(255,255,255,0.65);
   cursor: pointer;
   background: var(--background-color);
   border-radius: var(--border-radius);

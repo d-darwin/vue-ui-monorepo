@@ -8,7 +8,6 @@ import {
   InputHTMLAttributes,
 } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
@@ -99,7 +98,7 @@ export default defineComponent({
     /**
      * Defines size of the component
      */
-    size: generateSizeProp(SIZE.SMALL),
+    size: generateSizeProp(),
     /**
      * Defines transition type of the component
      */
