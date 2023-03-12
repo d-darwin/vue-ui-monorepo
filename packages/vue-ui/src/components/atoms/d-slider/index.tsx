@@ -8,13 +8,9 @@ import {
   InputHTMLAttributes,
 } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import getCommonCssClass, {
-  TOKEN_NAME, // TODO: move to the constants
-} from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import {
   generateColorSchemeProp,
   generateContentOptionsProp,
@@ -24,8 +20,11 @@ import {
   generateTagProp,
   generateTransitionProp,
 } from "@darwin-studio/vue-ui/src/utils/prop-factories/index";
-import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import { CAPTION_DEFAULTS, INPUT_DEFAULTS, LABEL_DEFAULTS } from "./contants";
 import config from "./config";

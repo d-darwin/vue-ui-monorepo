@@ -9,25 +9,9 @@ import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?mod
 import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-
-// TODO: move upper ???
-export type TokenName =
-  | "BORDER"
-  // | "BREAKPOINT"
-  | "COLOR_SCHEME"
-  | "FONT"
-  | "GRID"
-  | "MIN_CONTROL_WIDTH"
-  | "OUTLINE"
-  | "PADDING"
-  | "ROUNDING"
-  | "SIZE"
-  | "TRANSITION";
-
-export const TOKEN_NAME: Record<TokenName, TokenName> = Object.fromEntries(
-  Object.keys(codegenConfig.TOKENS).map((tokenKey) => [tokenKey, tokenKey])
-) as Record<TokenName, TokenName>;
+import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module";
+import type { TokenName } from "@darwin-studio/vue-ui/src/types/token-name";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name"; // TODO: shorter path, default export ??? TODO: make it module ???
 
 const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
   const classPrefix = codegenConfig.TOKENS[tokenName]?.CSS_CLASS_PREFIX;
