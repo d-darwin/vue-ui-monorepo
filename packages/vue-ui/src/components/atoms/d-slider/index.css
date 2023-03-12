@@ -20,3 +20,44 @@
   transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
   opacity: 0.65;
 }
+
+.input {
+  --height: calc(var(--size) / 10);
+  --opacity: aa;
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--height);
+  min-height: var(--height);
+  margin: calc((var(--size) - var(--height)) / 2) 0;
+  background-color: var(--background-color);
+  background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+  border-radius: var(--border-radius);
+
+}
+
+.input::-webkit-slider-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.input::-moz-range-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.__disable {
+  cursor: not-allowed;
+}

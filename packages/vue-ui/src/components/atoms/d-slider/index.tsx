@@ -7,6 +7,8 @@ import {
   LabelHTMLAttributes,
   InputHTMLAttributes,
 } from "vue";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
@@ -93,11 +95,11 @@ export default defineComponent({
     /**
      * Defines rounding of the component
      */
-    rounding: generateRoundingProp(),
+    rounding: generateRoundingProp(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
-    size: generateSizeProp(),
+    size: generateSizeProp(SIZE.SMALL),
     /**
      * Defines transition type of the component
      */
@@ -153,7 +155,11 @@ export default defineComponent({
   ],
 
   computed: {
-    renderLabel(): VNode {
+    renderLabel(): VNode | null {
+      if (!this.$slots.label?.() && !this.label) {
+        return null;
+      }
+      // TODO: enableHtml
       return (
         <label
           for={this.controlId}
@@ -161,7 +167,7 @@ export default defineComponent({
           class={getCommonClass(TOKEN_NAME.FONT, this.size)}
           {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions || {})}
         >
-          TODO: label
+          {this.$slots.label?.() || this.label}
         </label>
       );
     },
@@ -171,6 +177,12 @@ export default defineComponent({
         <input
           id={this.controlId}
           value={this.value}
+          class={[
+            getCommonClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+            getCommonClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+            getCommonClass(TOKEN_NAME.ROUNDING, this.rounding),
+            getCommonClass(TOKEN_NAME.TRANSITION, this.transition),
+          ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
           {...Object.assign({}, INPUT_DEFAULTS, this.inputOptions || {})}
@@ -190,7 +202,11 @@ export default defineComponent({
               label={this.caption}
               class={getCommonClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...mergeProps({}, CAPTION_DEFAULTS, this.captionOptions || {})}
+              {...mergeProps(
+                { font: this.size },
+                CAPTION_DEFAULTS,
+                this.captionOptions || {}
+              )}
             />
           )}
         </Trans>
@@ -246,7 +262,12 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag class={styles[config.className]}>
+      <Tag
+        class={[
+          styles[config.className],
+          getCommonClass(TOKEN_NAME.SIZE, this.size),
+        ]}
+      >
         {this.renderLabel}
         {this.renderInput}
         {this.renderCaption}

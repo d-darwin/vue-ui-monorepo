@@ -8,6 +8,7 @@ export default {
     // TODO
   },
   args: {
+    label: "Label",
     caption: "Error string",
   },
 };

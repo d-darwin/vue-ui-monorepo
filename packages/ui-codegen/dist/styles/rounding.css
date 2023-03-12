@@ -2,20 +2,25 @@
 
 .roundingNone {
   border-radius: var(--radius-none);
+  --border-radius: var(--radius-none);
 }
 
 .roundingSmall {
   border-radius: var(--radius-small);
+  --border-radius: var(--radius-small);
 }
 
 .roundingMedium {
   border-radius: var(--radius-medium);
+  --border-radius: var(--radius-medium);
 }
 
 .roundingLarge {
   border-radius: var(--radius-large);
+  --border-radius: var(--radius-large);
 }
 
 .roundingFull {
   border-radius: var(--radius-full);
+  --border-radius: var(--radius-full);
 }
