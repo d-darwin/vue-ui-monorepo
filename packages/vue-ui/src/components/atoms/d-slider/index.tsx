@@ -11,13 +11,8 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import generateColorSchemeProp from "@darwin-studio/vue-ui/src/utils/prop-factories/color-scheme";
-import generateContentProp from "@darwin-studio/vue-ui/src/utils/prop-factories/content";
-import generateContentOptionsProp from "@darwin-studio/vue-ui/src/utils/prop-factories/content-options";
-import generateRoundingProp from "@darwin-studio/vue-ui/src/utils/prop-factories/rounding";
-import generateSizeProp from "@darwin-studio/vue-ui/src/utils/prop-factories/size";
-import generateTagProp from "@darwin-studio/vue-ui/src/utils/prop-factories/tag";
-import generateTransitionProp from "@darwin-studio/vue-ui/src/utils/prop-factories/transition";
+import generateCommonProp from "@darwin-studio/vue-ui/src/utils/prop-factories/generate-common-prop";
+import generateOptionsProp from "@darwin-studio/vue-ui/src/utils/prop-factories/generate-options-prop";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
@@ -52,17 +47,15 @@ export default defineComponent({
     /**
      * Pass any input attrs you want
      */
-    inputOptions:
-      generateContentOptionsProp<InputHTMLAttributes>(INPUT_DEFAULTS),
+    inputOptions: generateOptionsProp<InputHTMLAttributes>(INPUT_DEFAULTS),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: generateContentProp(),
+    label: generateCommonProp.content(),
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelOptions:
-      generateContentOptionsProp<LabelHTMLAttributes>(LABEL_DEFAULTS),
+    labelOptions: generateOptionsProp<LabelHTMLAttributes>(LABEL_DEFAULTS),
     /**
      Defines offset of .label
      */
@@ -73,11 +66,11 @@ export default defineComponent({
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
-    caption: generateContentProp(),
+    caption: generateCommonProp.content(),
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
-    captionOptions: generateContentOptionsProp<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateOptionsProp<DCaptionProps>(CAPTION_DEFAULTS),
     /**
      * Defines offset of DCaption
      */
@@ -88,19 +81,19 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateColorSchemeProp(),
+    colorScheme: generateCommonProp.colorScheme(),
     /**
      * Defines rounding of the component
      */
-    rounding: generateRoundingProp(ROUNDING.FULL),
+    rounding: generateCommonProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
-    size: generateSizeProp(),
+    size: generateCommonProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: generateTransitionProp(),
+    transition: generateCommonProp.transaction(),
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
@@ -110,7 +103,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateTagProp(),
+    tag: generateCommonProp.tag(),
     // TODO: range? from, to ?
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
