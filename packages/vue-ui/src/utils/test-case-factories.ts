@@ -155,17 +155,6 @@ export function labelHtmlCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
-export function labelDisabledClassCase(
-  wrapper: VueWrapper,
-  labelSelector = "label"
-) {
-  return it("Label classes should contain __disabled if props.disabled passed", async () => {
-    await wrapper.setProps({ disabled: true });
-    const labelEl = wrapper.find(labelSelector);
-    expect(labelEl.classes()).toContain("__disabled");
-  });
-}
-
 export function iconSlotCase(
   component: ReturnType<typeof defineComponent>,
   config: Record<string, string | number>,
@@ -430,16 +419,21 @@ export function preventDefaultCase(wrapper: VueWrapper) {
   });
 }
 
-export function disabledControlCase(
-  wrapper: VueWrapper,
-  targetSelector: string
-) {
+export function disabledClassCase(wrapper: VueWrapper, targetSelector: string) {
+  return it(`${targetSelector} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
+    await wrapper.setProps({ disabled: true });
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl.classes()).toContain("__disabled");
+  });
+}
+
+export function disabledAttrCase(wrapper: VueWrapper, targetSelector: string) {
   return it(`${targetSelector} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
     await wrapper.setProps({ disabled: true });
 
     const targetEl = wrapper.find(targetSelector);
     expect(targetEl.attributes()?.disabled).toBeFalsy();
-    expect(wrapper.classes()).toContain("__disabled");
   });
 }
 

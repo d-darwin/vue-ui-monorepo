@@ -9,7 +9,7 @@ import {
   borderClassCase,
   callWhenClickCase,
   colorSchemeClassCase,
-  disabledControlCase,
+  disabledClassCase,
   dontCallWhenClickCase,
   dontEmitClickEventCase,
   emitClickEventCase,
@@ -25,6 +25,7 @@ import {
   slotCase,
   transitionClassCase,
   activeControlCase,
+  disabledAttrCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
 
@@ -78,7 +79,9 @@ describe("DButton", () => {
 
   preventDefaultCase(wrapper);
 
-  disabledControlCase(wrapper, `.${config.className}`);
+  disabledClassCase(wrapper, `.${config.className}`);
+
+  disabledAttrCase(wrapper, `.${config.className}`);
 
   activeControlCase(wrapper, `.${config.className}`);
 

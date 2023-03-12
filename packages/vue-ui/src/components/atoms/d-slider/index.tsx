@@ -138,6 +138,7 @@ export default defineComponent({
       return [
         styles[config.className],
         getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
       ];
     },
 
@@ -184,7 +185,6 @@ export default defineComponent({
           disabled={this.disabled}
           class={[
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
             getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
             getCommonCssClass(
