@@ -169,6 +169,7 @@ export default defineComponent({
           min={this.min}
           max={this.max}
           step={this.step}
+          role={config.defaultRole}
           class={[
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),

@@ -7,6 +7,7 @@ export default {
   defaultMin: 0,
   defaultMax: 100,
   defaultStep: 1,
+  defaultRole: "slider",
   defaultLabelOffset: "-4px",
   defaultCaptionOffset: "0",
   inputType: "range",
