@@ -35,15 +35,11 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: [String, Number] as PropType<Text>,
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    value: {
-      type: [String, Number] as PropType<Text>,
-    },
+    value: [String, Number] as PropType<Text>,
     /**
      * Pass any input attrs you want
      */
@@ -59,10 +55,7 @@ export default defineComponent({
     /**
      Defines offset of .label
      */
-    labelOffset: {
-      types: [String, Number] as PropType<Text>,
-      default: config.defaultLabelOffset,
-    },
+    labelOffset: generateCommonProp.htmlSize(config.defaultLabelOffset),
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
@@ -74,10 +67,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: {
-      types: [String, Number] as PropType<Text>,
-      default: config.defaultCaptionOffset,
-    },
+    captionOffset: generateCommonProp.htmlSize(config.defaultCaptionOffset),
     /**
      * Defines appearance of the component
      */
@@ -97,9 +87,7 @@ export default defineComponent({
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines container element type of the component
      */
@@ -109,28 +97,20 @@ export default defineComponent({
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
      */
-    whenChange: {
-      type: Function as PropType<(value: string) => void | Promise<void>>,
-    },
+    whenChange: Function as PropType<(value: string) => void | Promise<void>>,
     /**
      * Alternative way to catch input event
      */
-    whenInput: {
-      type: Function as PropType<(value: string) => void | Promise<void>>,
-    },
+    whenInput: Function as PropType<(value: string) => void | Promise<void>>,
     /**
      * Alternative way to catch submit event
      */
-    whenSubmit: {
-      type: Function as PropType<(value: string) => void | Promise<void>>,
-    },
+    whenSubmit: Function as PropType<(value: string) => void | Promise<void>>,
   },
 
   setup(props) {
@@ -149,7 +129,7 @@ export default defineComponent({
       if (!this.$slots.label?.() && !this.label) {
         return null;
       }
-      // TODO: enableHtml
+
       return (
         <label
           for={this.controlId}

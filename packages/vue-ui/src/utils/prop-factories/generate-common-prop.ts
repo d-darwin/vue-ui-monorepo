@@ -27,6 +27,11 @@ const generateCommonProp = {
     default: defaultValue,
   }),
 
+  htmlSize: (defaultValue?: Text) => ({
+    types: [String, Number] as PropType<Text>,
+    default: defaultValue,
+  }),
+
   rounding: (
     defaultValue: Rounding = ROUNDING.MEDIUM // TODO: avoid hardcode figma values
   ) => ({
