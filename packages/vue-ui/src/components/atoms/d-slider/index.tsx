@@ -147,7 +147,6 @@ export default defineComponent({
     },
 
     renderTrack(): VNode {
-      // TODO: options / slot / step marks /
       return (
         <div
           class={[
@@ -155,7 +154,9 @@ export default defineComponent({
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
           ]}
-        />
+        >
+          {this.$slots.track?.()}
+        </div>
       );
     },
 
@@ -244,6 +245,11 @@ export default defineComponent({
   /**
    * @slot $slots.label
    * Use instead of props.label to fully customize label
+   * */
+
+  /**
+   * @slot $slots.track
+   * Use instead of props.track to fully customize track
    * */
   /**
    * @slot $slots.caption
