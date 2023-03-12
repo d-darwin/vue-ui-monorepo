@@ -176,7 +176,6 @@ export default defineComponent({
         >
           {this.caption && (
             <DCaption
-              label={this.caption}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
               {...mergeProps(
@@ -184,7 +183,9 @@ export default defineComponent({
                 CAPTION_DEFAULTS,
                 this.captionOptions || {}
               )}
-            />
+            >
+              {this.$slots.caption?.() || this.caption}
+            </DCaption>
           )}
         </Trans>
       );
@@ -234,6 +235,14 @@ export default defineComponent({
     },
   },
 
+  /**
+   * @slot $slots.label
+   * Use instead of props.label to fully customize label
+   * */
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption
+   * */
   render(): VNode {
     const Tag = this.tag;
 
