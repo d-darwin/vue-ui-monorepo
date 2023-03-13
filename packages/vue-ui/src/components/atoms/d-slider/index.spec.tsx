@@ -1,5 +1,7 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import DSlider from "@darwin-studio/vue-ui/src/components/atoms/d-slider";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import {
   baseClassCase,
   captionAbsenceCase,
@@ -22,11 +24,9 @@ import {
   transitionClassCase,
 } from "@darwin-studio/vue-ui/src/utils/test-case-factories";
 import config from "./config";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 
 describe("DSlider", () => {
-  const wrapper = shallowMount(DSlider);
+  const wrapper = mount(DSlider);
 
   baseClassCase(wrapper, config.className);
 
@@ -70,7 +70,7 @@ describe("DSlider", () => {
   slotCase(DSlider, `.${config.labelClassName}`, "label");
 
   it("Should render props.labelOffset to the label style as '--offset: props.labelOffset'", async () => {
-    const labelOffset = 0.33;
+    const labelOffset = 33;
     await wrapper.setProps({
       labelOffset,
     });
@@ -87,20 +87,36 @@ describe("DSlider", () => {
 
   slotCase(DSlider, `.${config.trackClassName}`, "track");
 
-  captionAbsenceCase(wrapper);
-
-  // TODO: transition-stub
-  // captionStringCase(mount(DSlider), `.${config.captionClassName}`);
-
-  // TODO: transition-stub
-  // slotCase(DSlider, `.${config.captionClassName}`, "caption");
-
-  it("Should render props.caption ...", async () => {
-    expect(true).toBeFalsy();
+  it("Shouldn't render caption element if props.caption isn't passed", async () => {
+    await wrapper.setProps({ caption: undefined });
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.exists()).toBeFalsy();
+    await wrapper.setProps({ caption: "not empty" });
   });
 
-  it("Should render props.captionOffset ...", async () => {
-    expect(true).toBeFalsy();
+  it("Should render caption element with props.caption content if passed", async () => {
+    const captionContent = "some caption";
+    const caption = <div>{captionContent}</div>;
+    await wrapper.setProps({ caption });
+
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.exists()).toBeTruthy();
+    expect(captionEl.text()).toBe(captionContent);
+  });
+
+  slotCase(DSlider, `.${config.captionClassName}`, "caption");
+
+  it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
+    const captionOffset = 33;
+    await wrapper.setProps({
+      caption: "Caption string",
+      captionOffset,
+    });
+
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.attributes("style")).toContain(
+      `--offset: ${captionOffset}`
+    );
   });
 
   colorSchemeClassCase(
@@ -131,8 +147,6 @@ describe("DSlider", () => {
   disabledAttrCase(wrapper, `.${config.inputClassName}`);
 
   tagCase(wrapper);
-
-  // TODO slots
 
   // TODO on/whenChange
   it("Should render props. ...", async () => {

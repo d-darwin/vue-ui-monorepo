@@ -118,6 +118,7 @@ export function labelStringCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
+// TODO: merge with labelStringCase
 export function captionStringCase(
   wrapper: VueWrapper,
   captionSelector = "caption"
@@ -125,6 +126,8 @@ export function captionStringCase(
   return it("Should render caption element with props.caption content if passed", async () => {
     const caption = "Some caption";
     await wrapper.setProps({ caption });
+
+    console.log(wrapper.html());
 
     const captionEl = wrapper.find(captionSelector);
     expect(captionEl.exists()).toBeTruthy();
@@ -140,6 +143,7 @@ export function labelAbsenceCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
+// TODO: merge with labelAbsenceCase
 export function captionAbsenceCase(
   wrapper: VueWrapper,
   captionSelector = "caption"

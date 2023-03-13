@@ -19,7 +19,14 @@ const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
     return;
   }
 
-  const className = prepareCssClassName(classPrefix, tokenVariant);
+  const tokenVariantSuffix =
+    tokenName === TOKEN_NAME.MIN_CONTROL_WIDTH
+      ? `-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
+      : "";
+  const className = prepareCssClassName(
+    classPrefix,
+    `${tokenVariant}${tokenVariantSuffix}`
+  );
   if (!className) {
     return;
   }
