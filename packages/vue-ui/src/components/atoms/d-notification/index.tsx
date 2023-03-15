@@ -1,13 +1,14 @@
 import {
   defineComponent,
-  PropType,
-  VNode,
   Teleport,
   Transition as Trans,
-  CSSProperties,
   ref,
+  type CSSProperties,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
 } from "vue";
-import { RendererElement } from "@vue/runtime-core";
+import type { RendererElement } from "@vue/runtime-core";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
@@ -35,7 +36,8 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import { Type } from "./types";
+import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
+import type { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -282,13 +284,7 @@ export default defineComponent({
       return styles;
     },
 
-    bindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
         role: config.role,
         class: this.classes,
@@ -297,10 +293,7 @@ export default defineComponent({
       };
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,

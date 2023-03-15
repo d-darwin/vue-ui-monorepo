@@ -1,13 +1,12 @@
-import { defineComponent, PropType, VNode } from "vue";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import { defineComponent, HTMLAttributes, PropType, VNode } from "vue";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { CssPosition } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
-
 /**
  * The component renders simple backdrop, intended to be used with Drawers, Modals, etc.
  */
@@ -62,10 +61,7 @@ export default defineComponent({
   emits: [EVENT_NAME.CLICK],
 
   computed: {
-    bindings(): Record<
-      string,
-      string | Record<string, number | string> | (() => void)
-    > {
+    bindings(): HTMLAttributes {
       return {
         class: styles[config.className],
         style: {

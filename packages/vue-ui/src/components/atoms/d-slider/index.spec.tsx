@@ -268,9 +268,19 @@ describe("DSlider", () => {
     expect(whenInput).toHaveBeenCalledTimes(0);
   });
 
-  // TODO: props.trackOptions
   it("Should merge props from props.track and TRACK_DEFAULTS to the track element attrs", async () => {
-    expect(false).toBeTruthy();
+    const externalClass = "some-external-class";
+    const wrapper = mount(DSlider);
+    await wrapper.setProps({
+      trackOptions: {
+        class: externalClass,
+      },
+    });
+
+    console.log(wrapper.html());
+
+    const trackEl = wrapper.find(`.${externalClass}`);
+    expect(trackEl.exists()).toBeTruthy();
   });
 
   // TODO: props.inputOptions

@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import { ButtonHTMLAttributes, defineComponent, PropType, VNode } from "vue";
 // TODO: add import order rule
 // TODO: add import/index ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
@@ -214,10 +214,7 @@ export default defineComponent({
       return config.buttonTag;
     },
 
-    bindings(): Record<
-      string,
-      string[] | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): ButtonHTMLAttributes {
       return {
         class: this.classes,
         onClick: this.clickHandler,
@@ -253,11 +250,10 @@ export default defineComponent({
           {this.$slots.default?.() || this.label}
           {this.loading && (
             <DLoader
-              key={"loader"}
               colorScheme={this.colorScheme}
               size={this.size}
               font={this.size}
-              {...mergeProps({}, LOADER_DEFAULTS, this.loaderOptions)}
+              {...this.loaderOptions}
             />
           )}
         </Tag>

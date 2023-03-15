@@ -1,4 +1,9 @@
-import { defineComponent, PropType, VNode } from "vue";
+import {
+  defineComponent,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
 // TODO: add import/index ???
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
@@ -115,10 +120,7 @@ export default defineComponent({
       return config.linkTag;
     },
 
-    bindings(): Record<
-      string,
-      string[] | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
         class: this.classes,
         onClick: this.clickHandler,

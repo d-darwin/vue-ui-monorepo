@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, HTMLAttributes, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
@@ -118,20 +118,12 @@ export default defineComponent({
       ];
     },
 
-    bindings(): Record<
-      string,
-      | undefined
-      | boolean
-      | number
-      | string
-      | string[]
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
-        id: this.id,
+        id: String(this.id),
         tabindex: 0,
         role: "tabpanel",
-        ["aria-labelledby"]: this.tabId,
+        ["aria-labelledby"]: String(this.tabId),
         ["aria-expanded"]: this.active || undefined,
         ["aria-hidden"]: !this.active || undefined,
         hidden: !this.active || undefined,

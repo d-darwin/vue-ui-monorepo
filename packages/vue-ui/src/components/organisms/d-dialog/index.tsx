@@ -1,10 +1,11 @@
 import {
-  CSSProperties,
   defineComponent,
-  mergeProps,
-  PropType,
   Teleport,
-  VNode,
+  type CSSProperties,
+  type PropType,
+  type VNode,
+  HTMLAttributes,
+  DialogHTMLAttributes,
 } from "vue";
 import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
@@ -34,6 +35,7 @@ import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
@@ -289,23 +291,14 @@ export default defineComponent({
   },
 
   computed: {
-    backdropTransitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    backdropTransitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.backdropTransitionEnterActive,
         leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
-    backdropBindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    backdropBindings(): DBackdropProps {
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
@@ -315,7 +308,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps({}, BACKDROP_DEFAULTS, this.backdropOptions || {}),
+        ...this.backdropOptions,
       };
     },
 
@@ -360,7 +353,7 @@ export default defineComponent({
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps({}, CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
+          {...this.closeButtonOptions}
         />
       );
     },
@@ -410,29 +403,18 @@ export default defineComponent({
           {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
-              {...mergeProps(
-                {},
-                CANCEL_BUTTON_DEFAULTS,
-                this.cancelButtonOptions
-              )}
+              {...this.cancelButtonOptions}
             />,
             <DButton
               whenClick={this.acceptHandler}
-              {...mergeProps(
-                {},
-                ACCEPT_BUTTON_DEFAULTS,
-                this.acceptButtonOptions
-              )}
+              {...this.acceptButtonOptions}
             />,
           ]}
         </div>
       );
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,
@@ -487,10 +469,7 @@ export default defineComponent({
       };
     },
 
-    bindings(): Record<
-      string,
-      (string | undefined) | (string | undefined)[] | boolean | CSSProperties
-    > {
+    bindings(): DialogHTMLAttributes {
       return {
         open: this.isShown,
         role: this.role,

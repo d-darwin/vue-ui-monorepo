@@ -226,11 +226,7 @@ export default defineComponent({
         return (
           <DAspectRatio
             aspectRatio={this.aspectRatio}
-            {...mergeProps(
-              {},
-              ASPECT_RATIO_DEFAULTS,
-              this.aspectRatioOptions || {}
-            )}
+            {...this.aspectRatioOptions}
           >
             {this.imgVNode}
           </DAspectRatio>

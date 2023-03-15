@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import { defineComponent, PropType, VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -322,11 +322,7 @@ export default defineComponent({
             sizeStyles[sizeClassName],
             transitionStyles[transitionClassName],
           ]}
-          {...mergeProps(
-            {},
-            ASPECT_RATIO_DEFAULTS,
-            this.aspectRatioOptions || {}
-          )}
+          {...this.aspectRatioOptions}
         >
           <input
             id={this.controlId}

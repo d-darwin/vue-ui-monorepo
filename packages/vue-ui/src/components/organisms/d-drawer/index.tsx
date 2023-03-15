@@ -1,11 +1,11 @@
 import {
   defineComponent,
-  VNode,
   Transition as Trans,
   Teleport,
-  PropType,
-  CSSProperties,
-  mergeProps,
+  type VNode,
+  type PropType,
+  type CSSProperties,
+  type HTMLAttributes,
 } from "vue";
 import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -46,6 +46,7 @@ import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+import { TransitionBindings } from "@/types/transition-bindings";
 
 /**
  * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
@@ -270,23 +271,14 @@ export default defineComponent({
   },
 
   computed: {
-    backdropTransitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    backdropTransitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.backdropTransitionEnterActive,
         leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
-    backdropBindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    backdropBindings(): DBackdropProps {
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
@@ -296,7 +288,7 @@ export default defineComponent({
         colorScheme: this.colorScheme,
         class: transitionStyles[transitionClassName],
         whenClick: this.closeHandler,
-        ...mergeProps({}, BACKDROP_DEFAULTS, this.backdropOptions || {}),
+        ...this.backdropOptions,
       };
     },
 
@@ -341,7 +333,7 @@ export default defineComponent({
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps({}, CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
+          {...this.closeButtonOptions}
         />
       );
     },
@@ -394,10 +386,7 @@ export default defineComponent({
       );
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,
@@ -450,10 +439,7 @@ export default defineComponent({
       };
     },
 
-    bindings(): Record<
-      string,
-      (string | undefined) | (string | undefined)[] | boolean | CSSProperties
-    > {
+    bindings(): HTMLAttributes & { open: boolean } {
       return {
         open: this.isShown,
         role: this.role,

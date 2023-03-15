@@ -1,4 +1,9 @@
-import { defineComponent, PropType, VNode } from "vue";
+import {
+  defineComponent,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
@@ -147,21 +152,13 @@ export default defineComponent({
       return classes;
     },
 
-    bindings(): Record<
-      string,
-      | undefined
-      | boolean
-      | number
-      | string
-      | string[]
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
-        id: this.id,
+        id: String(this.id),
         tabindex: this.active ? 0 : -1,
         role: "tab",
         ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: this.tabpanelId,
+        ["aria-controls"]: String(this.tabpanelId),
         class: this.classes,
         onClick: this.clickHandler,
       };

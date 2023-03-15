@@ -1,12 +1,11 @@
 import {
   defineComponent,
-  mergeProps,
-  PropType,
-  VNode,
   Transition as Trans,
-  LabelHTMLAttributes,
-  InputHTMLAttributes,
-  HTMLAttributes,
+  type PropType,
+  type VNode,
+  type HTMLAttributes,
+  type InputHTMLAttributes,
+  type LabelHTMLAttributes,
 } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
@@ -152,7 +151,7 @@ export default defineComponent({
           for={this.controlId}
           style={`--offset: ${this.labelOffset}`}
           class={getCommonCssClass(TOKEN_NAME.FONT, this.size)}
-          {...Object.assign({}, LABEL_DEFAULTS, this.labelOptions || {})}
+          {...this.labelOptions}
         >
           {this.$slots.label?.() || this.label}
         </label>
@@ -166,7 +165,7 @@ export default defineComponent({
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
           ]}
-          {...Object.assign({}, TRACK_DEFAULTS, this.trackOptions || {})}
+          {...this.trackOptions}
         >
           {this.$slots.track?.()}
         </div>
@@ -194,7 +193,7 @@ export default defineComponent({
           ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
-          {...Object.assign({}, INPUT_DEFAULTS, this.inputOptions || {})}
+          {...this.inputOptions}
         />
       );
     },
@@ -208,13 +207,10 @@ export default defineComponent({
         >
           {(this.$slots.caption?.() || this.caption) && (
             <DCaption
+              font={this.size}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...mergeProps(
-                { font: this.size },
-                CAPTION_DEFAULTS,
-                this.captionOptions || {}
-              )}
+              {...this.captionOptions}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>

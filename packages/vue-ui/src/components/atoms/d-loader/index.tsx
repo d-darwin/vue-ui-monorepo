@@ -24,6 +24,7 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import { BACKDROP_DEFAULTS } from "./constants";
@@ -109,23 +110,14 @@ export default defineComponent({
   },
 
   computed: {
-    backdropTransitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    backdropTransitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.backdropTransitionEnterActive,
         leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
-    backdropBindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    backdropBindings(): DBackdropProps {
       const transitionClassName = prepareCssClassName(
         codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
         this.transition
@@ -189,10 +181,7 @@ export default defineComponent({
       };
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,

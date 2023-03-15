@@ -7,7 +7,6 @@ import {
   Transition as Trans,
   Ref,
   watch,
-  mergeProps,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
@@ -89,6 +88,7 @@ export default defineComponent({
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
+    // TODO: inputOptions
     inputAttrs: {
       type: Object as PropType<InputHTMLAttributes>,
     },
@@ -386,7 +386,7 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
-          {...mergeProps({}, BUTTON_DEFAULTS, this.buttonOptions || {})}
+          {...this.buttonOptions}
         />
       );
     },
