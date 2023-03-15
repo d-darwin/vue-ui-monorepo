@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, type PropType, type VNode } from "vue";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -14,6 +14,7 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { LOADER_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -132,10 +133,7 @@ export default defineComponent({
     /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
-    loaderOptions: {
-      type: Object as PropType<DLoaderProps>,
-      default: () => LOADER_DEFAULTS,
-    },
+    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
     /**
      * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.

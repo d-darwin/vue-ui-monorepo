@@ -41,12 +41,13 @@ import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
-import { TransitionBindings } from "@/types/transition-bindings";
 
 /**
  * Renders drawer. It's especially useful for navigation, but default slot may receive any content.
@@ -230,17 +231,13 @@ export default defineComponent({
     /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
-    closeButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CLOSE_BUTTON_DEFAULTS,
-    },
+    closeButtonOptions: generateProp.options<DButtonProps>(
+      CLOSE_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: {
-      type: Object as PropType<DBackdropProps>,
-      default: () => BACKDROP_DEFAULTS,
-    },
+    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */

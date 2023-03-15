@@ -1,4 +1,4 @@
-import { defineComponent, PropType, VNode } from "vue";
+import { defineComponent, type PropType, type VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -24,6 +24,7 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
@@ -150,10 +151,9 @@ export default defineComponent({
     /**
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
-    aspectRatioOptions: {
-      type: Object as PropType<DAspectRatioProps>,
-      default: () => ASPECT_RATIO_DEFAULTS,
-    },
+    aspectRatioOptions: generateProp.options<DAspectRatioProps>(
+      ASPECT_RATIO_DEFAULTS
+    ),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.

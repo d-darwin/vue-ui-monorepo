@@ -1,4 +1,9 @@
-import { ButtonHTMLAttributes, defineComponent, PropType, VNode } from "vue";
+import {
+  defineComponent,
+  type ButtonHTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
 // TODO: add import order rule
 // TODO: add import/index ???
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
@@ -25,6 +30,7 @@ import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/at
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { LOADER_DEFAULTS } from "./constants";
 import type { Tag } from "./types";
 import config from "./config";
@@ -101,10 +107,7 @@ export default defineComponent({
     /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
-    loaderOptions: {
-      type: Object as PropType<DLoaderProps>,
-      default: () => LOADER_DEFAULTS,
-    },
+    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
     /**
      * Pass true to make the button active // TODO: test, story
      */

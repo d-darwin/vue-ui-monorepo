@@ -1,12 +1,12 @@
 import {
   defineComponent,
-  InputHTMLAttributes,
-  PropType,
   ref,
-  VNode,
   Transition as Trans,
-  Ref,
   watch,
+  type InputHTMLAttributes,
+  type PropType,
+  type VNode,
+  type Ref,
 } from "vue";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
@@ -37,6 +37,7 @@ import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Type } from "./types";
 import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
@@ -187,10 +188,7 @@ export default defineComponent({
     /**
      * Pass any DButton.props to customize button, f.e. { colorScheme: "danger" }
      */
-    buttonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => BUTTON_DEFAULTS,
-    },
+    buttonOptions: generateProp.options<DButtonProps>(BUTTON_DEFAULTS),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.

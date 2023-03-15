@@ -1,15 +1,14 @@
 import {
-  CSSProperties,
   defineComponent,
-  mergeProps,
-  PropType,
-  VNode,
+  type CSSProperties,
+  type PropType,
+  type VNode,
 } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
+import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -27,9 +26,12 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
+import getCommonCssClass from "@/utils/get-common-css-class";
+import { TOKEN_NAME } from "@/constants/token-name";
 
 export default defineComponent({
   name: config.name,
@@ -103,10 +105,7 @@ export default defineComponent({
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: {
-      type: Object as PropType<DBackdropProps>,
-      default: () => BACKDROP_DEFAULTS,
-    },
+    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
   },
 
   computed: {
@@ -117,26 +116,18 @@ export default defineComponent({
       };
     },
 
-    backdropBindings(): DBackdropProps {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
-      return {
-        colorScheme: this.colorScheme,
-        class: [
-          styles[config.backdropClassName],
-          transitionStyles[transitionClassName],
-        ],
-        ...mergeProps({}, BACKDROP_DEFAULTS, this.backdropOptions),
-      };
+    backdropTransitionClass(): string | undefined {
+      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
     },
 
     renderBackdrop(): VNode | null {
       return (
         <Trans {...this.backdropTransitionBindings} appear>
-          <DBackdrop key={"backdrop"} {...this.backdropBindings} />
+          <DBackdrop
+            colorScheme={this.colorScheme}
+            class={this.backdropTransitionClass}
+            {...this.backdropOptions}
+          />
         </Trans>
       );
     },

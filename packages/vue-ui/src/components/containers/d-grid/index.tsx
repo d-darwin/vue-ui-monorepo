@@ -126,7 +126,6 @@ export default defineComponent({
     renderContent(): (VNode | string)[] | undefined {
       if (this.$slots.default) {
         return this.$slots.default()?.map((child) => {
-          // TODO: fix it
           child.props = mergeProps(child.props || {}, {
             class: styles[config.childClassName],
           });

@@ -4,8 +4,7 @@ import {
   type CSSProperties,
   type PropType,
   type VNode,
-  HTMLAttributes,
-  DialogHTMLAttributes,
+  type DialogHTMLAttributes,
 } from "vue";
 import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
@@ -38,8 +37,9 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import {
   BACKDROP_DEFAULTS,
   CLOSE_BUTTON_DEFAULTS,
@@ -224,31 +224,25 @@ export default defineComponent({
     /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
-    closeButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CLOSE_BUTTON_DEFAULTS,
-    },
+    closeButtonOptions: generateProp.options<DButtonProps>(
+      CLOSE_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
      */
-    cancelButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CANCEL_BUTTON_DEFAULTS,
-    },
+    cancelButtonOptions: generateProp.options<DButtonProps>(
+      CANCEL_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
      */
-    acceptButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => ACCEPT_BUTTON_DEFAULTS,
-    },
+    acceptButtonOptions: generateProp.options<DButtonProps>(
+      ACCEPT_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: {
-      type: Object as PropType<DBackdropProps>,
-      default: () => BACKDROP_DEFAULTS,
-    },
+    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
