@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import DSlider from "@darwin-studio/vue-ui/src/components/atoms/d-slider";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
@@ -148,9 +148,64 @@ describe("DSlider", () => {
 
   tagCase(wrapper);
 
-  // TODO on/whenChange
-  it("Should render props. ...", async () => {
-    expect(true).toBeFalsy();
+  it("Should emit onChange event with value payload", async () => {
+    const value = 34;
+    const newValue = 99;
+    const wrapper = shallowMount(DSlider, { props: { value } });
+    const inputEl = wrapper.find("input");
+
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("change");
+
+    expect(wrapper.emitted("change")?.[0]).toStrictEqual([String(newValue)]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
+      String(newValue),
+    ]);
+  });
+
+  it("Shouldn't emit onChange if props.disabled is passed", async () => {
+    const value = 34;
+    const disabled = true;
+    const wrapper = shallowMount(DSlider, {
+      props: { value, disabled },
+    });
+
+    const inputEl = wrapper.find("input");
+    const newValue = 99;
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("change");
+
+    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
+  });
+
+  it("Should call passed props.whenChange", async () => {
+    const value = 33;
+    const whenChange = jest.fn();
+    const wrapper = mount(DSlider, {
+      props: { value, whenChange },
+    });
+
+    const inputEl = wrapper.find("input");
+    const newValue = 99;
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("change");
+
+    expect(whenChange).toHaveBeenCalledWith(String(newValue));
+  });
+
+  it("Shouldn't call passed props.whenChange if props.disabled passed", async () => {
+    const value = 33;
+    const disabled = true;
+    const whenChange = jest.fn();
+    const wrapper = mount(DSlider, {
+      props: { value, disabled, whenChange },
+    });
+
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("change");
+
+    expect(whenChange).toHaveBeenCalledTimes(0);
   });
 
   // TODO on/whenInput
