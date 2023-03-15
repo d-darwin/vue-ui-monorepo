@@ -1,4 +1,4 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
 import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
@@ -258,7 +258,9 @@ export default defineComponent({
   render(): VNode {
     return (
       <table class={styles[config.className]}>
-        {this.loading && <DLoader {...this.loaderOptions} />}
+        {this.loading && (
+          <DLoader {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)} />
+        )}
         {this.renderHead}
         {this.renderBody}
       </table>

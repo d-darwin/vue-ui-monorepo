@@ -1,6 +1,7 @@
 import {
   defineComponent,
   Transition as Trans,
+  mergeProps,
   type PropType,
   type VNode,
   type HTMLAttributes,
@@ -151,7 +152,9 @@ export default defineComponent({
           for={this.controlId}
           style={`--offset: ${this.labelOffset}`}
           class={getCommonCssClass(TOKEN_NAME.FONT, this.size)}
-          {...this.labelOptions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          {...mergeProps(this.labelOptions, LABEL_DEFAULTS)}
         >
           {this.$slots.label?.() || this.label}
         </label>
@@ -165,7 +168,9 @@ export default defineComponent({
             getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
             getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
           ]}
-          {...this.trackOptions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          {...mergeProps(this.trackOptions, TRACK_DEFAULTS)}
         >
           {this.$slots.track?.()}
         </div>
@@ -193,7 +198,9 @@ export default defineComponent({
           ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
-          {...this.inputOptions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          {...mergeProps(this.inputOptions, INPUT_DEFAULTS)}
         />
       );
     },
@@ -210,7 +217,7 @@ export default defineComponent({
               font={this.size}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...this.captionOptions}
+              {...mergeProps(this.captionOptions, CAPTION_DEFAULTS)}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>

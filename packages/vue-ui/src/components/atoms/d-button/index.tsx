@@ -3,6 +3,7 @@ import {
   type ButtonHTMLAttributes,
   type PropType,
   type VNode,
+  mergeProps,
 } from "vue";
 // TODO: add import order rule
 // TODO: add import/index ???
@@ -256,7 +257,7 @@ export default defineComponent({
               colorScheme={this.colorScheme}
               size={this.size}
               font={this.size}
-              {...this.loaderOptions}
+              {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)}
             />
           )}
         </Tag>

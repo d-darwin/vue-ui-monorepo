@@ -163,9 +163,6 @@ describe("DTabs", () => {
     const id = wrapper.vm?.ids?.[0];
     const tabpanelWrapper = wrapper.findComponent(DTabpanel);
 
-    console.log(wrapper.vm.$slots);
-    console.log(id);
-
     expect(tabpanelWrapper.attributes("id")).toBe(id?.tabpanelId);
   });
 

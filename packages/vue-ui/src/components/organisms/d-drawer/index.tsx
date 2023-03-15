@@ -1,5 +1,6 @@
 import {
   defineComponent,
+  mergeProps,
   Transition as Trans,
   Teleport,
   type VNode,
@@ -330,7 +331,7 @@ export default defineComponent({
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...this.closeButtonOptions}
+          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
         />
       );
     },

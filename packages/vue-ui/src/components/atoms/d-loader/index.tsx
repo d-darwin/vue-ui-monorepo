@@ -1,5 +1,6 @@
 import {
   defineComponent,
+  mergeProps,
   type CSSProperties,
   type PropType,
   type VNode,
@@ -126,7 +127,7 @@ export default defineComponent({
           <DBackdrop
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
-            {...this.backdropOptions}
+            {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
           />
         </Trans>
       );

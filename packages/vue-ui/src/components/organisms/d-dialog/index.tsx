@@ -1,5 +1,6 @@
 import {
   defineComponent,
+  mergeProps,
   Teleport,
   type CSSProperties,
   type PropType,
@@ -40,6 +41,8 @@ import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import {
   BACKDROP_DEFAULTS,
   CLOSE_BUTTON_DEFAULTS,
@@ -292,18 +295,8 @@ export default defineComponent({
       };
     },
 
-    backdropBindings(): DBackdropProps {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
-      return {
-        colorScheme: this.colorScheme,
-        class: transitionStyles[transitionClassName],
-        whenClick: this.closeHandler,
-        ...this.backdropOptions,
-      };
+    backdropClass(): string | undefined {
+      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
     },
 
     renderBackdrop(): VNode | null {
@@ -313,7 +306,14 @@ export default defineComponent({
 
       return (
         <Trans {...this.backdropTransitionBindings}>
-          {this.isShown && <DBackdrop {...this.backdropBindings} />}
+          {this.isShown && (
+            <DBackdrop
+              colorScheme={this.colorScheme}
+              class={this.backdropClass}
+              whenClick={this.closeHandler}
+              {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+            />
+          )}
         </Trans>
       );
     },
@@ -347,7 +347,7 @@ export default defineComponent({
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...this.closeButtonOptions}
+          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
         />
       );
     },
@@ -397,11 +397,11 @@ export default defineComponent({
           {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
-              {...this.cancelButtonOptions}
+              {...mergeProps(this.cancelButtonOptions)}
             />,
             <DButton
               whenClick={this.acceptHandler}
-              {...this.acceptButtonOptions}
+              {...mergeProps(this.acceptButtonOptions)}
             />,
           ]}
         </div>

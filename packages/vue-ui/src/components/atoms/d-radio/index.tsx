@@ -3,6 +3,7 @@ import {
   ref,
   Transition as Trans,
   watch,
+  mergeProps,
   type InputHTMLAttributes,
   type PropType,
   type VNode,
@@ -384,7 +385,9 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
-          {...this.buttonOptions}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          {...mergeProps(this.buttonOptions, BUTTON_DEFAULTS)}
         />
       );
     },

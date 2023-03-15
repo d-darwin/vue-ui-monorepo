@@ -1,4 +1,4 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
@@ -226,7 +226,7 @@ export default defineComponent({
         return (
           <DAspectRatio
             aspectRatio={this.aspectRatio}
-            {...this.aspectRatioOptions}
+            {...mergeProps(this.aspectRatioOptions, ASPECT_RATIO_DEFAULTS)}
           >
             {this.imgVNode}
           </DAspectRatio>

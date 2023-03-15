@@ -1,5 +1,6 @@
 import { mount, shallowMount } from "@vue/test-utils";
 import DSlider from "@darwin-studio/vue-ui/src/components/atoms/d-slider";
+import DCaption from "@darwin-studio/vue-ui/src/components/atoms/d-caption";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import {
@@ -267,19 +268,57 @@ describe("DSlider", () => {
   });
 
   it("Should merge props from props.track and TRACK_DEFAULTS to the track element attrs", async () => {
-    expect(false).toBeTruthy();
+    const externalClass = "some-external-class";
+    const wrapper = mount(DSlider);
+    await wrapper.setProps({
+      trackOptions: {
+        class: externalClass,
+      },
+    });
+
+    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    expect(trackEl.classes()).toContain(externalClass);
   });
 
   it("Should merge props from props.input and INPUT_DEFAULTS to the input element attrs", async () => {
-    expect(false).toBeTruthy();
+    const externalClass = "some-external-class";
+    const wrapper = mount(DSlider);
+    await wrapper.setProps({
+      inputOptions: {
+        class: externalClass,
+      },
+    });
+
+    const inputEl = wrapper.find(`.${config.inputClassName}`);
+    expect(inputEl.classes()).toContain(externalClass);
   });
 
   it("Should merge props from props.label and LABEL_DEFAULTS to the label element attrs", async () => {
-    expect(false).toBeTruthy();
+    const externalClass = "some-external-class";
+    const wrapper = mount(DSlider);
+    await wrapper.setProps({
+      label: "not empty",
+      labelOptions: {
+        class: externalClass,
+      },
+    });
+
+    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    expect(labelEl.classes()).toContain(externalClass);
   });
 
   it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
-    // TODO: { font: this.size }
-    expect(false).toBeTruthy();
+    const externalClass = "some-external-class";
+    const wrapper = mount(DSlider, {
+      props: {
+        caption: "not empty",
+        captionOptions: {
+          class: externalClass,
+        },
+      },
+    });
+
+    const caption = wrapper.findComponent(DCaption);
+    expect(caption.classes()).toContain(externalClass);
   });
 });
