@@ -208,15 +208,84 @@ describe("DSlider", () => {
     expect(whenChange).toHaveBeenCalledTimes(0);
   });
 
-  // TODO on/whenInput
-  it("Should render props. ...", async () => {
-    expect(true).toBeFalsy();
+  it("Should emit onInput event with value payload", async () => {
+    const value = 34;
+    const newValue = 99;
+    const wrapper = shallowMount(DSlider, { props: { value } });
+    const inputEl = wrapper.find("input");
+
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toStrictEqual([String(newValue)]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
+      String(newValue),
+    ]);
   });
 
-  // TODO on:update:value
-  it("Should render props. ...", async () => {
-    expect(true).toBeFalsy();
+  it("Shouldn't emit onInput if props.disabled is passed", async () => {
+    const value = 34;
+    const disabled = true;
+    const wrapper = shallowMount(DSlider, {
+      props: { value, disabled },
+    });
+
+    const inputEl = wrapper.find("input");
+    const newValue = 99;
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("input");
+
+    expect(wrapper.emitted("input")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
 
-  // TODO: props. ...Options
+  it("Should call passed props.whenInput", async () => {
+    const value = 33;
+    const whenInput = jest.fn();
+    const wrapper = mount(DSlider, {
+      props: { value, whenInput },
+    });
+
+    const inputEl = wrapper.find("input");
+    const newValue = 99;
+    await inputEl.setValue(newValue);
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledWith(String(newValue));
+  });
+
+  it("Shouldn't call passed props.whenInput if props.disabled passed", async () => {
+    const value = 33;
+    const disabled = true;
+    const whenInput = jest.fn();
+    const wrapper = mount(DSlider, {
+      props: { value, disabled, whenInput },
+    });
+
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("input");
+
+    expect(whenInput).toHaveBeenCalledTimes(0);
+  });
+
+  // TODO: props.trackOptions
+  it("Should merge props from props.track and TRACK_DEFAULTS to the track element attrs", async () => {
+    expect(false).toBeTruthy();
+  });
+
+  // TODO: props.inputOptions
+  it("Should merge props from props.input and INPUT_DEFAULTS to the input element attrs", async () => {
+    expect(false).toBeTruthy();
+  });
+
+  // TODO: props.labelOptions
+  it("Should merge props from props.label and LABEL_DEFAULTS to the label element attrs", async () => {
+    expect(false).toBeTruthy();
+  });
+
+  // TODO: props.captionOptions
+  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+    // TODO: { font: this.size }
+    expect(false).toBeTruthy();
+  });
 });
