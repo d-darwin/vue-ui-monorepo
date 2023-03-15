@@ -120,10 +120,10 @@ export default defineComponent({
 
     bindings(): HTMLAttributes {
       return {
-        id: String(this.id),
+        id: this.id ? String(this.id) : undefined,
         tabindex: 0,
         role: "tabpanel",
-        ["aria-labelledby"]: String(this.tabId),
+        ["aria-labelledby"]: this.tabId ? String(this.tabId) : undefined,
         ["aria-expanded"]: this.active || undefined,
         ["aria-hidden"]: !this.active || undefined,
         hidden: !this.active || undefined,

@@ -154,11 +154,13 @@ export default defineComponent({
 
     bindings(): HTMLAttributes {
       return {
-        id: String(this.id),
+        id: this.id ? String(this.id) : undefined,
         tabindex: this.active ? 0 : -1,
         role: "tab",
         ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: String(this.tabpanelId),
+        ["aria-controls"]: this.tabpanelId
+          ? String(this.tabpanelId)
+          : undefined,
         class: this.classes,
         onClick: this.clickHandler,
       };
