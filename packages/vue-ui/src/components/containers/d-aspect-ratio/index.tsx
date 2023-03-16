@@ -1,7 +1,5 @@
-import { CSSProperties, defineComponent, PropType, VNode } from "vue";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import { defineComponent, type CSSProperties, type VNode } from "vue";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { parseWidthHeight } from "./utils";
 import config from "./config";
 import styles from "./index.css?module";
@@ -16,30 +14,21 @@ export default defineComponent({
     /**
      * Aspect ratio of the picture. Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
      */
-    aspectRatio: {
-      type: [String, Number] as PropType<Text>,
-      default: "1",
-    },
+    aspectRatio: generateProp.text(config.defaultAspectRatio),
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.label and props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
   },
 
   computed: {

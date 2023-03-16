@@ -5,15 +5,12 @@ import {
   type PropType,
   type VNode,
 } from "vue";
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -50,24 +47,17 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
   },
 
   setup() {
