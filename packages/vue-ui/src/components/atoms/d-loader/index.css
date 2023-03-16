@@ -12,22 +12,24 @@
 .dLoader {
   --z-index: 1001;
   z-index: var(--z-index);
-  --animation-duration: 1s;
+  --animation-duration: 1500ms;
   height: var(--size);
   width: var(--size);
-  font-size: 180%;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: rotation var(--animation-duration) infinite linear;
+  pointer-events: none;
+  animation: rotation var(--animation-duration) infinite normal; /*TODO: make whole animation configurable ???*/
 }
 
 @keyframes rotation {
   from {
-    transform: rotate(0deg);
+    transform: rotate3d(0, 0 ,1, 0deg);
+    /*rotate: 0;*/
   }
   to {
-    transform: rotate(359deg);
+    transform: rotate3d(0, 0 ,1, 359deg);
+    /*rotate: 359deg;*/
   }
 }
 
@@ -38,5 +40,7 @@
 
 .transitionEnterActive,
 .transitionLeaveActive {
-  opacity: 0;
+  opacity: 0.55;
+  scale: 1.1;
+  transform-origin: center;
 }

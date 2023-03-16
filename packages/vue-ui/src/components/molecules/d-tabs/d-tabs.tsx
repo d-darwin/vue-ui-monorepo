@@ -1,17 +1,10 @@
-import { defineComponent, PropType, VNode, ref } from "vue";
+import { defineComponent, ref, type PropType, type VNode } from "vue";
 import { v4 as uuid } from "uuid";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
@@ -23,15 +16,11 @@ export default defineComponent({
     /**
      * Aria label of the tablist
      */
-    tablistLabel: {
-      type: [String || Number] as PropType<Text>,
-    },
+    tablistLabel: generateProp.content(),
     /**
      * You can pass own class name to the tablist container element.
      */
-    tablistClass: {
-      type: String,
-    },
+    tablistClass: String,
     /**
      * Array of the DTab components, alternatively you can use slots.tabs
      */
@@ -41,10 +30,7 @@ export default defineComponent({
     /**
      * Defines size of the tabs
      */
-    tabsSize: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    tabsSize: generateProp.size(),
     /**
      Array of the DTabpanel components, alternatively you can use slots.tabpanels
      */
@@ -54,57 +40,37 @@ export default defineComponent({
     /**
      * Defines font size of the tabpanels
      */
-    tabpanelsFont: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    tabpanelsFont: generateProp.font(),
     /**
      * Pass true to disable <b>DTab</b> element.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines element type of the container component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Defines element type of the tablist component
      */
-    tablistTag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.UL,
-    },
+    tablistTag: generateProp.tag(TAG_NAME_DEFAULTS.UL),
     /**
      * Defines should DTabs be activated on arrow navigation
      */
-    activateOnKeys: {
-      type: Boolean,
-    },
+    activateOnKeys: Boolean,
     /**
      * Enables html string rendering passed in props.tabs and props.tabpanels.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
   },
 
   setup(props, { slots }) {
@@ -193,19 +159,19 @@ export default defineComponent({
       const tabId = (event.target as HTMLElement).getAttribute("id");
       const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
 
-      if (event.key === "ArrowLeft") {
+      if (event.key === EVENT_KEY.ArrowLeft) {
         event.preventDefault();
         const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
         // TODO: find out more elegant way
         tabs?.[prevIndex]?.el?.focus?.();
       }
-      if (event.key === "ArrowRight") {
+      if (event.key === EVENT_KEY.ArrowRight) {
         event.preventDefault();
         const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
         // TODO: find out more elegant way
         tabs?.[nextIndex]?.el?.focus?.();
       }
-      if (event.key === "Enter") {
+      if (event.key === EVENT_KEY.Enter) {
         event.preventDefault();
         // TODO: find out more elegant way
         tabs?.[tabIndex]?.props?.whenClick?.();

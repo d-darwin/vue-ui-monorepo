@@ -1,43 +1,26 @@
 import {
   defineComponent,
-  InputHTMLAttributes,
-  PropType,
   ref,
-  VNode,
   Transition as Trans,
-  Ref,
   watch,
   mergeProps,
+  type InputHTMLAttributes,
+  type PropType,
+  type VNode,
+  type Ref,
 } from "vue";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import minControlWidthStyles from "@darwin-studio/ui-codegen/dist/styles/min-control-width.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Type } from "./types";
 import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
@@ -50,29 +33,20 @@ export default defineComponent({
     /**
      * Defines is the component is checked by default
      */
-    checked: {
-      type: Boolean,
-    },
+    checked: Boolean,
     /**
      * Defines value of the <b>input</b> element
      */
-    value: {
-      type: [String, Number] as PropType<Text>,
-      required: true,
-    },
+    value: generateProp.text(undefined, true),
     /**
      * The common name for the radio group
      */
-    name: {
-      type: [String, Number] as PropType<Text>,
-    },
+    name: generateProp.text(),
     /**
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * Defines appearance of the components.
      */
@@ -83,121 +57,85 @@ export default defineComponent({
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    // TODO: inputOptions
+    inputClass: String,
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
+    // TODO: inputOptions
+    inputAttrs: generateProp.options<InputHTMLAttributes>(),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(BASE_COLOR_SCHEME),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(PADDING.EQUAL),
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.TINY),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
+    label: generateProp.content(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: labelOptions
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.content(),
     /**
      * You can pass own class name to the <b>error</b> element.
      */
-    errorClass: {
-      type: String,
-    },
+    // TODO: errorOptions
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: errorOptions
+    errorFont: generateProp.font(),
     /**
      * You can pass own class name to the icon container element.
      */
-    iconContainerClass: {
-      type: String,
-    },
+    iconContainerClass: String,
     /**
      * Pass true to disable <b>input</b> element.
      */
     // TODO: disabled and unchecked should have different appearance
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Pass any DButton.props to customize button, f.e. { colorScheme: "danger" }
      */
-    buttonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => BUTTON_DEFAULTS,
-    },
+    buttonOptions: generateProp.options<DButtonProps>(BUTTON_DEFAULTS),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -242,16 +180,6 @@ export default defineComponent({
 
   computed: {
     renderInput(): VNode {
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-
       return (
         <input
           ref={config.inputRef}
@@ -265,8 +193,11 @@ export default defineComponent({
           {...this.inputAttrs}
           class={[
             styles[config.inputClassName],
-            outlineStyles[outlineClassName],
-            sizeStyles[sizeClassName],
+            getCommonCssClass(
+              TOKEN_NAME.OUTLINE,
+              `${BASE_COLOR_SCHEME}-${this.size}`
+            ),
+            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
             this.inputClass,
           ]}
           onChange={this.changeHandler}
@@ -276,45 +207,26 @@ export default defineComponent({
     },
 
     renderIcon(): VNode[] {
-      // TODO: border and size and colorScheme separately ???
-      const borderClassName = prepareCssClassName(
-        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       const iconContainerClasses = [
         styles[config.iconContainerClassName],
-        borderStyles[borderClassName],
-        colorSchemeStyles[colorSchemeClassName],
-        paddingStyles[paddingClassName],
-        paddingStyles[paddingSizeClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(
+          TOKEN_NAME.BORDER,
+          `${BASE_COLOR_SCHEME}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(
+          TOKEN_NAME.PADDING,
+          this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
+        ),
+        getCommonCssClass(
+          TOKEN_NAME.PADDING,
+          `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${
+            this.size
+          }`
+        ),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
       if (this.disabled) {
         iconContainerClasses.push(colorSchemeStyles.__disabled);
@@ -328,7 +240,7 @@ export default defineComponent({
         <div
           class={[
             styles[config.iconContainerBackdropClassName],
-            sizeStyles[sizeClassName],
+            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
           ]}
         />,
         <div class={iconContainerClasses}>
@@ -338,10 +250,10 @@ export default defineComponent({
           >
             {!this.$slots?.icon && this.innerChecked && (
               <div
-                class={{
-                  [styles[config.iconClassName]]: true,
-                  [transitionStyles[transitionClassName]]: true,
-                }}
+                class={[
+                  styles[config.iconClassName],
+                  getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                ]}
               >
                 {config.checkMark}
               </div>
@@ -386,20 +298,17 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
-          {...mergeProps(BUTTON_DEFAULTS, this.buttonOptions || {})}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TODO
+          {...mergeProps(this.buttonOptions, BUTTON_DEFAULTS)}
         />
       );
     },
 
     renderLabel(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont || this.size
-      );
-
       const labelClasses = [
         styles[config.labelClassName],
-        fontStyles[fontClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
         this.labelClass,
       ];
       if (this.disabled) {
@@ -419,13 +328,9 @@ export default defineComponent({
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.errorFont || this.size
-        );
         const classes = [
           styles[config.errorClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
 
@@ -508,17 +413,11 @@ export default defineComponent({
   // TODO: input slot ???
   render(): VNode {
     const Tag = this.tag;
-
-    const minControlWidthClassName = prepareCssClassName(
-      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
-      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
-    );
-
     return (
       <Tag
         class={[
           styles[config.className],
-          minControlWidthStyles[minControlWidthClassName],
+          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
         ]}
       >
         {this.renderLabel}

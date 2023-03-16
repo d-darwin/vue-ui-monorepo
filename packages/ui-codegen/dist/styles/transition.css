@@ -2,12 +2,15 @@
 
 .transitionSlow {
   transition: var(--motion-slow);
+  --transition: var(--motion-slow);
 }
 
 .transitionAverage {
   transition: var(--motion-average);
+  --transition: var(--motion-average);
 }
 
 .transitionFast {
   transition: var(--motion-fast);
+  --transition: var(--motion-fast);
 }

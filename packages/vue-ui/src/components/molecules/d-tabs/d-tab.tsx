@@ -1,19 +1,14 @@
-import { defineComponent, PropType, VNode } from "vue";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import {
+  defineComponent,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Text } from "@/types/text";
-import type { TagName } from "@/types/tag-name";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
@@ -24,53 +19,35 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    label: {
-      // TODO: rename -> content ???
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateProp.content(),
     /**
      * Pass if the component is active
      */
-    active: {
-      type: Boolean,
-    },
+    active: Boolean,
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(), // TODO use .(() => uuid4()) ???
     /**
      * Defines <i>id</i> attr of the corresponding DTabpanel component
      */
-    tabpanelId: {
-      type: [String, Number] as PropType<Text>,
-    },
+    tabpanelId: generateProp.text(),
     /**
      * Pass true to disable <b>DTab</b> element.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-    },
+    padding: generateProp.padding(),
     /**
      * Defines size of the component
      */
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-    },
+    transition: generateProp.transition(),
     /*TODO: It is recommended to use a <button> element with the role tab for their built-in functional and accessible features instead,
        as opposed to needing to add them yourself. For controlling tab key functionality for elements with the role tab,
        it is recommended to set all non-active elements to tabindex="-1", and to set the active element to tabindex="0".
@@ -78,17 +55,13 @@ export default defineComponent({
     /**
      * Defines element type of the container component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.LI,
-    },
+    tag: generateProp.tag(TAG_NAME_DEFAULTS.LI),
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event
@@ -101,40 +74,18 @@ export default defineComponent({
   emits: [EVENT_NAME.CLICK],
 
   computed: {
-    classes(): string[] {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `primary-${this.size}` // TODO: not flexible
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    classes(): (string | undefined)[] {
       const classes = [
         styles[config.tabClassName],
-        fontStyles[fontClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        outlineStyles[outlineClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.size),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${config.baseColorScheme}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
 
       if (this.active) {
@@ -147,21 +98,15 @@ export default defineComponent({
       return classes;
     },
 
-    bindings(): Record<
-      string,
-      | undefined
-      | boolean
-      | number
-      | string
-      | string[]
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
-        id: this.id,
+        id: this.id ? String(this.id) : undefined,
         tabindex: this.active ? 0 : -1,
         role: "tab",
         ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: this.tabpanelId,
+        ["aria-controls"]: this.tabpanelId
+          ? String(this.tabpanelId)
+          : undefined,
         class: this.classes,
         onClick: this.clickHandler,
       };

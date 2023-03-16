@@ -1,0 +1,74 @@
+.dSlider {
+  position: relative;
+  width: fit-content;
+}
+
+.label {
+  display: block;
+  --offset: -4px;
+  margin-bottom: var(--offset);
+}
+
+.track {
+  position: absolute;
+  width: 100%;
+  bottom: calc(var(--size) * 0.55 / 2);
+  height: calc(var(--size) * 0.1);
+  background-color: var(--background-color);
+  background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+  border-radius: var(--border-radius);
+}
+
+.input {
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background: transparent !important;
+}
+
+.input::-webkit-slider-thumb {
+  appearance: none;
+  width: calc(var(--size) * 0.66);
+  height: calc(var(--size) * 0.66);
+  outline: calc(var(--size) * 0.17) solid rgba(255,255,255,0.66);
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.input:not(:disabled)::-webkit-slider-thumb {
+  cursor: pointer;
+}
+
+.input::-moz-range-thumb {
+  appearance: none;
+  width: calc(var(--size) * 0.66);
+  height: calc(var(--size) * 0.66);
+  outline: calc(var(--size) * 0.17) solid rgba(255,255,255,0.66);
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.input:not(:disabled)::-moz-range-thumb {
+  cursor: pointer;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.caption {
+  --offset: -4px;
+  position: absolute;
+  top: calc(100% + var(--offset));
+}
+
+.captionTransitionEnterActive,
+.captionTransitionEnterActive {
+  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
+  opacity: 0.65;
+}

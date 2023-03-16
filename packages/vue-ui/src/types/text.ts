@@ -1,3 +1,3 @@
-type Text = string | number; // TODO: ... | VNode ???
+type Text = string | number;
 
 export { Text };

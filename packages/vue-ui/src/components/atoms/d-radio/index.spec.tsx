@@ -24,7 +24,6 @@ import {
   inputClassCase,
   inputValueCase,
   labelClassCase,
-  labelDisabledClassCase,
   labelFontCase,
   labelHtmlCase,
   labelStringCase,
@@ -36,6 +35,8 @@ import {
   transitionClassCase,
   tagCase,
   slotCase,
+  disabledClassCase,
+  disabledAttrCase,
 } from "@/utils/test-case-factories";
 
 describe("DRadio", () => {
@@ -116,7 +117,9 @@ describe("DRadio", () => {
     value,
   });
 
-  labelDisabledClassCase(wrapper);
+  disabledClassCase(wrapper, `.${config.labelClassName}`);
+
+  disabledAttrCase(wrapper, `.${config.inputClassName}`);
 
   controlIdPresenceCase(wrapper);
 

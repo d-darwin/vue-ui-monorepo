@@ -3,7 +3,7 @@
 exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 1`] = `
 <div
   aria-expanded="true"
-  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   role="tabpanel"
   tabindex="0"
 >
@@ -14,7 +14,7 @@ exports[`DTabs Should render props.tabpanels as content of the list of tabpanels
 exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 2`] = `
 <div
   aria-hidden="true"
-  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   hidden=""
   role="tabpanel"
   tabindex="0"
@@ -27,7 +27,7 @@ exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
 <li
   aria-controls="111-1"
   aria-selected="true"
-  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast active"
+  class="dTab fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium sizeMedium transitionFast active"
   id="111"
   role="tab"
   tabindex="0"
@@ -39,7 +39,7 @@ exports[`DTabs Should render props.tabs as content of the tablist 1`] = `
 exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
 <li
   aria-controls="222-2"
-  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast"
+  class="dTab fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium sizeMedium transitionFast"
   id="222"
   role="tab"
   tabindex="-1"
@@ -51,7 +51,7 @@ exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
 exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 1`] = `
 <div
   aria-expanded="true"
-  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   role="tabpanel"
   tabindex="0"
 >
@@ -62,7 +62,7 @@ exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels
 exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 2`] = `
 <div
   aria-hidden="true"
-  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefaultMedium paddingDefault transitionFast"
+  class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   hidden=""
   role="tabpanel"
   tabindex="0"
@@ -75,7 +75,7 @@ exports[`DTabs Should render slots.tabs as content of the tablist 1`] = `
 <li
   aria-controls="111-1"
   aria-selected="true"
-  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast active"
+  class="dTab fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium sizeMedium transitionFast active"
   id="111"
   role="tab"
   tabindex="0"
@@ -87,7 +87,7 @@ exports[`DTabs Should render slots.tabs as content of the tablist 1`] = `
 exports[`DTabs Should render slots.tabs as content of the tablist 2`] = `
 <li
   aria-controls="222-2"
-  class="dTab fontMedium paddingDefaultMedium paddingDefault outlinePrimaryMedium sizeMedium transitionFast"
+  class="dTab fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium sizeMedium transitionFast"
   id="222"
   role="tab"
   tabindex="-1"

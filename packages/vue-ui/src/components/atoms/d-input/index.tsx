@@ -1,34 +1,17 @@
 import {
-  CSSProperties,
   defineComponent,
-  InputHTMLAttributes,
-  PropType,
-  VNode,
+  type CSSProperties,
+  type InputHTMLAttributes,
+  type PropType,
+  type VNode,
 } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import minControlWidthStyles from "@darwin-studio/ui-codegen/dist/styles/min-control-width.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import config from "./config";
@@ -46,53 +29,36 @@ export default defineComponent({
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    value: {
-      type: [String, Number] as PropType<Text>,
-    },
+    value: generateProp.text(),
     /**
      * Defines initial <i>placeholder</i> attr of the <b>input</b> element
      */
-    placeholder: {
-      type: String,
-    },
+    placeholder: String,
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * Defines padding type of the <b>input</b> element
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines corner rounding of the <b>input</b> element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines <i>type</i> attr of the <b>input</b> element
      */
+    // TODO: move to inputOptions
     inputType: {
       type: String as PropType<InputTypes>,
       default: INPUT_TYPE.TEXT,
@@ -101,85 +67,66 @@ export default defineComponent({
     /**
      * Defines <i>size</i> attr of the <b>input</b> element.<br>
      */
-    inputSize: {
-      type: Number,
-      default: 1,
-    },
+    // TODO: move to inputOptions
+    inputSize: generateProp.number(1),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    // TODO: move to inputOptions
+    inputClass: String,
     /**
      * Defines font size of the <b>input</b> element. By default depends on props.size
      */
-    inputFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to inputOptions
+    inputFont: generateProp.font(undefined, true),
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
+    // TODO: move to inputOptions
+    inputAttrs: generateProp.options<InputHTMLAttributes>(),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
+    label: generateProp.content(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: move to labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to labelOptions
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.content(),
     /**
      * You can pass own class name to the <b>error</b> element.
      */
-    errorClass: {
-      type: String,
-    },
+    // TODO: move to errorOptions
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to errorOptions
+    errorFont: generateProp.font(undefined, true),
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -215,15 +162,11 @@ export default defineComponent({
   computed: {
     renderLabel(): VNode | null {
       if (this.label || this.$slots.label) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.labelFont || this.size
-        );
         const bindings = {
           for: this.controlId,
           class: [
             styles[config.labelClassName],
-            fontStyles[fontClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
             this.labelClass,
           ],
         };
@@ -241,52 +184,22 @@ export default defineComponent({
     },
 
     inputClasses(): (string | undefined)[] {
-      // TODO: border and size and colorScheme separately ???
-      const borderClassName = prepareCssClassName(
-        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.inputFont || this.size
-      );
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return [
         styles[config.inputClassName],
-        borderStyles[borderClassName],
-        fontStyles[fontClassName],
-        outlineStyles[outlineClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(
+          TOKEN_NAME.BORDER,
+          `${BASE_COLOR_SCHEME}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.FONT, this.inputFont || this.size),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${BASE_COLOR_SCHEME}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         this.inputClass,
       ];
     },
@@ -334,18 +247,13 @@ export default defineComponent({
       );
 
       if (this.hasSlot) {
-        const sizeClassName = prepareCssClassName(
-          codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-          this.size
-        );
-
         return (
           <div class={styles[config.inputContainerClassName]}>
             {this.$slots.before && (
               <div
                 class={[
                   styles[config.beforeContainerClass],
-                  sizeStyles[sizeClassName],
+                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
                 ]}
               >
                 {this.$slots.before?.()}
@@ -356,7 +264,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.afterContainerClass],
-                  sizeStyles[sizeClassName],
+                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
                 ]}
               >
                 {this.$slots.after?.()}
@@ -373,13 +281,9 @@ export default defineComponent({
     // TODO: how to avoid layout shift
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.errorFont || this.size
-        );
         const classes = [
           styles[config.errorClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
 
@@ -424,8 +328,7 @@ export default defineComponent({
     },
 
     keyupHandler(event: KeyboardEvent) {
-      // TODO: add or find KEYS
-      if (event.key === "Enter") {
+      if (event.key === EVENT_KEY.Enter) {
         const value = (event.target as HTMLInputElement).value;
         /**
          * Emits on Enter keyup with value payload
@@ -441,22 +344,16 @@ export default defineComponent({
   // TODO: describe slots
   render(): VNode {
     const Tag = this.tag;
-
-    const minControlWidthClassName = prepareCssClassName(
-      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
-      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
-    );
-
     return (
       <Tag
         class={[
           styles[config.className],
-          minControlWidthStyles[minControlWidthClassName],
+          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
         ]}
       >
         {this.renderLabel}
         {this.renderInput}
-        {/*TODO: transition*/}
+        {/*TODO: transition, DCaption */}
         {this.renderError}
       </Tag>
     );

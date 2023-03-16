@@ -1,29 +1,15 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
+import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
@@ -39,128 +25,95 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * Defines if the component at the truthy state by default
      */
-    checked: {
-      type: Boolean,
-    },
+    checked: Boolean,
     /**
      * Replace default true/false values with your own.
      */
-    values: {
-      // TODO: naming, combine with labels ???
-      type: Object as PropType<Values>,
-    },
+    // TODO: naming, combine with labels ???
+    values: generateProp.options<Values>(),
     /**
      * Add labels to the component states.
      */
-    labels: {
-      // TODO: naming, combine with values ???
-      type: Object as PropType<Values>,
-    },
+    // TODO: naming, combine with values ???
+    labels: generateProp.options<Values>(),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    // TODO: inputOptions
+    inputClass: String,
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.content(),
     /**
      * You can pass own class name to the <b>error</b> element.
      */
+    // TODO: errorOptions
     errorClass: {
       type: String,
     },
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
+    // TODO: errorOptions
     errorFont: {
       type: String as PropType<Font>,
     },
     /**
      * Defines common font size of the component
      */
-    font: {
-      type: String as PropType<Font>,
-    },
+    font: generateProp.font(),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
-    size: {
-      // TODO: fontSize and size separately ???
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.TINY),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Pass true to disable <b>input</b> element.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     // TODO: readonly state ???
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
-    aspectRatioOptions: {
-      type: Object as PropType<DAspectRatioProps>,
-      default: () => ASPECT_RATIO_DEFAULTS,
-    },
+    aspectRatioOptions: generateProp.options<DAspectRatioProps>(
+      ASPECT_RATIO_DEFAULTS
+    ),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -191,17 +144,14 @@ export default defineComponent({
 
   computed: {
     labelClasses(): (string | undefined)[] {
-      // TODO: add getters?
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont || this.font || this.size
-      );
-
       return [
         styles[config.labelClassName],
-        fontStyles[fontClassName],
+        getCommonCssClass(
+          TOKEN_NAME.FONT,
+          this.labelFont || this.font || this.size
+        ),
         this.labelClass,
-        this.disabled ? styles.__disabled : undefined,
+        this.disabled ? styles.__disabled : undefined, // TODO: config
       ];
     },
     // TODO: add label generator ???
@@ -228,43 +178,22 @@ export default defineComponent({
     },
 
     renderThumb(): VNode | VNode[] {
-      // TODO: add getters?
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font || this.size
-      );
-      // TODO: add getters?
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      // TODO: add getters?
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      // TODO: add getters?
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return (
         <div
           class={[
             styles[config.thumbClassName],
-            fontStyles[fontClassName],
-            roundingStyles[roundingClassName],
-            sizeStyles[sizeClassName],
-            transitionStyles[transitionClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.font || this.size),
+            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
           ]}
         >
           {this.$slots.thumb?.() || (
             <div
               class={[
                 styles[config.thumbInnerClassName],
-                roundingStyles[roundingClassName],
-                transitionStyles[transitionClassName],
+                getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+                getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
               ]}
             />
           )}
@@ -273,39 +202,6 @@ export default defineComponent({
     },
 
     renderInput(): VNode {
-      // TODO: border and size and colorScheme separately ???
-      // TODO: add getters?
-      const borderClassName = prepareCssClassName(
-        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${this.colorScheme}-${this.size}`
-      );
-      // TODO: add getters?
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      // TODO: outline and size and colorScheme separately ???
-      // TODO: add getters?
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${this.colorScheme}-${this.size}`
-      );
-      // TODO: add getters?
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      // TODO: add getters?
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      // TODO: add getters?
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return (
         <DAspectRatio
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
@@ -315,14 +211,20 @@ export default defineComponent({
             styles[config.trackClassName],
             this.disabled ? styles.__disabled : undefined,
             this.disabled ? colorSchemeStyles.__disabled : undefined,
-            borderStyles[borderClassName],
-            colorSchemeStyles[colorSchemeClassName],
-            outlineStyles[outlineClassName],
-            roundingStyles[roundingClassName],
-            sizeStyles[sizeClassName],
-            transitionStyles[transitionClassName],
+            getCommonCssClass(
+              TOKEN_NAME.BORDER,
+              `${this.colorScheme}-${this.size}`
+            ),
+            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+            getCommonCssClass(
+              TOKEN_NAME.OUTLINE,
+              `${this.colorScheme}-${this.size}`
+            ),
+            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
           ]}
-          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions || {})}
+          {...mergeProps(this.aspectRatioOptions, ASPECT_RATIO_DEFAULTS)}
         >
           <input
             id={this.controlId}
@@ -334,9 +236,15 @@ export default defineComponent({
             class={[
               styles[config.inputClassName],
               this.inputClass,
-              borderStyles[borderClassName],
-              outlineStyles[outlineClassName],
-              roundingStyles[roundingClassName],
+              getCommonCssClass(
+                TOKEN_NAME.BORDER,
+                `${this.colorScheme}-${this.size}`
+              ),
+              getCommonCssClass(
+                TOKEN_NAME.OUTLINE,
+                `${this.colorScheme}-${this.size}`
+              ),
+              getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
             ]}
             type="checkbox"
             role="switch"
@@ -375,13 +283,12 @@ export default defineComponent({
     // TODO: how to avoid layout shift
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.errorFont || this.font || this.size
-        );
         const classes = [
           styles[config.errorClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(
+            TOKEN_NAME.FONT,
+            this.errorFont || this.font || this.size
+          ),
           this.errorClass,
         ];
 

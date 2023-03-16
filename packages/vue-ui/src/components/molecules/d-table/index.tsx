@@ -1,17 +1,11 @@
-import { defineComponent, PropType, VNode } from "vue";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import { Text } from "@darwin-studio/vue-ui/src/types/text";
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
+import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import { LOADER_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -31,30 +25,28 @@ export default defineComponent({
     /**
      * You can pass own class name to the <b>thead</b> element.
      */
-    headClass: {
-      type: String,
-    },
+    headClass: String,
     /**
      * You can pass own class name to the <b>tr</b> elements inside <b>thead</b>.
      */
-    headRowClass: {
-      type: String,
-    },
+    // TODO: options
+    headRowClass: String,
     /**
      * You can pass own class name to the <b>th</b> elements inside <b>thead</b>.
      */
-    headCellClass: {
-      type: String,
-    },
+    // TODO: options
+    headCellClass: String,
     /**
      * Pass any attrs to the <b>tr</b> elements inside <b>thead</b>.
      */
+    // TODO: options
     headRowAttrs: {
       type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * Pass any attrs to the <b>th</b> elements inside <b>thead</b>.
      */
+    // TODO: options
     headCellAttrs: {
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
@@ -69,30 +61,35 @@ export default defineComponent({
     /**
      * You can pass own class name to the <b>tbody</b> element.
      */
+    // TODO: options
     bodyClass: {
       type: String,
     },
     /**
      * You can pass own class name to the <b>tr</b> elements inside <b>tbody</b>.
      */
+    // TODO: options
     bodyRowClass: {
       type: String,
     },
     /**
      * You can pass own class name to the <b>td</b> elements inside <b>tbody</b>.
      */
+    // TODO: options
     bodyCellClass: {
       type: String,
     },
     /**
      * Pass any attrs to the <b>tr</b> elements inside <b>tbody</b>.
      */
+    // TODO: options
     bodyRowAttrs: {
       type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * Pass any attrs to the <b>td</b> elements inside <b>tbody</b>.
      */
+    // TODO: options
     bodyCellAttrs: {
       type: Function as PropType<
         (rowIndex: number, colIndex: number) => Record<string, unknown>
@@ -101,65 +98,44 @@ export default defineComponent({
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines size of the component
      */
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
+    /**
+     * Defines if DLoader element should be displayed.
+     */
+    loading: Boolean,
+    /**
+     * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
+     */
+    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
     /**
      * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
   },
 
   computed: {
-    commonRowClasses(): string[] {
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
-      return [fontStyles[fontClassName], transitionStyles[transitionClassName]];
-    },
-    commonCellClasses(): string[] {
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-
+    commonRowClasses(): (string | undefined)[] {
       return [
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        sizeStyles[sizeClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+      ];
+    },
+
+    commonCellClasses(): (string | undefined)[] {
+      return [
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
       ];
     },
 
@@ -243,6 +219,9 @@ export default defineComponent({
   render(): VNode {
     return (
       <table class={styles[config.className]}>
+        {this.loading && (
+          <DLoader {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)} />
+        )}
         {this.renderHead}
         {this.renderBody}
       </table>

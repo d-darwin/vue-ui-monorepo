@@ -3,4 +3,5 @@ export default {
   className: "dAspectRatio",
   innerClassName: "dAspectRatioInner",
   separatorList: ["/", ":"],
+  defaultAspectRatio: "1",
 } as const;

@@ -1,48 +1,30 @@
 import {
   defineComponent,
-  VNode,
+  mergeProps,
   Transition as Trans,
   Teleport,
-  PropType,
-  CSSProperties,
-  mergeProps,
+  type VNode,
+  type PropType,
+  type CSSProperties,
+  type HTMLAttributes,
 } from "vue";
-import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import type { RendererElement } from "@vue/runtime-core";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
-import {
-  POSITION_HORIZONTAL,
-  POSITION_VERTICAL,
-} from "@darwin-studio/vue-ui/src/constants/position";
+import type { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
+import { POSITION_HORIZONTAL } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
-import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -57,71 +39,49 @@ export default defineComponent({
     /**
      * Defines is component should be rendered
      */
-    isShown: {
-      type: Boolean,
-      default: true,
-    },
+    isShown: generateProp.boolean(true),
     /**
      * Defines if block scroll and backdrop presence
      */
-    isModal: {
-      type: Boolean,
-      default: true,
-    },
+    isModal: generateProp.boolean(true),
     /**
      * Defines content of the <b>title</b> element.
      */
-    title: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    title: generateProp.content(),
     /**
      * You can pass own class name to the <b>title</b> element.
      */
-    titleClass: {
-      type: String,
-    },
+    // TODO: options
+    titleClass: String,
     /**
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
-    titleFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    titleFont: generateProp.font(FONT.HUGE),
     // TODO: header
     // TODO: footer
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     /**
      * You can pass own class name to the <b>content</b> element.
      */
-    contentClass: {
-      type: String,
-    },
+    // TODO: options
+    contentClass: String,
     /**
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
-    contentFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    contentFont: generateProp.font(),
     /**
      * Defines a11y role of the component's content
      */
-    contentRole: {
-      type: String, // TODO: specify type,
-      default: config.defaultContentRole,
-    },
+    contentRole: generateProp.string(config.defaultContentRole),
     /**
      * Defines content element type of the component
      */
-    contentTag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.NAV,
-    },
+    contentTag: generateProp.tag(TAG_NAME_DEFAULTS.NAV),
     /**
      * Positions on the component.
      * Takes values: 'top', 'right', 'bottom', 'left'.
@@ -129,130 +89,80 @@ export default defineComponent({
     position: {
       type: String as PropType<PositionStrict>,
       default: POSITION_HORIZONTAL.RIGHT,
-      validator: (val: PositionStrict) =>
-        Boolean(
-          Object.values(
-            Object.assign({}, POSITION_HORIZONTAL, POSITION_VERTICAL)
-          ).includes(val)
-        ),
     },
     /**
      * Defines width of the component if props.position is "right" or "left"
      */
-    width: {
-      type: [String, Number],
-      default: config.defaultWidth,
-    },
+    width: generateProp.text(config.defaultWidth),
     /**
      * Defines height of the component if props.position is "top" or "bottom"
      */
-    height: {
-      type: [String, Number],
-      default: config.defaultHeight,
-    },
+    height: generateProp.text(config.defaultHeight),
     /**
      * The component is mounted inside passed element.
      */
-    target: {
-      type: [String, Object] as PropType<string | RendererElement>,
-      default: config.defaultTarget,
-    },
+    target: generateProp.teleportTarget(config.defaultTarget),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.LARGE),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.LARGE),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines a11y role of the component
      */
-    role: {
-      type: String, // TODO: specify type,
-      default: config.defaultRole,
-    },
+    role: generateProp.string(config.defaultRole),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.ASIDE,
-    },
+    tag: generateProp.tag(TAG_NAME_DEFAULTS.ASIDE),
     /**
      * Defines z-index of the component
      */
-    zIndex: {
-      type: Number,
-      default: config.defaultZIndex,
-    },
+    zIndex: generateProp.number(config.defaultZIndex),
     /**
      * Defines component id to be focused on show
      */
-    focusId: {
-      type: [String, Number] as PropType<Text>,
-    },
+    focusId: generateProp.text(),
     /**
      * Hides header if you don't need it
      */
-    hideHeader: {
-      type: Boolean,
-    },
+    hideHeader: Boolean,
     /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
-    closeButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CLOSE_BUTTON_DEFAULTS,
-    },
+    closeButtonOptions: generateProp.options<DButtonProps>(
+      CLOSE_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: {
-      type: Object as PropType<DBackdropProps>,
-      default: () => BACKDROP_DEFAULTS,
-    },
+    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
-    enableInline: {
-      type: Boolean,
-    },
+    enableInline: Boolean,
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch close event
@@ -270,33 +180,19 @@ export default defineComponent({
   },
 
   computed: {
-    backdropTransitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    backdropTransitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.backdropTransitionEnterActive,
         leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
-    backdropBindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    backdropBindings(): DBackdropProps {
       return {
         colorScheme: this.colorScheme,
-        class: transitionStyles[transitionClassName],
+        class: getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
+        ...this.backdropOptions,
       };
     },
 
@@ -313,17 +209,12 @@ export default defineComponent({
     },
 
     renderTitle(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.titleFont
-      );
-
       // TODO: slot, tag, enableHtml ... (like label in other components)
       return this.title ? (
         <div
           class={[
             styles[config.titleClassName],
-            fontStyles[fontClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.titleFont),
             this.titleClass,
           ]}
         >
@@ -341,7 +232,7 @@ export default defineComponent({
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
+          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
         />
       );
     },
@@ -361,17 +252,11 @@ export default defineComponent({
 
     renderContent(): VNode {
       const Tag = this.contentTag;
-
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.contentFont
-      );
-
       const bindings = {
         role: this.contentRole,
         class: [
           styles[config.contentClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
           this.contentClass,
         ],
       };
@@ -394,10 +279,7 @@ export default defineComponent({
       );
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,
@@ -405,55 +287,27 @@ export default defineComponent({
     },
 
     classes(): (string | undefined)[] {
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return [
         styles[config.className],
         styles[this.position],
-        colorSchemeStyles[colorSchemeClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
     },
 
     styles(): CSSProperties {
       return {
-        "--width": prepareElementSize(this.width),
-        "--height": prepareElementSize(this.height),
+        "--width": prepareHtmlSize(this.width),
+        "--height": prepareHtmlSize(this.height),
         "--z-index": this.zIndex,
       };
     },
 
-    bindings(): Record<
-      string,
-      (string | undefined) | (string | undefined)[] | boolean | CSSProperties
-    > {
+    bindings(): HTMLAttributes & { open: boolean } {
       return {
         open: this.isShown,
         role: this.role,

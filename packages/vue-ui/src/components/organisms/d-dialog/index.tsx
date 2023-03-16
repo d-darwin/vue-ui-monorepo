@@ -1,43 +1,29 @@
 import {
-  CSSProperties,
   defineComponent,
   mergeProps,
-  PropType,
   Teleport,
-  VNode,
+  type CSSProperties,
+  type PropType,
+  type VNode,
+  type DialogHTMLAttributes,
 } from "vue";
-import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareElementSize from "@darwin-studio/vue-ui/src/utils/prepare-element-size";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import {
   BACKDROP_DEFAULTS,
   CLOSE_BUTTON_DEFAULTS,
@@ -57,209 +43,139 @@ export default defineComponent({
     /**
      * Defines is component should be rendered
      */
-    isShown: {
-      type: Boolean,
-      default: true,
-    },
+    isShown: generateProp.boolean(true),
     /**
      * Defines if block scroll and backdrop presence
      */
-    isModal: {
-      type: Boolean,
-      default: true,
-    },
+    isModal: generateProp.boolean(true),
     /**
      * Defines content of the <b>title</b> element.
      */
-    title: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    title: generateProp.content(),
     /**
      * You can pass own class name to the <b>title</b> element.
      */
-    titleClass: {
-      type: String,
-    },
+    // TODO: options
+    titleClass: String,
     /**
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
-    titleFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    titleFont: generateProp.font(FONT.HUGE),
     // TODO: header
     // TODO: footer
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     // TODO: contentOptions instead of contentClass and contentFont ???
     /**
      * You can pass own class name to the <b>content</b> element.
      */
-    contentClass: {
-      type: String,
-    },
+    // TODO: options
+    contentClass: String,
     /**
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
-    contentFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    contentFont: generateProp.font(),
     /**
      * The component is mounted inside passed element.
      */
-    target: {
-      type: [String, Object] as PropType<string | RendererElement>,
-      default: config.defaultTarget,
-    },
+    target: generateProp.teleportTarget(config.defaultTarget),
     /**
      * Min width of the component.
      */
-    minWidth: {
-      type: [String, Number],
-      default: config.defaultMinWidth,
-    },
+    minWidth: generateProp.text(config.defaultMinWidth),
     /**
      * Max width of the component.
      */
-    maxWidth: {
-      type: [String, Number],
-      default: config.defaultMaxWidth,
-    },
+    maxWidth: generateProp.text(config.defaultMaxWidth),
     /**
      * Min height of the component.
      */
-    minHeight: {
-      type: [String, Number],
-      default: config.defaultMinHeight,
-    },
+    minHeight: generateProp.text(config.defaultMinHeight),
     /**
      * Max height of the component.
      */
-    maxHeight: {
-      type: [String, Number],
-      default: config.defaultMaxHeight,
-    },
+    maxHeight: generateProp.text(config.defaultMaxHeight),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(PADDING.EQUAL),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.LARGE),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.LARGE),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines a11y role of the component
      */
-    role: {
-      type: String, // TODO: specify type,
-      default: config.defaultRole,
-    },
+    role: generateProp.string(config.defaultRole),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIALOG,
-    },
+    tag: generateProp.tag(TAG_NAME_DEFAULTS.DIALOG),
     /**
      * Defines z-index of the component
      */
-    zIndex: {
-      type: Number,
-      default: config.defaultZIndex,
-    },
+    zIndex: generateProp.number(config.defaultZIndex),
     /**
      * Defines component id to be focused on show
      */
-    focusId: {
-      type: [String, Number] as PropType<Text>,
-    },
+    focusId: generateProp.text(),
     /**
      * Hides header if you don't need it
      */
-    hideHeader: {
-      type: Boolean,
-    },
+    hideHeader: Boolean,
     /**
      * Hides footer if you don't need it
      */
-    hideFooter: {
-      type: Boolean,
-    },
+    hideFooter: Boolean,
     /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
-    closeButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CLOSE_BUTTON_DEFAULTS,
-    },
+    closeButtonOptions: generateProp.options<DButtonProps>(
+      CLOSE_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
      */
-    cancelButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => CANCEL_BUTTON_DEFAULTS,
-    },
+    cancelButtonOptions: generateProp.options<DButtonProps>(
+      CANCEL_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
      */
-    acceptButtonOptions: {
-      type: Object as PropType<DButtonProps>,
-      default: () => ACCEPT_BUTTON_DEFAULTS,
-    },
+    acceptButtonOptions: generateProp.options<DButtonProps>(
+      ACCEPT_BUTTON_DEFAULTS
+    ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: {
-      type: Object as PropType<DBackdropProps>,
-      default: () => BACKDROP_DEFAULTS,
-    },
+    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
-    enableInline: {
-      type: Boolean,
-    },
+    enableInline: Boolean,
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch close event
@@ -289,34 +205,15 @@ export default defineComponent({
   },
 
   computed: {
-    backdropTransitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    backdropTransitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.backdropTransitionEnterActive,
         leaveActiveClass: styles.backdropTransitionLeaveActive,
       };
     },
 
-    backdropBindings(): Record<
-      string,
-      | string
-      | (string | undefined)[]
-      | CSSProperties
-      | ((event: MouseEvent) => void | Promise<void>)
-    > {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
-      return {
-        colorScheme: this.colorScheme,
-        class: transitionStyles[transitionClassName],
-        whenClick: this.closeHandler,
-        ...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions || {}),
-      };
+    backdropClass(): string | undefined {
+      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
     },
 
     renderBackdrop(): VNode | null {
@@ -326,23 +223,24 @@ export default defineComponent({
 
       return (
         <Trans {...this.backdropTransitionBindings}>
-          {this.isShown && <DBackdrop {...this.backdropBindings} />}
+          {this.isShown && (
+            <DBackdrop
+              colorScheme={this.colorScheme}
+              class={this.backdropClass}
+              whenClick={this.closeHandler}
+              {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+            />
+          )}
         </Trans>
       );
     },
 
     renderTitle(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.titleFont
-      );
-
-      // TODO: slot, tag, enableHtml ... (like label in other components)
       return this.title ? (
         <div
           class={[
             styles[config.titleClassName],
-            fontStyles[fontClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.titleFont),
             this.titleClass,
           ]}
         >
@@ -360,7 +258,7 @@ export default defineComponent({
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
+          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
         />
       );
     },
@@ -379,15 +277,10 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.contentFont
-      );
-
       const bindings = {
         class: [
           styles[config.contentClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
           this.contentClass,
         ],
       };
@@ -410,21 +303,18 @@ export default defineComponent({
           {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
-              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
+              {...mergeProps(this.cancelButtonOptions)}
             />,
             <DButton
               whenClick={this.acceptHandler}
-              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
+              {...mergeProps(this.acceptButtonOptions)}
             />,
           ]}
         </div>
       );
     },
 
-    transitionBindings(): {
-      enterActiveClass: string;
-      leaveActiveClass: string;
-    } {
+    transitionBindings(): TransitionBindings {
       return {
         enterActiveClass: styles.transitionEnterActive,
         leaveActiveClass: styles.transitionLeaveActive,
@@ -432,57 +322,28 @@ export default defineComponent({
     },
 
     classes(): (string | undefined)[] {
-      // TODO: make common class names generator
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return [
         styles[config.className],
-        colorSchemeStyles[colorSchemeClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
     },
 
     styles(): CSSProperties {
       return {
-        "--min-width": prepareElementSize(this.minWidth),
-        "--max-width": prepareElementSize(this.maxWidth),
-        "--min-height": prepareElementSize(this.minHeight),
-        "--max-height": prepareElementSize(this.maxHeight),
-        "--z-index": this.zIndex,
+        "--min-width": prepareHtmlSize(this.minWidth), // TODO: config
+        "--max-width": prepareHtmlSize(this.maxWidth), // TODO: config
+        "--min-height": prepareHtmlSize(this.minHeight), // TODO: config
+        "--max-height": prepareHtmlSize(this.maxHeight), // TODO: config
+        "--z-index": this.zIndex, // TODO: config
       };
     },
 
-    bindings(): Record<
-      string,
-      (string | undefined) | (string | undefined)[] | boolean | CSSProperties
-    > {
+    bindings(): DialogHTMLAttributes {
       return {
         open: this.isShown,
         role: this.role,

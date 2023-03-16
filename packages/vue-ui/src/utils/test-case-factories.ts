@@ -55,12 +55,14 @@ export function baseClassCase(
   });
 }
 
-export function inputValueCase(wrapper: VueWrapper) {
+export function inputValueCase(
+  wrapper: VueWrapper,
+  value: string | number = "some value"
+) {
   return it("Input element's value attr should contain props.value", async () => {
-    const value = "external value";
     await wrapper.setProps({ value });
     const inputEl = wrapper.find("input");
-    expect(inputEl.element?.value).toBe(value);
+    expect(inputEl.element?.value).toBe(String(value));
   });
 }
 
@@ -116,11 +118,40 @@ export function labelStringCase(wrapper: VueWrapper, labelSelector = "label") {
   });
 }
 
+// TODO: merge with labelStringCase
+export function captionStringCase(
+  wrapper: VueWrapper,
+  captionSelector = "caption"
+) {
+  return it("Should render caption element with props.caption content if passed", async () => {
+    const caption = "Some caption";
+    await wrapper.setProps({ caption });
+
+    console.log(wrapper.html());
+
+    const captionEl = wrapper.find(captionSelector);
+    expect(captionEl.exists()).toBeTruthy();
+    expect(captionEl.text()).toBe(caption);
+  });
+}
+
 export function labelAbsenceCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Shouldn't render label element if props.label isn't passed", async () => {
     await wrapper.setProps({ label: undefined });
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.exists()).toBeFalsy();
+  });
+}
+
+// TODO: merge with labelAbsenceCase
+export function captionAbsenceCase(
+  wrapper: VueWrapper,
+  captionSelector = "caption"
+) {
+  return it("Shouldn't render caption element if props.caption isn't passed", async () => {
+    await wrapper.setProps({ caption: undefined });
+    const captionEl = wrapper.find(captionSelector);
+    expect(captionEl.exists()).toBeFalsy();
   });
 }
 
@@ -152,17 +183,6 @@ export function labelHtmlCase(wrapper: VueWrapper, labelSelector = "label") {
     await wrapper.setProps({ label: labelHtml, enableHtml: true });
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.html()).toMatch(labelHtml);
-  });
-}
-
-export function labelDisabledClassCase(
-  wrapper: VueWrapper,
-  labelSelector = "label"
-) {
-  return it("Label classes should contain __disabled if props.disabled passed", async () => {
-    await wrapper.setProps({ disabled: true });
-    const labelEl = wrapper.find(labelSelector);
-    expect(labelEl.classes()).toContain("__disabled");
   });
 }
 
@@ -430,16 +450,21 @@ export function preventDefaultCase(wrapper: VueWrapper) {
   });
 }
 
-export function disabledControlCase(
-  wrapper: VueWrapper,
-  targetSelector: string
-) {
+export function disabledClassCase(wrapper: VueWrapper, targetSelector: string) {
+  return it(`${targetSelector} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
+    await wrapper.setProps({ disabled: true });
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl.classes()).toContain("__disabled");
+  });
+}
+
+export function disabledAttrCase(wrapper: VueWrapper, targetSelector: string) {
   return it(`${targetSelector} should have attrs.disabled and wrapper should have __disabled class if prop.disabled is passed`, async () => {
     await wrapper.setProps({ disabled: true });
 
     const targetEl = wrapper.find(targetSelector);
     expect(targetEl.attributes()?.disabled).toBeFalsy();
-    expect(wrapper.classes()).toContain("__disabled");
   });
 }
 

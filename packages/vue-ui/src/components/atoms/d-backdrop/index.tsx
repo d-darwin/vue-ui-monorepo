@@ -1,13 +1,14 @@
-import { defineComponent, PropType, VNode } from "vue";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import {
+  defineComponent,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { CssPosition } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
-
 /**
  * The component renders simple backdrop, intended to be used with Drawers, Modals, etc.
  */
@@ -18,38 +19,23 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(), // TODO: gent defaults base on actual values, not hardcoded
     /**
      * Defines opacity of the component
      */
-    opacity: {
-      type: Number,
-      default: config.defaultOpacity,
-    },
+    opacity: generateProp.number(config.defaultOpacity),
     /**
      * Defines z-index attr of the component
      */
-    zIndex: {
-      type: Number,
-      default: config.defaultZIndex,
-    },
+    zIndex: generateProp.number(config.defaultZIndex),
     /**
      * Defines position attr of the component
      */
-    position: {
-      type: String as PropType<CssPosition>,
-      default: config.defaultPosition,
-    },
+    position: generateProp.options<CssPosition>(config.defaultPosition),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
 
     /**
      * Alternative way to catch click event
@@ -62,10 +48,7 @@ export default defineComponent({
   emits: [EVENT_NAME.CLICK],
 
   computed: {
-    bindings(): Record<
-      string,
-      string | Record<string, number | string> | (() => void)
-    > {
+    bindings(): HTMLAttributes {
       return {
         class: styles[config.className],
         style: {

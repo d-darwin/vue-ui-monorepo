@@ -26,6 +26,7 @@ describe("DTooltip", () => {
 
   baseClassCase(wrapper, config.className);
 
+  // TODO: fix
   fontSizeClassCase(wrapper, `.${config.contentClassName}`);
 
   it("Should render props.target", async () => {

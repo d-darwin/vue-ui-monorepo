@@ -1,15 +1,17 @@
-import { defineComponent, mergeProps, PropType, VNode } from "vue";
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import {
+  defineComponent,
+  mergeProps,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
+import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 /**
  * The container provides you with an easy way to arrange child nodes in a grid template.
@@ -44,24 +46,17 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
   },
 
   setup() {
@@ -99,20 +94,15 @@ export default defineComponent({
       return rowGap;
     },
 
-    bindings(): Record<string, string[] | Record<string, string | number>> {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    bindings(): HTMLAttributes {
       return {
         class: [
           styles[config.className],
-          transitionStyles[transitionClassName],
+          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         ],
         style: {
-          "--grid-col-span": this.preparedColSpan,
-          "--grid-row-gap": this.preparedRowGap,
+          "--grid-col-span": this.preparedColSpan, // TODO: config
+          "--grid-row-gap": this.preparedRowGap, // TODO: config
         },
       };
     },

@@ -1,17 +1,13 @@
-import { defineComponent, PropType, VNode } from "vue";
-// TODO: add import/index ???
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import {
+  defineComponent,
+  type HTMLAttributes,
+  type PropType,
+  type VNode,
+} from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -27,42 +23,29 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    label: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateProp.content(),
     /**
      * Defines font size of the component. By default, depends on props.size
      */
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM,
-    },
+    font: generateProp.font(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Pass true to disable click events.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Pass true to prevent default click behaviour
      */
-    preventDefault: {
-      type: Boolean,
-    },
+    preventDefault: Boolean,
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event
@@ -76,28 +59,13 @@ export default defineComponent({
 
   // TODO: move to setup() ???
   computed: {
-    classes(): string[] {
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `primary-medium` // TODO: not flexible at all
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
-        fontStyles[fontClassName],
-        outlineStyles[outlineClassName],
-        sizeStyles[fontClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.font),
+        getCommonCssClass(TOKEN_NAME.OUTLINE, config.outlineTokenVariantName),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.font),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
 
       if (this.disabled) {
@@ -108,6 +76,7 @@ export default defineComponent({
     },
 
     tag(): Tag {
+      // TODO: config or const
       if (this.$attrs["to"]) {
         return config.routerLinkTag;
       }
@@ -115,10 +84,7 @@ export default defineComponent({
       return config.linkTag;
     },
 
-    bindings(): Record<
-      string,
-      string[] | ((event: MouseEvent) => void | Promise<void>)
-    > {
+    bindings(): HTMLAttributes {
       return {
         class: this.classes,
         onClick: this.clickHandler,

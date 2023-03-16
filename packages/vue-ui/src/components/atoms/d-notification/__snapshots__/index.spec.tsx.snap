@@ -2,7 +2,7 @@
 
 exports[`DNotification Should append the notification to the props.target 1`] = `
 <div id="custom-target"><transition-stub enteractiveclass="transitionEnterActive" leaveactiveclass="transitionLeaveActive" appear="false" persisted="false" css="true">
-    <div role="alert" class="dNotification top-right info colorSchemePrimary fontMedium paddingDefaultMedium paddingDefault roundingSmall sizeMedium transitionFast"></div>
+    <div role="alert" class="dNotification top-right info colorSchemePrimary fontMedium paddingDefault paddingDefaultMedium roundingSmall sizeMedium transitionFast"></div>
   </transition-stub></div>
 <div data-v-app=""><!--teleport start--><!--teleport end--></div>
 `;

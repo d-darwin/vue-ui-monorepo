@@ -2,6 +2,7 @@
 
 .dTable {
   border-collapse: collapse;
+  position: relative;
 }
 
 .row {

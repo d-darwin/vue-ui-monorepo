@@ -1,0 +1,15 @@
+export default {
+  name: "DSlider",
+  className: "dSlider",
+  labelClassName: "label",
+  inputClassName: "input",
+  trackClassName: "track",
+  captionClassName: "caption",
+  defaultMin: 0,
+  defaultMax: 100,
+  defaultStep: 1,
+  defaultRole: "slider",
+  defaultLabelOffset: "2px",
+  defaultCaptionOffset: "2px",
+  inputType: "range",
+};

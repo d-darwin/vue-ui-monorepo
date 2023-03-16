@@ -8,5 +8,6 @@ export default {
   iconContainerClassName: "iconContainer",
   iconContainerBackdropClassName: "iconContainerBackdrop",
   iconClassName: "icon",
+  inputType: "checkbox",
   checkMark: "✓",
 };
