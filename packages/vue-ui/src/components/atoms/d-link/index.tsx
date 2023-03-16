@@ -4,15 +4,10 @@ import {
   type PropType,
   type VNode,
 } from "vue";
-// TODO: add import/index ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -64,28 +59,13 @@ export default defineComponent({
 
   // TODO: move to setup() ???
   computed: {
-    classes(): string[] {
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `primary-medium` // TODO: not flexible at all
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
-        fontStyles[fontClassName],
-        outlineStyles[outlineClassName],
-        sizeStyles[fontClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.font),
+        getCommonCssClass(TOKEN_NAME.OUTLINE, config.outlineTokenVariantName),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.font),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
 
       if (this.disabled) {
@@ -96,6 +76,7 @@ export default defineComponent({
     },
 
     tag(): Tag {
+      // TODO: config or const
       if (this.$attrs["to"]) {
         return config.routerLinkTag;
       }

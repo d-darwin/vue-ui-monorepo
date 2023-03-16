@@ -7,14 +7,7 @@ import {
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
-import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
@@ -88,6 +81,7 @@ export default defineComponent({
       return (
         <Trans {...this.backdropTransitionBindings} appear>
           <DBackdrop
+            key={config.backdropKey}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
             {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
@@ -96,43 +90,21 @@ export default defineComponent({
       );
     },
 
-    classes(): string[] {
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
+    classes(): (string | undefined)[] {
       return [
         styles[config.className],
-        colorSchemeStyles[colorSchemeClassName],
-        fontStyles[fontClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.FONT, this.font),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
     },
 
     styles(): CSSProperties {
       return {
-        "--z-index": this.zIndex,
-        "--animation-duration": this.animationDuration,
+        "--z-index": this.zIndex, // TODO: config
+        "--animation-duration": this.animationDuration, // TODO: config
       };
     },
 
@@ -146,7 +118,7 @@ export default defineComponent({
     renderLoader(): VNode {
       return (
         <Trans {...this.transitionBindings} appear>
-          <div key={"loader"} class={this.classes} style={this.styles}>
+          <div key={config.key} class={this.classes} style={this.styles}>
             {/*TODO: default slot, enable html*/}
             {this.content}
           </div>

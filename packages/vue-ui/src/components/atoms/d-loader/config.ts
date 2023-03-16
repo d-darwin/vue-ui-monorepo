@@ -3,6 +3,8 @@ export default {
   className: "dLoader",
   wrapperClassName: "wrapper",
   backdropClassName: "backdrop",
+  key: "loader",
+  backdropKey: "backdrop",
   defaultAnimationDuration: "650ms",
   defaultZIndex: 1001,
   defaultContent: "☯",

@@ -1,11 +1,10 @@
 import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type {
   PictureSource,
   Source,
@@ -181,11 +180,10 @@ export default defineComponent({
     },
 
     figcaptionVNode(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.captionFont
-      );
-      const classes = [this.captionClass, fontStyles[fontClassName]];
+      const classes = [
+        this.captionClass,
+        getCommonCssClass(TOKEN_NAME.FONT, this.captionFont),
+      ];
 
       if (!this.enableHtml) {
         return (

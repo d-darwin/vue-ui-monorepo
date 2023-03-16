@@ -8,14 +8,6 @@ import {
   type VNode,
   type Ref,
 } from "vue";
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
@@ -24,6 +16,8 @@ import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
 import { TRIGGER, BASE_COLOR_SCHEME } from "./constant";
@@ -250,23 +244,16 @@ export default defineComponent({
     },
 
     renderTarget(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.targetFont || this.size
-      );
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-
       const bindings = {
         tabindex: this.tabindex,
         "aria-describedby": this.tooltipId,
         class: [
           styles[config.targetClassName],
-          fontStyles[fontClassName],
-          outlineStyles[outlineClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.targetFont || this.size),
+          getCommonCssClass(
+            TOKEN_NAME.OUTLINE,
+            `${BASE_COLOR_SCHEME}-${this.size}`
+          ),
           this.targetClass,
         ],
         onMouseenter: () => this.hoverHandler(true),
@@ -285,31 +272,6 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.contentFont || this.size
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-
       const bindings = {
         ref: config.contentRef,
         id: this.tooltipId,
@@ -317,12 +279,12 @@ export default defineComponent({
         role: "tooltip",
         class: [
           styles[config.contentClassName],
-          fontStyles[fontClassName],
-          paddingStyles[paddingClassName],
-          paddingStyles[paddingSizeClassName],
-          roundingStyles[roundingClassName],
-          sizeStyles[sizeClassName],
-          transitionStyles[transitionClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont || this.size),
+          getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+          getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+          getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+          getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
           this.contentClass,
         ],
         style: this.contentOffsetStyles,
@@ -393,7 +355,6 @@ export default defineComponent({
    * */
   render(): VNode {
     const Tag = this.tag;
-
     return (
       <Tag ref={config.containerRef} class={this.containerClasses}>
         {this.renderTarget}

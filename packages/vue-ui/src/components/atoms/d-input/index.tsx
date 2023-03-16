@@ -5,20 +5,13 @@ import {
   type PropType,
   type VNode,
 } from "vue";
-import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import minControlWidthStyles from "@darwin-studio/ui-codegen/dist/styles/min-control-width.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import config from "./config";
@@ -169,15 +162,11 @@ export default defineComponent({
   computed: {
     renderLabel(): VNode | null {
       if (this.label || this.$slots.label) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.labelFont || this.size
-        );
         const bindings = {
           for: this.controlId,
           class: [
             styles[config.labelClassName],
-            fontStyles[fontClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
             this.labelClass,
           ],
         };
@@ -195,52 +184,22 @@ export default defineComponent({
     },
 
     inputClasses(): (string | undefined)[] {
-      // TODO: border and size and colorScheme separately ???
-      const borderClassName = prepareCssClassName(
-        codegenConfig.TOKENS.BORDER.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      // TODO: font and size separately
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.inputFont || this.size
-      );
-      // TODO: outline and size and colorScheme separately ???
-      const outlineClassName = prepareCssClassName(
-        codegenConfig.TOKENS.OUTLINE.CSS_CLASS_PREFIX,
-        `${BASE_COLOR_SCHEME}-${this.size}`
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return [
         styles[config.inputClassName],
-        borderStyles[borderClassName],
-        fontStyles[fontClassName],
-        outlineStyles[outlineClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(
+          TOKEN_NAME.BORDER,
+          `${BASE_COLOR_SCHEME}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.FONT, this.inputFont || this.size),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${BASE_COLOR_SCHEME}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         this.inputClass,
       ];
     },
@@ -288,18 +247,13 @@ export default defineComponent({
       );
 
       if (this.hasSlot) {
-        const sizeClassName = prepareCssClassName(
-          codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-          this.size
-        );
-
         return (
           <div class={styles[config.inputContainerClassName]}>
             {this.$slots.before && (
               <div
                 class={[
                   styles[config.beforeContainerClass],
-                  sizeStyles[sizeClassName],
+                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
                 ]}
               >
                 {this.$slots.before?.()}
@@ -310,7 +264,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.afterContainerClass],
-                  sizeStyles[sizeClassName],
+                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
                 ]}
               >
                 {this.$slots.after?.()}
@@ -327,13 +281,9 @@ export default defineComponent({
     // TODO: how to avoid layout shift
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.errorFont || this.size
-        );
         const classes = [
           styles[config.errorClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
 
@@ -394,22 +344,16 @@ export default defineComponent({
   // TODO: describe slots
   render(): VNode {
     const Tag = this.tag;
-
-    const minControlWidthClassName = prepareCssClassName(
-      codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
-      `${this.size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
-    );
-
     return (
       <Tag
         class={[
           styles[config.className],
-          minControlWidthStyles[minControlWidthClassName],
+          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
         ]}
       >
         {this.renderLabel}
         {this.renderInput}
-        {/*TODO: transition*/}
+        {/*TODO: transition, DCaption */}
         {this.renderError}
       </Tag>
     );
