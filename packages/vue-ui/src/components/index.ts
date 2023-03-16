@@ -7,9 +7,11 @@ import DCaption from "./atoms/d-caption";
 import DCheckbox from "./atoms/d-checkbox";
 import DInput from "./atoms/d-input";
 import DLink from "./atoms/d-link";
+import DLoader from "./atoms/d-loader";
 import DNotification from "./atoms/d-notification";
 import DRadio from "./atoms/d-radio";
 import DResponsiveImage from "./atoms/d-responsive-image";
+import DSlider from "./atoms/d-slider";
 import DSwitch from "./atoms/d-switch";
 import DTooltip from "./atoms/d-tooltip";
 /** containers **/
@@ -35,9 +37,11 @@ export default {
     Vue.component(DCheckbox.name, DCheckbox);
     Vue.component(DInput.name, DInput);
     Vue.component(DLink.name, DLink);
+    Vue.component(DLoader.name, DLoader);
     Vue.component(DNotification.name, DNotification);
     Vue.component(DRadio.name, DRadio);
     Vue.component(DResponsiveImage.name, DResponsiveImage);
+    Vue.component(DSlider.name, DSlider);
     Vue.component(DSwitch.name, DSwitch);
     Vue.component(DTooltip.name, DTooltip);
     Vue.component(DAspectRatio.name, DAspectRatio);
@@ -61,9 +65,11 @@ export {
   DCheckbox,
   DInput,
   DLink,
+  DLoader,
   DNotification,
   DRadio,
   DResponsiveImage,
+  DSlider,
   DSwitch,
   DTooltip,
   DAspectRatio,

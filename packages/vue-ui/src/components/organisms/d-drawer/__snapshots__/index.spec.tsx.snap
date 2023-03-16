@@ -6,13 +6,13 @@ exports[`DDrawer Should append the container to the props.target 1`] = `
   </transition-stub><transition-stub enteractiveclass="transitionEnterActive" leaveactiveclass="transitionLeaveActive" appear="false" persisted="false" css="true">
     <aside open="true" role="complementary" aria-modal="true" class="dDrawer right colorSchemePrimary paddingDefaultLarge paddingDefault roundingLarge sizeLarge transitionFast" style="--width: 25%; --height: 25%; --z-index: 1001;">
       <div class="header"><!----><button class="dButton borderPrimarySmall colorSchemePrimary fontSmall outlinePrimarySmall paddingEqualSmall paddingEqual roundingMedium sizeSmall transitionFast closeButton" id="customFocusId">⛌<!----></button></div>
-      <nav role="navigation" class="content fontHuge">Plain string content</nav><!---->
+      <nav role="navigation" class="content fontMedium">Plain string content</nav><!---->
     </aside>
   </transition-stub></div>
 <div data-v-app=""><!--teleport start--><!--teleport end--></div>
 `;
 
-exports[`DDrawer Should render props.content to the component element 1`] = `<nav role="navigation" class="content fontHuge"><b>Some html content</b></nav>`;
+exports[`DDrawer Should render props.content to the component element 1`] = `<nav role="navigation" class="content fontMedium"><b>Some html content</b></nav>`;
 
 exports[`DDrawer Shouldn't move the container to the props.target if props.enableInline is true 1`] = `
 <div id="custom-target"></div>
@@ -21,7 +21,7 @@ exports[`DDrawer Shouldn't move the container to the props.target if props.enabl
   </transition-stub><transition-stub enteractiveclass="transitionEnterActive" leaveactiveclass="transitionLeaveActive" appear="false" persisted="false" css="true">
     <aside open="true" role="complementary" aria-modal="true" class="dDrawer right colorSchemePrimary paddingDefaultLarge paddingDefault roundingLarge sizeLarge transitionFast" style="--width: 25%; --height: 25%; --z-index: 1001;">
       <div class="header"><!----><button class="dButton borderPrimarySmall colorSchemePrimary fontSmall outlinePrimarySmall paddingEqualSmall paddingEqual roundingMedium sizeSmall transitionFast closeButton" id="why-not">⛌<!----></button></div>
-      <nav role="navigation" class="content fontHuge">Plain string content</nav><!---->
+      <nav role="navigation" class="content fontMedium">Plain string content</nav><!---->
     </aside>
   </transition-stub><!--teleport end--></div>
 `;

@@ -7,20 +7,11 @@ import {
   type VNode,
   type DialogHTMLAttributes,
 } from "vue";
-import type { RendererElement } from "@vue/runtime-core";
 import { Transition as Trans } from "@vue/runtime-dom";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -33,8 +24,6 @@ import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -62,168 +51,107 @@ export default defineComponent({
     /**
      * Defines is component should be rendered
      */
-    isShown: {
-      type: Boolean,
-      default: true,
-    },
+    isShown: generateProp.boolean(true),
     /**
      * Defines if block scroll and backdrop presence
      */
-    isModal: {
-      type: Boolean,
-      default: true,
-    },
+    isModal: generateProp.boolean(true),
     /**
      * Defines content of the <b>title</b> element.
      */
-    title: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    title: generateProp.content(),
     /**
      * You can pass own class name to the <b>title</b> element.
      */
-    titleClass: {
-      type: String,
-    },
+    // TODO: options
+    titleClass: String,
     /**
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
-    titleFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    titleFont: generateProp.font(FONT.HUGE),
     // TODO: header
     // TODO: footer
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     // TODO: contentOptions instead of contentClass and contentFont ???
     /**
      * You can pass own class name to the <b>content</b> element.
      */
-    contentClass: {
-      type: String,
-    },
+    // TODO: options
+    contentClass: String,
     /**
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
-    contentFont: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE,
-    },
+    // TODO: options
+    contentFont: generateProp.font(),
     /**
      * The component is mounted inside passed element.
      */
-    target: {
-      type: [String, Object] as PropType<string | RendererElement>,
-      default: config.defaultTarget,
-    },
+    target: generateProp.teleportTarget(config.defaultTarget),
     /**
      * Min width of the component.
      */
-    minWidth: {
-      type: [String, Number],
-      default: config.defaultMinWidth,
-    },
+    minWidth: generateProp.text(config.defaultMinWidth),
     /**
      * Max width of the component.
      */
-    maxWidth: {
-      type: [String, Number],
-      default: config.defaultMaxWidth,
-    },
+    maxWidth: generateProp.text(config.defaultMaxWidth),
     /**
      * Min height of the component.
      */
-    minHeight: {
-      type: [String, Number],
-      default: config.defaultMinHeight,
-    },
+    minHeight: generateProp.text(config.defaultMinHeight),
     /**
      * Max height of the component.
      */
-    maxHeight: {
-      type: [String, Number],
-      default: config.defaultMaxHeight,
-    },
+    maxHeight: generateProp.text(config.defaultMaxHeight),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.EQUAL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(PADDING.EQUAL),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.LARGE),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.LARGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.LARGE),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines a11y role of the component
      */
-    role: {
-      type: String, // TODO: specify type,
-      default: config.defaultRole,
-    },
+    role: generateProp.string(config.defaultRole),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIALOG,
-    },
+    tag: generateProp.tag(TAG_NAME_DEFAULTS.DIALOG),
     /**
      * Defines z-index of the component
      */
-    zIndex: {
-      type: Number,
-      default: config.defaultZIndex,
-    },
+    zIndex: generateProp.number(config.defaultZIndex),
     /**
      * Defines component id to be focused on show
      */
-    focusId: {
-      type: [String, Number] as PropType<Text>,
-    },
+    focusId: generateProp.text(),
     /**
      * Hides header if you don't need it
      */
-    hideHeader: {
-      type: Boolean,
-    },
+    hideHeader: Boolean,
     /**
      * Hides footer if you don't need it
      */
-    hideFooter: {
-      type: Boolean,
-    },
+    hideFooter: Boolean,
     /**
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
@@ -249,16 +177,13 @@ export default defineComponent({
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
-    enableInline: {
-      type: Boolean,
-    },
+    enableInline: Boolean,
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch close event
