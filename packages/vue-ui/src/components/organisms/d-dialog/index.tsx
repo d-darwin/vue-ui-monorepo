@@ -12,14 +12,6 @@ import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
@@ -244,17 +236,11 @@ export default defineComponent({
     },
 
     renderTitle(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.titleFont
-      );
-
-      // TODO: slot, tag, enableHtml ... (like label in other components)
       return this.title ? (
         <div
           class={[
             styles[config.titleClassName],
-            fontStyles[fontClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.titleFont),
             this.titleClass,
           ]}
         >
@@ -291,15 +277,10 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.contentFont
-      );
-
       const bindings = {
         class: [
           styles[config.contentClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
           this.contentClass,
         ],
       };
@@ -341,50 +322,24 @@ export default defineComponent({
     },
 
     classes(): (string | undefined)[] {
-      // TODO: make common class names generator
-      const colorSchemeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
-        this.colorScheme
-      );
-      const paddingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        this.padding
-      );
-      const paddingSizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.PADDING.CSS_CLASS_PREFIX,
-        `${this.padding}-${this.size}`
-      );
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return [
         styles[config.className],
-        colorSchemeStyles[colorSchemeClassName],
-        paddingStyles[paddingSizeClassName],
-        paddingStyles[paddingClassName],
-        roundingStyles[roundingClassName],
-        sizeStyles[sizeClassName],
-        transitionStyles[transitionClassName],
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
+        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
       ];
     },
 
     styles(): CSSProperties {
       return {
-        "--min-width": prepareHtmlSize(this.minWidth),
-        "--max-width": prepareHtmlSize(this.maxWidth),
-        "--min-height": prepareHtmlSize(this.minHeight),
-        "--max-height": prepareHtmlSize(this.maxHeight),
-        "--z-index": this.zIndex,
+        "--min-width": prepareHtmlSize(this.minWidth), // TODO: config
+        "--max-width": prepareHtmlSize(this.maxWidth), // TODO: config
+        "--min-height": prepareHtmlSize(this.minHeight), // TODO: config
+        "--max-height": prepareHtmlSize(this.maxHeight), // TODO: config
+        "--z-index": this.zIndex, // TODO: config
       };
     },
 
