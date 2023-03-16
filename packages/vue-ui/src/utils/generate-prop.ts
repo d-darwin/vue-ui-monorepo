@@ -32,10 +32,10 @@ const generateProp = {
     default: defaultValue,
   }),
 
-  font: (defaultValue: Font = FONT.MEDIUM) => ({
+  font: (defaultValue: Font = FONT.MEDIUM, skipDefault = false) => ({
     // TODO: avoid hardcode figma values
     type: String as PropType<Font>,
-    default: defaultValue,
+    default: !skipDefault ? defaultValue : undefined,
   }),
 
   htmlSize: (defaultValue?: Text) => ({

@@ -50,7 +50,7 @@ export default defineComponent({
      * Defines font size of the <b>target</b> element. By default depends on props.size
      */
     // TODO: targetOptions
-    targetFont: generateProp.font(),
+    targetFont: generateProp.font(undefined, true),
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
@@ -66,7 +66,7 @@ export default defineComponent({
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
     // TODO: contentOptions
-    contentFont: generateProp.font(),
+    contentFont: generateProp.font(undefined, true),
     /**
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.

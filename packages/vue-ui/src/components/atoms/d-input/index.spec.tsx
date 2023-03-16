@@ -104,6 +104,7 @@ describe("DInput", () => {
     await wrapper.setProps({ inputFont: undefined });
   });
 
+  // TODO: fix
   fontSizeClassCase(wrapper, "input");
 
   outlineClassCase(wrapper, "input", BASE_COLOR_SCHEME, SIZE.LARGE);

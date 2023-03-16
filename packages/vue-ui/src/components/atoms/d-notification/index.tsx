@@ -116,7 +116,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.size(),
+    tag: generateProp.tag(),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */

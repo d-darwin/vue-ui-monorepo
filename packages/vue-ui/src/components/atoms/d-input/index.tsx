@@ -85,7 +85,7 @@ export default defineComponent({
      * Defines font size of the <b>input</b> element. By default depends on props.size
      */
     // TODO: move to inputOptions
-    inputFont: generateProp.font(),
+    inputFont: generateProp.font(undefined, true),
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
@@ -120,7 +120,7 @@ export default defineComponent({
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
     // TODO: move to errorOptions
-    errorFont: generateProp.font(),
+    errorFont: generateProp.font(undefined, true),
     /**
      * Pass true to disable <b>input</b> element.
      */

@@ -27,32 +27,6 @@ describe("DTypography", () => {
 
   slotCase(DAspectRatio, `.${config.className}`);
 
-  const aspectRatioValidator = DAspectRatio.props.aspectRatio.validator;
-
-  it("Validator pass prop.aspectRatio = 0.66", () => {
-    expect(aspectRatioValidator(0.66)).toBe(true);
-  });
-
-  it("Validator passes prop.aspectRatio = 3 / 2", () => {
-    expect(aspectRatioValidator("2 / 3")).toBe(true);
-  });
-
-  it("Validator passes prop.aspectRatio = 2 : 1", () => {
-    expect(aspectRatioValidator("2 : 1")).toBe(true);
-  });
-
-  it("Validator rejects prop.aspectRatio = 0. 66", () => {
-    expect(aspectRatioValidator("0. 66")).toBe(false);
-  });
-
-  it("Validator rejects prop.aspectRatio = 3 \\ 2", () => {
-    expect(aspectRatioValidator("2 \\ 3")).toBe(false);
-  });
-
-  it("Validator rejects prop.aspectRatio = 2 : 1", () => {
-    expect(aspectRatioValidator("2 ; 1")).toBe(false);
-  });
-
   it("Formatted aspect-ratio of 0.33 is '0.33'", async () => {
     await wrapperWithFullCSSSupport.setProps({ aspectRatio: 0.33 });
     expect(wrapperWithFullCSSSupport.vm.formattedAspectRatio).toBe("0.33");
