@@ -1,9 +1,7 @@
 import { defineComponent, type VNode } from "vue";
-// TODO: get @darwin-studio/ui-codegen paths from config.json
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: shorter path, inject to not import ???
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -35,12 +33,11 @@ export default defineComponent({
   },
 
   computed: {
-    classes(): string[] {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.font
-      );
-      return [styles[config.className], fontStyles[fontClassName]];
+    classes(): (string | undefined)[] {
+      return [
+        styles[config.className],
+        getCommonCssClass(TOKEN_NAME.FONT, this.font),
+      ];
     },
   },
 

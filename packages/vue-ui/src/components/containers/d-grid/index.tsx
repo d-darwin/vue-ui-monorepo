@@ -6,11 +6,10 @@ import {
   type VNode,
 } from "vue";
 import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
-import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -96,19 +95,14 @@ export default defineComponent({
     },
 
     bindings(): HTMLAttributes {
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       return {
         class: [
           styles[config.className],
-          transitionStyles[transitionClassName],
+          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         ],
         style: {
-          "--grid-col-span": this.preparedColSpan,
-          "--grid-row-gap": this.preparedRowGap,
+          "--grid-col-span": this.preparedColSpan, // TODO: config
+          "--grid-row-gap": this.preparedRowGap, // TODO: config
         },
       };
     },
