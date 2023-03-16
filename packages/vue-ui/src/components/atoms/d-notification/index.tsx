@@ -8,19 +8,7 @@ import {
   type PropType,
   type VNode,
 } from "vue";
-import type { RendererElement } from "@vue/runtime-core";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -29,14 +17,12 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
+import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
@@ -53,72 +39,48 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      // TODO: array of messages ???
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     /**
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
+    // TODO: placement ???
     position: {
       type: String as PropType<Position>,
       default: POSITION.TOP_RIGHT,
-      validator: (val: Position) =>
-        Boolean(Object.values(POSITION).includes(val)),
     },
     /**
      * Min width of the component.
      */
-    minWidth: {
-      type: [String, Number],
-    },
+    minWidth: generateProp.text(),
     /**
      * Max width of the component.
      */
-    maxWidth: {
-      type: [String, Number],
-    },
+    maxWidth: generateProp.text(),
     /**
      * Min height of the component.
      */
-    minHeight: {
-      type: [String, Number],
-    },
+    minHeight: generateProp.text(),
     /**
      * Max height of the component.
      */
-    maxHeight: {
-      type: [String, Number],
-    },
+    maxHeight: generateProp.text(),
     /**
      * If close button shown.
      */
-    closable: {
-      // TODO: dont use hover classes
-      type: Boolean,
-      default: true,
-    },
+    closable: generateProp.boolean(true),
     /**
      * Defines how long the notification will be displayed.
      */
-    duration: {
-      type: Number,
-      default: config.duration,
-    },
+    duration: generateProp.number(config.duration),
     /**
      * You can pass own class name to the <b>notification</b> element.
      */
-    notificationClass: {
-      type: String,
-    },
+    notificationClass: String,
     /**
      * The component is mounted inside passed element.
      */
-    target: {
-      type: [String, Object] as PropType<string | RendererElement>,
-      default: config.defaultTarget,
-    },
+    target: generateProp.teleportTarget(config.defaultTarget),
     /**
      * The notification type: success, info, warning, error.
      */
@@ -129,64 +91,41 @@ export default defineComponent({
     /**
      * Defines font size of the component. By default, depends on props.size
      */
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM,
-    },
+    font: generateProp.font(),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      // TODO: other colors ???
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.SMALL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.SMALL),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.size(),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
-    enableInline: {
-      type: Boolean,
-    },
+    enableInline: Boolean,
     /**
      * Enables html string rendering passed in props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
+    // TODO: remove
     enableHtml: {
       type: Boolean,
     },

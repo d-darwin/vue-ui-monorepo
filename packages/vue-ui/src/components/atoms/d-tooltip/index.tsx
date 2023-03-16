@@ -1,22 +1,13 @@
 import {
-  PropType,
-  VNode,
-  Ref,
   defineComponent,
   ref,
   onMounted,
   nextTick,
   watch,
+  type PropType,
+  type VNode,
+  type Ref,
 } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -29,12 +20,10 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
 import { TRIGGER, BASE_COLOR_SCHEME } from "./constant";
@@ -51,39 +40,33 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    target: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    target: generateProp.content(),
     /**
      * You can pass own class name to the <b>target</b> element.
      */
-    targetClass: {
-      type: String,
-    },
+    // TODO: targetOptions
+    targetClass: String,
     /**
      * Defines font size of the <b>target</b> element. By default depends on props.size
      */
-    targetFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: targetOptions
+    targetFont: generateProp.font(),
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    content: generateProp.content(),
     /**
      * You can pass own class name to the <b>content</b> element.
      */
+    // TODO: contentOptions
     contentClass: {
       type: String,
     },
     /**
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
-    contentFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: contentOptions
+    contentFont: generateProp.font(),
     /**
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
@@ -91,17 +74,12 @@ export default defineComponent({
     position: {
       type: String as PropType<Position>,
       default: POSITION.TOP,
-      validator: (val: Position) =>
-        Boolean(Object.values(POSITION).includes(val)),
     },
     /**
      * Defines offset of the tooltip from the target
      */
     offset: {
-      // TODO
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      type: Array as PropType<[number, number]>,
+      type: Array as unknown as PropType<[number, number]>,
       default: () => [4, 4],
     },
     /**
@@ -114,67 +92,43 @@ export default defineComponent({
     /**
      * Use in pair with trigger="manual" to control the tooltip appearance manually
      */
-    forceShow: {
-      type: Boolean,
-    },
+    forceShow: Boolean,
     /**
      * Defines order of selection when navigating with Tab
      */
-    tabindex: {
-      type: Number,
-      default: 0,
-    },
+    tabindex: generateProp.number(0),
     /**
      * Defines should tooltip have arrow
      */
-    hasArrow: {
-      type: Boolean,
-      default: true,
-    },
+    hasArrow: generateProp.boolean(true),
     // TODO: inverse ???
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.target and props.content.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event

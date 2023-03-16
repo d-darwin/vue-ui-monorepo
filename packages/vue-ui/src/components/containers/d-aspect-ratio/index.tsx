@@ -1,6 +1,5 @@
 import { CSSProperties, defineComponent, PropType, VNode } from "vue";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
-import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { parseWidthHeight } from "./utils";
@@ -20,7 +19,6 @@ export default defineComponent({
     aspectRatio: {
       type: [String, Number] as PropType<Text>,
       default: "1",
-      validator: aspectRationValidator, // TODO: do we need this extra calculations ??
     },
     /**
      * Plain string, VNode or HTML if props.enableHtml is true

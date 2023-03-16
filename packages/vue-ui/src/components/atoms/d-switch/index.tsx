@@ -1,13 +1,7 @@
 import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
 import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -19,9 +13,7 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
@@ -40,114 +32,83 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * Defines if the component at the truthy state by default
      */
-    checked: {
-      type: Boolean,
-    },
+    checked: Boolean,
     /**
      * Replace default true/false values with your own.
      */
-    values: {
-      // TODO: naming, combine with labels ???
-      type: Object as PropType<Values>,
-    },
+    // TODO: naming, combine with labels ???
+    values: generateProp.options<Values>(),
     /**
      * Add labels to the component states.
      */
-    labels: {
-      // TODO: naming, combine with values ???
-      type: Object as PropType<Values>,
-    },
+    // TODO: naming, combine with values ???
+    labels: generateProp.options<Values>(),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    // TODO: inputOptions
+    inputClass: String,
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.text(), // TODO: .content
     /**
      * You can pass own class name to the <b>error</b> element.
      */
+    // TODO: errorOptions
     errorClass: {
       type: String,
     },
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
+    // TODO: errorOptions
     errorFont: {
       type: String as PropType<Font>,
     },
     /**
      * Defines common font size of the component
      */
-    font: {
-      type: String as PropType<Font>,
-    },
+    font: generateProp.font(),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
-    size: {
-      // TODO: fontSize and size separately ???
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.TINY),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Pass true to disable <b>input</b> element.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     // TODO: readonly state ???
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
@@ -158,9 +119,8 @@ export default defineComponent({
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event

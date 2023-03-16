@@ -1,13 +1,10 @@
 import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import aspectRationValidator from "@darwin-studio/vue-ui/src/utils/aspect-ration-validator"; // TODO: fix relative path
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type {
   PictureSource,
@@ -55,16 +52,12 @@ export default defineComponent({
     source: {
       // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
       type: [Array, Object, String] as PropType<Source>,
-      // TODO: validator or it is not efficient???
     },
     /**
      * Aspect ratio of the picture.
      * Expected format: 2 || '0.5' || 'width/height' || 'width:height'
      */
-    aspectRatio: {
-      type: [String, Number] as PropType<Text>,
-      validator: aspectRationValidator,
-    },
+    aspectRatio: generateProp.text(),
     /**
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
@@ -74,6 +67,7 @@ export default defineComponent({
     /**
      * Renders to the <i>object-fit</i> attr of the <b>img</b> element
      */
+    // TODO: imgOptions
     objectFit: {
       type: String as PropType<ObjectFit>,
       default: OBJECT_FIT.COVER,
@@ -81,27 +75,23 @@ export default defineComponent({
     /**
      * You can pass own class name to the <b>img</b> element.
      */
-    imageClass: {
-      type: String,
-    },
+    // TODO: imgOptions
+    imageClass: String,
     /**
      * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they don't present
      */
-    caption: {
-      type: String,
-    },
+    // TODO: use DCaption
+    caption: String, // TODO: generateProp.content
     /**
      * Defines font size of the <b>caption</b> element. By default depends on props.size
      */
-    captionFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: captionOptions
+    captionFont: generateProp.font(),
     /**
      * You can pass own class name to the <b>caption</b> element.
      */
-    captionClass: {
-      type: String,
-    },
+    // TODO: captionOptions
+    captionClass: String,
     /**
      * Renders to the <i>loading</i> attr of the <b>img</b> element
      */
@@ -116,10 +106,7 @@ export default defineComponent({
      * Enables html string rendering passed in props.caption.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      // TODO: use, test case
-      type: Boolean,
-    },
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch load event

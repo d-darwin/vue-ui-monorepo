@@ -132,12 +132,6 @@ export default defineComponent({
     position: {
       type: String as PropType<PositionStrict>,
       default: POSITION_HORIZONTAL.RIGHT,
-      validator: (val: PositionStrict) =>
-        Boolean(
-          Object.values(
-            Object.assign({}, POSITION_HORIZONTAL, POSITION_VERTICAL)
-          ).includes(val)
-        ),
     },
     /**
      * Defines width of the component if props.position is "right" or "left"

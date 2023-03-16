@@ -5,10 +5,6 @@ import {
   type VNode,
 } from "vue";
 // TODO: add import/index ???
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import outlineStyles from "@darwin-studio/ui-codegen/dist/styles/outline.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -16,7 +12,7 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -32,42 +28,29 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    label: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateProp.content(),
     /**
      * Defines font size of the component. By default, depends on props.size
      */
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM,
-    },
+    font: generateProp.font(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Pass true to disable click events.
      */
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Pass true to prevent default click behaviour
      */
-    preventDefault: {
-      type: Boolean,
-    },
+    preventDefault: Boolean,
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event

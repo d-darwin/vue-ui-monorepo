@@ -1,21 +1,14 @@
 import {
   defineComponent,
-  VNode,
-  PropType,
-  InputHTMLAttributes,
   ref,
   Transition as Trans,
+  type VNode,
+  type PropType,
+  type InputHTMLAttributes,
 } from "vue";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -28,10 +21,9 @@ import minControlWidthStyles from "@darwin-studio/ui-codegen/dist/styles/min-con
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -39,7 +31,7 @@ import styles from "./index.css?module";
 /**
  * Renders <b>input</b> element with <i>type="checkbox"</i>, label, error and customizable ✓ icon.
  */
-// TODO: indeterminate or mixed state
+// TODO: indeterminate (or mixed) state
 export default defineComponent({
   name: config.name,
 
@@ -47,127 +39,88 @@ export default defineComponent({
     /**
      * Defines is the component is checked by default
      */
-    checked: {
-      type: Boolean,
-    },
+    checked: Boolean,
     /**
      * Defines value of the <b>input</b> element
      */
-    value: {
-      type: [String, Number] as PropType<Text>,
-      default: DEFAULT_VALUE,
-    },
+    value: generateProp.text(DEFAULT_VALUE),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.TINY),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    inputClass: String,
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
+    inputAttrs: generateProp.options<InputHTMLAttributes>(),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
+    label: generateProp.text(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: move to labeOptions:
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to labeOptions:
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.text(), // TODO: .content
     /**
      * You can pass own class name to the <b>error</b> element.
      */
-    errorClass: {
-      type: String,
-    },
+    // TODO: move to errorOptions:
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to errorOptions:
+    errorFont: generateProp.font(),
     /**
      * You can pass own class name to the icon container element.
      */
-    iconContainerClass: {
-      type: String,
-    },
+    // TODO: option ???
+    iconContainerClass: String,
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event

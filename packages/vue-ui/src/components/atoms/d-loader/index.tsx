@@ -2,20 +2,11 @@ import {
   defineComponent,
   mergeProps,
   type CSSProperties,
-  type PropType,
   type VNode,
 } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -23,7 +14,6 @@ import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; 
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: move to common utils ???
 import codegenConfig from "@darwin-studio/ui-codegen/config.json"; // TODO: move to common config ???
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
@@ -41,68 +31,41 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    content: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-      default: config.defaultContent,
-    },
+    content: generateProp.content(config.defaultContent),
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.PRIMARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.HUGE, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    font: generateProp.font(FONT.HUGE),
     /**
      * Defines corner rounding of the component
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.FULL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(ROUNDING.FULL),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines animation duration
      */
-    animationDuration: {
-      type: String,
-      default: config.defaultAnimationDuration,
-    },
+    animationDuration: generateProp.string(config.defaultAnimationDuration),
     /**
      * Defines z-index of the component
      */
-    zIndex: {
-      type: Number,
-      default: config.defaultZIndex,
-    },
+    zIndex: generateProp.number(config.defaultZIndex),
     /**
      * Adds DBackdrop to fill all available space
      */
-    fillAvailable: {
-      type: Boolean,
-      default: false,
-    },
+    fillAvailable: Boolean,
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */

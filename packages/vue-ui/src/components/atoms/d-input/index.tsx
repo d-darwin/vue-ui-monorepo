@@ -1,19 +1,10 @@
 import {
-  CSSProperties,
   defineComponent,
-  InputHTMLAttributes,
-  PropType,
-  VNode,
+  type CSSProperties,
+  type InputHTMLAttributes,
+  type PropType,
+  type VNode,
 } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding"; // TODO: shorter path, default export ???
-import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import minControlWidthStyles from "@darwin-studio/ui-codegen/dist/styles/min-control-width.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -26,10 +17,8 @@ import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssC
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"; // TODO: fix relative path
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import config from "./config";
@@ -47,53 +36,36 @@ export default defineComponent({
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
-    value: {
-      type: [String, Number] as PropType<Text>,
-    },
+    value: generateProp.text(),
     /**
      * Defines initial <i>placeholder</i> attr of the <b>input</b> element
      */
-    placeholder: {
-      type: String,
-    },
+    placeholder: String,
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: {
-      type: [String, Number] as PropType<Text>,
-    },
+    id: generateProp.text(),
     /**
      * Defines padding type of the <b>input</b> element
      */
-    padding: {
-      type: String as PropType<Padding>,
-      default: PADDING.DEFAULT, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    padding: generateProp.padding(),
     /**
      * Defines corner rounding of the <b>input</b> element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines <i>type</i> attr of the <b>input</b> element
      */
+    // TODO: move to inputOptions
     inputType: {
       type: String as PropType<InputTypes>,
       default: INPUT_TYPE.TEXT,
@@ -102,85 +74,67 @@ export default defineComponent({
     /**
      * Defines <i>size</i> attr of the <b>input</b> element.<br>
      */
-    inputSize: {
-      type: Number,
-      default: 1,
-    },
+    // TODO: move to inputOptions
+    inputSize: generateProp.number(1),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
-    inputClass: {
-      type: String,
-    },
+    // TODO: move to inputOptions
+    inputClass: String,
     /**
      * Defines font size of the <b>input</b> element. By default depends on props.size
      */
-    inputFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to inputOptions
+    inputFont: generateProp.font(),
     /**
      * You can pass any attributes to the <b>input</b> element.
      */
-    inputAttrs: {
-      type: Object as PropType<InputHTMLAttributes>,
-    },
+    // TODO: move to inputOptions
+    inputAttrs: generateProp.options<InputHTMLAttributes>(),
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: move to prop.content();
+    label: generateProp.text(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: move to labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to labelOptions
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> tag.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    // TODO: use DCaption
+    error: generateProp.text(), // TODO: move to prop.content();
     /**
      * You can pass own class name to the <b>error</b> element.
      */
-    errorClass: {
-      type: String,
-    },
+    // TODO: move to errorOptions
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: move to errorOptions
+    errorFont: generateProp.font(),
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event

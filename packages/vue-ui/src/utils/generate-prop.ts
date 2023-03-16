@@ -1,4 +1,4 @@
-import { PropType, VNode } from "vue";
+import type { PropType, VNode } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -10,6 +10,11 @@ import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { RendererElement } from "@vue/runtime-core";
 
 /**
  *
@@ -27,8 +32,20 @@ const generateProp = {
     default: defaultValue,
   }),
 
+  font: (defaultValue: Font = FONT.MEDIUM) => ({
+    // TODO: avoid hardcode figma values
+    type: String as PropType<Font>,
+    default: defaultValue,
+  }),
+
   htmlSize: (defaultValue?: Text) => ({
     types: [String, Number] as PropType<Text>,
+    default: defaultValue,
+  }),
+
+  padding: (defaultValue: Padding = PADDING.DEFAULT) => ({
+    // TODO: avoid hardcode figma values
+    type: String as PropType<Padding>,
     default: defaultValue,
   }),
 
@@ -46,14 +63,14 @@ const generateProp = {
     default: defaultValue,
   }),
 
+  transition: (defaultValue: Transition = TRANSITION.FAST) => ({
+    type: String as PropType<Transition>,
+    default: defaultValue, // TODO: avoid hardcode figma values
+  }),
+
   tag: (defaultValue: TagName = TAG_NAME_DEFAULTS.DIV!) => ({
     type: String as PropType<TagName>,
     default: defaultValue,
-  }),
-
-  transaction: (defaultValue: Transition = TRANSITION.FAST) => ({
-    type: String as PropType<Transition>,
-    default: defaultValue, // TODO: gent defaults base on actual values, not hardcoded
   }),
 
   number: (defaultValue?: number) => ({
@@ -66,9 +83,20 @@ const generateProp = {
     default: defaultValue,
   }),
 
-  boolean: (defaultValue?: boolean) => ({
+  boolean: (defaultValue: boolean) => ({
     type: Boolean,
     default: defaultValue,
+  }),
+
+  text: (defaultValue?: Text, required?: boolean) => ({
+    type: [String, Number] as PropType<Text>,
+    default: defaultValue,
+    required,
+  }),
+
+  teleportTarget: (defaultValue?: string | RendererElement) => ({
+    type: [String, Object] as PropType<string | RendererElement>,
+    default: () => defaultValue,
   }),
 
   options: <T>(defaultValue?: T) => ({

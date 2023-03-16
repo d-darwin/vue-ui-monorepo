@@ -1,12 +1,9 @@
-import { defineComponent, PropType, VNode } from "vue";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import { defineComponent, type PropType, type VNode } from "vue";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Type } from "./types";
 import { TYPE } from "./constant";
 import config from "./config";
@@ -22,9 +19,7 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    label: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateProp.content(),
     /**
      * Defines colors of the component
      */
@@ -36,30 +31,23 @@ export default defineComponent({
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    font: {
-      type: String as PropType<Font>,
-      default: FONT.SMALL, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    font: generateProp.font(FONT.SMALL),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.DIV,
-    },
+    tag: generateProp.tag(),
 
     /**
      * Enables html string rendering passed in props.label.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    enableHtml: Boolean,
   },
 
   render(): VNode {
     const Tag = this.tag;
 
+    // TODO: use generator
     const fontClassName = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       this.font

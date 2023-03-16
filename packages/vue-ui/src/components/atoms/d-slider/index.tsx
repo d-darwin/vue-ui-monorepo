@@ -13,7 +13,6 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
@@ -39,7 +38,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: [String, Number] as PropType<Text>,
+    id: generateProp.text(),
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
@@ -107,7 +106,7 @@ export default defineComponent({
     /**
      * Defines transition type of the component
      */
-    transition: generateProp.transaction(),
+    transition: generateProp.transition(),
     /**
      * Pass true to disable attr of the <b>input</b> element.
      */
