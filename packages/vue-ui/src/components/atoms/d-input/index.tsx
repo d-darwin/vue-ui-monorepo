@@ -94,8 +94,7 @@ export default defineComponent({
     /**
      * Defines content of the <b>label</b> element.
      */
-    // TODO: move to prop.content();
-    label: generateProp.text(),
+    label: generateProp.content(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
@@ -110,7 +109,7 @@ export default defineComponent({
      * If not empty renders as an error string below the <b>input</b> tag.
      */
     // TODO: use DCaption
-    error: generateProp.text(), // TODO: move to prop.content();
+    error: generateProp.content(),
     /**
      * You can pass own class name to the <b>error</b> element.
      */

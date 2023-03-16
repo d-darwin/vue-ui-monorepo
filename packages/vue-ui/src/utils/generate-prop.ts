@@ -88,7 +88,7 @@ const generateProp = {
     default: defaultValue,
   }),
 
-  text: (defaultValue?: Text, required?: boolean) => ({
+  text: (defaultValue?: Text | (() => Text), required?: boolean) => ({
     type: [String, Number] as PropType<Text>,
     default: defaultValue,
     required,

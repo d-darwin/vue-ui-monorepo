@@ -1,22 +1,13 @@
-import { defineComponent, PropType, VNode } from "vue";
-import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme"; // TODO: shorter path, default export ???
+import { defineComponent, type PropType, type VNode } from "vue";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
-import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding"; // TODO: shorter path, default export ???
-import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
-import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition"; // TODO: shorter path, default export ???
-import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition"; // TODO: shorter path, default export ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./index.css?module";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 /**
  * Renders group of the DCheckbox components with label and error
@@ -34,90 +25,62 @@ export default defineComponent({
     /**
      * Plain string, VNode or HTML if props.enableHtml is true
      */
-    label: {
-      type: [String, Number, Object] as PropType<Text | VNode>,
-    },
+    label: generateProp.content(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    labelClass: {
-      type: String,
-    },
+    // TODO: labelOptions
+    labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: {
-      type: String as PropType<Font>,
-      default: FONT.MEDIUM,
-    },
+    // TODO: labelOptions
+    labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
      */
-    error: {
-      type: [String, Number] as PropType<Text>,
-    },
+    error: generateProp.content(),
     /**
      * You can pass own class name to the <b>error</b> element.
      */
-    errorClass: {
-      type: String,
-    },
+    // TODO: errorOptions
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    // TODO: errorOptions
+    errorFont: generateProp.font(undefined, true),
     /**
      * Pass true to disable <b>input</b> element.
      */
-    // TODO: - or add one props.inputAttrs
-    disabled: {
-      type: Boolean,
-    },
+    disabled: Boolean,
     /**
      * Defines appearance of the component
      */
-    colorScheme: {
-      type: String as PropType<ColorScheme>,
-      default: COLOR_SCHEME.SECONDARY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: {
-      type: String as PropType<Rounding>,
-      default: ROUNDING.MEDIUM, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    rounding: generateProp.rounding(),
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: {
-      type: String as PropType<Size>,
-      default: SIZE.TINY, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    size: generateProp.size(SIZE.TINY),
     /**
      * Defines transition type of the component
      */
-    transition: {
-      type: String as PropType<Transition>,
-      default: TRANSITION.FAST, // TODO: gent defaults base on actual values, not hardcoded
-    },
+    transition: generateProp.transition(),
     /**
      * Defines container element type of the component
      */
-    tag: {
-      type: String as PropType<TagName>,
-      default: TAG_NAME_DEFAULTS.FIELDSET,
-    },
+    tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
     /**
      * Enables html string rendering passed in props.label and props.error.<br>
      * ⚠️ Use only on trusted content and never on user-provided content.
      */
-    enableHtml: {
-      type: Boolean,
-    },
+    // TODO: remove
+    enableHtml: Boolean,
 
     // TODO: whenChange\WhenInput
   },

@@ -210,6 +210,8 @@ describe("DTabs", () => {
   it(`Should render props.transition to DTab transition class`, async () => {
     const transition = TRANSITION.AVERAGE;
     // TODO: without mounting new component ???
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO
     const wrapper = await mount(DTabs, {
       props: {
         transition,

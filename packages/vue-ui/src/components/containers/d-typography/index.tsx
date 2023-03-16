@@ -1,4 +1,4 @@
-import { defineComponent, VNode } from "vue";
+import { defineComponent, type VNode } from "vue";
 // TODO: get @darwin-studio/ui-codegen paths from config.json
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: module, common style ???
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName"; // TODO: shorter path ???

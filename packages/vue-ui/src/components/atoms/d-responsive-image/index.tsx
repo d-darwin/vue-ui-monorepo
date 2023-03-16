@@ -80,8 +80,10 @@ export default defineComponent({
     /**
      * The picture caption. Also used as <i>alt</i> and <i>title</> attrs if they don't present
      */
+    // TODO: imgOptions, descr
+    alt: String,
     // TODO: use DCaption
-    caption: String, // TODO: generateProp.content
+    caption: generateProp.content(),
     /**
      * Defines font size of the <b>caption</b> element. By default depends on props.size
      */
@@ -168,7 +170,7 @@ export default defineComponent({
         <img
           src={src}
           srcset={srcset}
-          alt={(this.$attrs?.alt as string) || this.caption || ""} // TODO: add props.alt ???
+          alt={String(this.alt)}
           loading={this.loading}
           style={{ "object-fit": this.objectFit }}
           class={classes}
