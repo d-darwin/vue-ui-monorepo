@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DTable Should render props.bodyRows as tr elements inside the tbody 1`] = `
-<td class="paddingDefaultMedium paddingDefault sizeMedium">
+<td class="paddingDefault paddingDefaultMedium sizeMedium">
   <div class="inner-td-element">cell 13</div>
 </td>
 `;
 
-exports[`DTable Should render props.bodyRows as tr elements inside the tbody 2`] = `<td class="paddingDefaultMedium paddingDefault sizeMedium"><span data-type="cell-content">cell 13</span></td>`;
+exports[`DTable Should render props.bodyRows as tr elements inside the tbody 2`] = `<td class="paddingDefault paddingDefaultMedium sizeMedium"><span data-type="cell-content">cell 13</span></td>`;
 
 exports[`DTable Should render props.headRows as tr elements inside the thead 1`] = `
-<th class="paddingDefaultMedium paddingDefault sizeMedium">
+<th class="paddingDefault paddingDefaultMedium sizeMedium">
   <div class="inner-th-element">head 3</div>
 </th>
 `;

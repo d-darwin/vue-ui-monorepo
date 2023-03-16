@@ -2,14 +2,13 @@ import { defineComponent, type PropType, type VNode } from "vue";
 import { v4 as uuid } from "uuid";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./index.css?module";
+import getCommonCssClass from "@/utils/get-common-css-class";
+import { TOKEN_NAME } from "@/constants/token-name";
 
 /**
  * Renders group of the DRadio components with label and error
@@ -105,14 +104,9 @@ export default defineComponent({
 
   computed: {
     renderLabel(): VNode | null {
-      const fontClassName = prepareCssClassName(
-        codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-        this.labelFont || this.size
-      );
-
       const labelClasses = [
         styles[config.labelClassName],
-        fontStyles[fontClassName],
+        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
         this.labelClass,
       ];
 
@@ -172,13 +166,9 @@ export default defineComponent({
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const fontClassName = prepareCssClassName(
-          codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-          this.errorFont || this.size
-        );
         const classes = [
           styles[config.errorClassName],
-          fontStyles[fontClassName],
+          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
 
@@ -203,7 +193,6 @@ export default defineComponent({
   // TODO: slots descr
   render(): VNode {
     const Tag = this.tag;
-
     return (
       <Tag class={styles[config.className]}>
         {this.renderLabel}

@@ -13,6 +13,7 @@ import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.c
 import type { TokenName } from "@darwin-studio/vue-ui/src/types/token-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name"; // TODO: shorter path, default export ??? TODO: make it module ???
 
+// TODO: convert to fabric method
 const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
   const classPrefix = codegenConfig.TOKENS[tokenName]?.CSS_CLASS_PREFIX;
   if (!classPrefix || !tokenVariant) {
