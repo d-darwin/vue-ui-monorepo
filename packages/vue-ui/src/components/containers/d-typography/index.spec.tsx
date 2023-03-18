@@ -18,10 +18,8 @@ describe("DTypography", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propStringCase(wrapper);
-
-  propVNodeCase(wrapper);
-
+  propStringCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.className}`);
   slotCase(DTypography, `.${config.className}`);
 
   // TODO: classes are not rendered in jest ???

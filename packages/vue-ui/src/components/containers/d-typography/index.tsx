@@ -13,7 +13,7 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     /**
@@ -24,12 +24,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   computed: {
@@ -43,16 +37,9 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
-
-    if (!this.enableHtml) {
-      /** @slot Use instead of props.content to fully customize content */
-      return (
-        <Tag class={this.classes}>
-          {this.$slots.default?.() || this.content}
-        </Tag>
-      );
-    }
-
-    return <Tag class={this.classes} v-html={this.content} />;
+    /** @slot Use instead of props.content to fully customize content */
+    return (
+      <Tag class={this.classes}>{this.$slots.default?.() || this.content}</Tag>
+    );
   },
 });

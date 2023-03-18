@@ -17,14 +17,10 @@ describe("DTypography", () => {
 
   baseClassCase(wrapperWithFullCSSSupport, config.className);
 
-  propStringCase(wrapperWithoutCSSSupport);
-
-  propStringCase(wrapperWithFullCSSSupport);
-
-  propVNodeCase(wrapperWithoutCSSSupport);
-
-  propVNodeCase(wrapperWithFullCSSSupport);
-
+  propStringCase(wrapperWithoutCSSSupport, `.${config.className}`);
+  propStringCase(wrapperWithFullCSSSupport, `.${config.className}`);
+  propVNodeCase(wrapperWithoutCSSSupport, `.${config.className}`);
+  propVNodeCase(wrapperWithFullCSSSupport, `.${config.className}`);
   slotCase(DAspectRatio, `.${config.className}`);
 
   it("Formatted aspect-ratio of 0.33 is '0.33'", async () => {
