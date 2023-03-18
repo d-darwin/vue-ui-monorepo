@@ -77,7 +77,6 @@ export default {
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     tag: "div",
-    enableHtml: false,
     whenChange: (value: Text | undefined) => {
       console.log("change", value);
     },

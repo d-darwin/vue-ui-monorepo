@@ -4,9 +4,11 @@ import { DBackdropAsync as DBackdrop } from "@/components/atoms/d-backdrop/async
 import config from "./config";
 import {
   colorSchemeClassCase,
+  propVNodeCase,
   fontClassCase,
   roundingClassCase,
   sizeClassCase,
+  slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -19,12 +21,9 @@ describe("DLoader", () => {
     expect(loaderEl.exists()).toBeTruthy();
   });
 
-  it("Should render props.content", async () => {
-    const content = <div>...</div>;
-    await wrapper.setProps({ content });
+  propVNodeCase(wrapper, `.${config.className}`);
 
-    expect(wrapper.html()).toMatchSnapshot();
-  });
+  slotCase(DLoader, `.${config.className}`);
 
   colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
 

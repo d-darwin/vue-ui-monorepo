@@ -21,13 +21,12 @@ export default {
     },
   },
   args: {
-    label: "Some text content",
+    content: "Some text content",
     href: "/some-link",
     font: FONT.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
     disabled: false,
     preventDefault: true,
-    enableHtml: false,
     whenClick: () => {
       console.log("click");
     },

@@ -17,8 +17,8 @@ import {
   controlIdPresenceCase,
   errorClassCase,
   errorFontCase,
-  errorHtmlCase,
-  errorStringCase,
+  propVNodeCase,
+  propStringCase,
   fontSizeClassCase,
   inputAttrsCase,
   inputClassCase,
@@ -26,8 +26,6 @@ import {
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
-  labelHtmlCase,
-  labelStringCase,
   minControlWidthCase,
   outlineClassCase,
   paddingEqualClassesCase,
@@ -72,16 +70,11 @@ describe("DInput", () => {
 
   inputAttrsCase(wrapper);
 
-  labelStringCase(wrapper);
-
   labelAbsenceCase(wrapper);
-
   labelClassCase(wrapper);
-
   labelFontCase(wrapper);
-
-  labelHtmlCase(wrapper);
-
+  propStringCase(wrapper, `.${config.labelClassName}`, "label");
+  propVNodeCase(wrapper, `.${config.labelClassName}`, "label");
   slotCase(DInput, `.${config.labelClassName}`, "label");
 
   controlIdPresenceCase(wrapper);
@@ -117,15 +110,11 @@ describe("DInput", () => {
 
   transitionClassCase(wrapper, "input");
 
-  errorStringCase(wrapper, `.${config.errorClassName}`);
-
-  errorHtmlCase(wrapper, `.${config.errorClassName}`);
-
-  slotCase(DInput, `.${config.errorClassName}`, "error");
-
   errorClassCase(wrapper, `.${config.errorClassName}`);
-
   errorFontCase(wrapper, `.${config.errorClassName}`);
+  propStringCase(wrapper, `.${config.errorClassName}`, "error");
+  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
+  slotCase(DInput, `.${config.errorClassName}`, "error");
 
   // TODO: case factory
   it("Should emit onChange event with value payload", async () => {

@@ -25,9 +25,9 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
-    label: generateProp.content(),
+    content: generateProp.content(),
     /**
      * Defines appearance of the component
      */
@@ -69,11 +69,6 @@ export default defineComponent({
      * Pass true to make the button active // TODO: test, story
      */
     active: Boolean,
-    /**
-     * Enables html string rendering passed in props.label.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event
@@ -164,23 +159,19 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    if (!this.enableHtml) {
-      /** @slot Use instead of props.label to fully customize content */
-      return (
-        <Tag {...this.bindings}>
-          {this.$slots.default?.() || this.label}
-          {this.loading && (
-            <DLoader
-              colorScheme={this.colorScheme}
-              size={this.size}
-              font={this.size}
-              {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)}
-            />
-          )}
-        </Tag>
-      );
-    }
-
-    return <Tag {...this.bindings} v-html={this.label} />;
+    /** @slot Use instead of props.content to fully customize content */
+    return (
+      <Tag {...this.bindings}>
+        {this.$slots.default?.() || this.content}
+        {this.loading && (
+          <DLoader
+            colorScheme={this.colorScheme}
+            size={this.size}
+            font={this.size}
+            {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)}
+          />
+        )}
+      </Tag>
+    );
   },
 });

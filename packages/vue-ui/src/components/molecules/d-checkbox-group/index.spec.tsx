@@ -9,14 +9,12 @@ import {
   baseClassCase,
   errorClassCase,
   errorFontCase,
-  errorHtmlCase,
-  errorStringCase,
+  propVNodeCase,
+  propStringCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
-  labelStringCase,
   tagCase,
-  labelHtmlCase,
   errorAbsenceCase,
   slotCase,
 } from "@/utils/test-case-factories";
@@ -39,15 +37,15 @@ describe("DCheckboxGroup", () => {
   });
 
   labelAbsenceCase(wrapper, "legend");
-  labelStringCase(wrapper, "legend");
-  labelHtmlCase(wrapper, "legend");
+  propStringCase(wrapper, "legend", "label");
+  propVNodeCase(wrapper, "legend", "label");
   slotCase(DCheckboxGroup, "legend", "label");
   labelClassCase(wrapper, "legend");
   labelFontCase(wrapper, "legend");
 
   errorAbsenceCase(wrapper, `.${config.errorClassName}`);
-  errorStringCase(wrapper, `.${config.errorClassName}`);
-  errorHtmlCase(wrapper, `.${config.errorClassName}`);
+  propStringCase(wrapper, `.${config.errorClassName}`, "error");
+  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
   slotCase(DCheckboxGroup, `.${config.errorClassName}`, "error");
   errorClassCase(wrapper, `.${config.errorClassName}`);
   errorFontCase(wrapper, `.${config.errorClassName}`);
@@ -132,19 +130,6 @@ describe("DCheckboxGroup", () => {
     const checkboxes = wrapper.findAllComponents(DCheckbox);
     expect(checkboxes[0]?.props("transition")).toBe(firstCheckboxTransition);
     expect(checkboxes[1]?.props("transition")).toBe(transition);
-  });
-
-  it("Should pass props.enableHtml to the descendants", async () => {
-    const enableHtml = true;
-    const items = [
-      <DCheckbox label={"checkbox 1"} />,
-      <DCheckbox label={"checkbox 2"} enableHtml={false} />,
-      <DCheckbox label={"checkbox 3"} />,
-    ];
-    await wrapper.setProps({ items, enableHtml });
-    const checkboxes = wrapper.findAllComponents(DCheckbox);
-    expect(checkboxes[0]?.props("enableHtml")).toBeTruthy();
-    expect(checkboxes[1]?.props("enableHtml")).toBeFalsy();
   });
 
   tagCase(wrapper);

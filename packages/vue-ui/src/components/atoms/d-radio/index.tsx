@@ -50,10 +50,7 @@ export default defineComponent({
     /**
      * Defines appearance of the components.
      */
-    type: {
-      type: String as PropType<Type>,
-      default: TYPE.BASE,
-    },
+    type: generateProp.string<Type>(TYPE.BASE),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
@@ -131,11 +128,6 @@ export default defineComponent({
      * Pass any DButton.props to customize button, f.e. { colorScheme: "danger" }
      */
     buttonOptions: generateProp.options<DButtonProps>(BUTTON_DEFAULTS),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -267,15 +259,6 @@ export default defineComponent({
 
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
-        if (this.enableHtml) {
-          return (
-            <div
-              class={styles[config.labelInnerClassName]}
-              v-html={this.label}
-            />
-          );
-        }
-
         return (
           <div class={styles[config.labelInnerClassName]}>
             {this.$slots.label?.() || this.label}
@@ -289,7 +272,7 @@ export default defineComponent({
     renderButton(): VNode {
       return (
         <DButton
-          label={this.label}
+          content={this.label}
           active={this.innerChecked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
           colorScheme={this.colorScheme}
@@ -333,10 +316,6 @@ export default defineComponent({
           getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
 
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }

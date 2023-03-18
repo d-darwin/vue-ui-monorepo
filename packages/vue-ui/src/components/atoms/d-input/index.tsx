@@ -59,10 +59,7 @@ export default defineComponent({
      * Defines <i>type</i> attr of the <b>input</b> element
      */
     // TODO: move to inputOptions
-    inputType: {
-      type: String as PropType<InputTypes>,
-      default: INPUT_TYPE.TEXT,
-    },
+    inputType: generateProp.string<InputTypes>(INPUT_TYPE.TEXT),
     // TODO: doesnt work properly (((
     /**
      * Defines <i>size</i> attr of the <b>input</b> element.<br>
@@ -121,12 +118,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -170,10 +161,6 @@ export default defineComponent({
             this.labelClass,
           ],
         };
-
-        if (this.enableHtml) {
-          return <label {...bindings} v-html={this.label} />;
-        }
 
         return (
           <label {...bindings}>{this.$slots.label?.() || this.label}</label>
@@ -286,10 +273,6 @@ export default defineComponent({
           getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
         ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
 
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }

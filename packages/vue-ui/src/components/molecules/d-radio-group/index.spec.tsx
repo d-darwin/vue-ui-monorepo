@@ -9,14 +9,12 @@ import {
   baseClassCase,
   errorClassCase,
   errorFontCase,
-  errorHtmlCase,
-  errorStringCase,
+  propStringCase,
+  propVNodeCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
-  labelStringCase,
   tagCase,
-  labelHtmlCase,
   errorAbsenceCase,
   slotCase,
 } from "@/utils/test-case-factories";
@@ -39,18 +37,18 @@ describe("DRadioGroup", () => {
   });
 
   labelAbsenceCase(wrapper, "legend");
-  labelStringCase(wrapper, "legend");
-  labelHtmlCase(wrapper, "legend");
-  slotCase(DRadioGroup, "legend", "label");
   labelClassCase(wrapper, "legend");
   labelFontCase(wrapper, "legend");
+  propStringCase(wrapper, "legend", "label");
+  propVNodeCase(wrapper, "legend", "label");
+  slotCase(DRadioGroup, "legend", "label");
 
   errorAbsenceCase(wrapper, `.${config.errorClassName}`);
-  errorStringCase(wrapper, `.${config.errorClassName}`);
-  errorHtmlCase(wrapper, `.${config.errorClassName}`);
-  slotCase(DRadioGroup, `.${config.errorClassName}`, "error");
   errorClassCase(wrapper, `.${config.errorClassName}`);
   errorFontCase(wrapper, `.${config.errorClassName}`);
+  propStringCase(wrapper, `.${config.errorClassName}`, "error");
+  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
+  slotCase(DRadioGroup, `.${config.errorClassName}`, "error");
 
   it("Should add config.radioClassName to the descendants", async () => {
     const firstRadioOwnClass = "some-own-class";
@@ -136,19 +134,6 @@ describe("DRadioGroup", () => {
     const radios = wrapper.findAllComponents(DRadio);
     expect(radios[0]?.props("transition")).toBe(firstRadioTransition);
     expect(radios[1]?.props("transition")).toBe(transition);
-  });
-
-  it("Should pass props.enableHtml to the descendants", async () => {
-    const enableHtml = true;
-    const items = [
-      <DRadio label={"radio 1"} value={1} />,
-      <DRadio label={"radio 2"} value={2} enableHtml={false} />,
-      <DRadio label={"radio 3"} value={3} />,
-    ];
-    await wrapper.setProps({ items, enableHtml });
-    const radios = wrapper.findAllComponents(DRadio);
-    expect(radios[0]?.props("enableHtml")).toBeTruthy();
-    expect(radios[1]?.props("enableHtml")).toBeFalsy();
   });
 
   tagCase(wrapper);

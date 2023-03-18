@@ -6,8 +6,8 @@ import DTypography from "@/components/containers/d-typography";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
   baseClassCase,
-  propContentCase,
-  contentHtmlCase,
+  propStringCase,
+  propVNodeCase,
   slotCase,
   tagCase,
 } from "@/utils/test-case-factories";
@@ -18,9 +18,9 @@ describe("DTypography", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propContentCase(wrapper);
+  propStringCase(wrapper);
 
-  contentHtmlCase(wrapper);
+  propVNodeCase(wrapper);
 
   slotCase(DTypography, `.${config.className}`);
 

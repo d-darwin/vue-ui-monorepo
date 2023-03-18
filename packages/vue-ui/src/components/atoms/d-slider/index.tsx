@@ -78,7 +78,7 @@ export default defineComponent({
     /**
      Defines offset of .label
      */
-    labelOffset: generateProp.htmlSize(config.defaultLabelOffset),
+    labelOffset: generateProp.text(config.defaultLabelOffset),
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
@@ -90,7 +90,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.htmlSize(config.defaultCaptionOffset),
+    captionOffset: generateProp.text(config.defaultCaptionOffset),
     /**
      * Defines appearance of the component
      */

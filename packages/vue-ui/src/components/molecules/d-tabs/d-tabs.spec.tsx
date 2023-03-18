@@ -231,30 +231,6 @@ describe("DTabs", () => {
     expect(tablist.element.tagName).toEqual(tablistTag.toLocaleUpperCase());
   });
 
-  it("Should pass props.enableHtml to the containing DTabs and DTabpanels", async () => {
-    const enableHtml = true;
-    // TODO: without mounting new component ???
-    const wrapper = await mount(DTabs, {
-      props: {
-        enableHtml,
-        tabs: [
-          <DTab label={"Tab 1"} />,
-          <DTab label={"Tab 2"} enableHtml={false} />,
-        ],
-        tabpanels: [
-          <DTabpanel content={"some content"} />,
-          <DTabpanel content={"some content"} enableHtml={false} />,
-        ],
-      },
-    });
-    const tabs = wrapper.findAllComponents(DTab);
-    expect(tabs[0]?.props("enableHtml")).toBe(enableHtml);
-    expect(tabs[1]?.props("enableHtml")).toBe(false);
-    const tabpanels = wrapper.findAllComponents(DTabpanel);
-    expect(tabpanels[0]?.props("enableHtml")).toBe(enableHtml);
-    expect(tabpanels[1]?.props("enableHtml")).toBe(false);
-  });
-
   it("Should focus on prev tab on ArrowLeft keydown", async () => {
     // TODO: without mounting new component ???
     const wrapper = await mount(DTabs, {

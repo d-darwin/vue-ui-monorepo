@@ -16,72 +16,58 @@ import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { RendererElement } from "@vue/runtime-core";
 
+const string = <T extends string>(defaultValue?: T) => ({
+  type: String as unknown as PropType<T>,
+  default: defaultValue,
+});
+
 /**
  *
  */
 const generateProp = {
   colorScheme: (
     defaultValue: ColorScheme = COLOR_SCHEME.PRIMARY // TODO: avoid hardcode figma values
-  ) => ({
-    type: String as PropType<ColorScheme>,
-    default: defaultValue,
-  }),
+  ) => string<ColorScheme>(defaultValue),
 
   content: (defaultValue?: Text | VNode) => ({
     type: [String, Number, Object] as PropType<Text | VNode>,
     default: defaultValue,
   }),
 
-  font: (defaultValue: Font = FONT.MEDIUM, skipDefault = false) => ({
-    // TODO: avoid hardcode figma values
-    type: String as PropType<Font>,
-    default: !skipDefault ? defaultValue : undefined,
-  }),
+  font: (
+    defaultValue: Font = FONT.MEDIUM, // TODO: avoid hardcode figma values
+    skipDefault = false
+  ) => string<Font>(!skipDefault ? defaultValue : undefined),
 
-  htmlSize: (defaultValue?: Text) => ({
-    types: [String, Number] as PropType<Text>,
-    default: defaultValue,
-  }),
-
-  padding: (defaultValue: Padding = PADDING.DEFAULT) => ({
-    // TODO: avoid hardcode figma values
-    type: String as PropType<Padding>,
-    default: defaultValue,
-  }),
+  padding: (
+    defaultValue: Padding = PADDING.DEFAULT // TODO: avoid hardcode figma values
+  ) => string<Padding>(defaultValue),
 
   rounding: (
     defaultValue: Rounding = ROUNDING.MEDIUM // TODO: avoid hardcode figma values
-  ) => ({
-    type: String as PropType<Rounding>,
-    default: defaultValue,
-  }),
+  ) => string<Rounding>(defaultValue),
 
   size: (
     defaultValue: Size = SIZE.MEDIUM // TODO: avoid hardcode figma values
+  ) => string<Size>(defaultValue),
+
+  transition: (
+    defaultValue: Transition = TRANSITION.FAST // TODO: avoid hardcode figma values
+  ) => string<Transition>(defaultValue),
+
+  tag: (
+    defaultValue: TagName = TAG_NAME_DEFAULTS.DIV // TODO: avoid hardcode figma values
   ) => ({
-    type: String as PropType<Size>,
-    default: defaultValue,
-  }),
-
-  transition: (defaultValue: Transition = TRANSITION.FAST) => ({
-    type: String as PropType<Transition>,
-    default: defaultValue, // TODO: avoid hardcode figma values
-  }),
-
-  tag: (defaultValue: TagName = TAG_NAME_DEFAULTS.DIV!) => ({
     type: String as PropType<TagName>,
     default: defaultValue,
   }),
 
-  number: (defaultValue?: number) => ({
-    type: Number,
+  number: <T>(defaultValue?: number) => ({
+    type: Number as PropType<T | number>,
     default: defaultValue,
   }),
 
-  string: (defaultValue?: string) => ({
-    type: String,
-    default: defaultValue,
-  }),
+  string,
 
   boolean: (defaultValue: boolean) => ({
     type: Boolean,

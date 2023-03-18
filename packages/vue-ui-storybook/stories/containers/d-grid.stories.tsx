@@ -122,6 +122,6 @@ const HtmlTemplate: Story = (args) => ({
     },
   },
   template: `
-    <DGrid v-bind="args" :content="content" :enableHtml="true" />`,
+    <DGrid v-bind="args" :content="content" />`,
 });
 export const HtmlDefault = HtmlTemplate.bind({});

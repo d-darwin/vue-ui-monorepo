@@ -70,16 +70,16 @@ export default defineComponent({
     /**
      * Defines content of the <b>label</b> element.
      */
-    label: generateProp.text(),
+    label: generateProp.content(),
     /**
      * You can pass own class name to the <b>label</b> element.
      */
-    // TODO: move to labeOptions:
+    // TODO: move to labelOptions:
     labelClass: String,
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    // TODO: move to labeOptions:
+    // TODO: move to labelOptions:
     labelFont: generateProp.font(),
     /**
      * If not empty renders as an error string below the <b>input</b> element.
@@ -109,11 +109,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -238,15 +233,6 @@ export default defineComponent({
 
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
-        if (this.enableHtml) {
-          return (
-            <div
-              class={styles[config.labelInnerClassName]}
-              v-html={this.label}
-            />
-          );
-        }
-
         return (
           <div class={styles[config.labelInnerClassName]}>
             {this.$slots.label?.() || this.label}
@@ -279,17 +265,17 @@ export default defineComponent({
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
-          this.errorClass,
-        ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
+              this.errorClass,
+            ]}
+          >
+            {this.$slots.error?.() || this.error}
+          </div>
+        );
       }
 
       return null;

@@ -91,7 +91,6 @@ export default {
       label: "Accept",
     },
     enableInline: false,
-    enableHtml: false,
     whenClose: () => {
       console.log("close");
     },

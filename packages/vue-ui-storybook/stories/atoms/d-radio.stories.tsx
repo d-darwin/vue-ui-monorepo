@@ -79,7 +79,6 @@ export default {
     errorClass: "someCustomErrorClass",
     iconContainerClass: "someIconContainerClass",
     tag: "div",
-    enableHtml: false,
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);
     },

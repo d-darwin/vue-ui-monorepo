@@ -10,19 +10,32 @@ import { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
-export function propContentCase(wrapper: VueWrapper) {
-  return it("Should render props.content", async () => {
+export function propStringCase(
+  wrapper: VueWrapper,
+  targetSelector = ".content",
+  propName = "content"
+) {
+  return it(`Should render props.${propName} as string`, async () => {
     const content = "some text content";
-    await wrapper.setProps({ content });
-    expect(wrapper.html()).toMatch(content);
+    await wrapper.setProps({ [propName]: content });
+
+    const contentEl = wrapper.find(targetSelector);
+    expect(contentEl.html()).toMatch(content);
   });
 }
 
-export function contentHtmlCase(wrapper: VueWrapper) {
-  return it("Should render props.content as HTML string if props.enableHtml is true", async () => {
-    const content = `<div>some <b>html</b> string</div>`;
-    await wrapper.setProps({ content, enableHtml: true });
-    expect(wrapper.html()).toMatch(content);
+export function propVNodeCase(
+  wrapper: VueWrapper,
+  targetSelector = ".content",
+  propName = "content"
+) {
+  return it(`Should render prop.${propName} as VNode`, async () => {
+    const content = <div>some content html</div>;
+    const contentHtml = `${content}`;
+    await wrapper.setProps({ [propName]: contentHtml });
+
+    const contentEl = wrapper.find(targetSelector);
+    expect(contentEl.html()).toMatch(contentHtml);
   });
 }
 
@@ -107,34 +120,7 @@ export function defaultCheckMarkCase(
   });
 }
 
-export function labelStringCase(wrapper: VueWrapper, labelSelector = "label") {
-  return it("Should render label element with props.label content if passed", async () => {
-    const label = "Some label";
-    await wrapper.setProps({ label });
-
-    const labelEl = wrapper.find(labelSelector);
-    expect(labelEl.exists()).toBeTruthy();
-    expect(labelEl.text()).toBe(label);
-  });
-}
-
-// TODO: merge with labelStringCase
-export function captionStringCase(
-  wrapper: VueWrapper,
-  captionSelector = "caption"
-) {
-  return it("Should render caption element with props.caption content if passed", async () => {
-    const caption = "Some caption";
-    await wrapper.setProps({ caption });
-
-    console.log(wrapper.html());
-
-    const captionEl = wrapper.find(captionSelector);
-    expect(captionEl.exists()).toBeTruthy();
-    expect(captionEl.text()).toBe(caption);
-  });
-}
-
+// TODO: propAbsenceCase
 export function labelAbsenceCase(wrapper: VueWrapper, labelSelector = "label") {
   return it("Shouldn't render label element if props.label isn't passed", async () => {
     await wrapper.setProps({ label: undefined });
@@ -174,15 +160,6 @@ export function labelFontCase(wrapper: VueWrapper, labelSelector = "label") {
     );
     const labelEl = wrapper.find(labelSelector);
     expect(labelEl.classes()).toContain(className);
-  });
-}
-
-export function labelHtmlCase(wrapper: VueWrapper, labelSelector = "label") {
-  return it("Should render prop.label as HTML string", async () => {
-    const labelHtml = `<div>some label html</div>`;
-    await wrapper.setProps({ label: labelHtml, enableHtml: true });
-    const labelEl = wrapper.find(labelSelector);
-    expect(labelEl.html()).toMatch(labelHtml);
   });
 }
 
@@ -486,18 +463,6 @@ export function errorAbsenceCase(wrapper: VueWrapper, errorElSelector: string) {
   });
 }
 
-export function errorStringCase(wrapper: VueWrapper, errorElSelector: string) {
-  // TODO: error array ???
-  // TODO: error via Tooltip ???
-  return it("Should render error string if props.error if passed", async () => {
-    const error = "Some error string";
-    await wrapper.setProps({ error });
-    const errorEl = wrapper.find(errorElSelector);
-    expect(errorEl.exists()).toBeTruthy();
-    expect(errorEl.text()).toBe(error);
-  });
-}
-
 export function errorClassCase(wrapper: VueWrapper, errorElSelector: string) {
   return it("Error element classes should contain props.errorClass if passed", async () => {
     const errorClass = "someCustomErrorClass";
@@ -517,15 +482,6 @@ export function errorFontCase(wrapper: VueWrapper, errorElSelector: string) {
     );
     const errorEl = wrapper.find(errorElSelector);
     expect(errorEl.classes()).toContain(className);
-  });
-}
-
-export function errorHtmlCase(wrapper: VueWrapper, errorElSelector: string) {
-  return it("Should render prop.errorHtml to the error's v-html", async () => {
-    const errorHtml = `<div>some label html</div>`;
-    await wrapper.setProps({ error: errorHtml, enableHtml: true });
-    const errorEl = wrapper.find(errorElSelector);
-    expect(errorEl.html()).toMatch(errorHtml);
   });
 }
 

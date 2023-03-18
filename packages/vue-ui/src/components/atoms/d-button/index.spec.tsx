@@ -17,8 +17,8 @@ import {
   outlineClassCase,
   paddingEqualClassesCase,
   preventDefaultCase,
-  labelStringCase,
-  contentHtmlCase,
+  propStringCase,
+  propVNodeCase,
   roundingClassCase,
   routerLinkComponentCase,
   sizeClassCase,
@@ -34,9 +34,9 @@ describe("DButton", () => {
 
   baseClassCase(wrapper, config.className);
 
-  labelStringCase(wrapper, "button");
+  propStringCase(wrapper, `.${config.className}`, "content");
 
-  contentHtmlCase(wrapper);
+  propVNodeCase(wrapper, `.${config.className}`);
 
   slotCase(DButton, `.${config.className}`);
 

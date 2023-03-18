@@ -61,7 +61,6 @@ export default {
     rounding: ROUNDING.SMALL,
     size: SIZE.MEDIUM,
     transition: TRANSITION.FAST,
-    enableHtml: false,
     whenClose: () => {
       console.log("close");
     },

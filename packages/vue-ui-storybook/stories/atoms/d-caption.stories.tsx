@@ -17,11 +17,10 @@ export default {
     },
   },
   args: {
-    label: "Some text content",
+    content: "Some text content",
     type: TYPE.DANGER,
     font: FONT.SMALL, // TODO: don't hardcode values
-    tag: "div",
-    enableHtml: false,
+    tag: "div", // TODO: use const
   },
 };
 

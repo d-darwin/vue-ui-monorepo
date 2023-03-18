@@ -16,7 +16,6 @@ export default {
     content: "Some text content",
     font: FONT.MEDIUM,
     tag: "div",
-    enableHtml: false,
   },
 };
 

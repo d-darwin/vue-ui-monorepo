@@ -22,7 +22,7 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(config.defaultContent),
     /**
@@ -119,8 +119,7 @@ export default defineComponent({
       return (
         <Trans {...this.transitionBindings} appear>
           <div key={config.key} class={this.classes} style={this.styles}>
-            {/*TODO: default slot, enable html*/}
-            {this.content}
+            {this.$slots.default?.() || this.content}
           </div>
         </Trans>
       );

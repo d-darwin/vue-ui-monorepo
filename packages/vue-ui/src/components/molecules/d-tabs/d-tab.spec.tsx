@@ -1,11 +1,11 @@
 import { mount } from "@vue/test-utils";
 import {
   baseClassCase,
-  contentHtmlCase,
+  propVNodeCase,
   fontSizeClassCase,
   outlineClassCase,
   paddingEqualClassesCase,
-  propContentCase,
+  propStringCase,
   sizeClassCase,
   slotCase,
   tagCase,
@@ -58,9 +58,9 @@ describe("DTab", () => {
     expect(wrapper.classes()).not.toContain("active");
   });
 
-  propContentCase(wrapper);
+  propStringCase(wrapper);
 
-  contentHtmlCase(wrapper);
+  propVNodeCase(wrapper);
 
   slotCase(DTab, `.${config.tabClassName}`);
 

@@ -31,7 +31,7 @@ export default defineComponent({
   props: {
     // TODO: isShown ???
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     /**
@@ -39,10 +39,7 @@ export default defineComponent({
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
     // TODO: placement ???
-    position: {
-      type: String as PropType<Position>,
-      default: POSITION.TOP_RIGHT,
-    },
+    position: generateProp.string<Position>(POSITION.TOP_RIGHT),
     /**
      * Min width of the component.
      */
@@ -78,10 +75,7 @@ export default defineComponent({
     /**
      * The notification type: success, info, warning, error.
      */
-    type: {
-      type: String as PropType<Type>,
-      default: TYPE.INFO,
-    },
+    type: generateProp.string<Type>(TYPE.INFO),
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -115,14 +109,6 @@ export default defineComponent({
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: Boolean,
-    /**
-     * Enables html string rendering passed in props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: {
-      type: Boolean,
-    },
 
     /**
      * Alternative way to catch close event
@@ -244,31 +230,15 @@ export default defineComponent({
    */
   render(): VNode {
     const Tag = this.tag;
-
-    if (!this.enableHtml) {
-      return (
-        <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
-          <Trans {...this.transitionBindings}>
-            {this.shown && (
-              <Tag {...this.bindings}>
-                {this.isContentShown
-                  ? this.$slots.default?.() || this.content
-                  : ""}
-              </Tag>
-            )}
-          </Trans>
-        </Teleport>
-      );
-    }
-
     return (
       <Teleport to={this.target} disabled={Boolean(this.enableInline)}>
         <Trans {...this.transitionBindings}>
           {this.shown && (
-            <Tag
-              {...this.bindings}
-              v-html={this.isContentShown ? this.content : ""}
-            />
+            <Tag {...this.bindings}>
+              {this.isContentShown
+                ? this.$slots.default?.() || this.content
+                : ""}
+            </Tag>
           )}
         </Trans>
       </Teleport>
