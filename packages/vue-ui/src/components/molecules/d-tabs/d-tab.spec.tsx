@@ -58,10 +58,8 @@ describe("DTab", () => {
     expect(wrapper.classes()).not.toContain("active");
   });
 
-  propStringCase(wrapper);
-
-  propVNodeCase(wrapper);
-
+  propStringCase(wrapper, `.${config.tabClassName}`);
+  propVNodeCase(wrapper, `.${config.tabClassName}`);
   slotCase(DTab, `.${config.tabClassName}`);
 
   fontSizeClassCase(wrapper, `.${config.tabClassName}`);

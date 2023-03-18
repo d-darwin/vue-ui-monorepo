@@ -17,9 +17,9 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
-    label: generateProp.content(),
+    content: generateProp.content(),
     /**
      * Pass if the component is active
      */
@@ -56,12 +56,6 @@ export default defineComponent({
      * Defines element type of the container component
      */
     tag: generateProp.tag(TAG_NAME_DEFAULTS.LI),
-    /**
-     * Enables html string rendering passed in props.label.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event
@@ -129,14 +123,9 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
-
-    if (!this.enableHtml) {
-      /** @slot Use instead of props.label to fully customize content */
-      return (
-        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
-      );
-    }
-
-    return <Tag {...this.bindings} v-html={this.label} />;
+    /** @slot Use instead of props.content to fully customize content */
+    return (
+      <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+    );
   },
 });

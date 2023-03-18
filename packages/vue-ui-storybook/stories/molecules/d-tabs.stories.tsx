@@ -50,14 +50,14 @@ const Template: Story = (args) => ({
         <DTab
           id="111"
           tabpanel-id="222"
-          label="Tab 1"
+          content="Tab 1"
           active={this.activeTab === "tab_1"}
           whenClick={() => {
             this.activeTab = "tab_1";
           }}
         />,
         <DTab
-          label="Tab 2"
+          content="Tab 2"
           active={this.activeTab === "tab_2"}
           whenClick={() => {
             this.activeTab = "tab_2";
@@ -87,8 +87,8 @@ const TemplateSlots: Story = (args) => ({
   template: `
     <DTabs v-bind="args">
       <template v-slot:tabs>
-        <DTab id="111" tabpanel-id="222" label="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
-        <DTab label="Tab 2" :active="this.activeTab === 'tab_2'" :whenClick="() => {this.activeTab = 'tab_2'}" />
+        <DTab id="111" tabpanel-id="222" content="Tab 1" :active="this.activeTab === 'tab_1'" :whenClick="() => {this.activeTab = 'tab_1'}" />
+        <DTab content="Tab 2" :active="this.activeTab === 'tab_2'" :whenClick="() => {this.activeTab = 'tab_2'}" />
       </template>
       <template v-slot:tabpanels>
         <DTabpanel id="222" tab-id="111" :active="this.activeTab === 'tab_1'">Panel 1</DTabpanel>

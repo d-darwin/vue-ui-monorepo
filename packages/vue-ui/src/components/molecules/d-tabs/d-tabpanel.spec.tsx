@@ -63,10 +63,8 @@ describe("DTabpanel", () => {
     expect(wrapper.attributes("hidden")).toBe("");
   });
 
-  propStringCase(wrapper);
-
-  propVNodeCase(wrapper);
-
+  propStringCase(wrapper, `.${config.tabpanelClassName}`);
+  propVNodeCase(wrapper, `.${config.tabpanelClassName}`);
   slotCase(DTabpanel, `.${config.tabpanelClassName}`);
 
   const fontClassName = prepareCssClassName(

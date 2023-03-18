@@ -25,6 +25,7 @@ export default defineComponent({
     /**
      * You can pass own class name to the <b>thead</b> element.
      */
+    // TODO: options
     headClass: String,
     /**
      * You can pass own class name to the <b>tr</b> elements inside <b>thead</b>.
@@ -41,7 +42,7 @@ export default defineComponent({
      */
     // TODO: options
     headRowAttrs: {
-      type: Object as PropType<(rowIndex: number) => Record<string, unknown>>,
+      type: Function as PropType<(rowIndex: number) => Record<string, unknown>>,
     },
     /**
      * Pass any attrs to the <b>th</b> elements inside <b>thead</b>.
@@ -62,23 +63,17 @@ export default defineComponent({
      * You can pass own class name to the <b>tbody</b> element.
      */
     // TODO: options
-    bodyClass: {
-      type: String,
-    },
+    bodyClass: String,
     /**
      * You can pass own class name to the <b>tr</b> elements inside <b>tbody</b>.
      */
     // TODO: options
-    bodyRowClass: {
-      type: String,
-    },
+    bodyRowClass: String,
     /**
      * You can pass own class name to the <b>td</b> elements inside <b>tbody</b>.
      */
     // TODO: options
-    bodyCellClass: {
-      type: String,
-    },
+    bodyCellClass: String,
     /**
      * Pass any attrs to the <b>tr</b> elements inside <b>tbody</b>.
      */
@@ -115,12 +110,6 @@ export default defineComponent({
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
     loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
-    /**
-     * Enables html string rendering passed in props.headRows and props.bodyRows.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   computed: {
@@ -156,22 +145,14 @@ export default defineComponent({
           {this.headRows?.map((row, rowIndex) => (
             <tr class={rowClasses} {...this.headRowAttrs?.(rowIndex)}>
               {/* TODO: keys */}
-              {row?.map((cell, colIndex) =>
-                this.enableHtml ? (
-                  <th
-                    class={cellClasses}
-                    {...this.headCellAttrs?.(rowIndex, colIndex)}
-                    v-html={cell}
-                  />
-                ) : (
-                  <th
-                    class={cellClasses}
-                    {...this.headCellAttrs?.(rowIndex, colIndex)}
-                  >
-                    {cell}
-                  </th>
-                )
-              )}
+              {row?.map((cell, colIndex) => (
+                <th
+                  class={cellClasses}
+                  {...this.headCellAttrs?.(rowIndex, colIndex)}
+                >
+                  {cell}
+                </th>
+              ))}
             </tr>
           ))}
         </thead>
@@ -193,22 +174,14 @@ export default defineComponent({
           {this.bodyRows?.map((row, rowIndex) => (
             <tr class={rowClasses} {...this?.bodyRowAttrs?.(rowIndex)}>
               {/* TODO: keys */}
-              {row?.map((cell, colIndex) =>
-                this.enableHtml ? (
-                  <td
-                    class={cellClasses}
-                    {...this?.bodyCellAttrs?.(rowIndex, colIndex)}
-                    v-html={cell}
-                  />
-                ) : (
-                  <td
-                    class={cellClasses}
-                    {...this?.bodyCellAttrs?.(rowIndex, colIndex)}
-                  >
-                    {cell}
-                  </td>
-                )
-              )}
+              {row?.map((cell, colIndex) => (
+                <td
+                  class={cellClasses}
+                  {...this?.bodyCellAttrs?.(rowIndex, colIndex)}
+                >
+                  {cell}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
