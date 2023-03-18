@@ -36,7 +36,7 @@ export default defineComponent({
       required: true,
     },*/
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     label: generateProp.content(),
     /**
@@ -86,12 +86,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     // TODO: whenChange\WhenInput
   },
@@ -105,20 +99,16 @@ export default defineComponent({
   computed: {
     // TODO: reuse -> composition
     renderLabel(): VNode | null {
-      const labelClasses = [
-        styles[config.labelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
-        this.labelClass,
-      ];
-
       if (this.$slots.label?.() || this.label) {
-        if (this.enableHtml) {
-          return <legend class={labelClasses} v-html={this.label} />;
-        }
-
         return (
           /*TODO: customizable tag*/
-          <legend class={labelClasses}>
+          <legend
+            class={[
+              styles[config.labelClassName],
+              getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
+              this.labelClass,
+            ]}
+          >
             {this.$slots.label?.() || this.label}
           </legend>
         );
@@ -141,10 +131,6 @@ export default defineComponent({
           rounding: radio.props?.rounding || this.rounding,
           size: radio.props?.size || this.size,
           transition: radio.props?.transition || this.transition,
-          enableHtml:
-            typeof radio.props?.enableHtml === "undefined"
-              ? this.enableHtml
-              : radio.props?.enableHtml,
           whenChange: (value: Text) => {
             // TODO: find out a better way to watch on checked item
             if (this.innerValue !== value) {
@@ -166,18 +152,18 @@ export default defineComponent({
 
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
-          this.errorClass,
-        ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
+      if (this.$slots.error || this.error) {
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
+              this.errorClass,
+            ]}
+          >
+            {this.$slots.error?.() || this.error}
+          </div>
+        );
       }
 
       return null;

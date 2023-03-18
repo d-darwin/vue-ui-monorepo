@@ -22,7 +22,7 @@ export default defineComponent({
 
   props: {
     /**
-     * An array of VNodes or HTML strings if props.enableHtml is true
+     * An array of strings or VNodes
      */
     content: {
       type: Array as PropType<(string | VNode)[]>,
@@ -51,12 +51,6 @@ export default defineComponent({
      * Defines transition type of the component
      */
     transition: generateProp.transition(),
-    /**
-     * Enables html string rendering passed in props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   setup() {
@@ -142,10 +136,6 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
 
-    if (!this.enableHtml || !this.content) {
-      return <Tag {...this.bindings}>{this.renderContent}</Tag>;
-    }
-
-    return <Tag {...this.bindings} v-html={this.content.join("")} />;
+    return <Tag {...this.bindings}>{this.renderContent}</Tag>;
   },
 });

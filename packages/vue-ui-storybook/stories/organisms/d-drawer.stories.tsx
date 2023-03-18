@@ -88,7 +88,6 @@ export default {
       colorScheme: COLOR_SCHEME.ALTERNATIVE,
     },
     enableInline: false,
-    enableHtml: false,
     whenClose: () => {
       console.log("close");
     },

@@ -75,7 +75,6 @@ export default {
     errorFont: undefined,
     errorClass: "customErrorClass",
     tag: "div",
-    enableHtml: false, // TODO: add story for this prop for all components
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);
     },

@@ -6,8 +6,8 @@ import DTypography from "@/components/containers/d-typography";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
   baseClassCase,
-  propContentCase,
-  contentHtmlCase,
+  propStringCase,
+  propVNodeCase,
   slotCase,
   tagCase,
 } from "@/utils/test-case-factories";
@@ -18,10 +18,8 @@ describe("DTypography", () => {
 
   baseClassCase(wrapper, config.className);
 
-  propContentCase(wrapper);
-
-  contentHtmlCase(wrapper);
-
+  propStringCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.className}`);
   slotCase(DTypography, `.${config.className}`);
 
   // TODO: classes are not rendered in jest ???

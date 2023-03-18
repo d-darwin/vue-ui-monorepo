@@ -111,17 +111,16 @@ describe("DGrid", () => {
     expect(child.classes()).toContain(styles[config.childClassName]);
   });
 
-  it("Should render html from prop.content if it is string[] and props.enableHtml is true", async () => {
+  it("Should render prop.content as string[]", async () => {
     const content = [
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
+      `some content`,
+      `some content`,
+      `some content`,
+      `some content`,
+      `some content`,
     ];
     const wrapper = await mount(DGrid, {
       props: {
-        enableHtml: true,
         content,
       },
     });
@@ -151,28 +150,9 @@ describe("DGrid", () => {
     expect(child.attributes().id).toBe(firstChildId);
   });
 
-  it("Should render child elements with passed to them own props if props.content is string[] and props.enableHtml is true", async () => {
-    const content = [
-      `<div id="${firstChildId}" class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-      `<div class="${itemClassName}"></div>`,
-    ];
-    const wrapper = await mount(DGrid, {
-      props: {
-        enableHtml: true,
-        content,
-      },
-    });
-
-    const child = wrapper.find(`.${itemClassName}`);
-    expect(child.attributes().id).toBe(firstChildId);
-  });
-
   tagCase(wrapper);
 
-  it("Should render plain strings if props.content is string[] and props.enableHtml is false", async () => {
+  it("Should render plain strings if props.content is string[]", async () => {
     const content = [
       `<div class="${itemClassName}"></div>`,
       `<div class="${itemClassName}"></div>`,
@@ -182,7 +162,6 @@ describe("DGrid", () => {
     ];
     const wrapper = await mount(DGrid, {
       props: {
-        enableHtml: false,
         content,
       },
     });

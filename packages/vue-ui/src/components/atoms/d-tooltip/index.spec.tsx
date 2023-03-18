@@ -13,6 +13,8 @@ import {
   fontSizeClassCase,
   outlineClassCase,
   paddingEqualClassesCase,
+  propStringCase,
+  propVNodeCase,
   roundingClassCase,
   sizeClassCase,
   tagCase,
@@ -37,25 +39,8 @@ describe("DTooltip", () => {
     expect(targetEl.text()).toBe(target);
   });
 
-  it("Should render props.target as HTML string if props.enableHtml is true", async () => {
-    const target = `<div>HTML <b>string</b> target</div>`;
-    await wrapper.setProps({ target, enableHtml: true });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl.exists()).toBeTruthy();
-    expect(targetEl.html()).toContain(target);
-  });
-
-  it("Should render slots.target", async () => {
-    const target = `<div>HTML <b>slot</b> target</div>`;
-    const wrapper = await shallowMount(DTooltip, {
-      slots: {
-        target,
-      },
-    });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
-    expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
-    expect(targetEl.html()).toContain(target);
-  });
+  propStringCase(wrapper, `.${config.targetClassName}`, "target");
+  propVNodeCase(wrapper, `.${config.targetClassName}`, "target");
 
   it("Target element should have props.targetClass if passed", async () => {
     const targetClass = "someTargetClass";
@@ -84,25 +69,8 @@ describe("DTooltip", () => {
     expect(contentEl.text()).toBe(content);
   });
 
-  it("Should render props.content as HTML string if props.enableHtml is true", async () => {
-    const content = `<div>HTML <b>string</b> content</div>`;
-    await wrapper.setProps({ content, enableHtml: true });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
-    expect(contentEl.html()).toContain(content);
-  });
-
-  it("Should render slots.content", async () => {
-    const content = `<div>HTML <b>slot</b> content</div>`;
-    const wrapper = await shallowMount(DTooltip, {
-      slots: {
-        content,
-      },
-    });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
-    expect(contentEl.html()).toContain(content);
-  });
+  propStringCase(wrapper);
+  propVNodeCase(wrapper);
 
   it("Target element should have props.contentClass if passed", async () => {
     const contentClass = "someTargetClass";

@@ -65,12 +65,6 @@ export default defineComponent({
      * Defines should DTabs be activated on arrow navigation
      */
     activateOnKeys: Boolean,
-    /**
-     * Enables html string rendering passed in props.tabs and props.tabpanels.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   setup(props, { slots }) {
@@ -111,10 +105,6 @@ export default defineComponent({
           padding: tab.props?.padding || this.padding,
           size: tab.props?.size || this.tabsSize,
           transition: tab.props?.transition || this.transition,
-          enableHtml:
-            typeof tab.props?.enableHtml === "undefined"
-              ? this.enableHtml
-              : tab.props?.enableHtml,
         });
         tab.key = tab.key || tab.props?.id;
         return tab;
@@ -135,10 +125,6 @@ export default defineComponent({
           font: tabpanel.props?.font || this.tabpanelsFont,
           padding: tabpanel.props?.padding || this.padding,
           transition: tabpanel.props?.transition || this.transition,
-          enableHtml:
-            typeof tabpanel.props?.enableHtml === "undefined"
-              ? this.enableHtml
-              : tabpanel.props?.enableHtml,
         });
         tabpanel.key = tabpanel.key || tabpanel.props?.id;
         return tabpanel;

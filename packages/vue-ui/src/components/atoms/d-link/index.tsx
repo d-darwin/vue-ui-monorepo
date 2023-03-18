@@ -21,9 +21,9 @@ export default defineComponent({
   // TODO: add props factory ???
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
-    label: generateProp.content(),
+    content: generateProp.content(),
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -40,12 +40,6 @@ export default defineComponent({
      * Pass true to prevent default click behaviour
      */
     preventDefault: Boolean,
-    /**
-     * Enables html string rendering passed in props.label.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch click event
@@ -112,14 +106,9 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
-
-    if (!this.enableHtml) {
-      /** @slot Use instead of props.label to fully customize content */
-      return (
-        <Tag {...this.bindings}>{this.$slots.default?.() || this.label}</Tag>
-      );
-    }
-
-    return <Tag {...this.bindings} v-html={this.label} />;
+    /** @slot Use instead of props.label to fully customize content */
+    return (
+      <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+    );
   },
 });

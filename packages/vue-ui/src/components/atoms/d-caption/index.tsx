@@ -1,4 +1,4 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent, type VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
@@ -15,16 +15,13 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
-    label: generateProp.content(),
+    content: generateProp.content(),
     /**
      * Defines colors of the component
      */
-    type: {
-      type: String as PropType<Type>,
-      default: TYPE.NONE,
-    },
+    type: generateProp.string<Type>(TYPE.NONE),
     /**
      * Defines size of the component
      */
@@ -34,13 +31,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-
-    /**
-     * Enables html string rendering passed in props.label.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   computed: {
@@ -55,14 +45,9 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
-
-    if (!this.enableHtml) {
-      /** @slot Use instead of props.label to fully customize content */
-      return (
-        <Tag class={this.classes}>{this.$slots.default?.() || this.label}</Tag>
-      );
-    }
-
-    return <Tag class={this.classes} v-html={this.label} />;
+    /** @slot Use instead of props.label to fully customize content */
+    return (
+      <Tag class={this.classes}>{this.$slots.default?.() || this.content}</Tag>
+    );
   },
 });

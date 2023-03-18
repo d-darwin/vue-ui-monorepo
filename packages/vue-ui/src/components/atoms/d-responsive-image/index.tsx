@@ -50,7 +50,7 @@ export default defineComponent({
      */
     source: {
       // TODO: what if { srcset: [{ src: '', min/max_width: 999, src_width: 999 }]}
-      type: [Array, Object, String] as PropType<Source>,
+      type: [Array, Object, String] as PropType<Source>, // TODO: add prop generator?
     },
     /**
      * Aspect ratio of the picture.
@@ -67,10 +67,7 @@ export default defineComponent({
      * Renders to the <i>object-fit</i> attr of the <b>img</b> element
      */
     // TODO: imgOptions
-    objectFit: {
-      type: String as PropType<ObjectFit>,
-      default: OBJECT_FIT.COVER,
-    },
+    objectFit: generateProp.string<ObjectFit>(OBJECT_FIT.COVER),
     /**
      * You can pass own class name to the <b>img</b> element.
      */
@@ -96,18 +93,10 @@ export default defineComponent({
     /**
      * Renders to the <i>loading</i> attr of the <b>img</b> element
      */
-    loading: {
-      type: String as PropType<Loading>,
-      default: LOADING.LAZY,
-    },
+    loading: generateProp.string<Loading>(LOADING.LAZY),
     // TODO: use DLoader???
     // TODO: preventDefault ???
     // TODO: caption gaps/spacing
-    /**
-     * Enables html string rendering passed in props.caption.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch load event
@@ -179,26 +168,23 @@ export default defineComponent({
       );
     },
 
-    figcaptionVNode(): VNode {
-      const classes = [
-        this.captionClass,
-        getCommonCssClass(TOKEN_NAME.FONT, this.captionFont),
-      ];
-
-      if (!this.enableHtml) {
-        return (
-          /*TODO: this.$slots.caption test case*/
-          <figcaption class={classes}>
-            {this.$slots.caption?.() || this.caption}
-          </figcaption>
-        );
-      }
-
-      return <figcaption class={classes} v-html={this.caption} />;
+    renderCaption(): VNode {
+      return (
+        <figcaption
+          class={[
+            this.captionClass,
+            getCommonCssClass(TOKEN_NAME.FONT, this.captionFont),
+          ]}
+        >
+          {this.$slots.caption?.() || this.caption}
+        </figcaption>
+      );
     },
 
     hasContainer(): boolean {
-      return Boolean(this.aspectRatio || this.caption);
+      return Boolean(
+        this.aspectRatio || this.$slots.caption?.() || this.caption
+      );
     },
 
     // TODO: simplify
@@ -225,7 +211,7 @@ export default defineComponent({
         return (
           <figure class={styles[config.className]}>
             {this.imgVNode}
-            {this.figcaptionVNode}
+            {this.renderCaption}
           </figure>
         );
       }
@@ -238,7 +224,7 @@ export default defineComponent({
           class={styles[config.className]}
         >
           {this.imgVNode}
-          {this.figcaptionVNode}
+          {this.renderCaption}
         </DAspectRatio>
       );
     },
@@ -286,7 +272,7 @@ export default defineComponent({
         return (
           <figure class={styles[config.className]}>
             {pictureVNode}
-            {this.figcaptionVNode}
+            {this.renderCaption}
           </figure>
         );
       }
@@ -299,7 +285,7 @@ export default defineComponent({
           class={styles[config.className]}
         >
           {pictureVNode}
-          {this.figcaptionVNode}
+          {this.renderCaption}
         </DAspectRatio>
       );
     },
@@ -344,6 +330,7 @@ export default defineComponent({
   },
 });
 
+// TODO: move to the common ???
 declare module "@vue/runtime-dom" {
   interface ImgHTMLAttributes extends HTMLAttributes {
     loading?: Loading;

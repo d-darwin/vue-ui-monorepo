@@ -19,7 +19,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(), // TODO: gent defaults base on actual values, not hardcoded
+    colorScheme: generateProp.colorScheme(),
     /**
      * Defines opacity of the component
      */
@@ -31,7 +31,7 @@ export default defineComponent({
     /**
      * Defines position attr of the component
      */
-    position: generateProp.options<CssPosition>(config.defaultPosition),
+    position: generateProp.string<CssPosition>(config.defaultPosition),
     /**
      * Defines container element type of the component
      */

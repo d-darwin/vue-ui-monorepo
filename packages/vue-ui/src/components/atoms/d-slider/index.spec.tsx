@@ -13,7 +13,8 @@ import {
   fontSizeClassCase,
   inputValueCase,
   labelAbsenceCase,
-  labelStringCase,
+  propStringCase,
+  propVNodeCase,
   minControlWidthCase,
   outlineClassCase,
   roundingClassCase,
@@ -21,7 +22,7 @@ import {
   slotCase,
   tagCase,
   transitionClassCase,
-} from "@darwin-studio/vue-ui/src/utils/test-case-factories";
+} from "@/utils/test-case-factories";
 import config from "./config";
 
 describe("DSlider", () => {
@@ -63,9 +64,8 @@ describe("DSlider", () => {
   });
 
   labelAbsenceCase(wrapper);
-
-  labelStringCase(wrapper);
-
+  propStringCase(wrapper, `.${config.labelClassName}`, "label");
+  propVNodeCase(wrapper, `.${config.labelClassName}`, "label");
   slotCase(DSlider, `.${config.labelClassName}`, "label");
 
   it("Should render props.labelOffset to the label style as '--offset: props.labelOffset'", async () => {

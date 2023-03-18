@@ -36,7 +36,7 @@ export default {
     },
   },
   args: {
-    label: "Some text content",
+    content: "Some text content",
     href: "",
     disabled: false,
     active: false,

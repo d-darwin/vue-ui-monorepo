@@ -65,8 +65,7 @@ export default {
     errorFont: undefined,
     errorClass: "someCustomErrorClass",
     iconContainerClass: "someIconContainerClass",
-    tag: "div",
-    enableHtml: false,
+    tag: "div", // TODO: const
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);
     },

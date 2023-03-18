@@ -4,8 +4,8 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import DNotification from "@/components/atoms/d-notification";
 import { TYPE } from "@/components/atoms/d-notification/constants";
 import {
-  propContentCase,
-  contentHtmlCase,
+  propStringCase,
+  propVNodeCase,
   colorSchemeClassCase,
   paddingEqualClassesCase,
   roundingClassCase,
@@ -36,9 +36,9 @@ describe("DNotification", () => {
     expect(notificationEl?.classes()).toContain(config.className);
   });
 
-  propContentCase(wrapper);
+  propStringCase(wrapper, `.${config.className}`);
 
-  contentHtmlCase(wrapper);
+  propVNodeCase(wrapper, `.${config.className}`);
 
   it("Renders $slots.default", async () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;

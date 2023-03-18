@@ -1,10 +1,10 @@
 import { mount } from "@vue/test-utils";
 import {
   baseClassCase,
-  contentHtmlCase,
+  propVNodeCase,
   outlineClassCase,
   paddingEqualClassesCase,
-  propContentCase,
+  propStringCase,
   slotCase,
   tagCase,
   transitionClassCase,
@@ -63,10 +63,8 @@ describe("DTabpanel", () => {
     expect(wrapper.attributes("hidden")).toBe("");
   });
 
-  propContentCase(wrapper);
-
-  contentHtmlCase(wrapper);
-
+  propStringCase(wrapper, `.${config.tabpanelClassName}`);
+  propVNodeCase(wrapper, `.${config.tabpanelClassName}`);
   slotCase(DTabpanel, `.${config.tabpanelClassName}`);
 
   const fontClassName = prepareCssClassName(

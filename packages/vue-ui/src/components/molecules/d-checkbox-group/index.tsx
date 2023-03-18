@@ -22,7 +22,7 @@ export default defineComponent({
       type: Array as PropType<VNode[]>, // TODO: more accurate type, what about array of DCheckbox props?
     },
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     label: generateProp.content(),
     /**
@@ -74,32 +74,22 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     // TODO: whenChange\WhenInput
   },
 
   computed: {
     renderLabel(): VNode | null {
-      const labelClasses = [
-        styles[config.labelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
-        this.labelClass,
-      ];
-
       if (this.$slots.label?.() || this.label) {
-        if (this.enableHtml) {
-          return <legend class={labelClasses} v-html={this.label} />;
-        }
-
         return (
           /*TODO: customizable tag*/
-          <legend class={labelClasses}>
+          <legend
+            class={[
+              styles[config.labelClassName],
+              getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
+              this.labelClass,
+            ]}
+          >
             {this.$slots.label?.() || this.label}
           </legend>
         );
@@ -120,10 +110,6 @@ export default defineComponent({
           rounding: checkbox.props?.rounding || this.rounding,
           size: checkbox.props?.size || this.size,
           transition: checkbox.props?.transition || this.transition,
-          enableHtml:
-            typeof checkbox.props?.enableHtml === "undefined"
-              ? this.enableHtml
-              : checkbox.props?.enableHtml,
         });
         checkbox.key = checkbox.key || checkbox.props?.id;
         return checkbox;
@@ -139,17 +125,17 @@ export default defineComponent({
     // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
     renderError(): VNode | null {
       if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
-          this.errorClass,
-        ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
+        return (
+          <div
+            class={[
+              styles[config.errorClassName],
+              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
+              this.errorClass,
+            ]}
+          >
+            {this.$slots.error?.() || this.error}
+          </div>
+        );
       }
 
       return null;

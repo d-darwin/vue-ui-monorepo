@@ -14,8 +14,8 @@ import {
   emitClickEventCase,
   outlineClassCase,
   preventDefaultCase,
-  labelStringCase,
-  contentHtmlCase,
+  propStringCase,
+  propVNodeCase,
   routerLinkComponentCase,
   slotCase,
   transitionClassCase,
@@ -27,9 +27,9 @@ describe("DLink", () => {
 
   baseClassCase(wrapper, config.className);
 
-  labelStringCase(wrapper, "a");
+  propStringCase(wrapper, "a");
 
-  contentHtmlCase(wrapper);
+  propVNodeCase(wrapper, `.${config.className}`);
 
   slotCase(DLink, `.${config.className}`);
 

@@ -1,8 +1,7 @@
 import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
-import type { Font } from "@darwin-studio/ui-codegen/dist/types/font"; // TODO: shorter path, default export ???
+import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
@@ -63,16 +62,12 @@ export default defineComponent({
      * You can pass own class name to the <b>error</b> element.
      */
     // TODO: errorOptions
-    errorClass: {
-      type: String,
-    },
+    errorClass: String,
     /**
      * Defines font size of the <b>error</b> element. By default depends on props.size
      */
     // TODO: errorOptions
-    errorFont: {
-      type: String as PropType<Font>,
-    },
+    errorFont: generateProp.font(undefined, true),
     /**
      * Defines common font size of the component
      */
@@ -108,12 +103,6 @@ export default defineComponent({
     aspectRatioOptions: generateProp.options<DAspectRatioProps>(
       ASPECT_RATIO_DEFAULTS
     ),
-    /**
-     * Enables html string rendering passed in props.label and props.error.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -157,16 +146,6 @@ export default defineComponent({
     // TODO: add label generator ???
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy || this.$slots.labelFalsy) {
-        if (this.enableHtml) {
-          return (
-            <label
-              for={this.controlId}
-              class={this.labelClasses}
-              v-html={this.labels?.falsy}
-            />
-          );
-        }
-
         return (
           <label for={this.controlId} class={this.labelClasses}>
             {this.$slots.labelFalsy?.() || this.labels?.falsy}
@@ -259,16 +238,6 @@ export default defineComponent({
     // TODO: add label generator ???
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy || this.$slots.labelTruthy) {
-        if (this.enableHtml) {
-          return (
-            <label
-              for={this.controlId}
-              class={this.labelClasses}
-              v-html={this.labels?.truthy}
-            />
-          );
-        }
-
         return (
           <label for={this.controlId} class={this.labelClasses}>
             {this.$slots.labelTruthy?.() || this.labels?.truthy}
@@ -291,10 +260,6 @@ export default defineComponent({
           ),
           this.errorClass,
         ];
-
-        if (this.enableHtml) {
-          return <div class={classes} v-html={this.error} />;
-        }
 
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }

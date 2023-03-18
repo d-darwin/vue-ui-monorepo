@@ -8,7 +8,7 @@ import styles from "./index.css?module";
 export const BACKDROP_DEFAULTS: DBackdropProps = {};
 
 export const CLOSE_BUTTON_DEFAULTS: DButtonProps = {
-  label: config.closeButtonContent,
+  content: config.closeButtonContent,
   size: SIZE.SMALL,
   padding: PADDING.EQUAL,
   class: styles[config.closeButtonClassName],

@@ -89,39 +89,3 @@ const SlotTemplate: Story = (args) => ({
     </DGrid>`,
 });
 export const SlotDefault = SlotTemplate.bind({});
-
-const HtmlTemplate: Story = (args) => ({
-  components: { DGrid },
-  setup() {
-    return { args, styles };
-  },
-  computed: {
-    content() {
-      return [
-        `<div class=${styles.item}>cell 1</div>`,
-        `<div class=${styles.item}>cell 2</div>`,
-        `<div class=${styles.item}>cell 3</div>`,
-        `<div class=${styles.item}>cell 4</div>`,
-        `<div class=${styles.item}>cell 5</div>`,
-        `<div class=${styles.item}>cell 6</div>`,
-        `<div class=${styles.item}>cell 7</div>`,
-        `<div class=${styles.item}>cell 8</div>`,
-        `<div class=${styles.item}>cell 9</div>`,
-        `<div class=${styles.item}>cell 10</div>`,
-        `<div class=${styles.item}>cell 11</div>`,
-        `<div class=${styles.item}>cell 12</div>`,
-        `<div class=${styles.item}>cell 13</div>`,
-        `<div class=${styles.item}>cell 14</div>`,
-        `<div class=${styles.item}>cell 15</div>`,
-        `<div class=${styles.item}>cell 16</div>`,
-        `<div class=${styles.item}>cell 17</div>`,
-        `<div class=${styles.item}>cell 18</div>`,
-        `<div class=${styles.item}>cell 19</div>`,
-        `<div class=${styles.item}>cell 20</div>`,
-      ];
-    },
-  },
-  template: `
-    <DGrid v-bind="args" :content="content" :enableHtml="true" />`,
-});
-export const HtmlDefault = HtmlTemplate.bind({});

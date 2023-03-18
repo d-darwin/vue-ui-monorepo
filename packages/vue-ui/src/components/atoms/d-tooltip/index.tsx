@@ -32,7 +32,7 @@ export default defineComponent({
 
   props: {
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     target: generateProp.content(),
     /**
@@ -46,16 +46,14 @@ export default defineComponent({
     // TODO: targetOptions
     targetFont: generateProp.font(undefined, true),
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     /**
      * You can pass own class name to the <b>content</b> element.
      */
     // TODO: contentOptions
-    contentClass: {
-      type: String,
-    },
+    contentClass: String,
     /**
      * Defines font size of the <b>content</b> element. By default depends on props.size
      */
@@ -65,10 +63,7 @@ export default defineComponent({
      * Positions on the component.
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
-    position: {
-      type: String as PropType<Position>,
-      default: POSITION.TOP,
-    },
+    position: generateProp.string<Position>(POSITION.TOP),
     /**
      * Defines offset of the tooltip from the target
      */
@@ -79,10 +74,7 @@ export default defineComponent({
     /**
      * Defines which user action should trigger the tooltip appearance. Use "manual" to control appearance via props.forceShow
      */
-    trigger: {
-      type: String as PropType<Trigger>,
-      default: TRIGGER.HOVER,
-    },
+    trigger: generateProp.string<Trigger>(TRIGGER.HOVER),
     /**
      * Use in pair with trigger="manual" to control the tooltip appearance manually
      */
@@ -117,12 +109,6 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.target and props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch change event
@@ -264,10 +250,6 @@ export default defineComponent({
         onKeyup: this.keyupHandler,
       };
 
-      if (this.enableHtml) {
-        return <div {...bindings} v-html={this.target} />;
-      }
-
       return <div {...bindings}>{this.$slots.target?.() || this.target}</div>;
     },
 
@@ -289,10 +271,6 @@ export default defineComponent({
         ],
         style: this.contentOffsetStyles,
       };
-
-      if (this.enableHtml) {
-        return <div {...bindings} v-html={this.content} />;
-      }
 
       return <div {...bindings}>{this.$slots.content?.() || this.content}</div>;
     },

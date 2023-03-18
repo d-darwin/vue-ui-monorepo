@@ -70,7 +70,6 @@ export default {
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     tag: "div",
-    enableHtml: false,
     whenChange: (show: boolean) => {
       console.log("change", show);
     },

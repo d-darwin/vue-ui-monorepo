@@ -49,7 +49,6 @@ export default {
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     tag: "fieldset",
-    enableHtml: false,
   },
 };
 

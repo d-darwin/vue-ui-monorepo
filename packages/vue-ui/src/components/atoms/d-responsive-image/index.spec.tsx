@@ -1,7 +1,11 @@
 import { mount, shallowMount } from "@vue/test-utils";
 import DResponsiveImage from "@/components/atoms/d-responsive-image";
 import { DAspectRatioAsync as DAspectRatio } from "@/components/containers/d-aspect-ratio/async";
-import { baseClassCase } from "@/utils/test-case-factories";
+import {
+  baseClassCase,
+  propVNodeCase,
+  slotCase,
+} from "@/utils/test-case-factories";
 import config from "./config";
 import {
   LOADING,
@@ -89,6 +93,7 @@ describe("DResponsiveImage", () => {
     expect(wrapper.findComponent(DAspectRatio).exists()).toBeTruthy();
   });
 
+  // TODO: use factory
   it("Should render as figure with figcaption if props.caption is passed", async () => {
     const caption = "some caption";
     await wrapper.setProps({ caption });
@@ -98,6 +103,11 @@ describe("DResponsiveImage", () => {
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
+  slotCase(DResponsiveImage, `.${config.className}`, "caption", {
+    source: "some-image-source",
+  });
+
+  // TODO: use factory
   it("Should render figcaption classes if props.caption is passed", async () => {
     const caption = "some caption";
     const captionClass = "someCaptionClass";
@@ -115,13 +125,7 @@ describe("DResponsiveImage", () => {
     expect(figcaptionElClasses).toContain(captionClass);
   });
 
-  it("Should render props.caption as html if props.enableHtml is passed", async () => {
-    const caption = `<b>Dome caption <i>html</i></b>`;
-    await wrapper.setProps({ caption, enableHtml: true });
-    const figcaptionContentEl = wrapper.find("figcaption b");
-    expect(figcaptionContentEl.exists()).toBeTruthy();
-    expect(figcaptionContentEl.html()).toBe(caption);
-  });
+  propVNodeCase(wrapper, `.${config.className}`, "caption");
 
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
     const aspectRatio = "3/2";

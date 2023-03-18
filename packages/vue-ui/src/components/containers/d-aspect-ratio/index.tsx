@@ -16,19 +16,13 @@ export default defineComponent({
      */
     aspectRatio: generateProp.text(config.defaultAspectRatio),
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     /**
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
-    /**
-     * Enables html string rendering passed in props.label and props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
   },
 
   computed: {
@@ -88,15 +82,11 @@ export default defineComponent({
         style: this.wrapperStyle,
       };
 
-      if (!this.enableHtml) {
-        return (
-          <Tag {...wrapperBindings}>
-            {this.$slots.default?.() || this.content}
-          </Tag>
-        );
-      }
-
-      return <Tag {...wrapperBindings} v-html={this.content} />;
+      return (
+        <Tag {...wrapperBindings}>
+          {this.$slots.default?.() || this.content}
+        </Tag>
+      );
     },
 
     renderHack(): VNode {
@@ -106,19 +96,11 @@ export default defineComponent({
         style: this.innerStyle,
       };
 
-      if (!this.enableHtml) {
-        return (
-          <Tag class={styles[config.className]}>
-            <div {...innerBindings}>
-              {this.$slots.default?.() || this.content}
-            </div>
-          </Tag>
-        );
-      }
-
       return (
         <Tag class={styles[config.className]}>
-          <div {...innerBindings} v-html={this.content} />
+          <div {...innerBindings}>
+            {this.$slots.default?.() || this.content}
+          </div>
         </Tag>
       );
     },

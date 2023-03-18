@@ -17,16 +17,14 @@ import {
   defaultCheckMarkCase,
   errorClassCase,
   errorFontCase,
-  errorHtmlCase,
-  errorStringCase,
+  propVNodeCase,
+  propStringCase,
   iconSlotCase,
   inputAttrsCase,
   inputClassCase,
   inputValueCase,
   labelClassCase,
   labelFontCase,
-  labelHtmlCase,
-  labelStringCase,
   minControlWidthCase,
   outlineClassCase,
   paddingEqualClassesCase,
@@ -89,7 +87,7 @@ describe("DRadio", () => {
     });
     const button = wrapper.findComponent(DButton);
     expect(button).toBeTruthy();
-    expect(button.attributes().label).toBe(label);
+    expect(button.attributes().content).toBe(label);
   });
 
   it("Should trigger input events on DButton click", async () => {
@@ -104,14 +102,10 @@ describe("DRadio", () => {
     expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
   });
 
-  labelStringCase(wrapper, `.${config.labelInnerClassName}`);
-
   labelClassCase(wrapper);
-
   labelFontCase(wrapper);
-
-  labelHtmlCase(wrapper);
-
+  propStringCase(wrapper, `.${config.labelInnerClassName}`, "label");
+  propVNodeCase(wrapper, `.${config.labelInnerClassName}`, "label");
   slotCase(DRadio, `.${config.labelInnerClassName}`, "label", {
     name,
     value,
@@ -156,25 +150,18 @@ describe("DRadio", () => {
   roundingClassCase(wrapper, `.${config.iconContainerClassName}`);
 
   sizeClassCase(wrapper, "input");
-
   sizeClassCase(wrapper, `.${config.iconContainerClassName}`);
-
   sizeClassCase(wrapper, `.${config.iconContainerBackdropClassName}`);
-
   transitionClassCase(wrapper, `.${config.iconContainerClassName}`);
 
-  errorStringCase(wrapper, `.${config.errorClassName}`);
-
-  errorHtmlCase(wrapper, `.${config.errorClassName}`);
-
+  errorClassCase(wrapper, `.${config.errorClassName}`);
+  errorFontCase(wrapper, `.${config.errorClassName}`);
+  propStringCase(wrapper, `.${config.errorClassName}`, "error");
+  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
   slotCase(DRadio, `.${config.errorClassName}`, "error", {
     name,
     value,
   });
-
-  errorClassCase(wrapper, `.${config.errorClassName}`);
-
-  errorFontCase(wrapper, `.${config.errorClassName}`);
 
   it("Should emit onChange event with checked and value payload", async () => {
     const value = "some value";

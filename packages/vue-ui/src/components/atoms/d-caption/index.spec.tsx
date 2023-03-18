@@ -1,8 +1,9 @@
 import { shallowMount } from "@vue/test-utils";
 import {
   baseClassCase,
-  contentHtmlCase,
+  propVNodeCase,
   fontSizeClassCase,
+  propStringCase,
   tagCase,
 } from "@/utils/test-case-factories";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
@@ -11,7 +12,7 @@ import config from "./config";
 import { TYPE } from "./constant";
 import styles from "./styles.css";
 
-describe("DButton", () => {
+describe("DCaption", () => {
   const wrapper = shallowMount(DCaption, {
     props: {
       font: FONT.SMALL,
@@ -29,5 +30,7 @@ describe("DButton", () => {
 
   tagCase(wrapper);
 
-  contentHtmlCase(wrapper);
+  propStringCase(wrapper, `.${config.className}`);
+
+  propVNodeCase(wrapper, `.${config.className}`);
 });

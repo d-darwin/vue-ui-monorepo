@@ -7,8 +7,7 @@ import {
   errorAbsenceCase,
   errorClassCase,
   errorFontCase,
-  errorHtmlCase,
-  errorStringCase,
+  propVNodeCase,
   inputClassCase,
   labelFontCase,
   roundingClassCase,
@@ -16,6 +15,7 @@ import {
   slotCase,
   tagCase,
   transitionClassCase,
+  propStringCase,
 } from "@/utils/test-case-factories";
 import DSwitch from "@/components/atoms/d-switch/index";
 import styles from "@/components/atoms/d-switch/index.css?module";
@@ -82,14 +82,7 @@ describe("DSwitch", () => {
     expect(labelFalsyEl.text()).toBe(labelFalsy);
   });
 
-  it("Shouldn render $slots.labelFalsy if presented", async () => {
-    const labelFalsy = `<b>Label falsy slot</b>`;
-    const wrapper = mount(DSwitch, {
-      slots: { labelFalsy },
-    });
-    const labelFalsyEl = wrapper.find(`.${config.labelClassName}`);
-    expect(labelFalsyEl.html()).toMatch(labelFalsy);
-  });
+  slotCase(DSwitch, `.${config.labelClassName}`, "labelFalsy");
 
   it("Shouldn render .label if props.labels.truthy is presented", async () => {
     const labelTruthy = "falsy label";
@@ -102,33 +95,27 @@ describe("DSwitch", () => {
     expect(labelTruthyEl.text()).toBe(labelTruthy);
   });
 
-  it("Shouldn render $slots.labelTruthy if presented", async () => {
-    const labelTruthy = `<b>Label truthy slot</b>`;
-    const wrapper = mount(DSwitch, {
-      slots: { labelTruthy },
-    });
-    const labelTruthyEl = wrapper.find(`.${config.labelClassName}`);
-    expect(labelTruthyEl.html()).toMatch(labelTruthy);
-  });
+  slotCase(DSwitch, `.${config.labelClassName}`, "labelTruthy");
 
   labelFontCase(wrapper, `.${config.labelClassName}`);
 
-  it("Should render .label content as HTML if props.enableHtml is true", async () => {
-    const labelFalsy = `<b>Label falsy</b>`;
-    const labelTruthy = `<b>Label truthy</b>`;
+  it("Should render props.labels content as HTML", async () => {
+    const labelFalsy = <b>Label falsy</b>;
+    const labelTruthy = <b>Label truthy</b>;
+    const labelFalsyHtml = `${labelFalsy}`;
+    const labelTruthyHtml = `${labelTruthy}`;
     await wrapper.setProps({
       labels: {
-        falsy: labelFalsy,
-        truthy: labelTruthy,
+        falsy: labelFalsyHtml,
+        truthy: labelTruthyHtml,
       },
-      enableHtml: true,
     });
     const labelFalsyEl = wrapper.find(`.${config.labelClassName}:nth-child(1)`);
-    expect(labelFalsyEl.html()).toMatch(labelFalsy);
+    expect(labelFalsyEl.html()).toMatch(labelFalsyHtml);
     const labelTruthyEl = wrapper.find(
       `.${config.labelClassName}:nth-child(3)`
     );
-    expect(labelTruthyEl.html()).toMatch(labelTruthy);
+    expect(labelTruthyEl.html()).toMatch(labelTruthyHtml);
   });
 
   inputClassCase(wrapper);
@@ -189,9 +176,9 @@ describe("DSwitch", () => {
 
   errorAbsenceCase(wrapper, `.${config.errorClassName}`);
 
-  errorStringCase(wrapper, `.${config.errorClassName}`);
+  propStringCase(wrapper, `.${config.errorClassName}`, "error");
 
-  errorHtmlCase(wrapper, `.${config.errorClassName}`);
+  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
 
   slotCase(DSwitch, `.${config.errorClassName}`, "error");
 
@@ -201,14 +188,7 @@ describe("DSwitch", () => {
 
   tagCase(wrapper);
 
-  it("Should render $slots.thumb", async () => {
-    const thumb = `<b>Thumb slot</b>`;
-    const wrapper = mount(DSwitch, {
-      slots: { thumb },
-    });
-    const slotThumbEl = wrapper.find(`.${config.thumbClassName}`);
-    expect(slotThumbEl.html()).toMatch(thumb);
-  });
+  slotCase(DSwitch, `.${config.thumbClassName}`, "thumb");
 
   it("Shouldn render disabled attr for input element if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });
