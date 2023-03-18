@@ -65,7 +65,7 @@ export default defineComponent({
     // TODO: header
     // TODO: footer
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     // TODO: contentOptions instead of contentClass and contentFont ???
@@ -151,13 +151,13 @@ export default defineComponent({
       CLOSE_BUTTON_DEFAULTS
     ),
     /**
-     * Pass any DButton.props to customize default footer cancel button, f.e. { label: "Cancel" }
+     * Pass any DButton.props to customize default footer cancel button, f.e. { content: "Cancel" }
      */
     cancelButtonOptions: generateProp.options<DButtonProps>(
       CANCEL_BUTTON_DEFAULTS
     ),
     /**
-     * Pass any DButton.props to customize default footer accept button, f.e. { label: "Accept" }
+     * Pass any DButton.props to customize default footer accept button, f.e. { content: "Accept" }
      */
     acceptButtonOptions: generateProp.options<DButtonProps>(
       ACCEPT_BUTTON_DEFAULTS
@@ -170,12 +170,6 @@ export default defineComponent({
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: Boolean,
-    /**
-     * Enables html string rendering passed in props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch close event
@@ -250,7 +244,7 @@ export default defineComponent({
     },
 
     renderCloseButton(): VNode {
-      // TODO: slot, tag, enableHtml ... (like label in other components)
+      // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -268,7 +262,7 @@ export default defineComponent({
         return null;
       }
 
-      // TODO: header, tag, enableHtml ... (like label in other components)
+      // TODO: header, tag, ... (like content in other components)
       return (
         <div class={styles[config.headerClassName]}>
           {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
@@ -277,18 +271,16 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
-      const bindings = {
-        class: [
-          styles[config.contentClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
-          this.contentClass,
-        ],
-      };
-
-      return !this.enableHtml ? (
-        <div {...bindings}>{this.$slots.default?.() || this.content}</div>
-      ) : (
-        <div {...bindings} v-html={this.content} />
+      return (
+        <div
+          class={[
+            styles[config.contentClassName],
+            getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
+            this.contentClass,
+          ]}
+        >
+          {this.$slots.default?.() || this.content}
+        </div>
       );
     },
 
@@ -297,17 +289,17 @@ export default defineComponent({
         return null;
       }
 
-      // TODO: footer, tag, enableHtml ... (like label in other components)
+      // TODO: footer, tag, ... (like content in other components)
       return (
         <div class={styles[config.footerClassName]}>
           {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
-              {...mergeProps(this.cancelButtonOptions)}
+              {...mergeProps(this.cancelButtonOptions, CANCEL_BUTTON_DEFAULTS)}
             />,
             <DButton
               whenClick={this.acceptHandler}
-              {...mergeProps(this.acceptButtonOptions)}
+              {...mergeProps(this.acceptButtonOptions, ACCEPT_BUTTON_DEFAULTS)}
             />,
           ]}
         </div>

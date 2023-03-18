@@ -11,6 +11,8 @@ import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import {
   colorSchemeClassCase,
   paddingEqualClassesCase,
+  propStringCase,
+  propVNodeCase,
   roundingClassCase,
   sizeClassCase,
   slotCase,
@@ -239,15 +241,8 @@ describe("DDrawer", () => {
     expect(headerEl.exists()).toBeFalsy();
   });
 
-  it("Should render props.content as HTML string if props.enableHtml is true", async () => {
-    const content = `<div>some <b>html</b> string</div>`;
-    await wrapper.setProps({ isShown: true, content, enableHtml: true });
-
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl.html()).toMatch(content);
-  });
-
-  // TODO: props.enableHtml for header, footer (?)
+  propStringCase(wrapper);
+  propVNodeCase(wrapper);
 
   it("Should emit close event on backdrop click", async () => {
     const wrapper = mount(DDrawer, {

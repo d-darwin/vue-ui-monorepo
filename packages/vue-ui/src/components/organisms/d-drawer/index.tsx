@@ -61,7 +61,7 @@ export default defineComponent({
     // TODO: header
     // TODO: footer
     /**
-     * Plain string, VNode or HTML if props.enableHtml is true
+     * Plain string or VNode
      */
     content: generateProp.content(),
     /**
@@ -86,10 +86,7 @@ export default defineComponent({
      * Positions on the component.
      * Takes values: 'top', 'right', 'bottom', 'left'.
      */
-    position: {
-      type: String as PropType<PositionStrict>,
-      default: POSITION_HORIZONTAL.RIGHT,
-    },
+    position: generateProp.string<PositionStrict>(POSITION_HORIZONTAL.RIGHT),
     /**
      * Defines width of the component if props.position is "right" or "left"
      */
@@ -157,12 +154,6 @@ export default defineComponent({
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
     enableInline: Boolean,
-    /**
-     * Enables html string rendering passed in props.content.<br>
-     * ⚠️ Use only on trusted content and never on user-provided content.
-     */
-    // TODO: remove
-    enableHtml: Boolean,
 
     /**
      * Alternative way to catch close event
@@ -209,7 +200,7 @@ export default defineComponent({
     },
 
     renderTitle(): VNode | null {
-      // TODO: slot, tag, enableHtml ... (like label in other components)
+      // TODO: slot, tag, ... (like content in other components)
       return this.title ? (
         <div
           class={[
@@ -224,7 +215,7 @@ export default defineComponent({
     },
 
     renderCloseButton(): VNode {
-      // TODO: slot, tag, enableHtml ... (like label in other components)
+      // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
@@ -242,7 +233,7 @@ export default defineComponent({
         return null;
       }
 
-      // TODO: header, tag, enableHtml ... (like label in other components)
+      // TODO: header, tag, ... (like content in other components)
       return (
         <div class={styles[config.headerClassName]}>
           {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
@@ -261,11 +252,7 @@ export default defineComponent({
         ],
       };
 
-      return !this.enableHtml ? (
-        <Tag {...bindings}>{this.$slots.default?.() || this.content}</Tag>
-      ) : (
-        <Tag {...bindings} v-html={this.content} />
-      );
+      return <Tag {...bindings}>{this.$slots.default?.() || this.content}</Tag>;
     },
 
     renderFooter(): VNode | null {
@@ -273,7 +260,7 @@ export default defineComponent({
         return null;
       }
 
-      // TODO: footer, tag, enableHtml ... (like label in other components)
+      // TODO: footer, tag, ... (like content in other components)
       return (
         <div class={styles[config.footerClassName]}>{this.$slots.footer()}</div>
       );
