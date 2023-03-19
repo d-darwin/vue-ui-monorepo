@@ -4,4 +4,6 @@ export default {
   role: "progressbar",
   labelClassName: "label",
   progressClassName: "progress",
+  contentClassName: "content",
+  defaultLabelOffset: "4px",
 } as const;

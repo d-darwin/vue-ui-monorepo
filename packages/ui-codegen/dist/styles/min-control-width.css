@@ -2,40 +2,50 @@
 
 .sizeHugeMinControlWidth {
   min-width: var(--size-huge-min-control-width);
+  --min-width: var(--size-huge-min-control-width);
 }
 
 .sizeLargeMinControlWidth {
   min-width: var(--size-large-min-control-width);
+  --min-width: var(--size-large-min-control-width);
 }
 
 .sizeMediumMinControlWidth {
   min-width: var(--size-medium-min-control-width);
+  --min-width: var(--size-medium-min-control-width);
 }
 
 .sizeSmallMinControlWidth {
   min-width: var(--size-small-min-control-width);
+  --min-width: var(--size-small-min-control-width);
 }
 
 .sizeTinyMinControlWidth {
   min-width: var(--size-tiny-min-control-width);
+  --min-width: var(--size-tiny-min-control-width);
 }
 
 .sizeHuge {
   min-width: var(--size-huge);
+  --min-width: var(--size-huge);
 }
 
 .sizeLarge {
   min-width: var(--size-large);
+  --min-width: var(--size-large);
 }
 
 .sizeMedium {
   min-width: var(--size-medium);
+  --min-width: var(--size-medium);
 }
 
 .sizeSmall {
   min-width: var(--size-small);
+  --min-width: var(--size-small);
 }
 
 .sizeTiny {
   min-width: var(--size-tiny);
+  --min-width: var(--size-tiny);
 }

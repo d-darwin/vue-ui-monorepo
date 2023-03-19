@@ -1,15 +1,46 @@
 import { Story } from "@storybook/vue3";
 import DProgress from "@darwin-studio/vue-ui/src/components/atoms/d-progress";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
 export default {
   title: "atoms/DProgress",
   component: DProgress,
   argTypes: {
+    colorScheme: {
+      control: { type: "select" },
+      options: Object.values(COLOR_SCHEME),
+    },
+    font: {
+      control: { type: "select" },
+      options: Object.values(FONT),
+    },
+    rounding: {
+      control: { type: "select" },
+      options: Object.values(ROUNDING),
+    },
+    size: {
+      control: { type: "select" },
+      options: Object.values(SIZE),
+    },
+    transition: {
+      control: { type: "select" },
+      options: Object.values(TRANSITION),
+    },
     /*TODO*/
   },
   args: {
     label: "Some label",
+    value: 33,
     content: "",
+    font: FONT.MEDIUM,
+    colorScheme: COLOR_SCHEME.PRIMARY,
+    rounding: ROUNDING.MEDIUM,
+    size: SIZE.MEDIUM,
+    transition: TRANSITION.FAST,
     /*TODO*/
   },
 };

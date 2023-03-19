@@ -1,24 +1,40 @@
 .dProgress {
   display: flex;
   flex-direction: column;
+  width: fit-content;
+}
+
+.label {
+  --offset: 4px;
+  margin-bottom: var(--offset);
 }
 
 .progress {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  overflow: hidden;
+  width: calc(var(--min-width)*2);
+  height: calc(var(--size)/2);
+  border: calc(var(--size)/10) solid var(--background-color);
+  outline: calc(var(--size)/10) solid var(--color);
+  cursor: wait;
 }
 
-.progress[value] {
-  /*TODO*/
+.progress[value]::-webkit-progress-bar {
+  background-color: var(--color);
 }
 
-.progress[value]::-webkit-progress-value,
+.progress[value]::-webkit-progress-value {
+  background-color: var(--background-color);
+}
+
 .progress[value]::-moz-progress-bar {
-  /*TODO*/
+  accent-color: var(--background-color);
 }
 
 /* TODO: or indeterminate*/
+.progress:indeterminate,
 .progress:not([value]) {
   /*TODO*/
 }
