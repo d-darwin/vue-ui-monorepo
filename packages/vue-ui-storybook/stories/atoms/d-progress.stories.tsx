@@ -4,7 +4,6 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
 export default {
   title: "atoms/DProgress",
@@ -13,10 +12,6 @@ export default {
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
-    },
-    font: {
-      control: { type: "select" },
-      options: Object.values(FONT),
     },
     rounding: {
       control: { type: "select" },
@@ -34,9 +29,8 @@ export default {
   },
   args: {
     label: "Some label",
-    value: "33",
-    content: "",
-    font: FONT.MEDIUM,
+    value: "50",
+    content: "50%",
     colorScheme: COLOR_SCHEME.PRIMARY,
     rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,
@@ -53,3 +47,8 @@ const Template: Story = (args) => ({
   template: `<DProgress v-bind="args" />`,
 });
 export const Default = Template.bind({});
+
+export const Indeterminate = Template.bind({});
+Indeterminate.args = {
+  value: undefined,
+};
