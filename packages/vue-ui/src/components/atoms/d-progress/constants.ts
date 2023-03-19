@@ -4,6 +4,8 @@ import {
   ProgressHTMLAttributes,
 } from "vue";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/constant";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -24,4 +26,9 @@ export const CONTENT_DEFAULTS: HTMLAttributes = {
 export const LOADER_DEFAULTS: DLoaderProps = {
   key: "loader",
   class: styles[config.loaderClassName],
+};
+
+export const CAPTION_DEFAULTS: DCaptionProps = {
+  type: TYPE.DANGER,
+  class: styles[config.captionClassName],
 };

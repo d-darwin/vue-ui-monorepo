@@ -5,7 +5,7 @@
 
 .label {
   display: block;
-  --offset: -4px;
+  --offset: 2px;
   margin-bottom: var(--offset);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .caption {
-  --offset: -4px;
+  --offset: 2px;
   position: absolute;
   top: calc(100% + var(--offset));
 }

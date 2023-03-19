@@ -7,5 +7,7 @@ export default {
   contentClassName: "content",
   loaderContainerClassName: "loaderContainer",
   loaderClassName: "loader",
-  defaultLabelOffset: "4px",
+  captionClassName: "caption",
+  defaultLabelOffset: "2px",
+  defaultCaptionOffset: "2px",
 } as const;

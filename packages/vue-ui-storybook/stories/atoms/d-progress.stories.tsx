@@ -31,6 +31,7 @@ export default {
     label: "Some label",
     value: "50",
     content: "50%",
+    caption: "Some caption",
     colorScheme: COLOR_SCHEME.PRIMARY,
     rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,

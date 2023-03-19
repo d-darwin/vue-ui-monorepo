@@ -9,8 +9,11 @@ import {
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import {
@@ -18,9 +21,11 @@ import {
   LABEL_DEFAULTS,
   PROGRESS_DEFAULTS,
   LOADER_DEFAULTS,
+  CAPTION_DEFAULTS,
 } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
+import { Transition as Trans } from "@vue/runtime-dom";
 
 export default defineComponent({
   name: config.name,
@@ -65,6 +70,17 @@ export default defineComponent({
      */
     loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
     /**
+     * If not empty renders DCaption below the <b>input</b> element.
+     */
+    caption: generateProp.content(),
+    /**
+     * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
+     */
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    /**
+     * Defines offset of DCaption
+     */
+    captionOffset: generateProp.text(config.defaultCaptionOffset),
     /**
      * Defines appearance of the component
      */
@@ -94,7 +110,7 @@ export default defineComponent({
         return (
           <label
             for={String(this.id)}
-            style={`--offset: ${this.labelOffset}`}
+            style={`--offset: ${prepareHtmlSize(this.labelOffset)}`}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore TODO
             {...mergeProps(LABEL_DEFAULTS, this.labelOptions)}
@@ -175,6 +191,27 @@ export default defineComponent({
       return null;
     },
 
+    renderCaption(): VNode {
+      return (
+        <Trans
+          enterActiveClass={styles.captionTransitionEnterActive}
+          leaveActiveClass={styles.captionTransitionLeaveActive}
+          appear={true}
+        >
+          {(this.$slots.caption?.() || this.caption) && (
+            <DCaption
+              font={this.size}
+              class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
+              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
+              {...mergeProps(CAPTION_DEFAULTS, this.captionOptions)}
+            >
+              {this.$slots.caption?.() || this.caption}
+            </DCaption>
+          )}
+        </Trans>
+      );
+    },
+
     classes(): (string | undefined)[] {
       return [
         styles[config.className],
@@ -207,7 +244,7 @@ export default defineComponent({
         {/*TODO: or renderCircle*/}
         {this.renderBar}
         {this.renderContent}
-        {/*TODO: this.renderError*/}
+        {this.renderCaption}
       </Tag>
     );
   },
