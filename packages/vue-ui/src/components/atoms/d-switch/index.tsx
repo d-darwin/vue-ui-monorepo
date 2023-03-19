@@ -203,7 +203,7 @@ export default defineComponent({
             getCommonCssClass(TOKEN_NAME.SIZE, this.size),
             getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
           ]}
-          {...mergeProps(this.aspectRatioOptions, ASPECT_RATIO_DEFAULTS)}
+          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
         >
           <input
             id={this.controlId}

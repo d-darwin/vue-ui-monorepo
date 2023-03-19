@@ -9,7 +9,7 @@ export default {
   },
   args: {
     label: "Some label",
-    content: "Some content string",
+    content: "",
     /*TODO*/
   },
 };

@@ -1,6 +1,20 @@
 .dProgress {
-  appearance: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.progress {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.progress[value] {
+  /*TODO*/
+}
+
+.progress[value]::-webkit-progress-value,
+.progress[value]::-moz-progress-bar {
   /*TODO*/
 }
 

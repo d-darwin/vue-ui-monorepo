@@ -153,7 +153,7 @@ export default defineComponent({
           class={getCommonCssClass(TOKEN_NAME.FONT, this.size)}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          {...mergeProps(this.labelOptions, LABEL_DEFAULTS)}
+          {...mergeProps(LABEL_DEFAULTS, this.labelOptions)}
         >
           {this.$slots.label?.() || this.label}
         </label>
@@ -169,7 +169,7 @@ export default defineComponent({
           ]}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          {...mergeProps(this.trackOptions, TRACK_DEFAULTS)}
+          {...mergeProps(TRACK_DEFAULTS, this.trackOptions)}
         >
           {this.$slots.track?.()}
         </div>
@@ -199,7 +199,7 @@ export default defineComponent({
           onInput={this.inputHandler}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          {...mergeProps(this.inputOptions, INPUT_DEFAULTS)}
+          {...mergeProps(INPUT_DEFAULTS, this.inputOptions)}
         />
       );
     },
@@ -216,7 +216,7 @@ export default defineComponent({
               font={this.size}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...mergeProps(this.captionOptions, CAPTION_DEFAULTS)}
+              {...mergeProps(CAPTION_DEFAULTS, this.captionOptions)}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>

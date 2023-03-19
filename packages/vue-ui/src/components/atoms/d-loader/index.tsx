@@ -84,7 +84,7 @@ export default defineComponent({
             key={config.backdropKey}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
-            {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+            {...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions)}
           />
         </Trans>
       );

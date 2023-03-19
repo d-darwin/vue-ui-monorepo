@@ -168,7 +168,7 @@ export default defineComponent({
             colorScheme={this.colorScheme}
             size={this.size}
             font={this.size}
-            {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)}
+            {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
           />
         )}
       </Tag>

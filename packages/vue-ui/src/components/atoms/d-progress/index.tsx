@@ -7,7 +7,9 @@ import {
 } from "vue";
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { LABEL_DEFAULTS, PROGRESS_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
@@ -36,7 +38,11 @@ export default defineComponent({
     // TODO: contentOptions
     // TODO: value \ min \ max \ indeterminate
     /**
-     * TODO
+     * Defines initial <i>value</i> attr of the <b>input</b> element
+     */
+    value: generateProp.text(),
+    /**
+     * Pass any attribute to the progress element
      */
     progressOptions:
       generateProp.options<ProgressHTMLAttributes>(PROGRESS_DEFAULTS),
@@ -69,6 +75,13 @@ export default defineComponent({
   },
 
   computed: {
+    classes(): (string | undefined)[] {
+      return [
+        styles[config.className],
+        getCommonCssClass(TOKEN_NAME.FONT, this.font || this.size),
+      ];
+    },
+
     renderLabel(): VNode | null {
       if (this.$slots.label || this.label) {
         return (
@@ -76,7 +89,7 @@ export default defineComponent({
             for={String(this.id)}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore TODO
-            {...mergeProps(this.labelOptions, config.defaultLabelOptions)}
+            {...mergeProps(LABEL_DEFAULTS, this.labelOptions)}
           >
             {this.$slots.label || this.label}
           </label>
@@ -93,11 +106,23 @@ export default defineComponent({
       return (
         <Tag
           id={String(this.id)}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          {...mergeProps(this.progressOptions, config.defaultProgressOptions)}
+          class={getCommonCssClass(TOKEN_NAME.SIZE, this.size)}
+          {...mergeProps(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore TODO
+            PROGRESS_DEFAULTS,
+            this.progressOptions,
+            {
+              value:
+                this.value ||
+                this.progressOptions.value ||
+                PROGRESS_DEFAULTS.value, // TODO: too verbose
+            }
+          )}
         >
-          {this.$slots.default?.() || this.content}
+          {this.$slots.default?.() ||
+            this.content ||
+            `${this.progressOptions.value} %`}
         </Tag>
       );
     },
@@ -119,7 +144,7 @@ export default defineComponent({
       <progress id="progress-bar" value="70" max="100">70 %</progress>
     * */
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={this.classes}>
         {this.renderLabel}
         {/*TODO: or renderCircle*/}
         {this.renderBar}

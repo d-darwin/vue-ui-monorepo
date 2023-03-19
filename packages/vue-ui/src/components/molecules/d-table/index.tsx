@@ -193,7 +193,7 @@ export default defineComponent({
     return (
       <table class={styles[config.className]}>
         {this.loading && (
-          <DLoader {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)} />
+          <DLoader {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)} />
         )}
         {this.renderHead}
         {this.renderBody}

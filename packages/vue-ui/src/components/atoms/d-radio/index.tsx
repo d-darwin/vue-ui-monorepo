@@ -283,7 +283,7 @@ export default defineComponent({
           whenClick={this.buttonClickHandler}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          {...mergeProps(this.buttonOptions, BUTTON_DEFAULTS)}
+          {...mergeProps(BUTTON_DEFAULTS, this.buttonOptions)}
         />
       );
     },

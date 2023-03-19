@@ -222,7 +222,7 @@ export default defineComponent({
               colorScheme={this.colorScheme}
               class={this.backdropClass}
               whenClick={this.closeHandler}
-              {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+              {...mergeProps(BACKDROP_DEFAULTS, this.backdropOptions)}
             />
           )}
         </Trans>
@@ -252,7 +252,7 @@ export default defineComponent({
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },
@@ -295,11 +295,11 @@ export default defineComponent({
           {this.$slots.footer?.() || [
             <DButton
               whenClick={this.cancelHandler}
-              {...mergeProps(this.cancelButtonOptions, CANCEL_BUTTON_DEFAULTS)}
+              {...mergeProps(CANCEL_BUTTON_DEFAULTS, this.cancelButtonOptions)}
             />,
             <DButton
               whenClick={this.acceptHandler}
-              {...mergeProps(this.acceptButtonOptions, ACCEPT_BUTTON_DEFAULTS)}
+              {...mergeProps(ACCEPT_BUTTON_DEFAULTS, this.acceptButtonOptions)}
             />,
           ]}
         </div>

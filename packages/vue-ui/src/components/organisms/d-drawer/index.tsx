@@ -223,7 +223,7 @@ export default defineComponent({
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
+          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },
