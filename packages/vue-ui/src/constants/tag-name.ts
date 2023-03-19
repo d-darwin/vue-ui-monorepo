@@ -11,6 +11,7 @@ export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
   NAV: "nav";
   DIALOG: "dialog";
   LABEL: "label";
+  PROGRESS: "progress";
 } = {
   DIV: "div",
   SPAN: "span",
@@ -22,4 +23,5 @@ export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
   NAV: "nav",
   DIALOG: "dialog",
   LABEL: "label",
+  PROGRESS: "progress",
 } as const;
