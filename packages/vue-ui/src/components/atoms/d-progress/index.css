@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
+  position: relative;
 }
 
 .label {
@@ -14,10 +15,10 @@
   -moz-appearance: none;
   appearance: none;
   overflow: hidden;
-  width: calc(var(--min-width)*2);
+  min-width: calc(var(--min-width)*2);
   height: calc(var(--size)/2);
-  border: calc(var(--size)/10) solid var(--background-color);
-  outline: calc(var(--size)/10) solid var(--color);
+  border: calc(var(--size)/16) solid var(--background-color);
+  outline: calc(var(--size)/16) solid var(--color);
   cursor: wait;
 }
 
@@ -37,4 +38,19 @@
 .progress:indeterminate,
 .progress:not([value]) {
   /*TODO*/
+}
+
+.content {
+  position: absolute;
+  bottom: 0;
+  height: calc(var(--size)/2);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  /* This value is the OPPOSITE color of our background */
+  color: var(--color);
+  mix-blend-mode: difference;
+  pointer-events: none;
 }

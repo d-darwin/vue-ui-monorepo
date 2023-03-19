@@ -134,9 +134,12 @@ export default defineComponent({
       // TODO: configurable tag ???
       if (this.$slots.default?.() || this.content) {
         return (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          <div {...mergeProps(CONTENT_DEFAULTS, this.contentOptions)}>
+          <div
+            class={getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme)}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore TODO
+            {...mergeProps(CONTENT_DEFAULTS, this.contentOptions)}
+          >
             {this.$slots.default?.() || this.content}
           </div>
         );
