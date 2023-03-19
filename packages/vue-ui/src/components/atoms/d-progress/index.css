@@ -34,10 +34,9 @@
   accent-color: var(--background-color);
 }
 
-/* TODO: or indeterminate*/
-.progress:indeterminate,
-.progress:not([value]) {
-  /*TODO*/
+.progress:indeterminate::-webkit-progress-bar,
+.progress:not([value])::-webkit-progress-bar {
+  background-color: var(--color);
 }
 
 .content {
@@ -53,4 +52,34 @@
   color: var(--color);
   mix-blend-mode: difference;
   pointer-events: none;
+}
+
+.loaderContainer {
+  position: absolute;
+  bottom: 0;
+  height: calc(var(--size)/2);
+  min-height: calc(var(--size)/2);
+  width: 100%;
+  overflow: hidden;
+}
+
+.loader {
+  height: calc(var(--size)/2);
+  bottom: 0;
+  margin-top: auto;
+  overflow: hidden;
+  animation: indeterminateAnimation 1s infinite linear;
+  transform-origin: 0 50%;
+}
+
+@keyframes indeterminateAnimation {
+  0% {
+    transform:  translateX(-65%);
+  }
+  45% {
+    transform:  translateX(0);
+  }
+  100% {
+    transform:  translateX(65%);
+  }
 }

@@ -34,7 +34,7 @@ export default {
   },
   args: {
     label: "Some label",
-    value: 33,
+    value: "33",
     content: "",
     font: FONT.MEDIUM,
     colorScheme: COLOR_SCHEME.PRIMARY,

@@ -9,12 +9,15 @@ import {
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
+import { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import {
   CONTENT_DEFAULTS,
   LABEL_DEFAULTS,
   PROGRESS_DEFAULTS,
+  LOADER_DEFAULTS,
 } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
@@ -57,6 +60,10 @@ export default defineComponent({
      * Pass any attribute to the content element
      */
     contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
+    /**
+     * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
+     */
+    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
     /**
     /**
      * Defines appearance of the component
@@ -125,14 +132,14 @@ export default defineComponent({
           )}
           value={this.value || this.progressOptions.value}
         >
-          {`${this.value || this.progressOptions.value}%`}
+          {(this.value || this.progressOptions.value) &&
+            `${this.value || this.progressOptions.value}%`}
         </Tag>
       );
     },
 
     renderContent(): VNode | null {
-      // TODO: configurable tag ???
-      if (this.$slots.default?.() || this.content) {
+      if (this.value && (this.$slots.default?.() || this.content)) {
         return (
           <div
             class={getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme)}
@@ -141,6 +148,26 @@ export default defineComponent({
             {...mergeProps(CONTENT_DEFAULTS, this.contentOptions)}
           >
             {this.$slots.default?.() || this.content}
+          </div>
+        );
+      }
+
+      if (!this.value) {
+        return (
+          <div
+            class={[
+              styles[config.loaderContainerClassName],
+              getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+              getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            ]}
+          >
+            <DLoader
+              colorScheme={this.colorScheme}
+              font={this.size}
+              size={this.size}
+              transition={this.transition}
+              {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
+            />
           </div>
         );
       }
