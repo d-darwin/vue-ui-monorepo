@@ -133,7 +133,7 @@ export default defineComponent({
               this.labelOffset
             )}`}
           >
-            {this.$slots.label || this.label}
+            {this.$slots.label?.() || this.label}
           </label>
         );
       }

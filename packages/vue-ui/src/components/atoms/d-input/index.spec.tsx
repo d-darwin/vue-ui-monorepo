@@ -22,7 +22,7 @@ import {
   fontSizeClassCase,
   inputAttrsCase,
   inputClassCase,
-  inputValueCase,
+  elementValueAttrCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
@@ -43,7 +43,7 @@ describe("DInput", () => {
 
   minControlWidthCase(wrapper);
 
-  inputValueCase(wrapper);
+  elementValueAttrCase(wrapper);
 
   inputClassCase(wrapper);
 

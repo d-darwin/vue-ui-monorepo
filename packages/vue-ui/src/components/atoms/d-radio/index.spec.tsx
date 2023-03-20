@@ -22,7 +22,7 @@ import {
   iconSlotCase,
   inputAttrsCase,
   inputClassCase,
-  inputValueCase,
+  elementValueAttrCase,
   labelClassCase,
   labelFontCase,
   minControlWidthCase,
@@ -53,7 +53,7 @@ describe("DRadio", () => {
     expect(inputEl.attributes().value).toBe(value);
   });
 
-  inputValueCase(wrapper);
+  elementValueAttrCase(wrapper);
 
   inputClassCase(wrapper);
 

@@ -68,14 +68,15 @@ export function baseClassCase(
   });
 }
 
-export function inputValueCase(
+export function elementValueAttrCase(
   wrapper: VueWrapper,
-  value: string | number = "some value"
+  value: string | number = "some value",
+  targetSelector = "input"
 ) {
-  return it("Input element's value attr should contain props.value", async () => {
+  return it(`${targetSelector}'s value attr should contain props.value`, async () => {
     await wrapper.setProps({ value });
-    const inputEl = wrapper.find("input");
-    expect(inputEl.element?.value).toBe(String(value));
+    const inputEl = wrapper.find(targetSelector);
+    expect(inputEl.attributes()?.value).toBe(String(value));
   });
 }
 
@@ -502,5 +503,17 @@ export function tagCase(wrapper: VueWrapper) {
     const tag = "section";
     await wrapper.setProps({ tag });
     expect(wrapper.element.tagName).toEqual(tag.toLocaleUpperCase());
+  });
+}
+
+export function offsetCase(wrapper: VueWrapper, targetSelector = "label") {
+  return it("Should render props.labelOffset to the label style as '--offset: props.labelOffset'", async () => {
+    const labelOffset = 33;
+    await wrapper.setProps({
+      labelOffset,
+    });
+
+    const targetEl = wrapper.find(targetSelector);
+    expect(targetEl.attributes("style")).toContain(`--offset: ${labelOffset}`);
   });
 }
