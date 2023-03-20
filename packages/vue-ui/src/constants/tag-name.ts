@@ -1,5 +1,6 @@
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 
+// TODO: naming
 export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
   DIV: "div";
   SPAN: "span";

@@ -5,6 +5,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { Type } from "@darwin-studio/vue-ui/src/components/atoms/d-progress/types";
+import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "atoms/DProgress",
@@ -30,19 +31,21 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    /*TODO*/
   },
   args: {
+    id: "some-id",
     label: "Some label",
+    labelOffset: "2px",
     value: 50,
     content: "50%",
     caption: "Some caption",
+    captionOffset: "2px",
     type: Type.linear,
     colorScheme: COLOR_SCHEME.PRIMARY,
     rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,
     transition: TRANSITION.FAST,
-    /*TODO*/
+    tag: TAG_NAME_DEFAULTS.DIV,
   },
 };
 
