@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
+import { defineComponent, type PropType, type VNode } from "vue";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -198,8 +198,9 @@ export default defineComponent({
       if (this.aspectRatio && !this.caption) {
         return (
           <DAspectRatio
+            {...ASPECT_RATIO_DEFAULTS}
+            {...this.aspectRatioOptions}
             aspectRatio={this.aspectRatio}
-            {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
           >
             {this.imgVNode}
           </DAspectRatio>

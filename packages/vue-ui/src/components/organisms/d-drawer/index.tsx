@@ -1,6 +1,5 @@
 import {
   defineComponent,
-  mergeProps,
   Transition as Trans,
   Teleport,
   type VNode,
@@ -218,12 +217,13 @@ export default defineComponent({
       // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
+          {...CLOSE_BUTTON_DEFAULTS}
+          {...this.closeButtonOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
           id={this.focusControlId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(CLOSE_BUTTON_DEFAULTS, this.closeButtonOptions)}
         />
       );
     },

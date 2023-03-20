@@ -3,7 +3,6 @@ import {
   type ButtonHTMLAttributes,
   type PropType,
   type VNode,
-  mergeProps,
 } from "vue";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
@@ -165,10 +164,11 @@ export default defineComponent({
         {this.$slots.default?.() || this.content}
         {this.loading && (
           <DLoader
+            {...LOADER_DEFAULTS}
+            {...this.loaderOptions}
             colorScheme={this.colorScheme}
             size={this.size}
             font={this.size}
-            {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
           />
         )}
       </Tag>

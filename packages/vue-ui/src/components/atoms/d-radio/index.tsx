@@ -1,9 +1,8 @@
 import {
   defineComponent,
   ref,
-  Transition as Trans,
   watch,
-  mergeProps,
+  Transition as Trans,
   type InputHTMLAttributes,
   type PropType,
   type VNode,
@@ -272,6 +271,8 @@ export default defineComponent({
     renderButton(): VNode {
       return (
         <DButton
+          {...BUTTON_DEFAULTS}
+          {...this.buttonOptions}
           content={this.label}
           active={this.innerChecked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
@@ -281,9 +282,6 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          {...mergeProps(BUTTON_DEFAULTS, this.buttonOptions)}
         />
       );
     },

@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
+import { defineComponent, type PropType, type VNode } from "vue";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
@@ -180,30 +180,51 @@ export default defineComponent({
       );
     },
 
+    inputContainerClasses(): (string | undefined)[] {
+      return [
+        styles[config.trackClassName],
+        this.disabled ? styles.__disabled : undefined,
+        this.disabled ? colorSchemeStyles.__disabled : undefined,
+        getCommonCssClass(
+          TOKEN_NAME.BORDER,
+          `${this.colorScheme}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${this.colorScheme}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+      ];
+    },
+
+    inputClasses(): (string | undefined)[] {
+      return [
+        styles[config.inputClassName],
+        this.inputClass,
+        getCommonCssClass(
+          TOKEN_NAME.BORDER,
+          `${this.colorScheme}-${this.size}`
+        ),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${this.colorScheme}-${this.size}`
+        ),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+      ];
+    },
+
     renderInput(): VNode {
       return (
         <DAspectRatio
+          {...ASPECT_RATIO_DEFAULTS}
+          {...this.aspectRatioOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           /* @ts-ignore TODO */
           for={this.controlId}
-          class={[
-            styles[config.trackClassName],
-            this.disabled ? styles.__disabled : undefined,
-            this.disabled ? colorSchemeStyles.__disabled : undefined,
-            getCommonCssClass(
-              TOKEN_NAME.BORDER,
-              `${this.colorScheme}-${this.size}`
-            ),
-            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonCssClass(
-              TOKEN_NAME.OUTLINE,
-              `${this.colorScheme}-${this.size}`
-            ),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-          ]}
-          {...mergeProps(ASPECT_RATIO_DEFAULTS, this.aspectRatioOptions)}
+          class={this.inputContainerClasses}
         >
           <input
             id={this.controlId}
@@ -212,21 +233,9 @@ export default defineComponent({
             aria-checked={this.checked || undefined}
             disabled={this.disabled || undefined}
             aria-disabled={this.disabled || undefined}
-            class={[
-              styles[config.inputClassName],
-              this.inputClass,
-              getCommonCssClass(
-                TOKEN_NAME.BORDER,
-                `${this.colorScheme}-${this.size}`
-              ),
-              getCommonCssClass(
-                TOKEN_NAME.OUTLINE,
-                `${this.colorScheme}-${this.size}`
-              ),
-              getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            ]}
-            type="checkbox"
-            role="switch"
+            class={this.inputClasses}
+            type="checkbox" // TODO: config
+            role="switch" // TODO: config
             onChange={this.changeHandler}
             onInput={this.inputHandler}
           />

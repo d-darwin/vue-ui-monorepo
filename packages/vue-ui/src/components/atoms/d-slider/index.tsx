@@ -1,7 +1,6 @@
 import {
   defineComponent,
   Transition as Trans,
-  mergeProps,
   type PropType,
   type VNode,
   type HTMLAttributes,
@@ -141,6 +140,10 @@ export default defineComponent({
       ];
     },
 
+    labelClasses(): (string | undefined)[] {
+      return [getCommonCssClass(TOKEN_NAME.FONT, this.size)];
+    },
+
     renderLabel(): VNode | null {
       if (!this.$slots.label?.() && !this.label) {
         return null;
@@ -148,37 +151,53 @@ export default defineComponent({
 
       return (
         <label
+          {...LABEL_DEFAULTS}
+          {...this.labelOptions}
           for={this.controlId}
+          class={this.labelClasses}
           style={`--offset: ${this.labelOffset}`}
-          class={getCommonCssClass(TOKEN_NAME.FONT, this.size)}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          {...mergeProps(LABEL_DEFAULTS, this.labelOptions)}
         >
           {this.$slots.label?.() || this.label}
         </label>
       );
     },
 
+    trackClasses(): (string | undefined)[] {
+      return [
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+      ];
+    },
+
     renderTrack(): VNode {
       return (
         <div
-          class={[
-            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-          ]}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          {...mergeProps(TRACK_DEFAULTS, this.trackOptions)}
+          {...TRACK_DEFAULTS}
+          {...this.trackOptions}
+          class={this.trackClasses}
         >
           {this.$slots.track?.()}
         </div>
       );
     },
 
+    inputClasses(): (string | undefined)[] {
+      return [
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        getCommonCssClass(
+          TOKEN_NAME.OUTLINE,
+          `${this.colorScheme}-${this.size}`
+        ),
+      ];
+    },
+
     renderInput(): VNode {
       return (
         <input
+          {...INPUT_DEFAULTS}
+          {...this.inputOptions}
           id={this.$slots.label?.() || this.label ? this.controlId : undefined}
           value={this.value}
           min={this.min}
@@ -186,22 +205,15 @@ export default defineComponent({
           step={this.step}
           role={config.defaultRole}
           disabled={this.disabled}
-          class={[
-            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-            getCommonCssClass(
-              TOKEN_NAME.OUTLINE,
-              `${this.colorScheme}-${this.size}`
-            ),
-          ]}
+          class={this.inputClasses}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore TODO
-          {...mergeProps(INPUT_DEFAULTS, this.inputOptions)}
         />
       );
+    },
+
+    captionClasses(): (string | undefined)[] {
+      return [getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)];
     },
 
     renderCaption(): VNode {
@@ -213,10 +225,11 @@ export default defineComponent({
         >
           {(this.$slots.caption?.() || this.caption) && (
             <DCaption
+              {...CAPTION_DEFAULTS}
+              {...this.captionOptions}
               font={this.size}
-              class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
+              class={this.captionClasses}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...mergeProps(CAPTION_DEFAULTS, this.captionOptions)}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>
