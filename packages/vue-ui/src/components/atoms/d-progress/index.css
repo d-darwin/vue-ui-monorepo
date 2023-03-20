@@ -83,20 +83,6 @@
   bottom: 0;
   margin-top: auto;
   overflow: hidden;
-  animation: indeterminateAnimation 1s infinite linear;
-  transform-origin: 0 50%;
-}
-
-@keyframes indeterminateAnimation {
-  0% {
-    transform:  translateX(-65%);
-  }
-  45% {
-    transform:  translateX(0);
-  }
-  100% {
-    transform:  translateX(65%);
-  }
 }
 
 .caption {

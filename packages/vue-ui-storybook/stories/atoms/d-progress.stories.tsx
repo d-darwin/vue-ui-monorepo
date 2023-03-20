@@ -29,7 +29,7 @@ export default {
   },
   args: {
     label: "Some label",
-    value: "50",
+    value: 50,
     content: "50%",
     caption: "Some caption",
     colorScheme: COLOR_SCHEME.PRIMARY,

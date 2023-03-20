@@ -2,10 +2,10 @@ import {
   defineComponent,
   HTMLAttributes,
   LabelHTMLAttributes,
-  mergeProps,
   ProgressHTMLAttributes,
   type VNode,
 } from "vue";
+import { Transition as Trans } from "@vue/runtime-dom";
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
@@ -16,6 +16,7 @@ import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/
 import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import { Type } from "./types";
 import {
   CONTENT_DEFAULTS,
   LABEL_DEFAULTS,
@@ -25,7 +26,6 @@ import {
 } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
-import { Transition as Trans } from "@vue/runtime-dom";
 
 export default defineComponent({
   name: config.name,
@@ -57,6 +57,10 @@ export default defineComponent({
      */
     progressOptions:
       generateProp.options<ProgressHTMLAttributes>(PROGRESS_DEFAULTS),
+    /**
+     * TODO
+     */
+    type: generateProp.string<Type>(config.defaultType),
     /**
      * Plain string or VNode
      */
@@ -109,11 +113,12 @@ export default defineComponent({
       if (this.$slots.label || this.label) {
         return (
           <label
+            {...LABEL_DEFAULTS}
+            {...this.labelOptions}
             for={String(this.id)}
-            style={`--offset: ${prepareHtmlSize(this.labelOffset)}`}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore TODO
-            {...mergeProps(LABEL_DEFAULTS, this.labelOptions)}
+            style={`${config.labelOffsetCSSPropName}: ${prepareHtmlSize(
+              this.labelOffset
+            )}`}
           >
             {this.$slots.label || this.label}
           </label>
@@ -123,30 +128,48 @@ export default defineComponent({
       return null;
     },
 
-    // TODO renderCircle
-    renderBar(): VNode {
+    progressClasses(): (string | undefined)[] {
+      return [
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+      ];
+    },
+
+    renderLinear(): VNode {
       // TODO: configurable tag ???
+      // TODO: aria-label="Content loading…"
       const Tag = TAG_NAME_DEFAULTS.PROGRESS;
       return (
         <Tag
+          {...PROGRESS_DEFAULTS}
+          {...this.progressOptions}
           id={String(this.id)}
-          class={[
-            getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
-            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-          ]}
-          {...{
-            ["aria-valuenow"]: this.value,
-            ["aria-valuemax"]: this.progressOptions.max,
-          }}
-          {...mergeProps(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore TODO
-            PROGRESS_DEFAULTS,
-            this.progressOptions
-          )}
           value={this.value || this.progressOptions.value}
+          class={this.progressClasses}
+          aria-valuenow={this.value}
+          aria-valuemax={this.progressOptions.max}
+        >
+          {(this.value || this.progressOptions.value) &&
+            `${this.value || this.progressOptions.value}%`}
+        </Tag>
+      );
+    },
+
+    renderCircular(): VNode {
+      // TODO: configurable tag ???
+      // TODO: aria-label="Content loading…"
+      const Tag = TAG_NAME_DEFAULTS.PROGRESS;
+      return (
+        <Tag
+          {...PROGRESS_DEFAULTS}
+          {...this.progressOptions}
+          id={String(this.id)}
+          value={this.value || this.progressOptions.value}
+          class={this.progressClasses}
+          aria-valuenow={this.value}
+          aria-valuemax={this.progressOptions.max}
         >
           {(this.value || this.progressOptions.value) &&
             `${this.value || this.progressOptions.value}%`}
@@ -158,10 +181,9 @@ export default defineComponent({
       if (this.value && (this.$slots.default?.() || this.content)) {
         return (
           <div
+            {...CONTENT_DEFAULTS}
+            {...this.contentOptions}
             class={getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme)}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore TODO
-            {...mergeProps(CONTENT_DEFAULTS, this.contentOptions)}
           >
             {this.$slots.default?.() || this.content}
           </div>
@@ -178,11 +200,12 @@ export default defineComponent({
             ]}
           >
             <DLoader
+              {...LOADER_DEFAULTS}
+              {...this.loaderOptions}
               colorScheme={this.colorScheme}
               font={this.size}
               size={this.size}
               transition={this.transition}
-              {...mergeProps(LOADER_DEFAULTS, this.loaderOptions)}
             />
           </div>
         );
@@ -200,10 +223,13 @@ export default defineComponent({
         >
           {(this.$slots.caption?.() || this.caption) && (
             <DCaption
+              {...CAPTION_DEFAULTS}
+              {...this.captionOptions}
               font={this.size}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
-              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...mergeProps(CAPTION_DEFAULTS, this.captionOptions)}
+              style={`${config.captionOffsetCSSPropName}: ${prepareHtmlSize(
+                this.captionOffset
+              )}`}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>
@@ -223,26 +249,13 @@ export default defineComponent({
 
   // TODO: slots.label
   // TODO: slots.default
-  // TODO: slots.error
+  // TODO: slots.caption
   render(): VNode {
     const Tag = this.tag;
-    // TODO: aria-valuemin
-    // TODO: aria-valuemax
-    /*
-      The aria-valuemin and aria-valuemax properties only need to be set for the progressbar role
-      when the progress bar's minimum is not 0 or the maximum value is not 100.
-    */
-    // TODO: indeterminate
-    // TODO: aria-label="Content loading…"
-    /*
-    * <label for="progress-bar">Uploading Document</label>
-      <progress id="progress-bar" value="70" max="100">70 %</progress>
-    * */
     return (
       <Tag class={this.classes}>
         {this.renderLabel}
-        {/*TODO: or renderCircle*/}
-        {this.renderBar}
+        {this.type === Type.linear ? this.renderLinear : this.renderCircular}
         {this.renderContent}
         {this.renderCaption}
       </Tag>
