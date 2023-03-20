@@ -17,7 +17,7 @@ module.exports = {
       }
       // TODO: use const for name
       if (name === "radius-full" || value.topLeft >= 999) {
-        return "10vmin";
+        return "100vmin";
       }
       return `${value.topLeft}px`;
     }

@@ -15,8 +15,8 @@ export const LABEL_DEFAULTS: LabelHTMLAttributes = {
 
 export const DEFAULT_MAX = 100;
 export const PROGRESS_DEFAULTS: ProgressHTMLAttributes = {
+  role: config.role,
   max: DEFAULT_MAX,
-  class: styles[config.progressClassName],
 };
 
 export const CONTENT_DEFAULTS: HTMLAttributes = {

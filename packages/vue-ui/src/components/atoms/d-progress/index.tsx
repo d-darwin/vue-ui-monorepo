@@ -132,8 +132,13 @@ export default defineComponent({
       return [
         getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
         getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+        this.type === Type.linear
+          ? getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size)
+          : undefined,
         getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        this.type === Type.linear
+          ? styles[config.linearClassName]
+          : styles[config.circularClassName],
       ];
     },
 
@@ -157,10 +162,11 @@ export default defineComponent({
       );
     },
 
+    // TODO !!!
     renderCircular(): VNode {
       // TODO: configurable tag ???
       // TODO: aria-label="Content loading…"
-      const Tag = TAG_NAME_DEFAULTS.PROGRESS;
+      /*const Tag = TAG_NAME_DEFAULTS.PROGRESS;
       return (
         <Tag
           {...PROGRESS_DEFAULTS}
@@ -174,7 +180,27 @@ export default defineComponent({
           {(this.value || this.progressOptions.value) &&
             `${this.value || this.progressOptions.value}%`}
         </Tag>
+      );*/
+      return (
+        <div
+          {...PROGRESS_DEFAULTS}
+          {...this.progressOptions}
+          id={String(this.id)}
+          class={this.progressClasses}
+          aria-valuenow={this.value}
+          aria-valuemax={this.progressOptions.max}
+          style={`--value: ${this.value || this.progressOptions.value || 0}%`}
+        />
       );
+    },
+
+    contentClasses(): (string | undefined)[] {
+      return [
+        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        this.type === Type.circular
+          ? getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding)
+          : undefined,
+      ];
     },
 
     renderContent(): VNode | null {
@@ -183,7 +209,7 @@ export default defineComponent({
           <div
             {...CONTENT_DEFAULTS}
             {...this.contentOptions}
-            class={getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme)}
+            class={this.contentClasses}
           >
             {this.$slots.default?.() || this.content}
           </div>

@@ -4,6 +4,7 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { Type } from "@darwin-studio/vue-ui/src/components/atoms/d-progress/types";
 
 export default {
   title: "atoms/DProgress",
@@ -12,6 +13,10 @@ export default {
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
+    },
+    type: {
+      control: { type: "select" },
+      options: Type,
     },
     rounding: {
       control: { type: "select" },
@@ -32,6 +37,7 @@ export default {
     value: 50,
     content: "50%",
     caption: "Some caption",
+    type: Type.linear,
     colorScheme: COLOR_SCHEME.PRIMARY,
     rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,
@@ -47,9 +53,22 @@ const Template: Story = (args) => ({
   },
   template: `<DProgress v-bind="args" />`,
 });
-export const Default = Template.bind({});
+export const Linear = Template.bind({});
 
-export const Indeterminate = Template.bind({});
-Indeterminate.args = {
+export const LinearIndeterminate = Template.bind({});
+LinearIndeterminate.args = {
   value: undefined,
+};
+
+export const Circular = Template.bind({});
+Circular.args = {
+  type: Type.circular,
+  rounding: ROUNDING.FULL,
+};
+
+export const CircularIndeterminate = Template.bind({});
+CircularIndeterminate.args = {
+  type: Type.circular,
+  value: undefined,
+  rounding: ROUNDING.FULL,
 };
