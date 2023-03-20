@@ -5,6 +5,7 @@ export default {
   className: "dProgress",
   role: "progressbar",
   labelClassName: "label",
+  progressClassName: "progress",
   linearClassName: "linear",
   circularClassName: "circular",
   contentClassName: "content",

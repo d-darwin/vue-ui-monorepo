@@ -143,15 +143,16 @@ export default defineComponent({
 
     progressClasses(): (string | undefined)[] {
       return [
+        styles[config.progressClassName],
+        this.type === Type.linear
+          ? styles[config.linearClassName]
+          : styles[config.circularClassName],
         getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
         getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
         this.type === Type.linear
           ? getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size)
           : undefined,
         getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-        this.type === Type.linear
-          ? styles[config.linearClassName]
-          : styles[config.circularClassName],
       ];
     },
 
