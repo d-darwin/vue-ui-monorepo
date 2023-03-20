@@ -56,14 +56,14 @@ export default defineComponent({
      */
     value: generateProp.text(),
     /**
+     * Defines type of the component: linear or circular
+     */
+    type: generateProp.string<Type>(config.defaultType),
+    /**
      * Pass any attribute to the progress element
      */
     progressOptions:
       generateProp.options<ProgressHTMLAttributes>(PROGRESS_DEFAULTS),
-    /**
-     * Defines type of the component: linear or circular
-     */
-    type: generateProp.string<Type>(config.defaultType),
     /**
      * Plain string or VNode
      */
@@ -81,13 +81,13 @@ export default defineComponent({
      */
     caption: generateProp.content(),
     /**
-     * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
-     */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
-    /**
      * Defines offset of DCaption
      */
     captionOffset: generateProp.text(config.defaultCaptionOffset),
+    /**
+     * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
+     */
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
      * Defines appearance of the component
      */
@@ -111,6 +111,17 @@ export default defineComponent({
   },
 
   computed: {
+    indeterminate(): boolean {
+      if (
+        typeof this.progressOptions?.value === "undefined" &&
+        typeof this.value === "undefined"
+      ) {
+        return true;
+      }
+
+      return Number.isNaN(this.progressOptions?.value || this.value);
+    },
+
     renderLabel(): VNode | null {
       if (this.$slots.label || this.label) {
         return (
@@ -148,16 +159,17 @@ export default defineComponent({
       const Tag = TAG_NAME_DEFAULTS.PROGRESS;
       return (
         <Tag
+          /*TODO: should we let redefine only ids?*/
           {...PROGRESS_DEFAULTS}
-          {...this.progressOptions}
-          id={String(this.id)}
-          value={this.value || this.progressOptions.value}
-          class={this.progressClasses}
-          aria-valuenow={this.value}
+          id={this.label ? String(this.id) : undefined}
+          value={!this.indeterminate ? this.value : undefined}
+          aria-valuenow={!this.indeterminate ? this.value : undefined}
           aria-valuemax={this.progressOptions.max}
+          class={this.progressClasses}
+          {...this.progressOptions}
         >
-          {(this.value || this.progressOptions.value) &&
-            `${this.value || this.progressOptions.value}%`}
+          {!this.indeterminate &&
+            `${this.progressOptions.value || this.value || 0}%`}
         </Tag>
       );
     },
@@ -166,12 +178,12 @@ export default defineComponent({
       return (
         <div
           {...PROGRESS_DEFAULTS}
-          {...this.progressOptions}
           id={String(this.id)}
           class={this.progressClasses}
-          aria-valuenow={this.value}
+          aria-valuenow={!this.indeterminate ? this.value : undefined}
           aria-valuemax={this.progressOptions.max}
-          style={`--value: ${this.value || this.progressOptions.value || 0}%`}
+          style={`--value: ${this.progressOptions.value || this.value || 0}%`}
+          {...this.progressOptions}
         />
       );
     },
@@ -186,19 +198,19 @@ export default defineComponent({
     },
 
     renderContent(): VNode | null {
-      if (this.value && (this.$slots.default?.() || this.content)) {
+      if (!this.indeterminate && (this.$slots.default?.() || this.content)) {
         return (
           <div
             {...CONTENT_DEFAULTS}
-            {...this.contentOptions}
             class={this.contentClasses}
+            {...this.contentOptions}
           >
             {this.$slots.default?.() || this.content}
           </div>
         );
       }
 
-      if (!this.value) {
+      if (this.indeterminate) {
         return (
           <div
             class={[
