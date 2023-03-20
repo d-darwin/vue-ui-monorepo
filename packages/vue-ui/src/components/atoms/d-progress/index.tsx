@@ -18,15 +18,18 @@ import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name"
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { Type } from "./types";
 import {
-  CONTENT_DEFAULTS,
-  LABEL_DEFAULTS,
-  PROGRESS_DEFAULTS,
-  LOADER_DEFAULTS,
-  CAPTION_DEFAULTS,
+  CONTENT_DEFAULTS, // TODO: config???
+  LABEL_DEFAULTS, // TODO: config???
+  PROGRESS_DEFAULTS, // TODO: config???
+  LOADER_DEFAULTS, // TODO: config???
+  CAPTION_DEFAULTS, // TODO: config???
 } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
 
+/**
+ * Renders custom progress bar, linear or circular.
+ */
 export default defineComponent({
   name: config.name,
 
@@ -58,7 +61,7 @@ export default defineComponent({
     progressOptions:
       generateProp.options<ProgressHTMLAttributes>(PROGRESS_DEFAULTS),
     /**
-     * TODO
+     * Defines type of the component: linear or circular
      */
     type: generateProp.string<Type>(config.defaultType),
     /**
@@ -96,7 +99,6 @@ export default defineComponent({
     /**
      * Defines size of the component
      */
-    // TODO: fontSize and size separately ???
     size: generateProp.size(),
     /**
      * Defines transition type of the component
@@ -143,8 +145,6 @@ export default defineComponent({
     },
 
     renderLinear(): VNode {
-      // TODO: configurable tag ???
-      // TODO: aria-label="Content loading…"
       const Tag = TAG_NAME_DEFAULTS.PROGRESS;
       return (
         <Tag
@@ -162,25 +162,7 @@ export default defineComponent({
       );
     },
 
-    // TODO !!!
     renderCircular(): VNode {
-      // TODO: configurable tag ???
-      // TODO: aria-label="Content loading…"
-      /*const Tag = TAG_NAME_DEFAULTS.PROGRESS;
-      return (
-        <Tag
-          {...PROGRESS_DEFAULTS}
-          {...this.progressOptions}
-          id={String(this.id)}
-          value={this.value || this.progressOptions.value}
-          class={this.progressClasses}
-          aria-valuenow={this.value}
-          aria-valuemax={this.progressOptions.max}
-        >
-          {(this.value || this.progressOptions.value) &&
-            `${this.value || this.progressOptions.value}%`}
-        </Tag>
-      );*/
       return (
         <div
           {...PROGRESS_DEFAULTS}
@@ -273,9 +255,15 @@ export default defineComponent({
     },
   },
 
-  // TODO: slots.label
-  // TODO: slots.default
-  // TODO: slots.caption
+  /** @slot $slots.label
+   *  Use instead of props.label to fully customize label
+   */
+  /** @slot $slots.default
+   *  Use instead of props.content to fully customize content
+   */
+  /** @slot $slots.caption
+   *  Use instead of props.caption to fully customize caption
+   */
   render(): VNode {
     const Tag = this.tag;
     return (
