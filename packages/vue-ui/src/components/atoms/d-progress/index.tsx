@@ -73,6 +73,10 @@ export default defineComponent({
      */
     contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
     /**
+     * Plain string or VNode
+     */
+    loader: generateProp.content(),
+    /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
     loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
@@ -162,6 +166,7 @@ export default defineComponent({
         <Tag
           /*TODO: should we let redefine only ids?*/
           {...PROGRESS_DEFAULTS}
+          key="linear"
           id={this.label ? String(this.id) : undefined}
           value={!this.indeterminate ? this.value : undefined}
           aria-valuenow={!this.indeterminate ? this.value : undefined}
@@ -179,6 +184,7 @@ export default defineComponent({
       return (
         <div
           {...PROGRESS_DEFAULTS}
+          key="circular"
           id={String(this.id)}
           class={this.progressClasses}
           aria-valuenow={!this.indeterminate ? this.value : undefined}
@@ -186,6 +192,29 @@ export default defineComponent({
           style={`--value: ${this.progressOptions.value || this.value || 0}%`}
           {...this.progressOptions}
         />
+      );
+    },
+
+    renderLoader(): VNode {
+      return (
+        <div
+          class={[
+            styles[config.loaderContainerClassName],
+            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+          ]}
+        >
+          {this.$slots.loader?.() || this.loader || (
+            <DLoader
+              {...LOADER_DEFAULTS}
+              colorScheme={this.colorScheme}
+              font={this.size}
+              size={this.size}
+              transition={this.transition}
+              {...this.loaderOptions}
+            />
+          )}
+        </div>
       );
     },
 
@@ -212,24 +241,7 @@ export default defineComponent({
       }
 
       if (this.indeterminate) {
-        return (
-          <div
-            class={[
-              styles[config.loaderContainerClassName],
-              getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-              getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-            ]}
-          >
-            <DLoader
-              {...LOADER_DEFAULTS}
-              {...this.loaderOptions}
-              colorScheme={this.colorScheme}
-              font={this.size}
-              size={this.size}
-              transition={this.transition}
-            />
-          </div>
-        );
+        return this.renderLoader;
       }
 
       return null;
@@ -273,6 +285,9 @@ export default defineComponent({
    */
   /** @slot $slots.default
    *  Use instead of props.content to fully customize content
+   */
+  /** @slot $slots.loader
+   *  Use instead of props.loader to fully customize loader
    */
   /** @slot $slots.caption
    *  Use instead of props.caption to fully customize caption

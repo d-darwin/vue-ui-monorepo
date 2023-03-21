@@ -13,11 +13,12 @@ import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 export function propStringCase(
   wrapper: VueWrapper,
   targetSelector = ".content",
-  propName = "content"
+  propName = "content",
+  props?: Record<string, unknown>
 ) {
   return it(`Should render props.${propName} as string`, async () => {
     const content = "some text content";
-    await wrapper.setProps({ [propName]: content });
+    await wrapper.setProps({ [propName]: content, ...props });
 
     const contentEl = wrapper.find(targetSelector);
     expect(contentEl.html()).toMatch(content);
@@ -27,12 +28,13 @@ export function propStringCase(
 export function propVNodeCase(
   wrapper: VueWrapper,
   targetSelector = ".content",
-  propName = "content"
+  propName = "content",
+  props?: Record<string, unknown>
 ) {
   return it(`Should render prop.${propName} as VNode`, async () => {
     const content = <div>some content html</div>;
     const contentHtml = `${content}`;
-    await wrapper.setProps({ [propName]: contentHtml });
+    await wrapper.setProps({ [propName]: contentHtml, ...props });
 
     const contentEl = wrapper.find(targetSelector);
     expect(contentEl.html()).toMatch(contentHtml);
@@ -98,15 +100,21 @@ export function inputAttrsCase(wrapper: VueWrapper) {
   });
 }
 
-export function minControlWidthCase(wrapper: VueWrapper) {
+export function minControlWidthCase(
+  wrapper: VueWrapper,
+  targetSelector?: string,
+  props?: Record<string, unknown>
+) {
   return it("Should render props.size to the container minControlWidth class", async () => {
     const size = SIZE.LARGE;
-    await wrapper.setProps({ size });
+    await wrapper.setProps({ size, ...props });
     const minControlWidthClassName = prepareCssClassName(
       codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_PREFIX,
       `${size}-${codegenConfig.TOKENS.MIN_CONTROL_WIDTH.CSS_CLASS_SUFFIX}`
     );
-    expect(wrapper.classes()).toContain(minControlWidthClassName);
+
+    const targetEl = targetSelector ? wrapper.find(targetSelector) : wrapper;
+    expect(targetEl.classes()).toContain(minControlWidthClassName);
   });
 }
 
@@ -340,10 +348,14 @@ export function paddingEqualClassesCase(
   });
 }
 
-export function roundingClassCase(wrapper: VueWrapper, targetSelector: string) {
+export function roundingClassCase(
+  wrapper: VueWrapper,
+  targetSelector: string,
+  props?: Record<string, unknown>
+) {
   return it(`Should render props.rounding to ${targetSelector} rounding class`, async () => {
     const rounding = ROUNDING.FULL;
-    await wrapper.setProps({ rounding });
+    await wrapper.setProps({ rounding, ...props });
     const className = prepareCssClassName(
       codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
       rounding

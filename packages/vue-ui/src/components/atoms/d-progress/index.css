@@ -98,6 +98,12 @@
   cursor: wait;
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .linear + .loaderContainer {
   position: absolute;
   bottom: 0;

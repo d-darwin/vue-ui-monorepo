@@ -38,6 +38,7 @@ export default {
     labelOffset: "2px",
     value: 50,
     content: "50%",
+    loader: "",
     caption: "Some caption",
     captionOffset: "2px",
     type: Type.linear,
