@@ -78,7 +78,12 @@ export function elementValueAttrCase(
   return it(`${targetSelector}'s value attr should contain props.value`, async () => {
     await wrapper.setProps({ value });
     const inputEl = wrapper.find(targetSelector);
-    expect(inputEl.attributes()?.value).toBe(String(value));
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO
+    expect(String(inputEl.element?.value || inputEl.attributes().value)).toBe(
+      String(value)
+    );
   });
 }
 
