@@ -228,7 +228,7 @@ export default defineComponent({
     },
 
     renderContent(): VNode | null {
-      if (!this.indeterminate && (this.$slots.default?.() || this.content)) {
+      if (!this.indeterminate && (this.$slots.default || this.content)) {
         return (
           <div
             {...CONTENT_DEFAULTS}
@@ -254,7 +254,7 @@ export default defineComponent({
           leaveActiveClass={styles.captionTransitionLeaveActive}
           appear={true}
         >
-          {(this.$slots.caption?.() || this.caption) && (
+          {(this.$slots.caption || this.caption) && (
             <DCaption
               {...CAPTION_DEFAULTS}
               {...this.captionOptions}

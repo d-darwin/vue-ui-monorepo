@@ -21,7 +21,7 @@ export function propStringCase(
     await wrapper.setProps({ [propName]: content, ...props });
 
     const contentEl = wrapper.find(targetSelector);
-    expect(contentEl.html()).toMatch(content);
+    expect(contentEl?.html()).toMatch(content);
   });
 }
 
@@ -270,10 +270,11 @@ export function borderClassCase(
 export function colorSchemeClassCase(
   wrapper: VueWrapper,
   targetSelector: string,
-  colorScheme: ColorScheme
+  colorScheme: ColorScheme,
+  props?: Record<string, unknown>
 ) {
   return it(`Should render props.colorScheme to the ${targetSelector}'s color scheme class`, async () => {
-    await wrapper.setProps({ colorScheme });
+    await wrapper.setProps({ colorScheme, ...props });
     const className = prepareCssClassName(
       codegenConfig.TOKENS.COLOR_SCHEME.CSS_CLASS_PREFIX,
       colorScheme
@@ -523,14 +524,18 @@ export function tagCase(wrapper: VueWrapper) {
   });
 }
 
-export function offsetCase(wrapper: VueWrapper, targetSelector = "label") {
-  return it("Should render props.labelOffset to the label style as '--offset: props.labelOffset'", async () => {
-    const labelOffset = 33;
+export function offsetCase(
+  wrapper: VueWrapper,
+  targetSelector = "label",
+  propName = "labelOffset"
+) {
+  return it(`Should render props.labelOffset to the label style as '--offset: props.${propName}'`, async () => {
+    const offset = "12%";
     await wrapper.setProps({
-      labelOffset,
+      [propName]: offset,
     });
 
     const targetEl = wrapper.find(targetSelector);
-    expect(targetEl.attributes("style")).toContain(`--offset: ${labelOffset}`);
+    expect(targetEl.attributes("style")).toContain(`--offset: ${offset}`);
   });
 }
