@@ -220,11 +220,11 @@ export default defineComponent({
       return (
         <DAspectRatio
           {...ASPECT_RATIO_DEFAULTS}
-          {...this.aspectRatioOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           /* @ts-ignore TODO */
           for={this.controlId}
           class={this.inputContainerClasses}
+          {...this.aspectRatioOptions}
         >
           <input
             id={this.controlId}

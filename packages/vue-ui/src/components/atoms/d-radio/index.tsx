@@ -272,7 +272,6 @@ export default defineComponent({
       return (
         <DButton
           {...BUTTON_DEFAULTS}
-          {...this.buttonOptions}
           content={this.label}
           active={this.innerChecked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
@@ -282,6 +281,7 @@ export default defineComponent({
           size={this.size}
           transition={this.transition}
           whenClick={this.buttonClickHandler}
+          {...this.buttonOptions}
         />
       );
     },

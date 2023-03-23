@@ -165,10 +165,10 @@ export default defineComponent({
         {this.loading && (
           <DLoader
             {...LOADER_DEFAULTS}
-            {...this.loaderOptions}
             colorScheme={this.colorScheme}
             size={this.size}
             font={this.size}
+            {...this.loaderOptions}
           />
         )}
       </Tag>

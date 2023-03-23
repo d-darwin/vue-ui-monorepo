@@ -372,10 +372,14 @@ export function roundingClassCase(
   });
 }
 
-export function sizeClassCase(wrapper: VueWrapper, targetSelector: string) {
+export function sizeClassCase(
+  wrapper: VueWrapper,
+  targetSelector: string,
+  props?: Record<string, unknown>
+) {
   return it(`Should render props.size to ${targetSelector} size class`, async () => {
     const size = SIZE.HUGE;
-    await wrapper.setProps({ size });
+    await wrapper.setProps({ size, ...props });
     const className = prepareCssClassName(
       codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
       size
@@ -388,11 +392,12 @@ export function sizeClassCase(wrapper: VueWrapper, targetSelector: string) {
 
 export function transitionClassCase(
   wrapper: VueWrapper,
-  targetSelector: string
+  targetSelector: string,
+  props?: Record<string, unknown>
 ) {
   return it(`Should render props.transition to ${targetSelector} transition class`, async () => {
     const transition = TRANSITION.AVERAGE;
-    await wrapper.setProps({ transition });
+    await wrapper.setProps({ transition, ...props });
     const className = prepareCssClassName(
       codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
       transition

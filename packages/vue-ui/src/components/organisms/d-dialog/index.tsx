@@ -219,10 +219,10 @@ export default defineComponent({
           {this.isShown && (
             <DBackdrop
               {...BACKDROP_DEFAULTS}
-              {...this.backdropOptions}
               colorScheme={this.colorScheme}
               class={this.backdropClass}
               whenClick={this.closeHandler}
+              {...this.backdropOptions}
             />
           )}
         </Trans>
@@ -248,12 +248,12 @@ export default defineComponent({
       return (
         <DButton
           {...CLOSE_BUTTON_DEFAULTS}
-          {...this.closeButtonOptions}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
+          {...this.closeButtonOptions}
         />
       );
     },
@@ -296,13 +296,13 @@ export default defineComponent({
           {this.$slots.footer?.() || [
             <DButton
               {...CANCEL_BUTTON_DEFAULTS}
-              {...this.cancelButtonOptions}
               whenClick={this.cancelHandler}
+              {...this.cancelButtonOptions}
             />,
             <DButton
               {...ACCEPT_BUTTON_DEFAULTS}
-              {...this.acceptButtonOptions}
               whenClick={this.acceptHandler}
+              {...this.acceptButtonOptions}
             />,
           ]}
         </div>

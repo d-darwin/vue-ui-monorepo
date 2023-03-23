@@ -77,9 +77,9 @@ export default defineComponent({
         <Trans {...this.backdropTransitionBindings} appear>
           <DBackdrop
             {...BACKDROP_DEFAULTS}
-            {...this.backdropOptions}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
+            {...this.backdropOptions}
           />
         </Trans>
       );

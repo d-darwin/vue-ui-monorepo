@@ -131,11 +131,11 @@ export default defineComponent({
         return (
           <label
             {...LABEL_DEFAULTS}
-            {...this.labelOptions}
             for={String(this.id)}
             style={`${config.labelOffsetCSSPropName}: ${prepareHtmlSize(
               this.labelOffset
             )}`}
+            {...this.labelOptions}
           >
             {this.$slots.label?.() || this.label}
           </label>
@@ -195,15 +195,16 @@ export default defineComponent({
       );
     },
 
+    loaderClasses(): (string | undefined)[] {
+      return [
+        styles[config.loaderContainerClassName],
+        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+      ];
+    },
+
     renderLoader(): VNode {
       return (
-        <div
-          class={[
-            styles[config.loaderContainerClassName],
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-          ]}
-        >
+        <div class={this.loaderClasses}>
           {this.$slots.loader?.() || this.loader || (
             <DLoader
               {...LOADER_DEFAULTS}
@@ -257,12 +258,12 @@ export default defineComponent({
           {(this.$slots.caption || this.caption) && (
             <DCaption
               {...CAPTION_DEFAULTS}
-              {...this.captionOptions}
               font={this.size}
               class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
               style={`${config.captionOffsetCSSPropName}: ${prepareHtmlSize(
                 this.captionOffset
               )}`}
+              {...this.captionOptions}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>

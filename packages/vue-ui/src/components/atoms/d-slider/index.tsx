@@ -152,10 +152,10 @@ export default defineComponent({
       return (
         <label
           {...LABEL_DEFAULTS}
-          {...this.labelOptions}
           for={this.controlId}
           class={this.labelClasses}
           style={`--offset: ${this.labelOffset}`}
+          {...this.labelOptions}
         >
           {this.$slots.label?.() || this.label}
         </label>
@@ -173,8 +173,8 @@ export default defineComponent({
       return (
         <div
           {...TRACK_DEFAULTS}
-          {...this.trackOptions}
           class={this.trackClasses}
+          {...this.trackOptions}
         >
           {this.$slots.track?.()}
         </div>
@@ -197,7 +197,6 @@ export default defineComponent({
       return (
         <input
           {...INPUT_DEFAULTS}
-          {...this.inputOptions}
           id={this.$slots.label?.() || this.label ? this.controlId : undefined}
           value={this.value}
           min={this.min}
@@ -208,6 +207,7 @@ export default defineComponent({
           class={this.inputClasses}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
+          {...this.inputOptions}
         />
       );
     },
@@ -226,10 +226,10 @@ export default defineComponent({
           {(this.$slots.caption?.() || this.caption) && (
             <DCaption
               {...CAPTION_DEFAULTS}
-              {...this.captionOptions}
               font={this.size}
               class={this.captionClasses}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
+              {...this.captionOptions}
             >
               {this.$slots.caption?.() || this.caption}
             </DCaption>
