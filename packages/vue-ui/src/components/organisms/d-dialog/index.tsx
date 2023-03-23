@@ -1,6 +1,5 @@
 import {
   defineComponent,
-  mergeProps,
   Teleport,
   type CSSProperties,
   type PropType,
@@ -219,10 +218,11 @@ export default defineComponent({
         <Trans {...this.backdropTransitionBindings}>
           {this.isShown && (
             <DBackdrop
+              {...BACKDROP_DEFAULTS}
               colorScheme={this.colorScheme}
               class={this.backdropClass}
               whenClick={this.closeHandler}
-              {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+              {...this.backdropOptions}
             />
           )}
         </Trans>
@@ -247,12 +247,13 @@ export default defineComponent({
       // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
+          {...CLOSE_BUTTON_DEFAULTS}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
           id={this.focusControlId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
-          {...mergeProps(this.closeButtonOptions, CLOSE_BUTTON_DEFAULTS)}
+          {...this.closeButtonOptions}
         />
       );
     },
@@ -294,12 +295,14 @@ export default defineComponent({
         <div class={styles[config.footerClassName]}>
           {this.$slots.footer?.() || [
             <DButton
+              {...CANCEL_BUTTON_DEFAULTS}
               whenClick={this.cancelHandler}
-              {...mergeProps(this.cancelButtonOptions, CANCEL_BUTTON_DEFAULTS)}
+              {...this.cancelButtonOptions}
             />,
             <DButton
+              {...ACCEPT_BUTTON_DEFAULTS}
               whenClick={this.acceptHandler}
-              {...mergeProps(this.acceptButtonOptions, ACCEPT_BUTTON_DEFAULTS)}
+              {...this.acceptButtonOptions}
             />,
           ]}
         </div>

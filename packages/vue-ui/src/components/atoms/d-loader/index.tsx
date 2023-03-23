@@ -1,9 +1,4 @@
-import {
-  defineComponent,
-  mergeProps,
-  type CSSProperties,
-  type VNode,
-} from "vue";
+import { defineComponent, type CSSProperties, type VNode } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -81,10 +76,10 @@ export default defineComponent({
       return (
         <Trans {...this.backdropTransitionBindings} appear>
           <DBackdrop
-            key={config.backdropKey}
+            {...BACKDROP_DEFAULTS}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
-            {...mergeProps(this.backdropOptions, BACKDROP_DEFAULTS)}
+            {...this.backdropOptions}
           />
         </Trans>
       );

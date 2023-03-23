@@ -22,7 +22,7 @@ import {
   iconSlotCase,
   inputAttrsCase,
   inputClassCase,
-  inputValueCase,
+  elementValueAttrCase,
   labelClassCase,
   labelFontCase,
   minControlWidthCase,
@@ -48,7 +48,7 @@ describe("DCheckbox", () => {
     expect(inputEl.attributes().type).toBe("checkbox");
   });
 
-  inputValueCase(wrapper);
+  elementValueAttrCase(wrapper);
 
   inputClassCase(wrapper);
 

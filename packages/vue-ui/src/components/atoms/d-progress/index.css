@@ -1,0 +1,142 @@
+.dProgress {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  position: relative;
+}
+
+.label {
+  --offset: 4px;
+  margin-bottom: var(--offset);
+}
+
+.linear {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  min-width: calc(var(--min-width)*2);
+  height: calc(var(--size)/2);
+  border: calc(var(--size)/16) solid var(--background-color);
+  outline: calc(var(--size)/16) solid var(--color);
+  cursor: wait;
+}
+
+.linear[value]::-webkit-progress-bar {
+  background-color: var(--color);
+}
+
+.linear[value]::-webkit-progress-value {
+  background-color: var(--background-color);
+}
+
+.linear[value]::-moz-progress-bar {
+  accent-color: var(--background-color);
+}
+
+.linear:indeterminate::-webkit-progress-bar,
+.linear:not([value])::-webkit-progress-bar {
+  background-color: var(--color);
+}
+
+.circular {
+  --value: 0;
+  box-sizing: border-box;
+  background: conic-gradient(
+    var(--background-color) var(--value),
+    var(--color) var(--value)
+  );
+  height: calc(var(--size)*2);
+  width: calc(var(--size)*2);
+  border: calc(var(--size)/20) solid var(--color);
+  cursor: wait;
+}
+
+.linear + .content {
+  position: absolute;
+  bottom: 0;
+  border-top: calc(var(--size)/16) solid var(--background-color);
+  border-bottom: calc(var(--size)/16) solid var(--background-color);
+  height: calc(var(--size)/2);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: var(--background-color);
+  margin: auto;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  padding: 4px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.linear + .content:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: var(--color);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.circular + .content {
+  position: absolute;
+  bottom: var(--size);
+  left: var(--size);
+  transform: translate3d(-50%, 50%, 0);
+  color: var(--background-color);
+  background: var(--color);
+  height: calc(var(--size)*1.55);
+  width: calc(var(--size)*1.55);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: wait;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.linear + .loaderContainer {
+  position: absolute;
+  bottom: 0;
+  height: calc(var(--size)/2);
+  min-height: calc(var(--size)/2);
+  width: 100%;
+  overflow: hidden;
+}
+
+.linear + .loaderContainer .loader {
+  height: calc(var(--size)/2);
+  bottom: 0;
+  margin-top: auto;
+  overflow: hidden;
+}
+
+.circular + .loaderContainer {
+  position: absolute;
+  bottom: 0;
+  height: calc(var(--size)*2);
+  min-height: calc(var(--size)*2);
+  width: 100%;
+  overflow: hidden;
+}
+
+.caption {
+  --offset: 2px;
+  position: absolute;
+  top: calc(100% + var(--offset));
+}
+
+.captionTransitionEnterActive,
+.captionTransitionEnterActive {
+  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
+  opacity: 0.65;
+}

@@ -3,5 +3,6 @@ export default function(className: string, customProperty: { name: string, value
   // TODO: move \n to the caller
   return `\n.${className} {
   min-width: var(${customProperty.name});
+  --min-width: var(${customProperty.name});
 }`;
 }

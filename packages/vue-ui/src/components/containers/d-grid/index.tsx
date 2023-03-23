@@ -103,6 +103,7 @@ export default defineComponent({
 
     renderContent(): (VNode | string)[] | undefined {
       if (this.$slots.default) {
+        // TODO: find out another way ...
         return this.$slots.default()?.map((child) => {
           child.props = mergeProps(child.props || {}, {
             class: styles[config.childClassName],
@@ -112,6 +113,7 @@ export default defineComponent({
       }
 
       if (this.content) {
+        // TODO: find out another way ...
         return this.content.map((child) => {
           if (typeof child !== "string") {
             child.props = mergeProps(child.props || {}, {

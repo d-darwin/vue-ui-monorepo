@@ -1,4 +1,4 @@
-import { defineComponent, mergeProps, type PropType, type VNode } from "vue";
+import { defineComponent, type PropType, type VNode } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
@@ -193,7 +193,7 @@ export default defineComponent({
     return (
       <table class={styles[config.className]}>
         {this.loading && (
-          <DLoader {...mergeProps(this.loaderOptions, LOADER_DEFAULTS)} />
+          <DLoader {...LOADER_DEFAULTS} {...this.loaderOptions} />
         )}
         {this.renderHead}
         {this.renderBody}

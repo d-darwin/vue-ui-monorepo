@@ -4,7 +4,6 @@ export default {
   wrapperClassName: "wrapper",
   backdropClassName: "backdrop",
   key: "loader",
-  backdropKey: "backdrop",
   defaultAnimationDuration: "650ms",
   defaultZIndex: 1001,
   defaultContent: "☯",

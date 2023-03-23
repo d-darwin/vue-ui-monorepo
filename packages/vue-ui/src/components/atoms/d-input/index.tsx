@@ -224,12 +224,12 @@ export default defineComponent({
           disabled={this.disabled}
           type={this.inputType}
           size={this.inputSize} // TODO: why warning ???
-          {...this.inputAttrs}
           class={this.inputClasses}
           style={this.inputStyles} // TODO: why warning ???
           onChange={this.changeHandler} // TODO: why warning ???
           onInput={this.inputHandler} // TODO: why warning ???
           onKeyup={this.keyupHandler}
+          {...this.inputAttrs}
         />
       );
 
