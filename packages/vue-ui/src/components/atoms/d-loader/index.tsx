@@ -6,8 +6,7 @@ import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transit
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -69,7 +68,7 @@ export default defineComponent({
     },
 
     backdropTransitionClass(): string | undefined {
-      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
+      return generateClass.transition(this.transition);
     },
 
     renderBackdrop(): VNode | null {
@@ -88,11 +87,11 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.className],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.font),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 

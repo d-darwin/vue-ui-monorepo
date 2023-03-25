@@ -22,8 +22,7 @@ import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transit
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -180,7 +179,7 @@ export default defineComponent({
     backdropBindings(): DBackdropProps {
       return {
         colorScheme: this.colorScheme,
-        class: getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        class: generateClass.transition(this.transition),
         whenClick: this.closeHandler,
         ...this.backdropOptions,
       };
@@ -204,8 +203,8 @@ export default defineComponent({
         <div
           class={[
             styles[config.titleClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.titleFont),
             this.titleClass,
+            generateClass.font(this.titleFont),
           ]}
         >
           {this.title}
@@ -247,8 +246,8 @@ export default defineComponent({
         role: this.contentRole,
         class: [
           styles[config.contentClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
           this.contentClass,
+          generateClass.font(this.contentFont),
         ],
       };
 
@@ -277,12 +276,12 @@ export default defineComponent({
       return [
         styles[config.className],
         styles[this.position],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 

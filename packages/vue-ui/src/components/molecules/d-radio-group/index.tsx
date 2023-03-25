@@ -3,10 +3,9 @@ import { v4 as uuid } from "uuid";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -105,8 +104,8 @@ export default defineComponent({
           <legend
             class={[
               styles[config.labelClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
               this.labelClass,
+              generateClass.font(this.labelFont || this.size),
             ]}
           >
             {this.$slots.label?.() || this.label}
@@ -157,8 +156,8 @@ export default defineComponent({
           <div
             class={[
               styles[config.errorClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
               this.errorClass,
+              generateClass.font(this.errorFont || this.size),
             ]}
           >
             {this.$slots.error?.() || this.error}

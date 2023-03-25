@@ -10,8 +10,7 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
 import config from "./config";
@@ -157,8 +156,8 @@ export default defineComponent({
           for: this.controlId,
           class: [
             styles[config.labelClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
             this.labelClass,
+            generateClass.font(this.labelFont || this.size),
           ],
         };
 
@@ -173,21 +172,15 @@ export default defineComponent({
     inputClasses(): (string | undefined)[] {
       return [
         styles[config.inputClassName],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${BASE_COLOR_SCHEME}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.FONT, this.inputFont || this.size),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${BASE_COLOR_SCHEME}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
         this.inputClass,
+        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.font(this.inputFont || this.size),
+        generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -240,7 +233,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.beforeContainerClass],
-                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+                  generateClass.size(this.size),
                 ]}
               >
                 {this.$slots.before?.()}
@@ -251,7 +244,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.afterContainerClass],
-                  getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+                  generateClass.size(this.size),
                 ]}
               >
                 {this.$slots.after?.()}
@@ -270,8 +263,8 @@ export default defineComponent({
       if (this.error || this.$slots.error) {
         const classes = [
           styles[config.errorClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
+          generateClass.font(this.errorFont || this.size),
         ];
 
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
@@ -331,7 +324,7 @@ export default defineComponent({
       <Tag
         class={[
           styles[config.className],
-          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+          generateClass.minControlWidth(this.size),
         ]}
       >
         {this.renderLabel}

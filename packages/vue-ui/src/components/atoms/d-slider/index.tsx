@@ -10,10 +10,9 @@ import {
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import {
@@ -135,13 +134,13 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.className],
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+        generateClass.minControlWidth(this.size),
+        generateClass.size(this.size),
       ];
     },
 
     labelClasses(): (string | undefined)[] {
-      return [getCommonCssClass(TOKEN_NAME.FONT, this.size)];
+      return [generateClass.font(this.size)];
     },
 
     renderLabel(): VNode | null {
@@ -164,8 +163,8 @@ export default defineComponent({
 
     trackClasses(): (string | undefined)[] {
       return [
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.rounding(this.rounding),
       ];
     },
 
@@ -183,13 +182,10 @@ export default defineComponent({
 
     inputClasses(): (string | undefined)[] {
       return [
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -213,7 +209,7 @@ export default defineComponent({
     },
 
     captionClasses(): (string | undefined)[] {
-      return [getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)];
+      return [generateClass.transition(this.transition)];
     },
 
     renderCaption(): VNode {

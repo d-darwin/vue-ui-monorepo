@@ -1,7 +1,6 @@
 import { defineComponent, type HTMLAttributes, type VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./d-tabpanel.css?module";
 
@@ -47,11 +46,11 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.tabpanelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.OUTLINE, config.outlineTokenVariantName),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.font}`),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.font(this.font),
+        generateClass.outline(config.outlineTokenVariantName),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.font}`),
+        generateClass.transition(this.transition),
       ];
     },
 

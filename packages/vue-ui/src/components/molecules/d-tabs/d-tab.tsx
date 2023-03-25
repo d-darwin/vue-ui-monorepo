@@ -5,10 +5,9 @@ import {
   type VNode,
 } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
@@ -71,15 +70,12 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       const classes = [
         styles[config.tabClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${config.baseColorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.font(this.size),
+        generateClass.outline(`${config.baseColorScheme}-${this.size}`),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
 
       if (this.active) {

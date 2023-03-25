@@ -9,8 +9,7 @@ import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/at
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { LOADER_DEFAULTS } from "./constants";
 import type { Tag } from "./types";
 import config from "./config";
@@ -83,21 +82,15 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.border(`${this.colorScheme}-${this.size}`),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.size),
+        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {

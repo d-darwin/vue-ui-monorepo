@@ -8,14 +8,13 @@ import {
 import { Transition as Trans } from "@vue/runtime-dom";
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { Type } from "./types";
 import {
   CONTENT_DEFAULTS, // TODO: config???
@@ -151,12 +150,12 @@ export default defineComponent({
         this.type === Type.linear
           ? styles[config.linearClassName]
           : styles[config.circularClassName],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.rounding(this.rounding),
         this.type === Type.linear
-          ? getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size)
+          ? generateClass.minControlWidth(this.size)
           : undefined,
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -198,7 +197,7 @@ export default defineComponent({
     loaderClasses(): (string | undefined)[] {
       return [
         styles[config.loaderContainerClassName],
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        generateClass.rounding(this.rounding),
       ];
     },
 
@@ -221,9 +220,9 @@ export default defineComponent({
 
     contentClasses(): (string | undefined)[] {
       return [
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        generateClass.colorScheme(this.colorScheme),
         this.type === Type.circular
-          ? getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding)
+          ? generateClass.rounding(this.rounding)
           : undefined,
       ];
     },
@@ -259,7 +258,7 @@ export default defineComponent({
             <DCaption
               {...CAPTION_DEFAULTS}
               font={this.size}
-              class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
+              class={generateClass.transition(this.transition)}
               style={`${config.captionOffsetCSSPropName}: ${prepareHtmlSize(
                 this.captionOffset
               )}`}
@@ -275,8 +274,8 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        generateClass.font(this.size),
+        generateClass.size(this.size),
       ];
     },
   },

@@ -18,8 +18,7 @@ import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Type } from "./types";
 import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
 import styles from "./index.css?module";
@@ -184,12 +183,9 @@ export default defineComponent({
           {...this.inputAttrs}
           class={[
             styles[config.inputClassName],
-            getCommonCssClass(
-              TOKEN_NAME.OUTLINE,
-              `${BASE_COLOR_SCHEME}-${this.size}`
-            ),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
             this.inputClass,
+            generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+            generateClass.size(this.size),
           ]}
           onChange={this.changeHandler}
           onInput={this.inputHandler}
@@ -200,24 +196,19 @@ export default defineComponent({
     renderIcon(): VNode[] {
       const iconContainerClasses = [
         styles[config.iconContainerClassName],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${BASE_COLOR_SCHEME}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(
-          TOKEN_NAME.PADDING,
+        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.padding(
           this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
         ),
-        getCommonCssClass(
-          TOKEN_NAME.PADDING,
+        generateClass.padding(
           `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${
             this.size
           }`
         ),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
       if (this.disabled) {
         iconContainerClasses.push(colorSchemeStyles.__disabled);
@@ -231,7 +222,7 @@ export default defineComponent({
         <div
           class={[
             styles[config.iconContainerBackdropClassName],
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            generateClass.size(this.size),
           ]}
         />,
         <div class={iconContainerClasses}>
@@ -243,7 +234,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.iconClassName],
-                  getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                  generateClass.transition(this.transition),
                 ]}
               >
                 {config.checkMark}
@@ -289,8 +280,8 @@ export default defineComponent({
     renderLabel(): VNode {
       const labelClasses = [
         styles[config.labelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
         this.labelClass,
+        generateClass.font(this.labelFont || this.size),
       ];
       if (this.disabled) {
         labelClasses.push(styles.__disabled);
@@ -311,8 +302,8 @@ export default defineComponent({
       if (this.error || this.$slots.error) {
         const classes = [
           styles[config.errorClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
           this.errorClass,
+          generateClass.font(this.errorFont || this.size),
         ];
 
         return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
@@ -394,7 +385,7 @@ export default defineComponent({
       <Tag
         class={[
           styles[config.className],
-          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+          generateClass.minControlWidth(this.size),
         ]}
       >
         {this.renderLabel}

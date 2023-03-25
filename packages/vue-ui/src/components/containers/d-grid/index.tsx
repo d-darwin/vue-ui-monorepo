@@ -8,8 +8,7 @@ import {
 import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -92,7 +91,7 @@ export default defineComponent({
       return {
         class: [
           styles[config.className],
-          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+          generateClass.transition(this.transition),
         ],
         style: {
           "--grid-col-span": this.preparedColSpan, // TODO: config

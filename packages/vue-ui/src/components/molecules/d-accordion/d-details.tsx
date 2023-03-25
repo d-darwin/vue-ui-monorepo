@@ -1,7 +1,6 @@
 import { defineComponent, VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./d-details.css?module";
 
@@ -45,27 +44,26 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.detailsClassName],
-        // TODO: factory or use function !!!
-        generateClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        generateClass(TOKEN_NAME.FONT, this.size),
-        generateClass(TOKEN_NAME.ROUNDING, this.rounding),
-        generateClass(TOKEN_NAME.SIZE, this.size),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
       ];
     },
 
     summaryClasses(): (string | undefined)[] {
       return [
         styles[config.summaryClassName],
-        generateClass(TOKEN_NAME.PADDING, this.padding), // TODO: merge in the util
-        generateClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`), // TODO: merge in the util
+        generateClass.padding(this.padding), // TODO: merge in the util
+        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
       ];
     },
 
     contentClasses(): (string | undefined)[] {
       return [
         styles[config.contentClassName],
-        generateClass(TOKEN_NAME.PADDING, this.padding), // TODO: merge in the util
-        generateClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`), // TODO: merge in the util
+        generateClass.padding(this.padding), // TODO: merge in the util
+        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
       ];
     },
   },

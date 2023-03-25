@@ -29,6 +29,7 @@ const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
     classPrefix,
     `${tokenVariant}${tokenVariantSuffix}`
   );
+
   if (!className) {
     return;
   }
@@ -46,7 +47,7 @@ const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
       return minControlWidthStyles[className];
     case TOKEN_NAME.OUTLINE:
       return outlineStyles[className];
-    // TODO: merge with size
+    // TODO: merge with size-padding
     case TOKEN_NAME.PADDING:
       return paddingStyles[className];
     case TOKEN_NAME.ROUNDING:
@@ -60,4 +61,28 @@ const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
   }
 };
 
-export default generateCssClass;
+// TODO: refactor
+const generateClass = {
+  border: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.BORDER, tokenVariant),
+  colorScheme: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.COLOR_SCHEME, tokenVariant),
+  font: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.FONT, tokenVariant),
+  grid: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.GRID, tokenVariant),
+  minControlWidth: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, tokenVariant),
+  outline: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.OUTLINE, tokenVariant),
+  padding: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.PADDING, tokenVariant),
+  rounding: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.ROUNDING, tokenVariant),
+  transition: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.TRANSITION, tokenVariant),
+  size: (tokenVariant: string) =>
+    generateCssClass(TOKEN_NAME.SIZE, tokenVariant),
+} as const;
+
+export default generateClass;

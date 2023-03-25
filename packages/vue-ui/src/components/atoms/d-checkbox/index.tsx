@@ -9,14 +9,11 @@ import {
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
@@ -142,31 +139,15 @@ export default defineComponent({
 
   computed: {
     renderIcon(): VNode[] {
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       const iconContainerClasses = [
         styles[config.iconContainerClassName],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${BASE_COLOR_SCHEME}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.PADDING, PADDING.EQUAL),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${PADDING.EQUAL}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.padding(PADDING.EQUAL),
+        generateClass.padding(`${PADDING.EQUAL}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
@@ -182,7 +163,7 @@ export default defineComponent({
         <div
           class={[
             styles[config.iconContainerBackdropClassName],
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            generateClass.size(this.size),
           ]}
         />,
         <div class={iconContainerClasses}>
@@ -194,7 +175,7 @@ export default defineComponent({
               <div
                 class={[
                   styles[config.iconClassName],
-                  getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                  generateClass.transition(this.transition),
                 ]}
               >
                 {config.checkMark}
@@ -218,11 +199,8 @@ export default defineComponent({
           {...this.inputAttrs}
           class={[
             styles[config.inputClassName],
-            getCommonCssClass(
-              TOKEN_NAME.OUTLINE,
-              `${BASE_COLOR_SCHEME}-${this.size}`
-            ),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+            generateClass.size(this.size),
             this.inputClass,
           ]}
           onChange={this.changeHandler}
@@ -246,8 +224,8 @@ export default defineComponent({
     renderLabel(): VNode {
       const labelClasses = [
         styles[config.labelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
         this.labelClass,
+        generateClass.font(this.labelFont || this.size),
       ];
       if (this.disabled) {
         labelClasses.push(styles.__disabled);
@@ -269,8 +247,8 @@ export default defineComponent({
           <div
             class={[
               styles[config.errorClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
               this.errorClass,
+              generateClass.font(this.errorFont || this.size),
             ]}
           >
             {this.$slots.error?.() || this.error}
@@ -350,7 +328,7 @@ export default defineComponent({
       <Tag
         class={[
           styles[config.className],
-          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
+          generateClass.minControlWidth(this.size),
         ]}
       >
         {this.renderLabel}

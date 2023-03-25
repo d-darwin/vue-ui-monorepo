@@ -3,8 +3,7 @@ import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/con
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type {
   PictureSource,
   Source,
@@ -171,10 +170,7 @@ export default defineComponent({
     renderCaption(): VNode {
       return (
         <figcaption
-          class={[
-            this.captionClass,
-            getCommonCssClass(TOKEN_NAME.FONT, this.captionFont),
-          ]}
+          class={[this.captionClass, generateClass.font(this.captionFont)]}
         >
           {this.$slots.caption?.() || this.caption}
         </figcaption>

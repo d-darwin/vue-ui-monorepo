@@ -15,8 +15,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
@@ -144,13 +143,13 @@ export default defineComponent({
         styles[config.className],
         styles[this.position],
         styles[this.type],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.font(this.colorScheme),
+        generateClass.font(this.font),
+        generateClass.padding(this.padding),
+        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -235,9 +234,7 @@ export default defineComponent({
         <Trans {...this.transitionBindings}>
           {this.shown && (
             <Tag {...this.bindings}>
-              {this.isContentShown
-                ? this.$slots.default?.() || this.content
-                : ""}
+              {this.isContentShown && (this.$slots.default?.() || this.content)}
             </Tag>
           )}
         </Trans>

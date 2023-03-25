@@ -1,7 +1,6 @@
 import { defineComponent, type VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -28,10 +27,7 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      return [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-      ];
+      return [styles[config.className], generateClass.font(this.font)];
     },
   },
 

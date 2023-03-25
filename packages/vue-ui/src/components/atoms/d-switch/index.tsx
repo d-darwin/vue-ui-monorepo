@@ -7,8 +7,7 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
@@ -135,10 +134,7 @@ export default defineComponent({
     labelClasses(): (string | undefined)[] {
       return [
         styles[config.labelClassName],
-        getCommonCssClass(
-          TOKEN_NAME.FONT,
-          this.labelFont || this.font || this.size
-        ),
+        generateClass.font(this.labelFont || this.font || this.size),
         this.labelClass,
         this.disabled ? styles.__disabled : undefined, // TODO: config
       ];
@@ -161,18 +157,18 @@ export default defineComponent({
         <div
           class={[
             styles[config.thumbClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.font || this.size),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+            generateClass.font(this.font || this.size),
+            generateClass.rounding(this.rounding),
+            generateClass.size(this.size),
+            generateClass.transition(this.transition),
           ]}
         >
           {this.$slots.thumb?.() || (
             <div
               class={[
                 styles[config.thumbInnerClassName],
-                getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-                getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                generateClass.rounding(this.rounding),
+                generateClass.transition(this.transition),
               ]}
             />
           )}
@@ -185,18 +181,12 @@ export default defineComponent({
         styles[config.trackClassName],
         this.disabled ? styles.__disabled : undefined,
         this.disabled ? colorSchemeStyles.__disabled : undefined,
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.border(`${this.colorScheme}-${this.size}`),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -204,15 +194,9 @@ export default defineComponent({
       return [
         styles[config.inputClassName],
         this.inputClass,
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        generateClass.border(`${this.colorScheme}-${this.size}`),
+        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.rounding(this.rounding),
       ];
     },
 
@@ -263,10 +247,7 @@ export default defineComponent({
       if (this.error || this.$slots.error) {
         const classes = [
           styles[config.errorClassName],
-          getCommonCssClass(
-            TOKEN_NAME.FONT,
-            this.errorFont || this.font || this.size
-          ),
+          generateClass.font(this.errorFont || this.font || this.size),
           this.errorClass,
         ];
 

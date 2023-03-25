@@ -6,8 +6,7 @@ import {
 } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -56,10 +55,10 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.OUTLINE, config.outlineTokenVariantName),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.font),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.font(this.font),
+        generateClass.outline(config.outlineTokenVariantName),
+        generateClass.size(this.font),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
