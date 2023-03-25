@@ -1,16 +1,46 @@
+import { Story } from "@storybook/vue3";
 import {
   DAccordion,
   DDetails,
 } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
-import { Story } from "@storybook/vue3";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 export default {
   title: "molecules/DAccordion",
   component: DAccordion,
   argTypes: {
+    colorScheme: {
+      control: { type: "select" },
+      options: Object.values(COLOR_SCHEME),
+    },
+    padding: {
+      control: { type: "select" },
+      options: Object.values(PADDING),
+    },
+    rounding: {
+      control: { type: "select" },
+      options: Object.values(ROUNDING),
+    },
+    size: {
+      control: { type: "select" },
+      options: Object.values(SIZE),
+    },
+    transition: {
+      control: { type: "select" },
+      options: Object.values(TRANSITION),
+    },
     // TODO
   },
   args: {
+    colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
+    padding: PADDING.DEFAULT, // TODO: don't hardcode values
+    rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
+    size: SIZE.MEDIUM, // TODO: don't hardcode values
+    transition: TRANSITION.SLOW, // TODO: don't hardcode values
     // TODO
   },
 };
@@ -29,3 +59,12 @@ const Template: Story = (args) => ({
   `,
 });
 export const Default = Template.bind({});
+
+const DetailsTemplate: Story = (args) => ({
+  components: { DDetails },
+  setup() {
+    return { args };
+  },
+  template: `<DDetails summary="Summary 1" content="Some content 1" v-bind="args" />`,
+});
+export const DetailsDefault = DetailsTemplate.bind({});

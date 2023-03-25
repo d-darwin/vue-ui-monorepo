@@ -143,7 +143,7 @@ export default defineComponent({
         styles[config.className],
         styles[this.position],
         styles[this.type],
-        generateClass.font(this.colorScheme),
+        generateClass.colorScheme(this.colorScheme),
         generateClass.font(this.font),
         generateClass.padding(this.padding),
         generateClass.padding(`${this.padding}-${this.size}`),

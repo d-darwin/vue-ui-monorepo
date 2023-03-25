@@ -17,6 +17,8 @@ export default defineComponent({
       type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
     },
     // TODO: specific props: isSolo, someOpen
+
+    // TODO: how to pas to the children properly???
     // TODO: common props
     /**
      * Defines container element type of the component

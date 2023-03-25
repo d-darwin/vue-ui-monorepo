@@ -35,6 +35,9 @@ export default defineComponent({
     // TODO: size
     size: generateProp.size(),
 
+    // TODO: use or remove
+    transition: generateProp.transition(),
+
     // TODO: disabled ???
 
     // TODO: whenToggle
@@ -48,6 +51,7 @@ export default defineComponent({
         generateClass.font(this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
+        generateClass.transition(this.transition), // TODO: use or remove
       ];
     },
 
@@ -72,6 +76,7 @@ export default defineComponent({
   render(): VNode {
     return (
       <details class={this.classes}>
+        {/*TODO: outline*/}
         <summary class={this.summaryClasses}>
           {/*TODO: $slots.before/after*/}
           {this.$slots.summary?.() || this.summary}
