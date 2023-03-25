@@ -7,7 +7,7 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS } from "./constants";

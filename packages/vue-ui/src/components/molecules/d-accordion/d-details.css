@@ -1,3 +1,14 @@
 .dDetails {
-  /*TODO*/
+  border: calc(var(--size)/16) solid var(--background-color);
+}
+
+.summary {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  cursor: pointer;
+}
+
+.content {
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  background: white; /*TODO*/
+  color: var(--color-text); /*TODO*/
 }

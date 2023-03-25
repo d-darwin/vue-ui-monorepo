@@ -5,7 +5,7 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: s
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";

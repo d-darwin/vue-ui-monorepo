@@ -9,7 +9,7 @@ import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/at
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { LOADER_DEFAULTS } from "./constants";
 import type { Tag } from "./types";

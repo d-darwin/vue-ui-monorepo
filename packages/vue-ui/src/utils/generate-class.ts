@@ -14,7 +14,8 @@ import type { TokenName } from "@darwin-studio/vue-ui/src/types/token-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name"; // TODO: shorter path, default export ??? TODO: make it module ???
 
 // TODO: convert to fabric method
-const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
+// TODO: naming
+const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
   const classPrefix = codegenConfig.TOKENS[tokenName]?.CSS_CLASS_PREFIX;
   if (!classPrefix || !tokenVariant) {
     return;
@@ -45,6 +46,7 @@ const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
       return minControlWidthStyles[className];
     case TOKEN_NAME.OUTLINE:
       return outlineStyles[className];
+    // TODO: merge with size
     case TOKEN_NAME.PADDING:
       return paddingStyles[className];
     case TOKEN_NAME.ROUNDING:
@@ -58,4 +60,4 @@ const getCommonCssClass = (tokenName: TokenName, tokenVariant: string) => {
   }
 };
 
-export default getCommonCssClass;
+export default generateCssClass;

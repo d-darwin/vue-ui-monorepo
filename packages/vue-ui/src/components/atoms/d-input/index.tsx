@@ -10,7 +10,7 @@ import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { InputTypes } from "./types";
 import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";

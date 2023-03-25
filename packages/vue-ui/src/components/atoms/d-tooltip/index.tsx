@@ -16,7 +16,7 @@ import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";

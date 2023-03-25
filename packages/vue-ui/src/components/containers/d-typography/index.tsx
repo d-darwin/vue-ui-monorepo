@@ -1,6 +1,6 @@
 import { defineComponent, type VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import config from "./config";
 import styles from "./index.css?module";

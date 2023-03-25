@@ -15,7 +15,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Type } from "./types";
 import { TYPE } from "./constants";

@@ -18,7 +18,7 @@ import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import type { Type } from "./types";
 import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
@@ -29,6 +29,11 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    /**
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
+     * If you don't want to specify it, it will be generated automatically.
+     */
+    id: generateProp.text(),
     /**
      * Defines is the component is checked by default
      */
@@ -41,11 +46,6 @@ export default defineComponent({
      * The common name for the radio group
      */
     name: generateProp.text(),
-    /**
-     * Defines <i>id</i> attr of the <b>input</b> element.<br>
-     * If you don't want to specify it, it will be generated automatically.
-     */
-    id: generateProp.text(),
     /**
      * Defines appearance of the components.
      */

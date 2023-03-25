@@ -10,7 +10,7 @@ import {
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";

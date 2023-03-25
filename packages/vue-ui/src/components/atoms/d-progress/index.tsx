@@ -8,7 +8,7 @@ import {
 import { Transition as Trans } from "@vue/runtime-dom";
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";

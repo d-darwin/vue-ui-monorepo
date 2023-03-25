@@ -22,7 +22,7 @@ import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transit
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";

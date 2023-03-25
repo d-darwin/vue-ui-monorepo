@@ -8,7 +8,9 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
 import styles from "./d-tabs.css?module";
 
-// TODO: description
+/**
+ * TODO: description
+ */
 export default defineComponent({
   name: config.tabsName,
 

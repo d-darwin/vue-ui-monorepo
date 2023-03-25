@@ -16,19 +16,21 @@ export default defineComponent({
     content: {
       type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
     },
-    // TODO: specific props: isSolo
+    // TODO: specific props: isSolo, someOpen
     // TODO: common props
     /**
      * Defines container element type of the component
      */
     tag: generateProp.tag(),
+
+    // TODO: whenChange ???
   },
 
   render(): VNode {
     const Tag = this.tag;
 
     return (
-      /*TODO: transition-group*/
+      /*TODO: transition-group, keys*/
       <Tag class={styles[config.className]}>
         {this.$slots.default?.() || this.content}
       </Tag>
