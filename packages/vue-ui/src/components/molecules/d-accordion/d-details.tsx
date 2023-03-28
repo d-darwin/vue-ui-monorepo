@@ -61,7 +61,7 @@ export default defineComponent({
     const contentHeight = ref(0);
     const isMounted = ref(false);
     const isOpened = ref(props.open);
-    const isExpended = ref(props.open);
+    const isExpended = ref(props.open); // TODO: naming
 
     onMounted(async () => {
       contentHeight.value = contentRef.value?.offsetHeight || 0;
@@ -74,7 +74,7 @@ export default defineComponent({
       contentHeight,
       isMounted,
       isOpened,
-      isExpended,
+      isExpended, // TODO: naming
     };
   },
 
@@ -114,6 +114,7 @@ export default defineComponent({
           height: stableOpened ? `${this.contentHeight}px` : 0,
           paddingTop: stableOpened ? undefined : 0,
           paddingBottom: stableOpened ? undefined : 0,
+          opacity: stableOpened ? undefined : 0,
         };
       }
 
@@ -135,9 +136,9 @@ export default defineComponent({
         this.isOpened = true;
         // TODO this.emitChange();
 
-        // use timeout and nextTick to hack event loop
+        // use timeout to hack event loop
         await sleep(24); // TODO: experimental value - config
-        await nextTick();
+        // await nextTick();
         this.isExpended = true;
       }
     },
