@@ -5,5 +5,5 @@ export default {
   contentClassName: "content",
   throttleDuration: 100,
   containerRef: "containerRef",
-  contentRef: "contentRef",
+  detailsContentRef: "contentRef",
 };

@@ -1,5 +1,6 @@
 .dDetails {
   border: calc(var(--size)/16) solid var(--background-color);
+  overflow: hidden;
 }
 
 .summary {
@@ -8,6 +9,7 @@
 }
 
 .content {
+  box-sizing: border-box;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
   background: white; /*TODO*/
   color: var(--color-text); /*TODO*/

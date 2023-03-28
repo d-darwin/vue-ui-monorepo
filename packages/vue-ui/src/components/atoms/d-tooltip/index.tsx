@@ -196,7 +196,7 @@ export default defineComponent({
       tooltipId,
       isShown,
       containerRef,
-      contentRef,
+      contentRef: detailsContentRef,
       horizontalPosition,
       verticalPosition,
     };
@@ -252,7 +252,7 @@ export default defineComponent({
     renderContent(): VNode {
       // TODO: move to getters
       const bindings = {
-        ref: config.contentRef,
+        ref: config.detailsContentRef,
         id: this.tooltipId,
         "aria-hidden": !this.isShown,
         role: "tooltip",

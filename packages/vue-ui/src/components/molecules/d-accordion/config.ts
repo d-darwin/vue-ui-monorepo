@@ -5,4 +5,6 @@ export default {
   detailsClassName: "dDetails",
   summaryClassName: "summary",
   contentClassName: "content",
+  detailsRef: "detailsRef",
+  detailsContentRef: "detailsContentRef",
 } as const;
