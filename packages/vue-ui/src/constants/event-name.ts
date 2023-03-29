@@ -15,4 +15,5 @@ export const EVENT_NAME = {
   UPDATE_SHOW: "update:show",
   KEYUP: "keyup",
   TOGGLE: "toggle",
+  UPDATE_OPEN: "update:open",
 } as const;

@@ -1,8 +1,8 @@
 import {
   CSSProperties,
   defineComponent,
-  nextTick,
   onMounted,
+  PropType,
   Ref,
   ref,
   VNode,
@@ -10,6 +10,7 @@ import {
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import config from "./config";
 import styles from "./d-details.css?module";
 
@@ -52,7 +53,12 @@ export default defineComponent({
 
     // TODO: disabled ???
 
-    // TODO: whenToggle
+    /**
+     * Alternative way to catch toggle event with current open attr in the payload
+     */
+    whenToggle: Function as PropType<
+      (event: Event, open?: boolean) => void | Promise<void>
+    >,
   },
 
   setup(props) {
@@ -60,23 +66,27 @@ export default defineComponent({
     const contentRef: Ref<HTMLElement | null> = ref(null);
     const contentHeight = ref(0);
     const isMounted = ref(false);
-    const isOpened = ref(props.open);
-    const isExpended = ref(props.open); // TODO: naming
+    const isVisible = ref(props.open); // TODO: naming
+    const innerOpen = ref(props.open);
 
     onMounted(async () => {
       contentHeight.value = contentRef.value?.offsetHeight || 0;
       isMounted.value = true;
     });
 
+    // TODO: watch on open
+
     return {
       [config.detailsRef]: detailsRef,
       [config.detailsContentRef]: contentRef,
       contentHeight,
       isMounted,
-      isOpened,
-      isExpended, // TODO: naming
+      isVisible, // TODO: naming
+      innerOpen, // inner open attr
     };
   },
+
+  emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
 
   computed: {
     classes(): (string | undefined)[] {
@@ -109,12 +119,12 @@ export default defineComponent({
 
     contentStyles(): CSSProperties {
       if (this.isMounted) {
-        const stableOpened = this.isOpened && this.isExpended; // TODO: naming
+        const hasHeight = this.innerOpen && this.isVisible;
         return {
-          height: stableOpened ? `${this.contentHeight}px` : 0,
-          paddingTop: stableOpened ? undefined : 0,
-          paddingBottom: stableOpened ? undefined : 0,
-          opacity: stableOpened ? undefined : 0,
+          height: hasHeight ? `${this.contentHeight}px` : 0,
+          paddingTop: hasHeight ? undefined : 0,
+          paddingBottom: hasHeight ? undefined : 0,
+          opacity: hasHeight ? undefined : 0,
         };
       }
 
@@ -124,23 +134,26 @@ export default defineComponent({
 
   methods: {
     async clickHandler(event: MouseEvent): Promise<void> {
-      event.preventDefault();
-      if (this.isOpened) {
-        this.isExpended = false;
-
-        // browser will completely hide .details-content only after transition finishes
-        await sleep(1000); // TODO: parse token value???
-        this.isOpened = false;
-        // TODO this.emitChange();
+      event.preventDefault(); // ???
+      if (this.innerOpen) {
+        this.isVisible = false;
+        // TODO: get from the token ???
+        await sleep(500); // browser shouldn't hide the content util transition animation will be finished
+        this.innerOpen = false;
       } else {
-        this.isOpened = true;
-        // TODO this.emitChange();
-
-        // use timeout to hack event loop
-        await sleep(24); // TODO: experimental value - config
-        // await nextTick();
-        this.isExpended = true;
+        this.innerOpen = true;
+        await sleep(0); // browser should render the content first
+        this.isVisible = true;
       }
+
+      /**
+       * Emits on toggle with generic Event payload
+       * @event toggle
+       * @type {event: Event}
+       */
+      this.$emit(EVENT_NAME.TOGGLE, event);
+      this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen);
+      this.whenToggle?.(event, this.innerOpen);
     },
   },
 
@@ -149,7 +162,7 @@ export default defineComponent({
     return (
       <details
         ref={config.detailsRef}
-        open={this.isOpened}
+        open={this.innerOpen}
         class={this.classes}
       >
         {/*TODO: outline*/}
