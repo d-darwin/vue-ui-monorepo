@@ -74,7 +74,7 @@ export default async () => {
   await generateConstantsFile(designTokens[roundingTokenConfig.NAME], roundingTokenConfig, null, null);
 
   const transitionTokenConfig = config.TOKENS.TRANSITION;
-  await generateConstantsFile(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, null);
+  await generateConstantsFile(designTokens[transitionTokenConfig.NAME], transitionTokenConfig, null, null, true);
 
   const breakpointTokenConfig = config.TOKENS.BREAKPOINT;
   await generateConstantsFile(designTokens[breakpointTokenConfig.NAME], breakpointTokenConfig, null, null, true);
