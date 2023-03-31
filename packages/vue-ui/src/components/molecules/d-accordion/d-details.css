@@ -5,10 +5,15 @@
 .summary {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   cursor: pointer;
   margin: -2px;
   height: calc(var(--size) + 4px);
+}
+
+.rotatedIcon {
+  rotate: -180deg;
 }
 
 .content {

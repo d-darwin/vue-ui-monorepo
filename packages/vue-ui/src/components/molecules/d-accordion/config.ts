@@ -4,6 +4,7 @@ export default {
   detailsName: "DDetails",
   detailsClassName: "dDetails",
   summaryClassName: "summary",
+  summaryIcon: "⛛",
   contentClassName: "content",
   detailsRef: "detailsRef",
   detailsContentRef: "detailsContentRef",

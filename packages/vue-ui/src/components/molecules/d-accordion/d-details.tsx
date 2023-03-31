@@ -188,8 +188,19 @@ export default defineComponent({
           onClick={this.clickHandler}
         >
           {/*TODO: $slots.before/after - instead of dropdown icon ? */}
+          {this.$slots.beforeSummary?.()}
           {this.$slots.summary?.() || this.summary}
-          {/*TODO: $slots.before/after - instead of dropdown icon ? */}
+          {this.$slots.afterSummary?.() || (
+            <span
+              class={[
+                this.isVisible ? styles.rotatedIcon : undefined,
+                generateClass.transition(this.transition),
+              ]}
+            >
+              {config.summaryIcon}
+            </span>
+          )}
+          {/*// TODO: hide chevron ???*/}
         </summary>
         <div
           key="content"
