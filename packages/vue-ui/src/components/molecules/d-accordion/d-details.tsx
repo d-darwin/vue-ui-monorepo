@@ -13,6 +13,8 @@ import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
 import getConstantKey from "@darwin-studio/vue-ui/src/utils/get-constant-key";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
+import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import config from "./config";
 import styles from "./d-details.css?module";
 import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -108,6 +110,7 @@ export default defineComponent({
         styles[config.summaryClassName],
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
+        generateClass.outline(`${this.colorScheme}-${this.size}`),
       ];
     },
 
@@ -117,16 +120,19 @@ export default defineComponent({
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
         generateClass.transition(this.transition),
+        this.isMounted && !(this.innerOpen && this.isVisible)
+          ? styles.closedContent
+          : undefined,
       ];
     },
 
-    contentStyles(): CSSProperties {
+    contentStyles(): CSSProperties | undefined {
       if (this.isMounted) {
+        const hasHeight = this.innerOpen && this.isVisible;
         return {
-          height:
-            this.innerOpen && this.isVisible ? `${this.contentHeight}px` : 0,
-          paddingTop: this.isVisible ? undefined : 0,
-          paddingBottom: this.isVisible ? undefined : 0,
+          height: hasHeight ? `${this.contentHeight}px` : 0,
+          paddingTop: hasHeight ? undefined : 0,
+          paddingBottom: hasHeight ? undefined : 0,
         };
       }
 
@@ -135,25 +141,7 @@ export default defineComponent({
   },
 
   methods: {
-    async clickHandler(event: MouseEvent): Promise<void> {
-      event.preventDefault();
-
-      if (this.innerOpen) {
-        this.isVisible = false;
-
-        const transitionKey = getConstantKey(
-          this.transition
-        ) as keyof typeof TRANSITION_VALUE;
-        const duration = TRANSITION_VALUE[transitionKey]?.duration || 0;
-        // browser shouldn't hide the content util transition animation will be finished
-        await sleep(duration * 1000);
-
-        this.innerOpen = false;
-      } else {
-        this.innerOpen = true;
-        this.isVisible = true;
-      }
-
+    emitToggle(event: MouseEvent): void {
       /**
        * Emits on toggle with generic Event payload
        * @event toggle
@@ -162,6 +150,28 @@ export default defineComponent({
       this.$emit(EVENT_NAME.TOGGLE, event);
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen);
       this.whenToggle?.(event, this.innerOpen);
+    },
+
+    async clickHandler(event: MouseEvent): Promise<void> {
+      event.preventDefault(); // ???
+      if (this.innerOpen) {
+        this.isVisible = false;
+
+        const transitionKey = getConstantKey(
+          this.transition
+        ) as keyof typeof TRANSITION_VALUE;
+        const duration = TRANSITION_VALUE[transitionKey]?.duration || 0;
+        await sleep(duration * 1000); // browser shouldn't hide the content util transition animation will be finished
+
+        this.innerOpen = false;
+        this.emitToggle(event); // TODO: watch on inner open ???
+      } else {
+        this.innerOpen = true;
+        this.emitToggle(event); // TODO: watch on inner open ???
+        // TODO: there is a step in animation on the first open closed by default item
+        await nextTick();
+        this.isVisible = true;
+      }
     },
   },
 
@@ -178,6 +188,7 @@ export default defineComponent({
         <summary
           key="summary"
           class={this.summaryClasses}
+          // tabindex={-1} // TODO
           onClick={this.clickHandler}
         >
           {/*TODO: $slots.before/after - instead of dropdown icon ? */}

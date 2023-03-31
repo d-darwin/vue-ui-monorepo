@@ -195,8 +195,8 @@ export default defineComponent({
     return {
       tooltipId,
       isShown,
-      containerRef,
-      contentRef: detailsContentRef,
+      containerRef, // TODO: like in the d-details
+      contentRef: config.detailsContentRef, // TODO: like in the d-details
       horizontalPosition,
       verticalPosition,
     };
