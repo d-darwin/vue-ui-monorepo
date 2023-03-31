@@ -7,14 +7,13 @@ import {
   Ref,
   ref,
   VNode,
+  watch,
 } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
 import getConstantKey from "@darwin-studio/vue-ui/src/utils/get-constant-key";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
-import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import config from "./config";
 import styles from "./d-details.css?module";
 import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
@@ -56,8 +55,6 @@ export default defineComponent({
     // TODO: use or remove
     transition: generateProp.transition(),
 
-    // TODO: disabled ???
-
     /**
      * Alternative way to catch toggle event with current open attr in the payload
      */
@@ -79,7 +76,12 @@ export default defineComponent({
       isMounted.value = true;
     });
 
-    // TODO: watch on open
+    watch(
+      () => props.open,
+      (open) => {
+        innerOpen.value = open;
+      }
+    );
 
     return {
       [config.detailsRef]: detailsRef,
@@ -87,7 +89,7 @@ export default defineComponent({
       contentHeight,
       isMounted,
       isVisible, // TODO: naming
-      innerOpen, // inner open attr
+      innerOpen,
     };
   },
 
@@ -120,9 +122,6 @@ export default defineComponent({
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
         generateClass.transition(this.transition),
-        this.isMounted && !(this.innerOpen && this.isVisible)
-          ? styles.closedContent
-          : undefined,
       ];
     },
 
@@ -161,13 +160,13 @@ export default defineComponent({
           this.transition
         ) as keyof typeof TRANSITION_VALUE;
         const duration = TRANSITION_VALUE[transitionKey]?.duration || 0;
-        await sleep(duration * 1000); // browser shouldn't hide the content util transition animation will be finished
+        await sleep(duration * 1000);
 
         this.innerOpen = false;
-        this.emitToggle(event); // TODO: watch on inner open ???
+        this.emitToggle(event);
       } else {
         this.innerOpen = true;
-        this.emitToggle(event); // TODO: watch on inner open ???
+        this.emitToggle(event);
         // TODO: there is a step in animation on the first open closed by default item
         await nextTick();
         this.isVisible = true;
@@ -183,12 +182,9 @@ export default defineComponent({
         open={this.innerOpen}
         class={this.classes}
       >
-        {/*TODO: outline*/}
-        {/*TODO: .prevent ???*/}
         <summary
           key="summary"
           class={this.summaryClasses}
-          // tabindex={-1} // TODO
           onClick={this.clickHandler}
         >
           {/*TODO: $slots.before/after - instead of dropdown icon ? */}
