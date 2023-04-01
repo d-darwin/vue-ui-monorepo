@@ -8,7 +8,7 @@ import {
   type VNode,
   type Ref,
 } from "vue";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import { v4 as uuid } from "uuid";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -124,7 +124,7 @@ export default defineComponent({
     const isShown = ref(false);
 
     // we will be watching on this to adjust tooltip position
-    const { controlId: tooltipId } = useControlId();
+    const tooltipId = uuid();
     const { scrollOffsetX, scrollOffsetY } = useScrollOffset(
       config.throttleDuration
     );

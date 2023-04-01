@@ -7,6 +7,7 @@ import {
   type CSSProperties,
   type HTMLAttributes,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
@@ -133,7 +134,7 @@ export default defineComponent({
     /**
      * Defines component id to be focused on show
      */
-    focusId: generateProp.text(),
+    focusId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Hides header if you don't need it
      */
@@ -164,8 +165,8 @@ export default defineComponent({
   emits: [EVENT_NAME.CLOSE],
 
   setup(props, { emit }) {
-    const { focusControlId } = useClosable(props, emit);
-    return { focusControlId };
+    const { focusId } = useClosable(props, emit);
+    return { focusId };
   },
 
   computed: {
@@ -219,7 +220,7 @@ export default defineComponent({
           {...CLOSE_BUTTON_DEFAULTS}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
-          id={this.focusControlId} // TODO: remove if props.focusId ???
+          id={this.focusId} // TODO: remove if props.focusId ???
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
           {...this.closeButtonOptions}

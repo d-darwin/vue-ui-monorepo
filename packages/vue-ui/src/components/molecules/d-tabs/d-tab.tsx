@@ -4,6 +4,7 @@ import {
   type PropType,
   type VNode,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -26,11 +27,11 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(), // TODO use .(() => uuid4()) ???
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines <i>id</i> attr of the corresponding DTabpanel component
      */
-    tabpanelId: generateProp.text(),
+    tabpanelId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -90,13 +91,11 @@ export default defineComponent({
 
     bindings(): HTMLAttributes {
       return {
-        id: this.id ? String(this.id) : undefined,
+        id: String(this.id),
         tabindex: this.active ? 0 : -1,
         role: "tab",
         ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: this.tabpanelId
-          ? String(this.tabpanelId)
-          : undefined,
+        ["aria-controls"]: String(this.tabpanelId),
         class: this.classes,
         onClick: this.clickHandler,
       };

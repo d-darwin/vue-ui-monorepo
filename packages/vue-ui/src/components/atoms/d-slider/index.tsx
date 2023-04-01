@@ -7,8 +7,8 @@ import {
   type InputHTMLAttributes,
   type LabelHTMLAttributes,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
@@ -36,7 +36,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(),
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
@@ -124,10 +124,6 @@ export default defineComponent({
     whenInput: Function as PropType<(value: string) => void | Promise<void>>,
   },
 
-  setup(props) {
-    return useControlId(props);
-  },
-
   emits: [EVENT_NAME.CHANGE, EVENT_NAME.INPUT, EVENT_NAME.UPDATE_VALUE],
 
   computed: {
@@ -151,7 +147,7 @@ export default defineComponent({
       return (
         <label
           {...LABEL_DEFAULTS}
-          for={this.controlId}
+          for={String(this.id)}
           class={this.labelClasses}
           style={`--offset: ${this.labelOffset}`}
           {...this.labelOptions}
@@ -193,7 +189,7 @@ export default defineComponent({
       return (
         <input
           {...INPUT_DEFAULTS}
-          id={this.$slots.label?.() || this.label ? this.controlId : undefined}
+          id={this.$slots.label?.() || this.label ? String(this.id) : undefined}
           value={this.value}
           min={this.min}
           max={this.max}

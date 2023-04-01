@@ -84,9 +84,8 @@ export default defineComponent({
       ids.push({
         tabId: tab.props?.id || uuid(),
         tabpanelId:
-          slotTabpanels?.[index]?.props?.id ||
           props.tabpanels?.[index]?.props?.id ||
-          tab.props?.tabpanelId ||
+          slotTabpanels?.[index]?.props?.id ||
           uuid(),
       });
     });

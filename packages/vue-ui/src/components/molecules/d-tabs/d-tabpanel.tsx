@@ -1,4 +1,5 @@
 import { defineComponent, type HTMLAttributes, type VNode } from "vue";
+import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -19,11 +20,11 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(), // TODO use .(() => uuid4()) ???
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines <i>id</i> attr of the corresponding DTab component
      */
-    tabId: generateProp.text(),
+    tabId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines font size of the component
      */
@@ -56,10 +57,10 @@ export default defineComponent({
 
     bindings(): HTMLAttributes {
       return {
-        id: this.id ? String(this.id) : undefined,
+        id: String(this.id),
         tabindex: 0,
         role: "tabpanel",
-        ["aria-labelledby"]: this.tabId ? String(this.tabId) : undefined,
+        ["aria-labelledby"]: String(this.tabId),
         ["aria-expanded"]: this.active || undefined,
         ["aria-hidden"]: !this.active || undefined,
         hidden: !this.active || undefined,

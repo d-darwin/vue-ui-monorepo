@@ -5,8 +5,8 @@ import {
   ProgressHTMLAttributes,
   type VNode,
 } from "vue";
-import { Transition as Trans } from "@vue/runtime-dom";
 import { v4 as uuid } from "uuid";
+import { Transition as Trans } from "@vue/runtime-dom";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";

@@ -6,6 +6,7 @@ import {
   type VNode,
   type DialogHTMLAttributes,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
@@ -133,7 +134,7 @@ export default defineComponent({
     /**
      * Defines component id to be focused on show
      */
-    focusId: generateProp.text(),
+    focusId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Hides header if you don't need it
      */
@@ -192,8 +193,8 @@ export default defineComponent({
   emits: [EVENT_NAME.CLOSE, EVENT_NAME.CANCEL, EVENT_NAME.ACCEPT],
 
   setup(props, { emit }) {
-    const { focusControlId } = useClosable(props, emit);
-    return { focusControlId };
+    const { focusId } = useClosable(props, emit);
+    return { focusId };
   },
 
   computed: {
@@ -249,7 +250,7 @@ export default defineComponent({
           {...CLOSE_BUTTON_DEFAULTS}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          id={this.focusControlId}
+          id={this.focusId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
           {...this.closeButtonOptions}
