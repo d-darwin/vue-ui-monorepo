@@ -6,6 +6,9 @@ import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
+import { CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -49,17 +52,17 @@ export default defineComponent({
     // TODO: labelOptions
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    errorFont: generateProp.font(undefined, true),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Pass true to disable <b>input</b> element.
      */
@@ -87,6 +90,10 @@ export default defineComponent({
     tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
 
     // TODO: whenChange\WhenInput
+  },
+
+  setup(props, { slots }) {
+    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
   },
 
   data() {
@@ -148,25 +155,6 @@ export default defineComponent({
 
       return this.$slots.default?.().map(prepareProps) || [];
     },
-
-    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
-    renderError(): VNode | null {
-      if (this.$slots.error || this.error) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              this.errorClass,
-              generateClass.font(this.errorFont || this.size),
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
-        );
-      }
-
-      return null;
-    },
   },
 
   methods: {
@@ -183,7 +171,7 @@ export default defineComponent({
       <Tag class={styles[config.className]}>
         {this.renderLabel}
         {this.renderItemList}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

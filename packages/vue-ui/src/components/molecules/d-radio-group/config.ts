@@ -3,5 +3,6 @@ export default {
   className: "dRadioGroup",
   labelClassName: "label",
   radioClassName: "radio",
-  errorClassName: "error",
+  captionClassName: "caption",
+  captionOffset: "0.2em",
 } as const;

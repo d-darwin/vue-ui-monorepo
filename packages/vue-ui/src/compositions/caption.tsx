@@ -24,6 +24,13 @@ interface Styles {
   [className: string]: string;
 }
 
+/**
+ * Renders props.caption or $slots.caption()
+ * @param props
+ * @param slots
+ * @param styles
+ * @param captionDefaults
+ */
 export default function useCaption(
   props: Props,
   slots: Slots,

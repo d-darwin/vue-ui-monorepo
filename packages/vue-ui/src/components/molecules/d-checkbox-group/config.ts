@@ -3,5 +3,6 @@ export default {
   className: "dCheckboxGroup",
   labelClassName: "label",
   checkboxClassName: "checkbox",
-  errorClassName: "error",
+  captionClassName: "caption",
+  captionOffset: "0.2em",
 } as const;

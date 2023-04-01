@@ -7,21 +7,23 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import {
   baseClassCase,
-  errorClassCase,
-  errorFontCase,
   propStringCase,
   propVNodeCase,
   labelAbsenceCase,
   labelClassCase,
   labelFontCase,
   tagCase,
-  errorAbsenceCase,
   slotCase,
+  transitionClassCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
+import { sleep } from "@/utils/sleep";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import DCaption from "@/components/atoms/d-caption";
 
 describe("DRadioGroup", () => {
-  const wrapper = shallowMount(DRadioGroup);
+  const wrapper = mount(DRadioGroup, { props: { caption: "Not empty" } });
 
   baseClassCase(wrapper, config.className);
 
@@ -43,12 +45,82 @@ describe("DRadioGroup", () => {
   propVNodeCase(wrapper, "legend", "label");
   slotCase(DRadioGroup, "legend", "label");
 
-  errorAbsenceCase(wrapper, `.${config.errorClassName}`);
-  errorClassCase(wrapper, `.${config.errorClassName}`);
-  errorFontCase(wrapper, `.${config.errorClassName}`);
-  propStringCase(wrapper, `.${config.errorClassName}`, "error");
-  propVNodeCase(wrapper, `.${config.errorClassName}`, "error");
-  slotCase(DRadioGroup, `.${config.errorClassName}`, "error");
+  // TODO: combine all Caption cases in one factory or just test composition???
+  it("Shouldn render props.size into props.font of the DCaption", async () => {
+    const size = SIZE.HUGE;
+    const wrapper = await mount(DRadioGroup, {
+      props: { size, caption: "Not empty" },
+    });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
+
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      size
+    );
+    expect(captionEl.classes()).toContain(className);
+  });
+  it("Shouldn't render caption element if props.caption isn't passed", async () => {
+    const wrapper = await mount(DRadioGroup);
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.exists()).toBeFalsy();
+  });
+  it("Should render caption element with props.caption content if passed", async () => {
+    const captionContent = "some caption";
+    const caption = <div>{captionContent}</div>;
+    const wrapper = await mount(DRadioGroup, { props: { caption } });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
+
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.exists()).toBeTruthy();
+    expect(captionEl.text()).toBe(captionContent);
+  });
+  slotCase(DRadioGroup, `.${config.captionClassName}`, "caption");
+  it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
+    const captionOffset = 33;
+    await wrapper.setProps({
+      caption: "Caption string",
+      captionOffset,
+    });
+
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    expect(captionEl.attributes("style")).toContain(
+      `--offset: ${captionOffset}`
+    );
+  });
+  transitionClassCase(wrapper, `.${config.captionClassName}`);
+  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+    const externalClass = "some-external-class";
+    const wrapper = mount(DRadioGroup, {
+      props: {
+        caption: "not empty",
+        captionOptions: {
+          class: externalClass,
+        },
+      },
+    });
+
+    const caption = wrapper.findComponent(DCaption);
+    expect(caption.classes()).toContain(externalClass);
+  });
+  it("Should emit onChange event with checked and value payload", async () => {
+    const value = "some value";
+    const checked = false;
+    const wrapper = shallowMount(DRadio, { props: { value, checked } });
+    const inputEl = wrapper.find("input");
+    await inputEl.trigger("click");
+    await inputEl.trigger("change");
+
+    expect(wrapper.emitted("change")?.[0]).toStrictEqual([
+      !checked,
+      !checked ? value : undefined,
+    ]);
+    expect(wrapper.emitted("update:checked")?.[0]).toStrictEqual([!checked]);
+    expect(wrapper.emitted("update:value")?.[0]).toStrictEqual([
+      !checked ? value : undefined,
+    ]);
+  });
 
   it("Should add config.radioClassName to the descendants", async () => {
     const firstRadioOwnClass = "some-own-class";

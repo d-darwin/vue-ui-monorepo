@@ -15,10 +15,6 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -40,9 +36,8 @@ export default {
     label: "Some text content",
     labelFont: undefined,
     labelClass: "someCustomLabelClass",
-    error: "Some error string",
-    errorFont: undefined,
-    errorClass: "someCustomErrorClass",
+    caption: "Some caption",
+    captionOffset: "0.2em",
     disabled: false,
     colorScheme: COLOR_SCHEME.SECONDARY, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
