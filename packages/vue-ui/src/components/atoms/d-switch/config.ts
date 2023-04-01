@@ -6,6 +6,7 @@ export default {
   trackClassName: "track",
   thumbClassName: "thumb",
   thumbInnerClassName: "thumbInner",
-  errorClassName: "error",
+  captionClassName: "caption",
+  captionOffset: "2px",
   trackAspectRatio: 2.4,
 };

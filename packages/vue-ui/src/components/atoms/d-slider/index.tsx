@@ -82,7 +82,7 @@ export default defineComponent({
      */
     caption: generateProp.content(),
     /**
-     * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
+     * Pass any DCaption.props to customize caption, f.e. { type: "error" }
      */
     captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**

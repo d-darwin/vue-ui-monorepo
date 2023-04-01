@@ -1,15 +1,19 @@
 import { defineComponent, type PropType, type VNode } from "vue";
+import { v4 as uuid } from "uuid";
+import { Transition as Trans } from "@vue/runtime-dom";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
+import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types"; // TODO: move to /d-caption/async ??
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Values, Value } from "./types";
-import { ASPECT_RATIO_DEFAULTS } from "./constants";
+import { ASPECT_RATIO_DEFAULTS, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -23,7 +27,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: generateProp.text(),
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines if the component at the truthy state by default
      */
@@ -53,20 +57,17 @@ export default defineComponent({
      */
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: errorOptions
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: errorOptions
-    errorFont: generateProp.font(undefined, true),
+    captionOffset: generateProp.text(config.captionOffset),
     /**
      * Defines common font size of the component
      */
@@ -119,10 +120,6 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    return useControlId(props);
-  },
-
   emits: [
     EVENT_NAME.CHANGE,
     EVENT_NAME.INPUT,
@@ -134,16 +131,16 @@ export default defineComponent({
     labelClasses(): (string | undefined)[] {
       return [
         styles[config.labelClassName],
-        generateClass.font(this.labelFont || this.font || this.size),
-        this.labelClass,
         this.disabled ? styles.__disabled : undefined, // TODO: config
+        this.labelClass,
+        generateClass.font(this.labelFont || this.font || this.size),
       ];
     },
     // TODO: add label generator ???
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy || this.$slots.labelFalsy) {
         return (
-          <label for={this.controlId} class={this.labelClasses}>
+          <label for={String(this.id) || undefined} class={this.labelClasses}>
             {this.$slots.labelFalsy?.() || this.labels?.falsy}
           </label>
         );
@@ -178,7 +175,6 @@ export default defineComponent({
 
     inputContainerClasses(): (string | undefined)[] {
       return [
-        styles[config.trackClassName],
         this.disabled ? styles.__disabled : undefined,
         this.disabled ? colorSchemeStyles.__disabled : undefined,
         generateClass.border(`${this.colorScheme}-${this.size}`),
@@ -205,21 +201,21 @@ export default defineComponent({
         <DAspectRatio
           {...ASPECT_RATIO_DEFAULTS}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          /* @ts-ignore TODO */
-          for={this.controlId}
+          // @ts-ignore TODO
+          for={this.id}
           class={this.inputContainerClasses}
           {...this.aspectRatioOptions}
         >
           <input
-            id={this.controlId}
+            id={String(this.id) || undefined}
             value={this.values?.truthy} // TODO: is it right ???
             checked={this.checked || undefined}
             aria-checked={this.checked || undefined}
             disabled={this.disabled || undefined}
             aria-disabled={this.disabled || undefined}
             class={this.inputClasses}
-            type="checkbox" // TODO: config
-            role="switch" // TODO: config
+            type="checkbox" // TODO: _DEFAULTS
+            role="switch" // TODO: _DEFAULTS
             onChange={this.changeHandler}
             onInput={this.inputHandler}
           />
@@ -232,7 +228,7 @@ export default defineComponent({
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy || this.$slots.labelTruthy) {
         return (
-          <label for={this.controlId} class={this.labelClasses}>
+          <label for={String(this.id) || undefined} class={this.labelClasses}>
             {this.$slots.labelTruthy?.() || this.labels?.truthy}
           </label>
         );
@@ -241,20 +237,26 @@ export default defineComponent({
       return null;
     },
 
-    // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
-    // TODO: how to avoid layout shift
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          generateClass.font(this.errorFont || this.font || this.size),
-          this.errorClass,
-        ];
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
-      }
-
-      return null;
+    renderCaption(): VNode {
+      return (
+        <Trans
+          enterActiveClass={styles.captionTransitionEnterActive}
+          leaveActiveClass={styles.captionTransitionLeaveActive}
+          appear={true}
+        >
+          {(this.$slots.caption?.() || this.caption) && (
+            <DCaption
+              {...CAPTION_DEFAULTS}
+              font={this.size}
+              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
+              class={generateClass.transition(this.transition)}
+              {...this.captionOptions}
+            >
+              {this.$slots.caption?.() || this.caption}
+            </DCaption>
+          )}
+        </Trans>
+      );
     },
   },
 
@@ -298,20 +300,9 @@ export default defineComponent({
        * @type {value: Text | undefined}
        */
       this.$emit(EVENT_NAME.INPUT, value);
-      /**
-       * Emits on click with value payload
-       * @event update:value
-       * @type {value: Text | undefined}
-       */
-      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
       this.whenInput?.(value);
     },
   },
-
-  /**
-   * @slot $slots.error
-   * Use instead of props.error to fully customize error content
-   * */
   /**
    * @slot $slots.labelFalsy
    * Use instead of props.labels.falsy to fully customize falsy label content
@@ -319,6 +310,10 @@ export default defineComponent({
   /**
    * @slot $slots.labelTruthy
    * Use instead of props.labels.truthy to fully customize truthy label content
+   * */
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
    * */
   /**
    * @slot $slots.thumb
@@ -336,7 +331,7 @@ export default defineComponent({
           {this.renderInput}
           {this.renderTruthyLabel}
         </div>
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

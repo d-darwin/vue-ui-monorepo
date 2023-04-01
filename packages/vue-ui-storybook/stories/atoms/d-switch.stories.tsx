@@ -18,10 +18,6 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -71,9 +67,8 @@ export default {
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     font: undefined,
-    error: "Some error string",
-    errorFont: undefined,
-    errorClass: "customErrorClass",
+    caption: "Some caption",
+    captionOffset: "4px",
     tag: "div",
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);
@@ -94,18 +89,18 @@ const Template: Story = (args) => ({
 
 export const Default = Template.bind({});
 
-const SlotErrorTemplate: Story = (args) => ({
+const SlotCaptionTemplate: Story = (args) => ({
   components: { DSwitch },
   setup() {
     return { args };
   },
   template: `
     <DSwitch v-bind="args">
-      <template v-slot:error><b>Error slot</b></template>
+      <template v-slot:caption><b>Caption slot</b></template>
     </DSwitch>
   `,
 });
-export const SlotError = SlotErrorTemplate.bind({});
+export const SlotCaption = SlotCaptionTemplate.bind({});
 
 const SlotLabelFalsyTemplate: Story = (args) => ({
   components: { DSwitch },
