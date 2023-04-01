@@ -65,7 +65,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.captionOffset),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Defines appearance of the component
      */

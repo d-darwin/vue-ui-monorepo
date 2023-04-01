@@ -4,7 +4,8 @@ export default {
   inputClassName: "input",
   inputContainerClassName: "inputContainer",
   labelClassName: "label",
-  errorClassName: "error",
+  captionClassName: "caption",
+  captionOffset: "0.2em",
   beforeContainerClass: "beforeInput",
   afterContainerClass: "afterInput",
 };

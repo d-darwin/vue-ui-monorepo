@@ -5,14 +5,16 @@ import {
   type PropType,
   type VNode,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { InputTypes } from "./types";
-import { INPUT_TYPE, BASE_COLOR_SCHEME } from "./constants";
+import { INPUT_TYPE, BASE_COLOR_SCHEME, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -26,6 +28,10 @@ export default defineComponent({
 
   props: {
     /**
+     * Defines <i>id</i> attr of the <b>input</b> element
+     */
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
     value: generateProp.text(),
@@ -33,10 +39,6 @@ export default defineComponent({
      * Defines initial <i>placeholder</i> attr of the <b>input</b> element
      */
     placeholder: String,
-    /**
-     * Defines <i>id</i> attr of the <b>input</b> element
-     */
-    id: generateProp.text(),
     /**
      * Defines padding type of the <b>input</b> element
      */
@@ -95,20 +97,17 @@ export default defineComponent({
     // TODO: move to labelOptions
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> tag.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: move to errorOptions
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: move to errorOptions
-    errorFont: generateProp.font(undefined, true),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Pass true to disable <b>input</b> element.
      */
@@ -138,8 +137,8 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    return useControlId(props);
+  setup(props, { slots }) {
+    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
   },
 
   emits: [
@@ -153,7 +152,7 @@ export default defineComponent({
     renderLabel(): VNode | null {
       if (this.label || this.$slots.label) {
         const bindings = {
-          for: this.controlId,
+          for: String(this.id),
           class: [
             styles[config.labelClassName],
             this.labelClass,
@@ -211,7 +210,7 @@ export default defineComponent({
     renderInput(): VNode {
       const inputVNode = (
         <input
-          id={this.label || this.id ? this.controlId : undefined}
+          id={this.label ? String(this.id) : undefined}
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled}
@@ -255,22 +254,6 @@ export default defineComponent({
       }
 
       return inputVNode;
-    },
-
-    // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
-    // TODO: how to avoid layout shift
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          this.errorClass,
-          generateClass.font(this.errorFont || this.size),
-        ];
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
-      }
-
-      return null;
     },
   },
 
@@ -317,7 +300,23 @@ export default defineComponent({
     },
   },
 
-  // TODO: describe slots
+  /*TODO: why vue-docgen cant' detect not default slots ???*/
+  /**
+   * @slot $slots.before
+   * Any content before the input element
+   * */
+  /**
+   * @slot $slots.after
+   * Any content after the input element
+   * */
+  /**
+   * @slot $slots.label
+   * Use instead of props.label to fully customize label content
+   * */
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
+   * */
   render(): VNode {
     const Tag = this.tag;
     return (
@@ -329,8 +328,7 @@ export default defineComponent({
       >
         {this.renderLabel}
         {this.renderInput}
-        {/*TODO: transition, DCaption */}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

@@ -39,10 +39,6 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     onChange: {
       action: "change",
     },
@@ -72,10 +68,9 @@ export default {
     padding: PADDING.DEFAULT,
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
-    transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    error: "Some error string",
-    errorFont: undefined,
-    errorClass: "someCustomErrorClass",
+    transition: TRANSITION.FAST, // TODO: don't hardcode values
+    caption: "Some caption",
+    captionOffset: "0.2em",
     tag: "div",
     whenChange: (value: Text | undefined) => {
       console.log("change", value);
@@ -137,15 +132,15 @@ const SlotLabelTemplate: Story = (args) => ({
 });
 export const SlotLabel = SlotLabelTemplate.bind({});
 
-const SlotErrorTemplate: Story = (args) => ({
+const SlotCaptionTemplate: Story = (args) => ({
   components: { DInput },
   setup() {
     return { args };
   },
   template: `
     <DInput v-bind="args" >
-      <template v-slot:error><b>Error slot</b></template>
+      <template v-slot:caption><b>Caption slot</b></template>
     </DInput>
   `,
 });
-export const SlotError = SlotErrorTemplate.bind({});
+export const SlotCaption = SlotCaptionTemplate.bind({});

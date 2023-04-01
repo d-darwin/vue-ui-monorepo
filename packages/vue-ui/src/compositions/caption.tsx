@@ -30,6 +30,10 @@ export default function useCaption(
   styles: Styles,
   captionDefaults: DCaptionProps
 ): { renderCaption: Ref<VNode> } {
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
+   * */
   const captionContent = slots.caption?.() || props.caption;
   const renderCaption = ref(
     <Trans

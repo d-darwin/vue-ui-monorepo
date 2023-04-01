@@ -95,7 +95,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.captionOffset),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * You can pass own class name to the icon container element.
      */

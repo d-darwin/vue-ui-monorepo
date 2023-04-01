@@ -86,7 +86,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.defaultCaptionOffset),
+    captionOffset: generateProp.text(config.defaultCaptionOffset), // TODO: move to captionOptions
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
