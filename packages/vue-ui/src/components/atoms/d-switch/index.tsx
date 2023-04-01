@@ -1,17 +1,15 @@
 import { defineComponent, type PropType, type VNode } from "vue";
 import { v4 as uuid } from "uuid";
-import { Transition as Trans } from "@vue/runtime-dom";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
-import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
-import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types"; // TODO: move to /d-caption/async ??
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types"; // TODO: move to /d-caption/async ??
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { Values, Value } from "./types";
 import { ASPECT_RATIO_DEFAULTS, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
@@ -51,11 +49,11 @@ export default defineComponent({
      * You can pass own class name to the <b>label</b> element.
      */
     // TODO: labelOptions
-    labelClass: String,
+    labelClass: String, // TODO: labelOptions:
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: generateProp.font(),
+    labelFont: generateProp.font(), // TODO: labelOptions:
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
@@ -69,13 +67,13 @@ export default defineComponent({
      */
     captionOffset: generateProp.text(config.captionOffset),
     /**
-     * Defines common font size of the component
-     */
-    font: generateProp.font(),
-    /**
      * Defines appearance of the component
      */
     colorScheme: generateProp.colorScheme(),
+    /**
+     * Defines common font size of the component
+     */
+    font: generateProp.font(), // TODO: merge with size ???
     /**
      * Defines corner rounding of the icon container element
      */
@@ -93,6 +91,7 @@ export default defineComponent({
      */
     disabled: Boolean,
     // TODO: readonly state ???
+    // TODO: indeterminate state ???
     /**
      * Defines container element type of the component
      */
@@ -118,6 +117,10 @@ export default defineComponent({
     whenInput: {
       type: Function as PropType<(value?: Value) => void | Promise<void>>,
     },
+  },
+
+  setup(props, { slots }) {
+    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
   },
 
   emits: [
@@ -235,28 +238,6 @@ export default defineComponent({
       }
 
       return null;
-    },
-
-    renderCaption(): VNode {
-      return (
-        <Trans
-          enterActiveClass={styles.captionTransitionEnterActive}
-          leaveActiveClass={styles.captionTransitionLeaveActive}
-          appear={true}
-        >
-          {(this.$slots.caption?.() || this.caption) && (
-            <DCaption
-              {...CAPTION_DEFAULTS}
-              font={this.size}
-              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              class={generateClass.transition(this.transition)}
-              {...this.captionOptions}
-            >
-              {this.$slots.caption?.() || this.caption}
-            </DCaption>
-          )}
-        </Trans>
-      );
     },
   },
 

@@ -6,15 +6,21 @@ import {
   type PropType,
   type InputHTMLAttributes,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
+import {
+  BASE_COLOR_SCHEME,
+  DEFAULT_VALUE,
+  CAPTION_DEFAULTS,
+} from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -26,6 +32,11 @@ export default defineComponent({
   name: config.name,
 
   props: {
+    /**
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
+     * If you don't want to specify it, it will be generated automatically.
+     */
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines is the component is checked by default
      */
@@ -52,11 +63,6 @@ export default defineComponent({
      */
     transition: generateProp.transition(),
     /**
-     * Defines <i>id</i> attr of the <b>input</b> element.<br>
-     * If you don't want to specify it, it will be generated automatically.
-     */
-    id: generateProp.text(),
-    /**
      * You can pass own class name to the <b>input</b> element.
      */
     inputClass: String,
@@ -79,20 +85,17 @@ export default defineComponent({
     // TODO: move to labelOptions:
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: move to errorOptions:
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: move to errorOptions:
-    errorFont: generateProp.font(),
+    captionOffset: generateProp.text(config.captionOffset),
     /**
      * You can pass own class name to the icon container element.
      */
@@ -123,11 +126,16 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    const innerChecked = ref(props.checked); // TODO: what for ???
-    const { controlId } = useControlId(props);
+  setup(props, { slots }) {
+    const innerChecked = ref(props.checked); // TODO: what for, remove ???
+    const { renderCaption } = useCaption(
+      props,
+      slots,
+      styles,
+      CAPTION_DEFAULTS
+    );
 
-    return { innerChecked, controlId };
+    return { innerChecked, renderCaption };
   },
 
   emits: [
@@ -192,7 +200,7 @@ export default defineComponent({
       return (
         <input
           type={config.inputType}
-          id={this.label || this.id ? this.controlId : undefined}
+          id={this.label ? String(this.id) : undefined}
           checked={this.checked}
           value={this.value}
           disabled={this.disabled}
@@ -232,31 +240,12 @@ export default defineComponent({
       }
 
       return (
-        <label for={this.controlId} class={labelClasses}>
+        <label for={String(this.id)} class={labelClasses}>
           {this.renderInput}
           {this.renderIcon}
           {this.renderLabelContent}
         </label>
       );
-    },
-
-    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              this.errorClass,
-              generateClass.font(this.errorFont || this.size),
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
-        );
-      }
-
-      return null;
     },
   },
 
@@ -318,8 +307,8 @@ export default defineComponent({
    * Use instead of props.label to fully customize label content
    * */
   /**
-   * @slot $slots.error
-   * Use instead of props.error to fully customize error content
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
    * */
   // TODO: input slot ???
   render(): VNode {
@@ -332,8 +321,7 @@ export default defineComponent({
         ]}
       >
         {this.renderLabel}
-        {/*TODO: add transition | use DCaption?*/}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

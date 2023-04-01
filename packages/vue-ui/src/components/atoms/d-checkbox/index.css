@@ -1,5 +1,6 @@
 .dCheckbox {
   width: fit-content;
+  position: relative;
 }
 
 .input,
@@ -56,9 +57,15 @@
   opacity: 0;
 }
 
-.error {
-  /*TODO: avoid hardcode*/
-  margin-top: 4px;
-  /*TODO: avoid hardcode*/
-  color: var(--color-danger-background);
+.caption {
+  --offset: 2px;
+  position: absolute;
+  top: calc(100% + var(--offset));
 }
+
+.captionTransitionEnterActive,
+.captionTransitionEnterActive {
+  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
+  opacity: 0.65;
+}
+

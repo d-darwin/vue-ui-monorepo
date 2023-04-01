@@ -7,6 +7,6 @@ export default {
   thumbClassName: "thumb",
   thumbInnerClassName: "thumbInner",
   captionClassName: "caption",
-  captionOffset: "2px",
+  captionOffset: "0.2em",
   trackAspectRatio: 2.4,
 };

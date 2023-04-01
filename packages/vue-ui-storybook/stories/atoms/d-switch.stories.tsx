@@ -68,7 +68,7 @@ export default {
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     font: undefined,
     caption: "Some caption",
-    captionOffset: "4px",
+    captionOffset: "0.2em",
     tag: "div",
     whenChange: (checked: boolean, value: Text) => {
       console.log("change", checked, value);

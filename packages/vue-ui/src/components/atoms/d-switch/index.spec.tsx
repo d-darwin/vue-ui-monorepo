@@ -14,7 +14,6 @@ import {
 } from "@/utils/test-case-factories";
 import DSwitch from "@/components/atoms/d-switch/index";
 import DCaption from "@/components/atoms/d-caption";
-import { DCaptionAsync } from "@/components/atoms/d-caption/async";
 import styles from "@/components/atoms/d-switch/index.css?module";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import config from "@/components/atoms/d-switch/config";
@@ -27,7 +26,9 @@ import { sleep } from "@/utils/sleep";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 
 describe("DSwitch", () => {
-  const wrapper = mount(DSwitch);
+  const wrapper = mount(DSwitch, {
+    props: { caption: "Not empty" },
+  });
 
   baseClassCase(wrapper, config.className);
 
@@ -182,16 +183,17 @@ describe("DSwitch", () => {
   transitionClassCase(wrapper, `.${config.thumbInnerClassName}`);
 
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
-    await wrapper.setProps({ caption: undefined });
+    const wrapper = await mount(DSwitch);
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
     const captionEl = wrapper.find(`.${config.captionClassName}`);
     expect(captionEl.exists()).toBeFalsy();
-    await wrapper.setProps({ caption: "not empty" });
   });
 
   it("Should render caption element with props.caption content if passed", async () => {
     const captionContent = "some caption";
     const caption = <div>{captionContent}</div>;
-    await wrapper.setProps({ caption });
+    const wrapper = await mount(DSwitch, { props: { caption } });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
     const captionEl = wrapper.find(`.${config.captionClassName}`);
     expect(captionEl.exists()).toBeTruthy();
