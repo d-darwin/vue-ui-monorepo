@@ -195,8 +195,8 @@ export default defineComponent({
     return {
       tooltipId,
       isShown,
-      containerRef, // TODO: like in the d-details
-      contentRef: config.detailsContentRef, // TODO: like in the d-details
+      [config.containerRef]: containerRef,
+      [config.contentRef]: contentRef,
       horizontalPosition,
       verticalPosition,
     };
@@ -217,6 +217,7 @@ export default defineComponent({
       if (this.verticalPosition) {
         classes.push(styles[this.verticalPosition]);
       }
+
       return classes;
     },
 
@@ -252,7 +253,7 @@ export default defineComponent({
     renderContent(): VNode {
       // TODO: move to getters
       const bindings = {
-        ref: config.detailsContentRef,
+        ref: config.contentRef,
         id: this.tooltipId,
         "aria-hidden": !this.isShown,
         role: "tooltip",
