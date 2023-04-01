@@ -1,25 +1,27 @@
 import {
-  CSSProperties,
   defineComponent,
   nextTick,
-  onMounted,
-  PropType,
-  Ref,
   ref,
-  VNode,
+  onMounted,
   watch,
+  type CSSProperties,
+  type HTMLAttributes,
+  type PropType,
+  type Ref,
+  type VNode,
 } from "vue";
+import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
 import getConstantKey from "@darwin-studio/vue-ui/src/utils/get-constant-key";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import { SUMMARY_DEFAULTS, CONTENT_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./d-details.css?module";
-import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
 
 /**
- * TODO
+ * Renders <b>details</b> element with <b>summary</b>.
  */
 export default defineComponent({
   name: config.detailsName,
@@ -29,30 +31,45 @@ export default defineComponent({
      * Plain string or VNode
      */
     summary: generateProp.content(),
-    // TODO: summaryOptions
+    /**
+     * Pass any attribute to the summary element
+     */
+    summaryOptions: generateProp.options<HTMLAttributes>(SUMMARY_DEFAULTS),
+    /**
+     * Don't show content after the summary
+     */
+    hideSummaryAfter: Boolean,
     /**
      * Plain string or VNode
      */
     content: generateProp.content(),
-    // TODO: contentOptions
-
-    // TODO:
+    /**
+     * Pass any attribute to the content element
+     */
+    contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
+    /**
+     * Defines if the component opened by default
+     */
     open: Boolean,
-
-    // TODO: colorScheme
+    /**
+     * Defines appearance of the component
+     */
     colorScheme: generateProp.colorScheme(),
-
-    // TODO: padding
+    /**
+     * Defines padding type of the component, use 'equal' if the component contains only an icon
+     */
     padding: generateProp.padding(),
-
-    // TODO: roundness
+    /**
+     * Defines corner rounding of the component
+     */
     rounding: generateProp.rounding(),
-
-    // TODO: font ???
-    // TODO: size
+    /**
+     * Defines size of the component
+     */
     size: generateProp.size(),
-
-    // TODO: use or remove
+    /**
+     * Defines transition type of the component
+     */
     transition: generateProp.transition(),
 
     /**
@@ -103,13 +120,12 @@ export default defineComponent({
         generateClass.font(this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
-        generateClass.transition(this.transition), // TODO: use or remove
+        generateClass.transition(this.transition),
       ];
     },
 
     summaryClasses(): (string | undefined)[] {
       return [
-        styles[config.summaryClassName],
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
         generateClass.outline(`${this.colorScheme}-${this.size}`),
@@ -118,7 +134,6 @@ export default defineComponent({
 
     contentClasses(): (string | undefined)[] {
       return [
-        styles[config.contentClassName],
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
         generateClass.transition(this.transition),
@@ -167,14 +182,25 @@ export default defineComponent({
       } else {
         this.innerOpen = true;
         this.emitToggle(event);
-        // TODO: there is a step in animation on the first open closed by default item
+        // TODO: there is a step in animation on the first open :thinking:
         await nextTick();
         this.isVisible = true;
       }
     },
   },
 
-  // TODO: slots descr
+  /**
+   * @slot slots.summary
+   * Use instead of props.summary to fully customize summary element content
+   * */
+  /**
+   * @slot slots.summaryAfter
+   * Use instead of props.summaryAfter to fully customize after summary element
+   * */
+  /**
+   * @slot slots.default
+   * Use instead of props.content to fully customize details content
+   * */
   render(): VNode {
     return (
       <details
@@ -183,34 +209,32 @@ export default defineComponent({
         class={this.classes}
       >
         <summary
-          key="summary"
+          {...SUMMARY_DEFAULTS}
           class={this.summaryClasses}
           onClick={this.clickHandler}
+          {...this.summaryOptions}
         >
-          {/*TODO: $slots.before/after - instead of dropdown icon ? */}
-          {this.$slots.beforeSummary?.()}
           {this.$slots.summary?.() || this.summary}
-          {this.$slots.afterSummary?.() || (
-            <span
-              class={[
-                this.isVisible ? styles.rotatedIcon : undefined,
-                generateClass.transition(this.transition),
-              ]}
-            >
-              {config.summaryIcon}
-            </span>
-          )}
-          {/*// TODO: hide chevron ???*/}
+          {!this.hideSummaryAfter &&
+            (this.$slots.summaryAfter?.() || (
+              <span
+                class={[
+                  this.isVisible ? styles.rotatedIcon : undefined,
+                  generateClass.transition(this.transition),
+                ]}
+              >
+                {config.summaryIcon}
+              </span>
+            ))}
         </summary>
         <div
-          key="content"
-          ref={config.detailsContentRef}
+          {...CONTENT_DEFAULTS}
           class={this.contentClasses}
           style={this.contentStyles}
+          {...this.contentOptions}
         >
           {this.$slots.default?.() || this.content}
         </div>
-        {/*TODO: or whole content including summary ???*/}
       </details>
     );
   },

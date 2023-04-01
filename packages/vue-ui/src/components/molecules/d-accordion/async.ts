@@ -4,4 +4,8 @@ const DAccordionAsync = defineAsyncComponent(
   () => import(/* webpackChunkName: "molecules/d-accordion" */ "./d-accordion")
 );
 
-export { DAccordionAsync };
+const DDetailsAsync = defineAsyncComponent(
+  () => import(/* webpackChunkName: "molecules/d-details" */ "./d-details")
+);
+
+export { DAccordionAsync, DDetailsAsync };
