@@ -147,19 +147,6 @@ describe("DSwitch", () => {
     expect(thumbEl.classes()).toContain(className);
   });
 
-  it("Shouldn render props.size into props.font of the DCaption", async () => {
-    const size = SIZE.HUGE;
-    await wrapper.setProps({ size, caption: "Not empty" });
-
-    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
-    const className = prepareCssClassName(
-      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
-      size
-    );
-    expect(captionEl.classes()).toContain(className);
-  });
-
   colorSchemeClassCase(
     wrapper,
     `.${config.trackClassName}`,
@@ -182,13 +169,25 @@ describe("DSwitch", () => {
 
   transitionClassCase(wrapper, `.${config.thumbInnerClassName}`);
 
+  // TODO: combine all Caption cases in one factory or just test composition???
+  it("Shouldn render props.size into props.font of the DCaption", async () => {
+    const size = SIZE.HUGE;
+    await wrapper.setProps({ size, caption: "Not empty" });
+
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
+    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
+      size
+    );
+    expect(captionEl.classes()).toContain(className);
+  });
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DSwitch);
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
     const captionEl = wrapper.find(`.${config.captionClassName}`);
     expect(captionEl.exists()).toBeFalsy();
   });
-
   it("Should render caption element with props.caption content if passed", async () => {
     const captionContent = "some caption";
     const caption = <div>{captionContent}</div>;
@@ -199,9 +198,7 @@ describe("DSwitch", () => {
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-
   slotCase(DSwitch, `.${config.captionClassName}`, "caption");
-
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -214,9 +211,7 @@ describe("DSwitch", () => {
       `--offset: ${captionOffset}`
     );
   });
-
   transitionClassCase(wrapper, `.${config.captionClassName}`);
-
   it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSwitch, {

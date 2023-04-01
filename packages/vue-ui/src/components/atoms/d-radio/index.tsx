@@ -8,19 +8,26 @@ import {
   type VNode,
   type Ref,
 } from "vue";
+import { v4 as uuid } from "uuid";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { Type } from "./types";
-import { TYPE, BASE_COLOR_SCHEME, BUTTON_DEFAULTS } from "./constants";
+import {
+  TYPE,
+  BASE_COLOR_SCHEME,
+  BUTTON_DEFAULTS,
+  CAPTION_DEFAULTS,
+} from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
 
@@ -32,7 +39,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(),
+    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
     /**
      * Defines is the component is checked by default
      */
@@ -95,20 +102,17 @@ export default defineComponent({
     // TODO: labelOptions
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: errorOptions
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: errorOptions
-    errorFont: generateProp.font(),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * You can pass own class name to the icon container element.
      */
@@ -143,13 +147,18 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, { slots }) {
     const innerChecked = ref(props.checked); // TODO: what for ???
     // To manipulate get getBoundingClientRect and adjust tooltip position
     // It's a bit of magic - use the same refs name in the render function and return they from the setup()
     // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
     const inputRef: Ref<HTMLInputElement | null> = ref(null);
-    const { controlId } = useControlId(props);
+    const { renderCaption } = useCaption(
+      props,
+      slots,
+      styles,
+      CAPTION_DEFAULTS
+    );
 
     watch(
       () => props.checked,
@@ -158,7 +167,7 @@ export default defineComponent({
       }
     );
 
-    return { innerChecked, inputRef, controlId };
+    return { innerChecked, inputRef, renderCaption };
   },
 
   emits: [
@@ -174,7 +183,7 @@ export default defineComponent({
         <input
           ref={config.inputRef}
           type="radio"
-          id={this.label || this.id ? this.controlId : undefined}
+          id={this.label ? String(this.id) : undefined}
           name={String(this.name)}
           checked={this.innerChecked}
           value={this.value}
@@ -288,28 +297,13 @@ export default defineComponent({
       }
 
       return (
-        <label for={this.controlId} class={labelClasses}>
+        <label for={String(this.id)} class={labelClasses}>
           {this.renderInput}
           {this.type === TYPE.BASE
             ? [this.renderIcon, this.renderLabelContent]
             : this.renderButton}
         </label>
       );
-    },
-
-    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          this.errorClass,
-          generateClass.font(this.errorFont || this.size),
-        ];
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
-      }
-
-      return null;
     },
   },
 
@@ -375,8 +369,8 @@ export default defineComponent({
    * Use instead of props.label to fully customize label content
    * */
   /**
-   * @slot $slots.error
-   * Use instead of props.error to fully customize error content
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
    * */
   // TODO: input slot ???
   render(): VNode {
@@ -389,8 +383,7 @@ export default defineComponent({
         ]}
       >
         {this.renderLabel}
-        {/*TODO: add transition | what about layout shift ???*/}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

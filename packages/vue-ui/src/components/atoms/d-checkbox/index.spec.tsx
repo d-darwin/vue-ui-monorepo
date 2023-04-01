@@ -35,7 +35,6 @@ import {
 import { sleep } from "@/utils/sleep";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import DSwitch from "@/components/atoms/d-switch";
 import DCaption from "@/components/atoms/d-caption";
 
 describe("DCheckbox", () => {
@@ -119,7 +118,6 @@ describe("DCheckbox", () => {
     const captionEl = wrapper.find(`.${config.captionClassName}`);
     expect(captionEl.exists()).toBeFalsy();
   });
-
   it("Should render caption element with props.caption content if passed", async () => {
     const captionContent = "some caption";
     const caption = <div>{captionContent}</div>;
@@ -129,9 +127,7 @@ describe("DCheckbox", () => {
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-
-  slotCase(DSwitch, `.${config.captionClassName}`, "caption");
-
+  slotCase(DCheckbox, `.${config.captionClassName}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     const wrapper = await mount(DCheckbox, {
@@ -144,14 +140,12 @@ describe("DCheckbox", () => {
       `--offset: ${captionOffset}`
     );
   });
-
   transitionClassCase(wrapper, `.${config.captionClassName}`, {
     caption: "not empty",
   });
-
   it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
     const externalClass = "some-external-class";
-    const wrapper = mount(DSwitch, {
+    const wrapper = mount(DCheckbox, {
       props: {
         caption: "not empty",
         captionOptions: {
@@ -163,7 +157,6 @@ describe("DCheckbox", () => {
     const caption = wrapper.findComponent(DCaption);
     expect(caption.classes()).toContain(externalClass);
   });
-
   it("Shouldn render props.size into props.font of the DCaption", async () => {
     const size = SIZE.HUGE;
     const wrapper = await mount(DCheckbox, {

@@ -20,10 +20,6 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -74,9 +70,8 @@ export default {
     rounding: ROUNDING.FULL, // TODO: don't hardcode values
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
-    error: "Some error string",
-    errorFont: undefined,
-    errorClass: "someCustomErrorClass",
+    caption: "Some caption",
+    captionOffset: "0.2em",
     iconContainerClass: "someIconContainerClass",
     tag: "div",
     whenChange: (checked: boolean, value: Text) => {
@@ -101,3 +96,5 @@ export const Button = Template.bind({});
 Button.args = {
   type: TYPE.BUTTON,
 };
+
+// TODO: slot cases
