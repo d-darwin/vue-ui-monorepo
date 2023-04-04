@@ -5,6 +5,7 @@ export default {
   detailsClassName: "dDetails",
   summaryClassName: "summary",
   summaryIcon: "⛛",
+  summaryAfterClassName: "summaryAfter",
   contentClassName: "content",
   detailsRef: "detailsRef",
   detailsContentRef: "detailsContentRef",

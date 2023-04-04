@@ -11,7 +11,7 @@ export default defineComponent({
 
   props: {
     /**
-     * An array of VNodes (DDetails)
+     * An array of VNodes (DDetails supposed)
      */
     content: {
       type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
@@ -19,7 +19,14 @@ export default defineComponent({
     // TODO: specific props: isSolo, someOpen
 
     // TODO: how to pas to the children properly???
+    //  hideSummaryAfter
+    //  openId\Value ???
     // TODO: common props
+    //  colorScheme
+    //  padding
+    //  rounding
+    //  size
+    //  transition
     /**
      * Defines container element type of the component
      */

@@ -207,11 +207,13 @@ export default defineComponent({
         ref={config.detailsRef}
         open={this.innerOpen}
         class={this.classes}
+        // TODO: onToggle ???
       >
         <summary
           {...SUMMARY_DEFAULTS}
           class={this.summaryClasses}
           onClick={this.clickHandler}
+          // TODO: onToggle ???
           {...this.summaryOptions}
         >
           {this.$slots.summary?.() || this.summary}
@@ -219,6 +221,7 @@ export default defineComponent({
             (this.$slots.summaryAfter?.() || (
               <span
                 class={[
+                  styles[config.summaryAfterClassName],
                   this.isVisible ? styles.rotatedIcon : undefined,
                   generateClass.transition(this.transition),
                 ]}

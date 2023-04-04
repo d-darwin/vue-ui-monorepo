@@ -50,6 +50,24 @@ const Template: Story = (args) => ({
   setup() {
     return { args };
   },
+  computed: {
+    content() {
+      return [
+        <DDetails summary="Summary 1" content="Some content 1" />,
+        <DDetails summary="Summary 2" content="Some content 2" />,
+        <DDetails summary="Summary 3" content="Some content 3" />,
+      ];
+    },
+  },
+  template: `<DAccordion v-bind="args" :content="content">`,
+});
+export const Default = Template.bind({});
+
+const TemplateSlot: Story = (args) => ({
+  components: { DAccordion, DDetails },
+  setup() {
+    return { args };
+  },
   template: `
     <DAccordion v-bind="args">
       <DDetails summary="Summary 1" content="Some content 1" />
@@ -58,7 +76,7 @@ const Template: Story = (args) => ({
     </DAccordion>
   `,
 });
-export const Default = Template.bind({});
+export const DefaultSlot = TemplateSlot.bind({});
 
 const DetailsTemplate: Story = (args) => ({
   components: { DDetails },
@@ -68,3 +86,5 @@ const DetailsTemplate: Story = (args) => ({
   template: `<DDetails summary="Summary 1" content="Some content 1" v-bind="args" />`,
 });
 export const DetailsDefault = DetailsTemplate.bind({});
+
+// TODO: other DDetails stories
