@@ -5,18 +5,16 @@ import {
   onMounted,
   watch,
   type CSSProperties,
-  type HTMLAttributes,
-  type PropType,
   type Ref,
   type VNode,
 } from "vue";
 import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
 import getConstantKey from "@darwin-studio/vue-ui/src/utils/get-constant-key";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { SUMMARY_DEFAULTS, CONTENT_DEFAULTS } from "./constants";
+import { dDetailsProps as props } from "./props";
 import config from "./config";
 import styles from "./d-details.css?module";
 
@@ -26,59 +24,11 @@ import styles from "./d-details.css?module";
 export default defineComponent({
   name: config.detailsName,
 
-  props: {
-    /**
-     * Plain string or VNode
-     */
-    summary: generateProp.content(),
-    /**
-     * Pass any attribute to the summary element
-     */
-    summaryOptions: generateProp.options<HTMLAttributes>(SUMMARY_DEFAULTS),
-    /**
-     * Don't show content after the summary
-     */
-    hideSummaryAfter: Boolean,
-    /**
-     * Plain string or VNode
-     */
-    content: generateProp.content(),
-    /**
-     * Pass any attribute to the content element
-     */
-    contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
-    /**
-     * Defines if the component opened by default
-     */
-    open: Boolean,
-    /**
-     * Defines appearance of the component
-     */
-    colorScheme: generateProp.colorScheme(),
-    /**
-     * Defines padding type of the component, use 'equal' if the component contains only an icon
-     */
-    padding: generateProp.padding(),
-    /**
-     * Defines corner rounding of the component
-     */
-    rounding: generateProp.rounding(),
-    /**
-     * Defines size of the component
-     */
-    size: generateProp.size(),
-    /**
-     * Defines transition type of the component
-     */
-    transition: generateProp.transition(),
-
-    /**
-     * Alternative way to catch toggle event with current open attr in the payload
-     */
-    whenToggle: Function as PropType<
-      (event: Event, open?: boolean) => void | Promise<void>
-    >,
-  },
+  /**
+   * @props summary
+   * TODO: check if there is jsdoc -> storybook
+   * */
+  props,
 
   setup(props) {
     const detailsRef: Ref<HTMLElement | null> = ref(null);
@@ -174,6 +124,7 @@ export default defineComponent({
         const transitionKey = getConstantKey(
           this.transition
         ) as keyof typeof TRANSITION_VALUE;
+        // TODO: test case
         const duration = TRANSITION_VALUE[transitionKey]?.duration || 0;
         await sleep(duration * 1000);
 
@@ -183,6 +134,7 @@ export default defineComponent({
         this.innerOpen = true;
         this.emitToggle(event);
         // TODO: there is a step in animation on the first open :thinking:
+        //  https://github.com/sticker0ne/vue3-rich-accordion/blob/main/src/library/accordion/AccordionItem.vue
         await nextTick();
         this.isVisible = true;
       }

@@ -1,5 +1,5 @@
-import { defineComponent, PropType, VNode } from "vue";
-import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import { defineComponent, VNode } from "vue";
+import { dAccordionProps as props } from "./props";
 import config from "./config";
 import styles from "./d-accordion.css?module";
 
@@ -9,31 +9,11 @@ import styles from "./d-accordion.css?module";
 export default defineComponent({
   name: config.name,
 
-  props: {
-    /**
-     * An array of VNodes (DDetails supposed)
-     */
-    content: {
-      type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
-    },
-    // TODO: specific props: isSolo, someOpen
-
-    // TODO: how to pas to the children properly???
-    //  hideSummaryAfter
-    //  openId\Value ???
-    // TODO: common props
-    //  colorScheme
-    //  padding
-    //  rounding
-    //  size
-    //  transition
-    /**
-     * Defines container element type of the component
-     */
-    tag: generateProp.tag(),
-
-    // TODO: whenChange ???
-  },
+  /**
+   * @props summary
+   * TODO: check if there is jsdoc -> storybook
+   * */
+  props,
 
   render(): VNode {
     const Tag = this.tag;

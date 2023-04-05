@@ -13,6 +13,9 @@ export default {
   title: "molecules/DAccordion",
   component: DAccordion,
   argTypes: {
+    /**
+     * TODO: argTypes
+     */
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -36,6 +39,9 @@ export default {
     // TODO
   },
   args: {
+    /**
+     * TODO: args
+     */
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
