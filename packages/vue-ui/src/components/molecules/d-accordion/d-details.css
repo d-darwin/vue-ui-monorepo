@@ -1,5 +1,6 @@
 .dDetails {
   border: calc(var(--size)/16) solid var(--background-color);
+  padding: 0;
 }
 
 .summary {
@@ -10,6 +11,7 @@
   cursor: pointer;
   margin: -2px;
   height: calc(var(--size) + 4px);
+  padding: var(--padding);
 }
 
 .rotatedIcon {
@@ -17,9 +19,11 @@
 }
 
 .content {
-  box-sizing: border-box;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
   background: white; /*TODO*/
   color: var(--color-text); /*TODO*/
   overflow: hidden;
+  padding: var(--padding);
+  padding-top: 0;
+  padding-bottom: 0;
 }

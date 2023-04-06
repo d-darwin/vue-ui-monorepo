@@ -4,7 +4,7 @@ import config from "./config";
 import styles from "./d-accordion.css?module";
 
 /**
- * TODO
+ * TODO: DAccordion
  */
 export default defineComponent({
   name: config.name,
@@ -13,7 +13,7 @@ export default defineComponent({
    * @props summary
    * TODO: check if there is jsdoc -> storybook
    * */
-  props,
+  props: props,
 
   render(): VNode {
     const Tag = this.tag;

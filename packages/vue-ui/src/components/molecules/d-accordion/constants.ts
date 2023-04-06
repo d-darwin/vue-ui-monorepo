@@ -9,6 +9,6 @@ export const SUMMARY_DEFAULTS: HTMLAttributes & { key: string } = {
 
 export const CONTENT_DEFAULTS: HTMLAttributes & { key: string; ref: string } = {
   key: "content",
-  ref: config.detailsContentRef,
+  ref: config.contentRef,
   class: styles[config.contentClassName],
 };

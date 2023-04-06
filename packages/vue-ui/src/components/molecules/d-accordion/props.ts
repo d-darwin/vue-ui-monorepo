@@ -61,6 +61,10 @@ export const dDetailsProps = {
 
 export const dAccordionProps = {
   /**
+   * Defines appearance of the component
+   */
+  colorScheme: generateProp.colorScheme(),
+  /**
    * An array of VNodes (DDetails supposed)
    */
   content: {

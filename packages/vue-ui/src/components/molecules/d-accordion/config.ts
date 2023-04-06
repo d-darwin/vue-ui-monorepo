@@ -8,5 +8,5 @@ export default {
   summaryAfterClassName: "summaryAfter",
   contentClassName: "content",
   detailsRef: "detailsRef",
-  detailsContentRef: "detailsContentRef",
+  contentRef: "detailsContentRef",
 } as const;

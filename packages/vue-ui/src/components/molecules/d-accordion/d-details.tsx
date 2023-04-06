@@ -1,6 +1,5 @@
 import {
   defineComponent,
-  nextTick,
   ref,
   onMounted,
   watch,
@@ -8,14 +7,13 @@ import {
   type Ref,
   type VNode,
 } from "vue";
-import { TRANSITION_VALUE } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
-import getConstantKey from "@darwin-studio/vue-ui/src/utils/get-constant-key";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { SUMMARY_DEFAULTS, CONTENT_DEFAULTS } from "./constants";
 import { dDetailsProps as props } from "./props";
 import config from "./config";
+import { getTransitionDuration } from "./utils";
 import styles from "./d-details.css?module";
 
 /**
@@ -35,8 +33,9 @@ export default defineComponent({
     const contentRef: Ref<HTMLElement | null> = ref(null);
     const contentHeight = ref(0);
     const isMounted = ref(false);
-    const isVisible = ref(props.open || false);
     const innerOpen = ref(props.open || false);
+    const isTransitionOpen = ref(false);
+    const transitionDuration = ref(getTransitionDuration(props.transition));
 
     onMounted(async () => {
       contentHeight.value = contentRef.value?.offsetHeight || 0;
@@ -50,94 +49,134 @@ export default defineComponent({
       }
     );
 
+    watch(
+      () => props.transition,
+      (transition) => {
+        transitionDuration.value = getTransitionDuration(transition);
+      }
+    );
+
     return {
       [config.detailsRef]: detailsRef,
-      [config.detailsContentRef]: contentRef,
+      [config.contentRef]: contentRef,
       contentHeight,
       isMounted,
-      isVisible, // TODO: naming
       innerOpen,
+      isTransitionOpen, // TODO: naming
+      transitionDuration,
     };
   },
 
   emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
 
   computed: {
-    classes(): (string | undefined)[] {
-      return [
-        styles[config.detailsClassName],
-        generateClass.colorScheme(this.colorScheme),
-        generateClass.font(this.size),
-        generateClass.rounding(this.rounding),
-        generateClass.size(this.size),
-        generateClass.transition(this.transition),
-      ];
+    summaryClasses(): (string | undefined)[] {
+      return [generateClass.outline(`${this.colorScheme}-${this.size}`)];
     },
 
-    summaryClasses(): (string | undefined)[] {
-      return [
-        generateClass.padding(this.padding), // TODO: merge in the util
-        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
-        generateClass.outline(`${this.colorScheme}-${this.size}`),
-      ];
+    renderSummary(): VNode {
+      return (
+        <summary
+          {...SUMMARY_DEFAULTS}
+          class={this.summaryClasses}
+          onClick={this.clickHandler}
+          {...this.summaryOptions}
+        >
+          {this.$slots.summary?.() || this.summary}
+          {!this.hideSummaryAfter && this.renderSummaryAfter}
+        </summary>
+      );
+    },
+
+    renderSummaryAfter(): VNode[] | VNode {
+      return (
+        this.$slots.summaryAfter?.() || (
+          <span
+            class={[
+              styles[config.summaryAfterClassName],
+              this.innerOpen && this.isTransitionOpen
+                ? styles.rotatedIcon
+                : undefined,
+              generateClass.transition(this.transition),
+            ]}
+          >
+            {config.summaryIcon}
+          </span>
+        )
+      );
     },
 
     contentClasses(): (string | undefined)[] {
-      return [
-        generateClass.padding(this.padding), // TODO: merge in the util
-        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
-        generateClass.transition(this.transition),
-      ];
+      return [generateClass.transition(this.transition)];
     },
 
     contentStyles(): CSSProperties | undefined {
       if (this.isMounted) {
-        const hasHeight = this.innerOpen && this.isVisible;
+        const hasHeight = this.innerOpen && this.isTransitionOpen;
         return {
           height: hasHeight ? `${this.contentHeight}px` : 0,
-          paddingTop: hasHeight ? undefined : 0,
-          paddingBottom: hasHeight ? undefined : 0,
+          padding: hasHeight ? `var(--padding)` : undefined,
         };
       }
 
       return {};
     },
+
+    renderContent(): VNode {
+      return (
+        <div
+          {...CONTENT_DEFAULTS}
+          ref={config.contentRef}
+          class={this.contentClasses}
+          style={this.contentStyles}
+          {...this.contentOptions}
+        >
+          {this.$slots.default?.() || this.content}
+        </div>
+      );
+    },
+
+    classes(): (string | undefined)[] {
+      return [
+        styles[config.detailsClassName],
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.size),
+        generateClass.padding(this.padding), // TODO: merge in the util
+        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
+      ];
+    },
   },
 
   methods: {
-    emitToggle(event: MouseEvent): void {
+    async clickHandler(event: MouseEvent): Promise<void> {
+      event.preventDefault();
+
+      if (this.innerOpen) {
+        this.isTransitionOpen = false;
+        await sleep(this.transitionDuration * 1000);
+        this.innerOpen = false;
+      } else {
+        this.innerOpen = true;
+        await sleep(0);
+        this.isTransitionOpen = true;
+      }
+
       /**
-       * Emits on toggle with generic Event payload
+       * Emits on toggle with MouseEvent payload
        * @event toggle
        * @type {event: Event}
        */
       this.$emit(EVENT_NAME.TOGGLE, event);
+      /**
+       * Emits on toggle with current open state
+       * @event update:open
+       * @type {open: boolean}
+       */
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen);
       this.whenToggle?.(event, this.innerOpen);
-    },
-
-    async clickHandler(event: MouseEvent): Promise<void> {
-      event.preventDefault(); // ???
-      if (this.innerOpen) {
-        this.isVisible = false;
-
-        const transitionKey = getConstantKey(
-          this.transition
-        ) as keyof typeof TRANSITION_VALUE;
-        // TODO: test case
-        const duration = TRANSITION_VALUE[transitionKey]?.duration || 0;
-        await sleep(duration * 1000);
-
-        this.innerOpen = false;
-        this.emitToggle(event);
-      } else {
-        this.innerOpen = true;
-        this.emitToggle(event);
-        // TODO: there is a step in animation on the first open :thinking:
-        //  https://github.com/sticker0ne/vue3-rich-accordion/blob/main/src/library/accordion/AccordionItem.vue
-        await nextTick();
-        this.isVisible = true;
-      }
     },
   },
 
@@ -159,37 +198,9 @@ export default defineComponent({
         ref={config.detailsRef}
         open={this.innerOpen}
         class={this.classes}
-        // TODO: onToggle ???
       >
-        <summary
-          {...SUMMARY_DEFAULTS}
-          class={this.summaryClasses}
-          onClick={this.clickHandler}
-          // TODO: onToggle ???
-          {...this.summaryOptions}
-        >
-          {this.$slots.summary?.() || this.summary}
-          {!this.hideSummaryAfter &&
-            (this.$slots.summaryAfter?.() || (
-              <span
-                class={[
-                  styles[config.summaryAfterClassName],
-                  this.isVisible ? styles.rotatedIcon : undefined,
-                  generateClass.transition(this.transition),
-                ]}
-              >
-                {config.summaryIcon}
-              </span>
-            ))}
-        </summary>
-        <div
-          {...CONTENT_DEFAULTS}
-          class={this.contentClasses}
-          style={this.contentStyles}
-          {...this.contentOptions}
-        >
-          {this.$slots.default?.() || this.content}
-        </div>
+        {this.renderSummary}
+        {this.renderContent}
       </details>
     );
   },

@@ -36,7 +36,7 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    // TODO
+    // TODO 1
   },
   args: {
     /**
@@ -47,7 +47,7 @@ export default {
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    // TODO
+    // TODO 2
   },
 };
 
@@ -65,7 +65,7 @@ const Template: Story = (args) => ({
       ];
     },
   },
-  template: `<DAccordion v-bind="args" :content="content">`,
+  template: `<DAccordion v-bind="args" :content="content" />`,
 });
 export const Default = Template.bind({});
 
@@ -84,6 +84,7 @@ const TemplateSlot: Story = (args) => ({
 });
 export const DefaultSlot = TemplateSlot.bind({});
 
+// TODO: own file with default export and  title: "molecules/DAccordion", ???
 const DetailsTemplate: Story = (args) => ({
   components: { DDetails },
   setup() {
