@@ -3,6 +3,7 @@ import {
   ref,
   onMounted,
   watch,
+  inject,
   type CSSProperties,
   type Ref,
   type VNode,
@@ -56,6 +57,10 @@ export default defineComponent({
       }
     );
 
+    // TODO: typings, injectedProps
+    const injectedColorScheme = inject("colorScheme") as string;
+    console.log("injected colorScheme:", injectedColorScheme);
+
     return {
       [config.detailsRef]: detailsRef,
       [config.contentRef]: contentRef,
@@ -64,6 +69,7 @@ export default defineComponent({
       innerOpen,
       isTransitionOpen, // TODO: naming
       transitionDuration,
+      injectedColorScheme,
     };
   },
 
@@ -71,7 +77,11 @@ export default defineComponent({
 
   computed: {
     summaryClasses(): (string | undefined)[] {
-      return [generateClass.outline(`${this.colorScheme}-${this.size}`)];
+      return [
+        generateClass.outline(
+          `${this.injectedColorScheme || this.colorScheme}-${this.size}`
+        ),
+      ];
     },
 
     renderSummary(): VNode {
@@ -139,7 +149,7 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.detailsClassName],
-        generateClass.colorScheme(this.colorScheme),
+        generateClass.colorScheme(this.injectedColorScheme || this.colorScheme),
         generateClass.font(this.size),
         generateClass.padding(this.padding), // TODO: merge in the util
         generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util

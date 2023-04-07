@@ -5,6 +5,40 @@ import {
   SUMMARY_DEFAULTS,
 } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/constants";
 
+/**
+ * @prop colorScheme
+ * TODO: check if there is jsdoc -> storybook
+ * */
+export const dAccordionProps = {
+  /**
+   * An array of VNodes (DDetails supposed)
+   */
+  content: {
+    type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
+  },
+  // TODO: specific props: isSolo, someOpen
+
+  // TODO: how to pas to the children properly???
+  //  hideSummaryAfter
+  //  openId\Value ???
+  // TODO: common props
+  //  colorScheme
+  /**
+   * Defines appearance of the component
+   */
+  colorScheme: generateProp.colorScheme(),
+  //  padding
+  //  rounding
+  //  size
+  //  transition
+  /**
+   * Defines container element type of the component
+   */
+  tag: generateProp.tag(),
+
+  // TODO: whenChange ???
+};
+
 export const dDetailsProps = {
   /**
    * Plain string or VNode
@@ -57,34 +91,4 @@ export const dDetailsProps = {
   whenToggle: Function as PropType<
     (event: Event, open?: boolean) => void | Promise<void>
   >,
-};
-
-export const dAccordionProps = {
-  /**
-   * Defines appearance of the component
-   */
-  colorScheme: generateProp.colorScheme(),
-  /**
-   * An array of VNodes (DDetails supposed)
-   */
-  content: {
-    type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
-  },
-  // TODO: specific props: isSolo, someOpen
-
-  // TODO: how to pas to the children properly???
-  //  hideSummaryAfter
-  //  openId\Value ???
-  // TODO: common props
-  //  colorScheme
-  //  padding
-  //  rounding
-  //  size
-  //  transition
-  /**
-   * Defines container element type of the component
-   */
-  tag: generateProp.tag(),
-
-  // TODO: whenChange ???
 };
