@@ -6,12 +6,12 @@ import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { DDetails, DAccordion } from "./index";
 
 export interface DAccordionProvided {
-  hideSummaryAfter: boolean;
-  colorScheme: ColorScheme;
-  padding: Padding;
-  rounding: Rounding;
-  size: Size;
-  transition: Transition;
+  hideSummaryAfter?: boolean;
+  colorScheme?: ColorScheme;
+  padding?: Padding;
+  rounding?: Rounding;
+  size?: Size;
+  transition?: Transition;
 }
 
 export type DDetailsProps = InstanceType<typeof DDetails>["$props"];

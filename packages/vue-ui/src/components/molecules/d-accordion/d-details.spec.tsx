@@ -22,11 +22,11 @@ describe("DDetails", () => {
   const wrapper = shallowMount(DDetails);
 
   baseClassCase(wrapper, config.detailsClassName);
+  paddingEqualClassesCase(wrapper, `.${config.detailsClassName}`);
 
   propStringCase(wrapper, `.${config.summaryClassName}`, "summary");
   propVNodeCase(wrapper, `.${config.summaryClassName}`, "summary");
   slotCase(DDetails, `.${config.summaryClassName}`, "summary");
-  paddingEqualClassesCase(wrapper, `.${config.summaryClassName}`);
   outlineClassCase(
     wrapper,
     `.${config.summaryClassName}`,
@@ -66,7 +66,6 @@ describe("DDetails", () => {
   propStringCase(wrapper, `.${config.contentClassName}`, "content");
   propVNodeCase(wrapper, `.${config.contentClassName}`, "content");
   slotCase(DDetails, `.${config.contentClassName}`, "default");
-  paddingEqualClassesCase(wrapper, `.${config.contentClassName}`);
   transitionClassCase(wrapper, `.${config.contentClassName}`, {
     content: "Not empty",
   });
@@ -85,27 +84,19 @@ describe("DDetails", () => {
     expect(contentEl.classes()).toContain(externalClass);
   });
 
-  it("Should render height and paddingTop/Bottom of the content eq to 0, if props.open is false", async () => {
+  it("Should render height eq to 0, if props.open is false", async () => {
     await wrapper.setProps({ open: false, content: "Not empty" });
     const contentEl = wrapper.find(`.${config.contentClassName}`);
     expect(contentEl.attributes("style")).toContain(`height: 0`);
-    expect(contentEl.attributes("style")).toContain(`padding-top: 0`);
-    expect(contentEl.attributes("style")).toContain(`padding-bottom: 0`);
   });
-  it("Should render initial paddingTop/Bottom of the content eq to 0, if props.open is true", async () => {
-    const wrapper = await mount(DDetails, {
-      props: { open: true, content: "Not empty" },
-    });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
-    expect(contentEl.attributes("style")).not.toContain(`padding-top: 0`);
-    expect(contentEl.attributes("style")).not.toContain(`padding-bottom: 0`);
-  });
+
   it("Should change data.innerOpen according to props.open", async () => {
     const open = false;
     await wrapper.setProps({ open });
     expect(wrapper.vm.innerOpen).toBe(open);
 
     await wrapper.setProps({ open: !open });
+    await sleep(wrapper.vm.transitionDuration);
     expect(wrapper.vm.innerOpen).toBe(!open);
   });
 
@@ -132,11 +123,12 @@ describe("DDetails", () => {
     const wrapper = shallowMount(DDetails, { props: { open: false } });
     const summaryEl = wrapper.find(`.${config.summaryClassName}`);
     await summaryEl.trigger("click");
+    await sleep(wrapper.vm.transitionDuration);
     expect(wrapper.emitted("toggle")?.[0]).toBeTruthy();
     expect(wrapper.emitted("update:open")?.[0]).toStrictEqual([true]);
 
     await summaryEl.trigger("click");
-    await sleep(1000);
+    await sleep(wrapper.vm.transitionDuration);
     expect(wrapper.emitted("toggle")?.[1]).toBeTruthy();
     expect(wrapper.emitted("update:open")?.[1]).toStrictEqual([false]);
   });
@@ -148,6 +140,7 @@ describe("DDetails", () => {
     });
     const summaryEl = wrapper.find(`.${config.summaryClassName}`);
     await summaryEl.trigger("click");
+    await sleep(wrapper.vm.transitionDuration);
     expect(whenToggle).toHaveBeenCalledWith(
       expect.objectContaining({ isTrusted: false }),
       true
@@ -155,7 +148,7 @@ describe("DDetails", () => {
 
     await whenToggle.mockReset();
     await summaryEl.trigger("click");
-    await sleep(1000);
+    await sleep(wrapper.vm.transitionDuration);
     expect(whenToggle).toHaveBeenCalledWith(
       expect.objectContaining({ isTrusted: false }),
       false

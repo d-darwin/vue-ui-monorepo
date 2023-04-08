@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, inject } from "vue";
+import { defineComponent, ref, onMounted, inject, watch } from "vue";
 import type { CSSProperties, Ref, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
@@ -35,40 +35,51 @@ export default defineComponent({
       isMounted.value = true;
     });
 
-    const injection = inject<Ref<DAccordionProvided>>(PROVIDE_INJECT_KEY);
-    const commonProps = ref({
-      hideSummaryAfter:
-        injection?.value.hideSummaryAfter || props.hideSummaryAfter,
-      colorScheme: injection?.value.colorScheme || props.colorScheme,
-      padding: injection?.value.padding || props.padding,
-      rounding: injection?.value.rounding || props.rounding,
-      size: injection?.value.size || props.size,
-      transition: injection?.value.transition || props.transition,
-    });
+    const innerOpen = ref(props.open || false);
+    const isExpanded = ref(props.open || false);
+    watch(
+      () => props.open,
+      () => {
+        innerOpen.value = props.open;
+        isExpanded.value = props.open;
+      }
+    );
 
     return {
       [config.contentRef]: contentRef,
       contentHeight,
       isMounted,
-      commonProps,
       [config.detailsRef]: ref(null) as Ref<HTMLElement | null>,
-      innerOpen: ref(props.open || false),
-      isExpanded: ref(props.open || false),
-      transitionDuration: ref(
-        getTransitionDuration(commonProps.value.transition)
-      ),
+      innerOpen,
+      isExpanded,
+      injection: inject<DAccordionProvided>(PROVIDE_INJECT_KEY, {}),
     };
   },
 
   emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
 
   computed: {
+    commonProps(): Required<DAccordionProvided> {
+      return {
+        hideSummaryAfter:
+          this.injection?.hideSummaryAfter || this.hideSummaryAfter,
+        colorScheme: this.injection?.colorScheme || this.colorScheme,
+        padding: this.injection?.padding || this.padding,
+        rounding: this.injection?.rounding || this.rounding,
+        size: this.injection?.size || this.size,
+        transition: this.injection?.transition || this.transition,
+      };
+    },
+
+    transitionDuration(): number {
+      return getTransitionDuration(this.commonProps.transition) * 1000;
+    },
+
     summaryClasses(): (string | undefined)[] {
       return [
         generateClass.outline(
           `${this.commonProps.colorScheme}-${this.commonProps.size}`
         ),
-        generateClass.rounding(this.commonProps.rounding),
       ];
     },
 
@@ -101,10 +112,7 @@ export default defineComponent({
     },
 
     contentClasses(): (string | undefined)[] {
-      return [
-        generateClass.rounding(this.commonProps.rounding),
-        generateClass.transition(this.commonProps.transition),
-      ];
+      return [generateClass.transition(this.commonProps.transition)];
     },
 
     contentStyles(): CSSProperties | undefined {
@@ -155,7 +163,7 @@ export default defineComponent({
 
       if (this.innerOpen) {
         this.isExpanded = false;
-        await sleep(this.transitionDuration * 1000);
+        await sleep(this.transitionDuration);
         this.innerOpen = false;
       } else {
         this.innerOpen = true;
