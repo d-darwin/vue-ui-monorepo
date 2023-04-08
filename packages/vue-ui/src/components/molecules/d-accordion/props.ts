@@ -22,15 +22,26 @@ export const dAccordionProps = {
   //  hideSummaryAfter
   //  openId\Value ???
   // TODO: common props
-  //  colorScheme
   /**
    * Defines appearance of the component
    */
   colorScheme: generateProp.colorScheme(),
-  //  padding
-  //  rounding
-  //  size
-  //  transition
+  /**
+   * Defines padding type of the component, use 'equal' if the component contains only an icon
+   */
+  padding: generateProp.padding(),
+  /**
+   * Defines corner rounding of the component
+   */
+  rounding: generateProp.rounding(),
+  /**
+   * Defines size of the component
+   */
+  size: generateProp.size(),
+  /**
+   * Defines transition type of the component
+   */
+  transition: generateProp.transition(),
   /**
    * Defines container element type of the component
    */

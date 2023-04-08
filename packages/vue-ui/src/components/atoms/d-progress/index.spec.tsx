@@ -23,7 +23,7 @@ import DCaption from "@/components/atoms/d-caption";
 import DLoader from "@/components/atoms/d-loader";
 import config from "@/components/atoms/d-progress/config";
 import { Type } from "@/components/atoms/d-progress/types";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";

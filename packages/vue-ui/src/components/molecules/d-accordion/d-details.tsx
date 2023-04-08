@@ -1,21 +1,18 @@
-import {
-  defineComponent,
-  ref,
-  onMounted,
-  watch,
-  inject,
-  type CSSProperties,
-  type Ref,
-  type VNode,
-} from "vue";
+import { defineComponent, ref, onMounted, inject } from "vue";
+import type { CSSProperties, Ref, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { sleep } from "@darwin-studio/vue-ui/src/utils/sleep";
+import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { SUMMARY_DEFAULTS, CONTENT_DEFAULTS } from "./constants";
+import {
+  SUMMARY_DEFAULTS,
+  CONTENT_DEFAULTS,
+  PROVIDE_INJECT_KEY,
+} from "./constants";
 import { dDetailsProps as props } from "./props";
 import config from "./config";
 import { getTransitionDuration } from "./utils";
 import styles from "./d-details.css?module";
+import type { DAccordionProvided } from "./types";
 
 /**
  * Renders <b>details</b> element with <b>summary</b>.
@@ -30,46 +27,34 @@ export default defineComponent({
   props,
 
   setup(props) {
-    const detailsRef: Ref<HTMLElement | null> = ref(null);
     const contentRef: Ref<HTMLElement | null> = ref(null);
     const contentHeight = ref(0);
     const isMounted = ref(false);
-    const innerOpen = ref(props.open || false);
-    const isTransitionOpen = ref(false);
-    const transitionDuration = ref(getTransitionDuration(props.transition));
-
     onMounted(async () => {
       contentHeight.value = contentRef.value?.offsetHeight || 0;
       isMounted.value = true;
     });
 
-    watch(
-      () => props.open,
-      (open) => {
-        innerOpen.value = open;
-      }
-    );
-
-    watch(
-      () => props.transition,
-      (transition) => {
-        transitionDuration.value = getTransitionDuration(transition);
-      }
-    );
-
-    // TODO: typings, injectedProps
-    const injectedColorScheme = inject("colorScheme") as string;
-    console.log("injected colorScheme:", injectedColorScheme);
+    const injection = inject<Ref<DAccordionProvided>>(PROVIDE_INJECT_KEY);
+    const commonProps = ref({
+      colorScheme: injection?.value.colorScheme || props.colorScheme,
+      padding: injection?.value.padding || props.padding,
+      rounding: injection?.value.rounding || props.rounding,
+      size: injection?.value.size || props.size,
+      transition: injection?.value.transition || props.transition,
+    });
 
     return {
-      [config.detailsRef]: detailsRef,
       [config.contentRef]: contentRef,
       contentHeight,
       isMounted,
-      innerOpen,
-      isTransitionOpen, // TODO: naming
-      transitionDuration,
-      injectedColorScheme,
+      commonProps,
+      [config.detailsRef]: ref(null) as Ref<HTMLElement | null>,
+      innerOpen: ref(props.open || false),
+      isExpanded: ref(props.open || false),
+      transitionDuration: ref(
+        getTransitionDuration(commonProps.value.transition)
+      ),
     };
   },
 
@@ -79,8 +64,9 @@ export default defineComponent({
     summaryClasses(): (string | undefined)[] {
       return [
         generateClass.outline(
-          `${this.injectedColorScheme || this.colorScheme}-${this.size}`
+          `${this.commonProps.colorScheme}-${this.commonProps.size}`
         ),
+        generateClass.rounding(this.commonProps.rounding),
       ];
     },
 
@@ -104,10 +90,10 @@ export default defineComponent({
           <span
             class={[
               styles[config.summaryAfterClassName],
-              this.innerOpen && this.isTransitionOpen
+              this.innerOpen && this.isExpanded
                 ? styles.rotatedIcon
                 : undefined,
-              generateClass.transition(this.transition),
+              generateClass.transition(this.commonProps.transition),
             ]}
           >
             {config.summaryIcon}
@@ -117,12 +103,15 @@ export default defineComponent({
     },
 
     contentClasses(): (string | undefined)[] {
-      return [generateClass.transition(this.transition)];
+      return [
+        generateClass.rounding(this.commonProps.rounding),
+        generateClass.transition(this.commonProps.transition),
+      ];
     },
 
     contentStyles(): CSSProperties | undefined {
       if (this.isMounted) {
-        const hasHeight = this.innerOpen && this.isTransitionOpen;
+        const hasHeight = this.innerOpen && this.isExpanded;
         return {
           height: hasHeight ? `${this.contentHeight}px` : 0,
           padding: hasHeight ? `var(--padding)` : undefined,
@@ -149,13 +138,15 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         styles[config.detailsClassName],
-        generateClass.colorScheme(this.injectedColorScheme || this.colorScheme),
-        generateClass.font(this.size),
-        generateClass.padding(this.padding), // TODO: merge in the util
-        generateClass.padding(`${this.padding}-${this.size}`), // TODO: merge in the util
-        generateClass.rounding(this.rounding),
-        generateClass.size(this.size),
-        generateClass.transition(this.transition),
+        generateClass.colorScheme(this.commonProps.colorScheme),
+        generateClass.font(this.commonProps.size),
+        generateClass.padding(this.commonProps.padding), // TODO: merge in the util
+        generateClass.padding(
+          `${this.commonProps.padding}-${this.commonProps.size}`
+        ), // TODO: merge in the util
+        generateClass.rounding(this.commonProps.rounding),
+        generateClass.size(this.commonProps.size),
+        generateClass.transition(this.commonProps.transition),
       ];
     },
   },
@@ -165,13 +156,13 @@ export default defineComponent({
       event.preventDefault();
 
       if (this.innerOpen) {
-        this.isTransitionOpen = false;
+        this.isExpanded = false;
         await sleep(this.transitionDuration * 1000);
         this.innerOpen = false;
       } else {
         this.innerOpen = true;
         await sleep(0);
-        this.isTransitionOpen = true;
+        this.isExpanded = true;
       }
 
       /**

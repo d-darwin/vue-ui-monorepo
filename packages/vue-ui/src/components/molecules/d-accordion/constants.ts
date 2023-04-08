@@ -12,3 +12,5 @@ export const CONTENT_DEFAULTS: HTMLAttributes & { key: string; ref: string } = {
   ref: config.contentRef,
   class: styles[config.contentClassName],
 };
+
+export const PROVIDE_INJECT_KEY = "commonProps";

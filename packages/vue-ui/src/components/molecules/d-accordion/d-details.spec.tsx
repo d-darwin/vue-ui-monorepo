@@ -16,7 +16,7 @@ import {
 } from "@/utils/test-case-factories";
 import DDetails from "./d-details";
 import config from "./config";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 
 describe("DDetails", () => {
   const wrapper = shallowMount(DDetails);

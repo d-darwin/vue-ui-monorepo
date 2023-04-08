@@ -1,6 +1,9 @@
-import { defineComponent, ref, provide, type VNode } from "vue";
+import { defineComponent, ref, provide } from "vue";
+import type { VNode, Ref } from "vue";
 import { dAccordionProps as props } from "./props";
 import config from "./config";
+import { PROVIDE_INJECT_KEY } from "./constants";
+import type { DAccordionProvided } from "./types";
 import styles from "./d-accordion.css?module";
 
 /**
@@ -24,8 +27,16 @@ export default defineComponent({
   props,
 
   setup(props) {
-    // provide reactive value
-    provide("colorScheme", ref(props.colorScheme)); // TODO
+    provide<Ref<DAccordionProvided>>(
+      PROVIDE_INJECT_KEY,
+      ref({
+        colorScheme: props.colorScheme,
+        padding: props.padding,
+        rounding: props.rounding,
+        size: props.size,
+        transition: props.transition,
+      })
+    );
   },
 
   render(): VNode {

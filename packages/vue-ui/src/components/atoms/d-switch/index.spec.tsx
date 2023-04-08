@@ -22,7 +22,7 @@ import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 
 describe("DSwitch", () => {

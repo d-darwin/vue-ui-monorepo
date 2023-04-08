@@ -12,7 +12,7 @@ import {
   sizeClassCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
 

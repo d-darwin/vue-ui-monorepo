@@ -1,15 +1,15 @@
-import { DOMWrapper, shallowMount, VueWrapper, mount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
+import type { DOMWrapper, VueWrapper } from "@vue/test-utils";
 import { defineComponent } from "vue";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { Size } from "@darwin-studio/ui-codegen/dist/types/size";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import { sleep } from "@/utils/sleep";
 
 export function propStringCase(
   wrapper: VueWrapper,

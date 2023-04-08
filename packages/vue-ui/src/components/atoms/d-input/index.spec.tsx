@@ -33,7 +33,7 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import DCaption from "@/components/atoms/d-caption";
 
 describe("DInput", () => {

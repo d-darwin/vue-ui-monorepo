@@ -7,7 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   cursor: pointer;
   margin: -2px;
   height: calc(var(--size) + 4px);
@@ -15,14 +16,15 @@
 }
 
 .rotatedIcon {
-  rotate: -180deg;
+  scale: -1;
 }
 
 .content {
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
   background: white; /*TODO*/
   color: var(--color-text); /*TODO*/
   overflow: hidden;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   padding: var(--padding);
   padding-top: 0;
   padding-bottom: 0;

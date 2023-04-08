@@ -17,7 +17,7 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import DCaption from "@/components/atoms/d-caption";
