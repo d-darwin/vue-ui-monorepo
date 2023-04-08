@@ -1,14 +1,11 @@
-import {
-  defineComponent,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
 import { v4 as uuid } from "uuid";
-import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
@@ -27,11 +24,11 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines <i>id</i> attr of the corresponding DTabpanel component
      */
-    tabpanelId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    tabpanelId: generateProp.text(() => uuid()),
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -72,9 +69,8 @@ export default defineComponent({
       const classes = [
         styles[config.tabClassName],
         generateClass.font(this.size),
-        generateClass.outline(`${config.baseColorScheme}-${this.size}`),
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config.colorScheme
+        ...generateClass.padding(this.padding, this.size),
         generateClass.size(this.size),
         generateClass.transition(this.transition),
       ];

@@ -3,10 +3,7 @@ import DTooltip from "@/components/atoms/d-tooltip";
 import config from "@/components/atoms/d-tooltip/config";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import {
-  BASE_COLOR_SCHEME,
-  TRIGGER,
-} from "@/components/atoms/d-tooltip/constant";
+import { TRIGGER } from "@/components/atoms/d-tooltip/constant";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import {
   baseClassCase,
@@ -22,6 +19,7 @@ import {
 } from "@/utils/test-case-factories";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import { POSITION } from "@/constants/position";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);
@@ -244,7 +242,7 @@ describe("DTooltip", () => {
   outlineClassCase(
     wrapper,
     `.${config.targetClassName}`,
-    BASE_COLOR_SCHEME,
+    COLOR_SCHEME.SECONDARY,
     SIZE.TINY
   );
 

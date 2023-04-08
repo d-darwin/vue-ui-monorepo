@@ -1,14 +1,7 @@
-import {
-  defineComponent,
-  ref,
-  watch,
-  Transition as Trans,
-  type InputHTMLAttributes,
-  type PropType,
-  type VNode,
-  type Ref,
-} from "vue";
+import { defineComponent, ref, watch, Transition as Trans } from "vue";
+import type { InputHTMLAttributes, PropType, VNode, Ref } from "vue";
 import { v4 as uuid } from "uuid";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
@@ -19,15 +12,10 @@ import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/at
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import type { Type } from "./types";
-import {
-  TYPE,
-  BASE_COLOR_SCHEME,
-  BUTTON_DEFAULTS,
-  CAPTION_DEFAULTS,
-} from "./constants";
+import { TYPE } from "./constants";
 import styles from "./index.css?module";
 import config from "./config";
 
@@ -39,7 +27,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines is the component is checked by default
      */
@@ -69,7 +57,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(BASE_COLOR_SCHEME),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
@@ -108,7 +96,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -129,7 +117,7 @@ export default defineComponent({
     /**
      * Pass any DButton.props to customize button, f.e. { colorScheme: "danger" }
      */
-    buttonOptions: generateProp.options<DButtonProps>(BUTTON_DEFAULTS),
+    buttonOptions: generateProp.options<DButtonProps>(config.buttonOptions),
 
     /**
      * Alternative way to catch change event
@@ -149,15 +137,12 @@ export default defineComponent({
 
   setup(props, { slots }) {
     const innerChecked = ref(props.checked); // TODO: what for ???
-    // To manipulate get getBoundingClientRect and adjust tooltip position
-    // It's a bit of magic - use the same refs name in the render function and return they from the setup()
-    // https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/
     const inputRef: Ref<HTMLInputElement | null> = ref(null);
     const { renderCaption } = useCaption(
       props,
       slots,
       styles,
-      CAPTION_DEFAULTS
+      config.captionOptions
     );
 
     watch(
@@ -193,7 +178,7 @@ export default defineComponent({
           class={[
             styles[config.inputClassName],
             this.inputClass,
-            generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+            generateClass.outline(this.colorScheme, this.size),
             generateClass.size(this.size),
           ]}
           onChange={this.changeHandler}
@@ -205,15 +190,11 @@ export default defineComponent({
     renderIcon(): VNode[] {
       const iconContainerClasses = [
         styles[config.iconContainerClassName],
-        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
-        generateClass.padding(
-          this.type === TYPE.BASE ? PADDING.EQUAL : this.padding
-        ),
-        generateClass.padding(
-          `${this.type === TYPE.BASE ? PADDING.EQUAL : this.padding}-${
-            this.size
-          }`
+        ...generateClass.padding(
+          this.type === TYPE.BASE ? PADDING.EQUAL : this.padding,
+          this.size
         ),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
@@ -271,7 +252,7 @@ export default defineComponent({
     renderButton(): VNode {
       return (
         <DButton
-          {...BUTTON_DEFAULTS}
+          {...config.buttonOptions}
           content={this.label}
           active={this.innerChecked} // TODO: checked and disabled state should have different appearance
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance

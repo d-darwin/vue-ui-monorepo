@@ -134,7 +134,7 @@ export default defineComponent({
     /**
      * Defines component id to be focused on show
      */
-    focusId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    focusId: generateProp.text(() => uuid()),
     /**
      * Hides header if you don't need it
      */
@@ -193,8 +193,8 @@ export default defineComponent({
   emits: [EVENT_NAME.CLOSE, EVENT_NAME.CANCEL, EVENT_NAME.ACCEPT],
 
   setup(props, { emit }) {
-    const { focusId } = useClosable(props, emit);
-    return { focusId };
+    const { closeFocusId } = useClosable(props, emit);
+    return { closeFocusId };
   },
 
   computed: {
@@ -320,8 +320,7 @@ export default defineComponent({
       return [
         styles[config.className],
         generateClass.colorScheme(this.colorScheme),
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.size}`),
+        ...generateClass.padding(this.padding, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
         generateClass.transition(this.transition),

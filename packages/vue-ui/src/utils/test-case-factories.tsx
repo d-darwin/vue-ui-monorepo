@@ -10,6 +10,7 @@ import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-sch
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 
 export function propStringCase(
   wrapper: VueWrapper,
@@ -126,7 +127,7 @@ export function minControlWidthCase(
 
 export function defaultCheckMarkCase(
   wrapper: VueWrapper,
-  config: Record<string, string | number>
+  config: Record<string, unknown>
 ) {
   return it(`Should render default icon with ${config.checkMark}`, async () => {
     const iconEl = wrapper.find(`.${config.iconClassName}`);
@@ -180,7 +181,7 @@ export function labelFontCase(wrapper: VueWrapper, labelSelector = "label") {
 
 export function iconSlotCase(
   component: ReturnType<typeof defineComponent>,
-  config: Record<string, string | number>,
+  config: Record<string, unknown>,
   props?: Record<string, unknown>
 ) {
   return it("Should render icon slot instead of default icon", () => {
@@ -318,7 +319,7 @@ export function outlineClassCase(
   wrapper: VueWrapper,
   targetSelector: string,
   colorScheme: ColorScheme,
-  size: Size
+  size: Size | Font
 ) {
   return it(`${targetSelector} should contain color scheme and size dependent outline class name`, async () => {
     const className = prepareCssClassName(

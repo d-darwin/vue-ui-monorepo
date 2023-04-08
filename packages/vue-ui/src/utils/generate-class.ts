@@ -10,8 +10,10 @@ import paddingStyles from "@darwin-studio/ui-codegen/dist/styles/padding.css?mod
 import roundingStyles from "@darwin-studio/ui-codegen/dist/styles/rounding.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import sizeStyles from "@darwin-studio/ui-codegen/dist/styles/size.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import transitionStyles from "@darwin-studio/ui-codegen/dist/styles/transition.css?module";
+import type { Font } from "@darwin-studio/ui-codegen/dist/types/font";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size"; // TODO: shorter path, default export ??? TODO: make it module ???
 import type { TokenName } from "@darwin-studio/vue-ui/src/types/token-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name"; // TODO: shorter path, default export ??? TODO: make it module ???
+import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 
 // TODO: naming
 const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
@@ -62,8 +64,8 @@ const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
 
 // TODO: refactor
 const generateClass = {
-  border: (tokenVariant: string) =>
-    generateCssClass(TOKEN_NAME.BORDER, tokenVariant),
+  border: (tokenVariant: string, size: Size) =>
+    generateCssClass(TOKEN_NAME.BORDER, `${tokenVariant}-${size}`),
   colorScheme: (tokenVariant: string) =>
     generateCssClass(TOKEN_NAME.COLOR_SCHEME, tokenVariant),
   font: (tokenVariant: string) =>
@@ -72,10 +74,14 @@ const generateClass = {
     generateCssClass(TOKEN_NAME.GRID, tokenVariant),
   minControlWidth: (tokenVariant: string) =>
     generateCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, tokenVariant),
-  outline: (tokenVariant: string) =>
-    generateCssClass(TOKEN_NAME.OUTLINE, tokenVariant),
-  padding: (tokenVariant: string) =>
+  outline: (tokenVariant: string, size: Size | Font) =>
+    generateCssClass(TOKEN_NAME.OUTLINE, `${tokenVariant}-${size}`),
+  padding: (tokenVariant: string, size?: Size | Font) => [
     generateCssClass(TOKEN_NAME.PADDING, tokenVariant),
+    size
+      ? generateCssClass(TOKEN_NAME.PADDING, `${tokenVariant}-${size}`)
+      : undefined,
+  ],
   rounding: (tokenVariant: string) =>
     generateCssClass(TOKEN_NAME.ROUNDING, tokenVariant),
   transition: (tokenVariant: string) =>

@@ -59,6 +59,8 @@ export default defineComponent({
   emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
 
   computed: {
+    // TODO: computed(() => {
+    //  return Object.values(state.value).some(status => status);
     commonProps(): Required<DAccordionProvided> {
       return {
         hideSummaryAfter:
@@ -71,6 +73,7 @@ export default defineComponent({
       };
     },
 
+    // TODO: computed(() => {
     transitionDuration(): number {
       return getTransitionDuration(this.commonProps.transition) * 1000;
     },
@@ -78,7 +81,8 @@ export default defineComponent({
     summaryClasses(): (string | undefined)[] {
       return [
         generateClass.outline(
-          `${this.commonProps.colorScheme}-${this.commonProps.size}`
+          this.commonProps.colorScheme,
+          this.commonProps.size
         ),
       ];
     },
@@ -146,10 +150,10 @@ export default defineComponent({
         styles[config.detailsClassName],
         generateClass.colorScheme(this.commonProps.colorScheme),
         generateClass.font(this.commonProps.size),
-        generateClass.padding(this.commonProps.padding), // TODO: merge in the util
-        generateClass.padding(
-          `${this.commonProps.padding}-${this.commonProps.size}`
-        ), // TODO: merge in the util
+        ...generateClass.padding(
+          this.commonProps.padding,
+          this.commonProps.size
+        ),
         generateClass.rounding(this.commonProps.rounding),
         generateClass.size(this.commonProps.size),
         generateClass.transition(this.commonProps.transition),

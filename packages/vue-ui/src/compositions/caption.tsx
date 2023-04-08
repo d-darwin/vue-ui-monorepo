@@ -1,4 +1,5 @@
-import { type VNode, ref, Ref } from "vue";
+import { ref } from "vue";
+import type { VNode, Ref } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
@@ -41,6 +42,9 @@ export default function useCaption(
    * @slot $slots.caption
    * Use instead of props.caption to fully customize caption content
    * */
+  // TODO
+  //  [Vue warn]: Slot "caption" invoked outside of the render function: this will not track dependencies used in the slot.
+  //  Invoke the slot function inside the render function instead.
   const captionContent = slots.caption?.() || props.caption;
   const renderCaption = ref(
     <Trans

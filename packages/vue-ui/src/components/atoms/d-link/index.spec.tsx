@@ -47,7 +47,7 @@ describe("DLink", () => {
     wrapper,
     `.${config.className}`,
     COLOR_SCHEME.PRIMARY,
-    SIZE.MEDIUM
+    FONT.SMALL
   );
 
   transitionClassCase(wrapper, `.${config.className}`);

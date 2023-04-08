@@ -21,7 +21,7 @@ export default function useClosable(
   },
   emit: (eventName: "close") => void
 ) {
-  const focusId = ref(props.focusId);
+  const closeFocusId = ref(props.focusId);
   const { setBodyOverflow } = useSetBodyOverflow();
   let activeElement: Element | HTMLElement | null = null;
   let keyupHandler: ((event: KeyboardEvent) => void) | null = null;
@@ -52,7 +52,7 @@ export default function useClosable(
         }
         activeElement = document.activeElement;
         await nextTick(() => {
-          document.getElementById(String(focusId.value))?.focus?.();
+          document.getElementById(String(closeFocusId.value))?.focus?.();
         });
       } else {
         if (props.isModal) {
@@ -73,5 +73,5 @@ export default function useClosable(
     }
   });
 
-  return { focusId };
+  return { closeFocusId };
 }

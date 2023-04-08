@@ -7,6 +7,7 @@ import {
   type InputHTMLAttributes,
 } from "vue";
 import { v4 as uuid } from "uuid";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -16,11 +17,7 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import {
-  BASE_COLOR_SCHEME,
-  DEFAULT_VALUE,
-  CAPTION_DEFAULTS,
-} from "./constants";
+import { DEFAULT_VALUE, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -36,7 +33,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines is the component is checked by default
      */
@@ -48,7 +45,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(BASE_COLOR_SCHEME),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
     /**
      * Defines corner rounding of the icon container element
      */
@@ -149,10 +146,9 @@ export default defineComponent({
     renderIcon(): VNode[] {
       const iconContainerClasses = [
         styles[config.iconContainerClassName],
-        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
-        generateClass.padding(PADDING.EQUAL),
-        generateClass.padding(`${PADDING.EQUAL}-${this.size}`),
+        ...generateClass.padding(PADDING.EQUAL, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
         generateClass.transition(this.transition),
@@ -207,7 +203,7 @@ export default defineComponent({
           {...this.inputAttrs}
           class={[
             styles[config.inputClassName],
-            generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+            generateClass.outline(this.colorScheme, this.size),
             generateClass.size(this.size),
             this.inputClass,
           ]}

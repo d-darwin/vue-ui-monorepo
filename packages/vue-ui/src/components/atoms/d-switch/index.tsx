@@ -25,7 +25,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines if the component at the truthy state by default
      */
@@ -180,9 +180,9 @@ export default defineComponent({
       return [
         this.disabled ? styles.__disabled : undefined,
         this.disabled ? colorSchemeStyles.__disabled : undefined,
-        generateClass.border(`${this.colorScheme}-${this.size}`),
+        generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
-        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.outline(this.colorScheme, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
         generateClass.transition(this.transition),
@@ -193,8 +193,8 @@ export default defineComponent({
       return [
         styles[config.inputClassName],
         this.inputClass,
-        generateClass.border(`${this.colorScheme}-${this.size}`),
-        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.border(this.colorScheme, this.size),
+        generateClass.outline(this.colorScheme, this.size),
         generateClass.rounding(this.rounding),
       ];
     },

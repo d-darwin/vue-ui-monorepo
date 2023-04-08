@@ -1,4 +1,5 @@
-import { HTMLAttributes, PropType, VNode } from "vue";
+import { HTMLAttributes, PropType } from "vue";
+import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/d-details";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import {
   CONTENT_DEFAULTS,
@@ -11,16 +12,15 @@ import {
  * */
 export const dAccordionProps = {
   /**
-   * An array of VNodes (DDetails supposed)
+   * An array of DDetails
    */
   content: {
-    type: Array as PropType<(VNode | undefined)[]>, // TODO: specify type ???
+    type: Array as PropType<(typeof DDetails | undefined)[]>,
   },
-  // TODO: specific props: isSolo, someOpen
 
-  // TODO: how to pas to the children properly???
-  //  hideSummaryAfter
-  //  openId\Value ???
+  // TODO: specific props: isSolo, someOpen
+  // TODO: openId\Value ???
+
   /**
    * Don't show content after the summary
    */

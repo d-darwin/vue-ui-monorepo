@@ -82,12 +82,11 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
-        generateClass.border(`${this.colorScheme}-${this.size}`),
+        generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
         generateClass.font(this.size),
-        generateClass.outline(`${this.colorScheme}-${this.size}`),
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.outline(this.colorScheme, this.size),
+        ...generateClass.padding(this.padding, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
         generateClass.transition(this.transition),

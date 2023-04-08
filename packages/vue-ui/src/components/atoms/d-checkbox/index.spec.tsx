@@ -1,7 +1,6 @@
 import { mount, shallowMount } from "@vue/test-utils";
 import DCheckbox from "@/components/atoms/d-checkbox";
 import config from "@/components/atoms/d-checkbox/config";
-import { BASE_COLOR_SCHEME } from "@/components/atoms/d-checkbox/constants";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css"; // TODO: shorter path, default export ??? TODO: make it module ???
@@ -101,7 +100,7 @@ describe("DCheckbox", () => {
     COLOR_SCHEME.DANGER
   );
 
-  outlineClassCase(wrapper, "input", BASE_COLOR_SCHEME, SIZE.LARGE);
+  outlineClassCase(wrapper, "input", COLOR_SCHEME.ALTERNATIVE, SIZE.LARGE);
 
   paddingEqualClassesCase(wrapper, `.${config.iconContainerClassName}`);
 

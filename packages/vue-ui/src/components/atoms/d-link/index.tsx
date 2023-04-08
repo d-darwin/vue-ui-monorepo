@@ -1,9 +1,6 @@
-import {
-  defineComponent,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
@@ -17,7 +14,7 @@ import styles from "./index.css?module";
 export default defineComponent({
   name: config.name,
 
-  // TODO: add props factory ???
+  // TODO: move the ./props
   props: {
     /**
      * Plain string or VNode
@@ -50,19 +47,18 @@ export default defineComponent({
 
   emits: [EVENT_NAME.CLICK],
 
-  // TODO: move to setup() ???
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
         styles[config.className],
         generateClass.font(this.font),
-        generateClass.outline(config.outlineTokenVariantName),
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.font), // TODO: config.colorScheme
         generateClass.size(this.font),
         generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
-        classes.push(styles["__disabled"]);
+        classes.push(styles["__disabled"]); // TODO: hardcode
       }
 
       return classes;
@@ -87,9 +83,7 @@ export default defineComponent({
 
   methods: {
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault) {
-        event.preventDefault();
-      }
+      this.preventDefault && event.preventDefault();
 
       if (!this.disabled) {
         /**

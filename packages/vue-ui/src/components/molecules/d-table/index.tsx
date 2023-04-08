@@ -121,8 +121,7 @@ export default defineComponent({
 
     commonCellClasses(): (string | undefined)[] {
       return [
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.size}`),
+        ...generateClass.padding(this.padding, this.size),
         generateClass.size(this.size),
       ];
     },

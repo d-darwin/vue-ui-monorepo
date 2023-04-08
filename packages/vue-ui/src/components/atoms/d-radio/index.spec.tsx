@@ -2,7 +2,7 @@ import { mount, shallowMount } from "@vue/test-utils";
 import DRadio from "@/components/atoms/d-radio";
 import config from "@/components/atoms/d-radio/config";
 import { DButtonAsync as DButton } from "@/components/atoms/d-button/async";
-import { BASE_COLOR_SCHEME, TYPE } from "@/components/atoms/d-radio/constants";
+import { TYPE } from "@/components/atoms/d-radio/constants";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
@@ -135,7 +135,7 @@ describe("DRadio", () => {
     COLOR_SCHEME.DANGER
   );
 
-  outlineClassCase(wrapper, "input", BASE_COLOR_SCHEME, SIZE.LARGE);
+  outlineClassCase(wrapper, "input", COLOR_SCHEME.SECONDARY, SIZE.LARGE);
 
   paddingEqualClassesCase(wrapper, `.${config.iconContainerClassName}`);
 
@@ -164,7 +164,7 @@ describe("DRadio", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       size
@@ -174,7 +174,7 @@ describe("DRadio", () => {
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DRadio);
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
   });
   it("Should render caption element with props.caption content if passed", async () => {
@@ -183,11 +183,11 @@ describe("DRadio", () => {
     const wrapper = await mount(DRadio, { props: { caption } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DRadio, `.${config.captionClassName}`, "caption");
+  slotCase(DRadio, `.${config.captionOptions.class}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -195,12 +195,12 @@ describe("DRadio", () => {
       captionOffset,
     });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
   });
-  transitionClassCase(wrapper, `.${config.captionClassName}`);
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
   it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DRadio, {

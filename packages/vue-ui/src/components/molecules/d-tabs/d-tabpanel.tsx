@@ -1,5 +1,7 @@
 import { defineComponent, type HTMLAttributes, type VNode } from "vue";
 import { v4 as uuid } from "uuid";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -20,11 +22,11 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines <i>id</i> attr of the corresponding DTab component
      */
-    tabId: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    tabId: generateProp.text(() => uuid()),
     /**
      * Defines font size of the component
      */
@@ -48,9 +50,8 @@ export default defineComponent({
       return [
         styles[config.tabpanelClassName],
         generateClass.font(this.font),
-        generateClass.outline(config.outlineTokenVariantName),
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.font}`),
+        generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM),
+        ...generateClass.padding(this.padding, this.font),
         generateClass.transition(this.transition),
       ];
     },

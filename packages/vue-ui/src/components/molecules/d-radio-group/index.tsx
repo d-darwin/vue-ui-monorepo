@@ -22,7 +22,7 @@ export default defineComponent({
     /**
      * The common name for the radio group
      */
-    name: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    name: generateProp.text(() => uuid()),
     /**
      * Array of the DRadio components, alternatively you can use default slot
      */

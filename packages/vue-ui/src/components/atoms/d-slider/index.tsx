@@ -36,7 +36,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>input</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
@@ -179,7 +179,7 @@ export default defineComponent({
     inputClasses(): (string | undefined)[] {
       return [
         generateClass.colorScheme(this.colorScheme),
-        generateClass.outline(`${this.colorScheme}-${this.size}`),
+        generateClass.outline(this.colorScheme, this.size),
         generateClass.rounding(this.rounding),
         generateClass.transition(this.transition),
       ];

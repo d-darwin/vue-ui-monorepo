@@ -37,7 +37,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>progress</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines content of the <b>label</b> element.
      */

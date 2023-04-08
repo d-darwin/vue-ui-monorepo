@@ -1,25 +1,21 @@
-import {
-  defineComponent,
-  type CSSProperties,
-  type InputHTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, InputHTMLAttributes, PropType, VNode } from "vue";
 import { v4 as uuid } from "uuid";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import type { InputTypes } from "./types";
-import { INPUT_TYPE, BASE_COLOR_SCHEME, CAPTION_DEFAULTS } from "./constants";
+import { INPUT_TYPE, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
 // TODO: mask ???
-// TODO: inverse (dark) color scheme ???
+// TODO: props.colorScheme
 /**
  * Renders <b>input</b> element with label, error and icons slots.
  */
@@ -30,7 +26,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
@@ -172,11 +168,10 @@ export default defineComponent({
       return [
         styles[config.inputClassName],
         this.inputClass,
-        generateClass.border(`${BASE_COLOR_SCHEME}-${this.size}`),
+        generateClass.border(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
         generateClass.font(this.inputFont || this.size),
-        generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
-        generateClass.padding(this.padding),
-        generateClass.padding(`${this.padding}-${this.size}`),
+        generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
+        ...generateClass.padding(this.padding, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),
         generateClass.transition(this.transition),

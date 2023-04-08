@@ -1,16 +1,9 @@
-import {
-  defineComponent,
-  ref,
-  onMounted,
-  nextTick,
-  watch,
-  type PropType,
-  type VNode,
-  type Ref,
-} from "vue";
+import { defineComponent, ref, onMounted, nextTick, watch } from "vue";
+import type { PropType, VNode, Ref } from "vue";
 import { v4 as uuid } from "uuid";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
@@ -19,7 +12,7 @@ import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
-import { TRIGGER, BASE_COLOR_SCHEME } from "./constant";
+import { TRIGGER } from "./constant";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -237,7 +230,7 @@ export default defineComponent({
           styles[config.targetClassName],
           this.targetClass,
           generateClass.font(this.targetFont || this.size),
-          generateClass.outline(`${BASE_COLOR_SCHEME}-${this.size}`),
+          generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
         ],
         onMouseenter: () => this.hoverHandler(true),
         onMouseleave: () => this.hoverHandler(false),
@@ -261,8 +254,7 @@ export default defineComponent({
           styles[config.contentClassName],
           this.contentClass,
           generateClass.font(this.contentFont || this.size),
-          generateClass.padding(this.padding),
-          generateClass.padding(`${this.padding}-${this.size}`),
+          ...generateClass.padding(this.padding, this.size),
           generateClass.rounding(this.rounding),
           generateClass.size(this.size),
           generateClass.transition(this.transition),
