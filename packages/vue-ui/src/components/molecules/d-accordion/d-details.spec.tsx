@@ -21,15 +21,15 @@ import sleep from "@/utils/sleep";
 describe("DDetails", () => {
   const wrapper = shallowMount(DDetails);
 
-  baseClassCase(wrapper, config.detailsClassName);
-  paddingEqualClassesCase(wrapper, `.${config.detailsClassName}`);
+  baseClassCase(wrapper, config.details.class);
+  paddingEqualClassesCase(wrapper, `.${config.details.class}`);
 
-  propStringCase(wrapper, `.${config.summaryClassName}`, "summary");
-  propVNodeCase(wrapper, `.${config.summaryClassName}`, "summary");
-  slotCase(DDetails, `.${config.summaryClassName}`, "summary");
+  propStringCase(wrapper, `.${config.summaryOptions.class}`, "summary");
+  propVNodeCase(wrapper, `.${config.summaryOptions.class}`, "summary");
+  slotCase(DDetails, `.${config.summaryOptions.class}`, "summary");
   outlineClassCase(
     wrapper,
-    `.${config.summaryClassName}`,
+    `.${config.summaryOptions.class}`,
     COLOR_SCHEME.INVERSE,
     SIZE.TINY
   );
@@ -44,29 +44,29 @@ describe("DDetails", () => {
       },
     });
 
-    const summaryEl = wrapper.find(`.${config.summaryClassName}`);
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
     expect(summaryEl.classes()).toContain(externalClass);
   });
 
   it("Shouldn't render default dropdown mark if props.hideSummaryAfter is true", async () => {
     await wrapper.setProps({ hideSummaryAfter: true });
-    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClassName}`);
+    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClass}`);
     expect(afterSummaryEl.exists()).toBeFalsy();
     await wrapper.setProps({ hideSummaryAfter: false });
   });
 
   it("Should render default dropdown mark if props.hideSummaryAfter is falsy", async () => {
     await wrapper.setProps({ hideSummaryAfter: false });
-    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClassName}`);
+    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClass}`);
     expect(afterSummaryEl.exists()).toBeTruthy();
     await wrapper.setProps({ hideSummaryAfter: true });
   });
-  slotCase(DDetails, `.${config.summaryClassName}`, "summaryAfter");
+  slotCase(DDetails, `.${config.summaryOptions.class}`, "summaryAfter");
 
-  propStringCase(wrapper, `.${config.contentClassName}`, "content");
-  propVNodeCase(wrapper, `.${config.contentClassName}`, "content");
-  slotCase(DDetails, `.${config.contentClassName}`, "default");
-  transitionClassCase(wrapper, `.${config.contentClassName}`, {
+  propStringCase(wrapper, `.${config.contentOptions.class}`, "content");
+  propVNodeCase(wrapper, `.${config.contentOptions.class}`, "content");
+  slotCase(DDetails, `.${config.contentOptions.class}`, "default");
+  transitionClassCase(wrapper, `.${config.contentOptions.class}`, {
     content: "Not empty",
   });
   it("Should merge props from props.contentOptions and CONTENT_DEFAULTS to the content element attrs", async () => {
@@ -80,13 +80,13 @@ describe("DDetails", () => {
       },
     });
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentOptions.class}`);
     expect(contentEl.classes()).toContain(externalClass);
   });
 
   it("Should render height eq to 0, if props.open is false", async () => {
     await wrapper.setProps({ open: false, content: "Not empty" });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentOptions.class}`);
     expect(contentEl.attributes("style")).toContain(`height: 0`);
   });
 
@@ -102,26 +102,26 @@ describe("DDetails", () => {
 
   colorSchemeClassCase(
     wrapper,
-    `.${config.detailsClassName}`,
+    `.${config.details.class}`,
     COLOR_SCHEME.SECONDARY,
     {
       content: "Not empty",
     }
   );
-  fontSizeClassCase(wrapper, `.${config.detailsClassName}`);
-  roundingClassCase(wrapper, `.${config.detailsClassName}`, {
+  fontSizeClassCase(wrapper, `.${config.details.class}`);
+  roundingClassCase(wrapper, `.${config.details.class}`, {
     content: "Not empty",
   });
-  sizeClassCase(wrapper, `.${config.detailsClassName}`, {
+  sizeClassCase(wrapper, `.${config.details.class}`, {
     content: "Not empty",
   });
-  transitionClassCase(wrapper, `.${config.detailsClassName}`, {
+  transitionClassCase(wrapper, `.${config.details.class}`, {
     content: "Not empty",
   });
 
   it("Should emit onToggle event on the summary click", async () => {
     const wrapper = shallowMount(DDetails, { props: { open: false } });
-    const summaryEl = wrapper.find(`.${config.summaryClassName}`);
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
     expect(wrapper.emitted("toggle")?.[0]).toBeTruthy();
@@ -138,7 +138,7 @@ describe("DDetails", () => {
     const wrapper = shallowMount(DDetails, {
       props: { whenToggle, open: false },
     });
-    const summaryEl = wrapper.find(`.${config.summaryClassName}`);
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
     expect(whenToggle).toHaveBeenCalledWith(

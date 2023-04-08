@@ -1,10 +1,7 @@
 import { HTMLAttributes, PropType } from "vue";
 import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/d-details";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import {
-  CONTENT_DEFAULTS,
-  SUMMARY_DEFAULTS,
-} from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/constants";
+import config from "@/components/molecules/d-accordion/config";
 
 /**
  * @prop colorScheme
@@ -61,7 +58,7 @@ export const dDetailsProps = {
   /**
    * Pass any attribute to the summary element
    */
-  summaryOptions: generateProp.options<HTMLAttributes>(SUMMARY_DEFAULTS),
+  summaryOptions: generateProp.options<HTMLAttributes>(config.summaryOptions),
   /**
    * Don't show content after the summary
    */
@@ -73,7 +70,7 @@ export const dDetailsProps = {
   /**
    * Pass any attribute to the content element
    */
-  contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
+  contentOptions: generateProp.options<HTMLAttributes>(config.contentOptions),
   /**
    * Defines if the component opened by default
    */

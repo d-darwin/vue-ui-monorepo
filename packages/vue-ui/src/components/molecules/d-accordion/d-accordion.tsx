@@ -1,9 +1,8 @@
 import { defineComponent, ref, provide } from "vue";
 import type { VNode, Ref } from "vue";
 import { dAccordionProps as props } from "./props";
-import config from "./config";
-import { PROVIDE_INJECT_KEY } from "./constants";
 import type { DAccordionProvided } from "./types";
+import config from "./config";
 import styles from "./d-accordion.css?module";
 
 /**
@@ -20,7 +19,7 @@ export default defineComponent({
 
   setup(props) {
     provide<Ref<DAccordionProvided>>(
-      PROVIDE_INJECT_KEY,
+      config.provideInjectKey,
       ref({
         hideSummaryAfter: props.hideSummaryAfter,
         colorScheme: props.colorScheme,

@@ -1,12 +1,22 @@
+import dDetailsStyles from "./d-details.css";
+
 export default {
   name: "DAccordion",
-  className: "dAccordion",
-  detailsName: "DDetails",
-  detailsClassName: "dDetails",
-  summaryClassName: "summary",
+  class: "dAccordion",
+  details: {
+    ref: "detailsRef",
+    name: "DDetails",
+    class: dDetailsStyles["dDetails"],
+  },
+  summaryOptions: {
+    class: dDetailsStyles["summary"],
+  },
   summaryIcon: "⛛",
-  summaryAfterClassName: "summaryAfter",
-  contentClassName: "content",
-  detailsRef: "detailsRef",
-  contentRef: "detailsContentRef",
+  summaryAfterClass: dDetailsStyles["summaryAfter"],
+  contentOptions: {
+    key: "detailsContent",
+    ref: "detailsContentRef",
+    class: dDetailsStyles["detailsContent"],
+  },
+  provideInjectKey: "commonProps",
 } as const;

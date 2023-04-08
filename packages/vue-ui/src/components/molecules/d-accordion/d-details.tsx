@@ -3,11 +3,6 @@ import type { CSSProperties, Ref, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import {
-  SUMMARY_DEFAULTS,
-  CONTENT_DEFAULTS,
-  PROVIDE_INJECT_KEY,
-} from "./constants";
 import { dDetailsProps as props } from "./props";
 import config from "./config";
 import { getTransitionDuration } from "./utils";
@@ -18,7 +13,7 @@ import type { DAccordionProvided } from "./types";
  * Renders <b>details</b> element with <b>summary</b>.
  */
 export default defineComponent({
-  name: config.detailsName,
+  name: config.details.name,
 
   /**
    * @prop summary
@@ -46,13 +41,13 @@ export default defineComponent({
     );
 
     return {
-      [config.contentRef]: contentRef,
+      [config.contentOptions.ref]: contentRef,
       contentHeight,
       isMounted,
-      [config.detailsRef]: ref(null) as Ref<HTMLElement | null>,
+      [config.contentOptions.ref]: ref(null) as Ref<HTMLElement | null>,
       innerOpen,
       isExpanded,
-      injection: inject<DAccordionProvided>(PROVIDE_INJECT_KEY, {}),
+      injection: inject<DAccordionProvided>(config.provideInjectKey, {}),
     };
   },
 
@@ -90,7 +85,7 @@ export default defineComponent({
     renderSummary(): VNode {
       return (
         <summary
-          {...SUMMARY_DEFAULTS}
+          {...config.summaryOptions}
           class={this.summaryClasses}
           onClick={this.clickHandler}
           {...this.summaryOptions}
@@ -105,7 +100,7 @@ export default defineComponent({
       return (
         <span
           class={[
-            styles[config.summaryAfterClassName],
+            config.summaryAfterClass,
             this.innerOpen && this.isExpanded ? styles.rotatedIcon : undefined,
             generateClass.transition(this.commonProps.transition),
           ]}
@@ -134,8 +129,7 @@ export default defineComponent({
     renderContent(): VNode {
       return (
         <div
-          {...CONTENT_DEFAULTS}
-          ref={config.contentRef}
+          {...config.contentOptions}
           class={this.contentClasses}
           style={this.contentStyles}
           {...this.contentOptions}
@@ -147,7 +141,7 @@ export default defineComponent({
 
     classes(): (string | undefined)[] {
       return [
-        styles[config.detailsClassName],
+        config.details.class,
         generateClass.colorScheme(this.commonProps.colorScheme),
         generateClass.font(this.commonProps.size),
         ...generateClass.padding(
@@ -206,7 +200,7 @@ export default defineComponent({
   render(): VNode {
     return (
       <details
-        ref={config.detailsRef}
+        ref={config.details.ref}
         open={this.innerOpen}
         class={this.classes}
       >

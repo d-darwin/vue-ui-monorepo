@@ -6,5 +6,5 @@ import config from "./config";
 describe("DAccordion", () => {
   const wrapper = shallowMount(DAccordion);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 });
