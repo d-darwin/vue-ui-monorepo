@@ -3,7 +3,6 @@ import DLink from "@/components/atoms/d-link";
 // TODO: get @darwin-studio/ui-codegen paths from config.json
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import {

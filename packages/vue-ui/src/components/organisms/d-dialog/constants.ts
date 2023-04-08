@@ -1,6 +1,6 @@
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import config from "./config";

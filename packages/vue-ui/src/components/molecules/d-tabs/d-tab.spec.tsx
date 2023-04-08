@@ -11,10 +11,10 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { DTab } from "./index";
-import config from "./config";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { DTab } from "./index";
+import config from "./config";
 
 // TODO: move to the config
 jest.mock("chalk", () => ({
