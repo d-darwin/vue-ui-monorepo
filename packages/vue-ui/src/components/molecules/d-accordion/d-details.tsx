@@ -21,7 +21,7 @@ export default defineComponent({
   name: config.detailsName,
 
   /**
-   * @props summary
+   * @prop summary
    * TODO: check if there is jsdoc -> storybook
    * */
   props,
@@ -37,6 +37,8 @@ export default defineComponent({
 
     const injection = inject<Ref<DAccordionProvided>>(PROVIDE_INJECT_KEY);
     const commonProps = ref({
+      hideSummaryAfter:
+        injection?.value.hideSummaryAfter || props.hideSummaryAfter,
       colorScheme: injection?.value.colorScheme || props.colorScheme,
       padding: injection?.value.padding || props.padding,
       rounding: injection?.value.rounding || props.rounding,
@@ -79,26 +81,22 @@ export default defineComponent({
           {...this.summaryOptions}
         >
           {this.$slots.summary?.() || this.summary}
-          {!this.hideSummaryAfter && this.renderSummaryAfter}
+          {!this.commonProps?.hideSummaryAfter && this.renderSummaryAfter}
         </summary>
       );
     },
 
     renderSummaryAfter(): VNode[] | VNode {
       return (
-        this.$slots.summaryAfter?.() || (
-          <span
-            class={[
-              styles[config.summaryAfterClassName],
-              this.innerOpen && this.isExpanded
-                ? styles.rotatedIcon
-                : undefined,
-              generateClass.transition(this.commonProps.transition),
-            ]}
-          >
-            {config.summaryIcon}
-          </span>
-        )
+        <span
+          class={[
+            styles[config.summaryAfterClassName],
+            this.innerOpen && this.isExpanded ? styles.rotatedIcon : undefined,
+            generateClass.transition(this.commonProps.transition),
+          ]}
+        >
+          {this.$slots.summaryAfter?.() || config.summaryIcon}
+        </span>
       );
     },
 
@@ -182,15 +180,15 @@ export default defineComponent({
   },
 
   /**
-   * @slot slots.summary
+   * @slot $slots.summary
    * Use instead of props.summary to fully customize summary element content
    * */
   /**
-   * @slot slots.summaryAfter
+   * @slot $slots.summaryAfter
    * Use instead of props.summaryAfter to fully customize after summary element
    * */
   /**
-   * @slot slots.default
+   * @slot $slots.default
    * Use instead of props.content to fully customize details content
    * */
   render(): VNode {

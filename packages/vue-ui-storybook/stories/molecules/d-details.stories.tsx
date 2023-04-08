@@ -1,21 +1,15 @@
 import { Story } from "@storybook/vue3";
-import {
-  DAccordion,
-  DDetails,
-} from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import { DDetails } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
 
 export default {
-  title: "molecules/DAccordion",
-  component: DAccordion,
+  title: "molecules/DAccordion/DDetails",
+  component: DDetails,
   argTypes: {
-    /**
-     * TODO: argTypes
-     */
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -36,51 +30,75 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    // TODO 1
+    onToggle: {
+      action: "click",
+    },
+    "onUpdate:open": {
+      action: "update:open",
+    },
   },
   args: {
-    /**
-     * TODO: args
-     */
+    summary: "Summary",
+    summaryOptions: { class: "customSummaryClass" },
     hideSummaryAfter: false,
+    content: "Some content string",
+    contentOptions: { class: "customContentClass" },
+    open: false,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    // TODO 2
+    whenToggle: (event: MouseEvent, open: boolean) => {
+      console.log("toggle", event, open);
+    },
   },
 };
 
 const Template: Story = (args) => ({
-  components: { DAccordion, DDetails },
+  components: { DDetails },
   setup() {
     return { args };
   },
-  computed: {
-    content() {
-      return [
-        <DDetails summary="Summary 1" content="Some content 1" />,
-        <DDetails summary="Summary 2" content="Some content 2" />,
-        <DDetails summary="Summary 3" content="Some content 3" />,
-      ];
-    },
-  },
-  template: `<DAccordion v-bind="args" :content="content" />`,
+  template: `<DDetails v-bind="args" />`,
 });
 export const Default = Template.bind({});
 
-const TemplateSlot: Story = (args) => ({
-  components: { DAccordion, DDetails },
+const DefaultSlotTemplate: Story = (args) => ({
+  components: { DDetails },
   setup() {
     return { args };
   },
   template: `
-    <DAccordion v-bind="args">
-      <DDetails summary="Summary 1" content="Some content 1" />
-      <DDetails summary="Summary 2" content="Some content 2" />
-      <DDetails summary="Summary 3" content="Some content 3" />
-    </DAccordion>
+    <DDetails v-bind="args">
+      Default <b>slot</b>
+    </DDetails>
   `,
 });
-export const DefaultSlot = TemplateSlot.bind({});
+export const DefaultSlot = DefaultSlotTemplate.bind({});
+
+const SummarySlotTemplate: Story = (args) => ({
+  components: { DDetails },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DDetails v-bind="args">
+      <template v-slot:summary><span>Summary <b>slot</b></span></template>
+    </DDetails>
+  `,
+});
+export const SummarySlot = SummarySlotTemplate.bind({});
+
+const SummaryAfterSlotTemplate: Story = (args) => ({
+  components: { DDetails },
+  setup() {
+    return { args };
+  },
+  template: `
+    <DDetails v-bind="args">
+      <template v-slot:summaryAfter><span>⬇️</span></template>
+    </DDetails>
+  `,
+});
+export const SummaryAfterSlot = SummaryAfterSlotTemplate.bind({});

@@ -9,14 +9,6 @@ import styles from "./d-accordion.css?module";
 /**
  * TODO: DAccordion
  */
-/**
- * @vue-prop {Number} initialCounter - Initial counter's value
- * @vue-prop {Number} [step=1] - Step
- * @vue-data {Number} counter - Current counter's value
- * @vue-computed {String} message
- * @vue-event {Number} increment - Emit counter's value after increment
- * @vue-event {Number} decrement - Emit counter's value after decrement
- */
 export default defineComponent({
   name: config.name,
 
@@ -30,6 +22,7 @@ export default defineComponent({
     provide<Ref<DAccordionProvided>>(
       PROVIDE_INJECT_KEY,
       ref({
+        hideSummaryAfter: props.hideSummaryAfter,
         colorScheme: props.colorScheme,
         padding: props.padding,
         rounding: props.rounding,

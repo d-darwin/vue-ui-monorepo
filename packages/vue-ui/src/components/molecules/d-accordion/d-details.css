@@ -20,9 +20,9 @@
 }
 
 .content {
+  overflow: hidden;
   background: white; /*TODO*/
   color: var(--color-text); /*TODO*/
-  overflow: hidden;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   padding: var(--padding);

@@ -21,7 +21,10 @@ export const dAccordionProps = {
   // TODO: how to pas to the children properly???
   //  hideSummaryAfter
   //  openId\Value ???
-  // TODO: common props
+  /**
+   * Don't show content after the summary
+   */
+  hideSummaryAfter: Boolean,
   /**
    * Defines appearance of the component
    */
