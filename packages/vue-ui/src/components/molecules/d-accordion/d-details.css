@@ -15,7 +15,7 @@
   padding: var(--padding);
 }
 
-.summary:not(.summary) {
+.summary:not(.__disabled) {
   cursor: pointer;
 }
 

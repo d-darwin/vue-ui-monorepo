@@ -5,8 +5,8 @@ import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { DAccordionProvided } from "./types";
 import { dDetailsProps as props } from "./props";
-import { getTransitionDuration } from "./utils";
 import { dDetailsSetup as setup } from "./setup";
+import { getTransitionDuration } from "./utils";
 import config from "./config";
 import styles from "./d-details.css?module";
 
@@ -16,11 +16,11 @@ import styles from "./d-details.css?module";
 export default defineComponent({
   name: config.details.name,
 
-  props,
+  props, // TODO: move to the config ???
 
-  setup,
+  setup, // TODO: move to the config ???
 
-  emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
+  emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN], // TODO: move to the config ???
 
   computed: {
     // TODO: computed(() => {

@@ -1,8 +1,8 @@
 import { defineComponent } from "vue";
 import type { VNode } from "vue";
 import { dAccordionProps as props } from "./props";
+import { dAccordionSetup as setup } from "./setup";
 import config from "./config";
-import { dAccordionSetup } from "./setup";
 
 /**
  * Renders an accordion using <b>DDetails</b> components.
@@ -12,9 +12,7 @@ export default defineComponent({
 
   props,
 
-  setup(props) {
-    dAccordionSetup(props);
-  },
+  setup,
 
   render(): VNode {
     const Tag = this.tag;

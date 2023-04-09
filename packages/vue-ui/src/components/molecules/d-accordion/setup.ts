@@ -1,8 +1,8 @@
 import { inject, onMounted, provide, ref, Ref, watch } from "vue";
-import { DAccordionProps, DAccordionProvided } from "./types";
+import { DAccordionProvided } from "./types";
 import config from "./config";
 
-export function dAccordionSetup(props: DAccordionProps) {
+export function dAccordionSetup(props: DAccordionProvided) {
   provide<Ref<DAccordionProvided>>(
     config.provideInjectKey,
     ref({
@@ -17,8 +17,7 @@ export function dAccordionSetup(props: DAccordionProps) {
   );
 }
 
-// TODO: specify props type
-export function dDetailsSetup(props: Record<string, unknown>) {
+export function dDetailsSetup(props: { open?: boolean }) {
   const contentRef: Ref<HTMLElement | null> = ref(null);
   const contentHeight = ref(0);
   const isMounted = ref(false);
