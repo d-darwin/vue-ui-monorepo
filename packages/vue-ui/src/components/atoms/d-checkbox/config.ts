@@ -3,19 +3,19 @@ import styles from "./index.css?module";
 
 export default {
   name: "DCheckbox",
-  className: "dCheckbox",
-  inputClassName: "input",
+  class: styles["dCheckbox"],
+  inputClass: styles["input"],
   value: "on",
-  labelClassName: "label",
-  labelInnerClassName: "labelInner",
+  labelClass: styles["label"],
+  labelInnerClass: styles["labelInner"],
   captionOptions: {
     type: TYPE.DANGER,
     class: styles["caption"],
   },
   captionOffset: "0.2em",
-  iconContainerClassName: "iconContainer",
-  iconContainerBackdropClassName: "iconContainerBackdrop",
-  iconClassName: "icon",
+  iconContainerClass: styles["iconContainer"],
+  iconContainerBackdropClass: styles["iconContainerBackdrop"],
+  iconClass: styles["icon"],
   inputType: "checkbox",
   checkMark: "✓",
 };

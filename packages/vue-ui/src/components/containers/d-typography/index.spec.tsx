@@ -16,11 +16,11 @@ import config from "./config";
 describe("DTypography", () => {
   const wrapper = shallowMount(DTypography);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
-  propStringCase(wrapper, `.${config.className}`);
-  propVNodeCase(wrapper, `.${config.className}`);
-  slotCase(DTypography, `.${config.className}`);
+  propStringCase(wrapper, `.${config.class}`);
+  propVNodeCase(wrapper, `.${config.class}`);
+  slotCase(DTypography, `.${config.class}`);
 
   // TODO: classes are not rendered in jest ???
   it("Renders props.font to font class when passed", async () => {

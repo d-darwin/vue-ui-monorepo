@@ -2,7 +2,7 @@ import styles from "./index.css?module";
 
 export default {
   name: "DButton",
-  className: "dButton",
+  class: styles["dButton"],
   loaderOptions: {
     key: "loader",
     class: styles["loader"],

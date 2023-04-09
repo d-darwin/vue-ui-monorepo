@@ -130,7 +130,7 @@ export function defaultCheckMarkCase(
   config: Record<string, unknown>
 ) {
   return it(`Should render default icon with ${config.checkMark}`, async () => {
-    const iconEl = wrapper.find(`.${config.iconClassName}`);
+    const iconEl = wrapper.find(`.${config.iconClass}`);
     expect(iconEl.exists()).toBeTruthy();
     expect(iconEl.text()).toBe(config.checkMark);
   });
@@ -181,7 +181,7 @@ export function labelFontCase(wrapper: VueWrapper, labelSelector = "label") {
 
 export function iconSlotCase(
   component: ReturnType<typeof defineComponent>,
-  config: Record<string, unknown>,
+  iconSelector: string,
   props?: Record<string, unknown>
 ) {
   return it("Should render icon slot instead of default icon", () => {
@@ -196,7 +196,7 @@ export function iconSlotCase(
         icon: slotIcon,
       },
     });
-    const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
+    const iconContainerEl = wrapper.find(iconSelector);
     expect(iconContainerEl.exists()).toBeTruthy();
     const slotIconEl = wrapper.find(`.${slotIconClass}`);
     expect(slotIconEl.html()).toMatch(slotIcon);

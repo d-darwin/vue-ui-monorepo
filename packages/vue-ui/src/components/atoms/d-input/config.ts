@@ -3,15 +3,15 @@ import styles from "./index.css?module";
 
 export default {
   name: "DInput",
-  className: "dInput",
-  inputClassName: "input",
-  inputContainerClassName: "inputContainer",
-  labelClassName: "label",
+  class: styles["dInput"],
+  inputClass: styles["input"],
+  inputContainerClass: styles["inputContainer"],
+  labelClass: styles["label"],
   captionOptions: {
     type: TYPE.DANGER,
     class: styles["caption"],
   },
   captionOffset: "0.2em",
-  beforeContainerClass: "beforeInput",
-  afterContainerClass: "afterInput",
+  beforeContainerClass: styles["beforeInput"],
+  afterContainerClass: styles["afterInput"],
 };

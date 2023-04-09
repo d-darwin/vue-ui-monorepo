@@ -67,7 +67,7 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
-        styles[config.tabClassName],
+        config.tabClass,
         generateClass.font(this.size),
         generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config.colorScheme
         ...generateClass.padding(this.padding, this.size),

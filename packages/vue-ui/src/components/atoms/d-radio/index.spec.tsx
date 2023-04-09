@@ -46,7 +46,7 @@ describe("DRadio", () => {
     props: { name, value, checked: true, caption: "Not empty" },
   });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render input element with radio type, name and value", () => {
     const inputEl = wrapper.find("input");
@@ -65,20 +65,20 @@ describe("DRadio", () => {
 
   defaultCheckMarkCase(wrapper, config);
 
-  iconSlotCase(DRadio, config, { name, value });
+  iconSlotCase(DRadio, `.${config.iconContainerClass}`, { name, value });
 
   // TODO: make check target class factory ???
   it("Icon container classes should contain props.iconContainerClass if passed", async () => {
     const iconContainerClass = "iconContainerCustomClass";
     await wrapper.setProps({ iconContainerClass });
-    const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
+    const iconContainerEl = wrapper.find(`.${config.iconContainerClass}`);
     expect(iconContainerEl.classes()).toContain(iconContainerClass);
   });
 
   // TODO: make check target class factory ???
   it("Icon container classes should contain colorSchemeStyles.__disabled if props.disabled passed", async () => {
     await wrapper.setProps({ disabled: true });
-    const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
+    const iconContainerEl = wrapper.find(`.${config.iconContainerClass}`);
     expect(iconContainerEl.classes()).toContain(colorSchemeStyles.__disabled);
   });
 
@@ -106,16 +106,16 @@ describe("DRadio", () => {
 
   labelClassCase(wrapper);
   labelFontCase(wrapper);
-  propStringCase(wrapper, `.${config.labelInnerClassName}`, "label");
-  propVNodeCase(wrapper, `.${config.labelInnerClassName}`, "label");
-  slotCase(DRadio, `.${config.labelInnerClassName}`, "label", {
+  propStringCase(wrapper, `.${config.labelInnerClass}`, "label");
+  propVNodeCase(wrapper, `.${config.labelInnerClass}`, "label");
+  slotCase(DRadio, `.${config.labelInnerClass}`, "label", {
     name,
     value,
   });
 
-  disabledClassCase(wrapper, `.${config.labelClassName}`);
+  disabledClassCase(wrapper, `.${config.labelClass}`);
 
-  disabledAttrCase(wrapper, `.${config.inputClassName}`);
+  disabledAttrCase(wrapper, `.${config.inputClass}`);
 
   controlIdPresenceCase(wrapper);
 
@@ -125,19 +125,19 @@ describe("DRadio", () => {
 
   borderClassCase(
     wrapper,
-    `.${config.iconContainerClassName}`,
+    `.${config.iconContainerClass}`,
     COLOR_SCHEME.SECONDARY
   );
 
   colorSchemeClassCase(
     wrapper,
-    `.${config.iconContainerClassName}`,
+    `.${config.iconContainerClass}`,
     COLOR_SCHEME.DANGER
   );
 
   outlineClassCase(wrapper, "input", COLOR_SCHEME.SECONDARY, SIZE.LARGE);
 
-  paddingEqualClassesCase(wrapper, `.${config.iconContainerClassName}`);
+  paddingEqualClassesCase(wrapper, `.${config.iconContainerClass}`);
 
   it("Should pass props.padding to DButton if props.type === 'button'", async () => {
     const padding = PADDING.NONE;
@@ -149,12 +149,12 @@ describe("DRadio", () => {
     expect(button.attributes().padding).toBe(padding);
   });
 
-  roundingClassCase(wrapper, `.${config.iconContainerClassName}`);
+  roundingClassCase(wrapper, `.${config.iconContainerClass}`);
 
   sizeClassCase(wrapper, "input");
-  sizeClassCase(wrapper, `.${config.iconContainerClassName}`);
-  sizeClassCase(wrapper, `.${config.iconContainerBackdropClassName}`);
-  transitionClassCase(wrapper, `.${config.iconContainerClassName}`);
+  sizeClassCase(wrapper, `.${config.iconContainerClass}`);
+  sizeClassCase(wrapper, `.${config.iconContainerBackdropClass}`);
+  transitionClassCase(wrapper, `.${config.iconContainerClass}`);
 
   // TODO: combine all Caption cases in one factory or just test composition???
   it("Shouldn render props.size into props.font of the DCaption", async () => {

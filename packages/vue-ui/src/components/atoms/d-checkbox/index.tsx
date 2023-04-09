@@ -118,12 +118,7 @@ export default defineComponent({
 
   setup(props, { slots }) {
     const innerChecked = ref(props.checked); // TODO: what for, remove ???
-    const { renderCaption } = useCaption(
-      props,
-      slots,
-      styles,
-      config.captionOptions
-    );
+    const { renderCaption } = useCaption(props, slots, config.captionOptions);
 
     return { innerChecked, renderCaption };
   },
@@ -138,7 +133,7 @@ export default defineComponent({
   computed: {
     renderIcon(): VNode[] {
       const iconContainerClasses = [
-        styles[config.iconContainerClassName],
+        config.iconContainerClass,
         generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
         ...generateClass.padding(PADDING.EQUAL, this.size),
@@ -159,7 +154,7 @@ export default defineComponent({
       return [
         <div
           class={[
-            styles[config.iconContainerBackdropClassName],
+            config.iconContainerBackdropClass,
             generateClass.size(this.size),
           ]}
         />,
@@ -171,7 +166,7 @@ export default defineComponent({
             {!this.$slots?.icon && this.innerChecked && (
               <div
                 class={[
-                  styles[config.iconClassName],
+                  config.iconClass,
                   generateClass.transition(this.transition),
                 ]}
               >
@@ -195,7 +190,7 @@ export default defineComponent({
           disabled={this.disabled}
           {...this.inputAttrs}
           class={[
-            styles[config.inputClassName],
+            config.inputClass,
             generateClass.outline(this.colorScheme, this.size),
             generateClass.size(this.size),
             this.inputClass,
@@ -209,7 +204,7 @@ export default defineComponent({
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
         return (
-          <div class={styles[config.labelInnerClassName]}>
+          <div class={config.labelInnerClass}>
             {this.$slots.label?.() || this.label}
           </div>
         );
@@ -220,7 +215,7 @@ export default defineComponent({
 
     renderLabel(): VNode {
       const labelClasses = [
-        styles[config.labelClassName],
+        config.labelClass,
         this.labelClass,
         generateClass.font(this.labelFont || this.size),
       ];
@@ -303,12 +298,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag
-        class={[
-          styles[config.className],
-          generateClass.minControlWidth(this.size),
-        ]}
-      >
+      <Tag class={[config.class, generateClass.minControlWidth(this.size)]}>
         {this.renderLabel}
         {this.renderCaption}
       </Tag>

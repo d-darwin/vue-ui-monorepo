@@ -6,7 +6,6 @@ import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/at
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * Simply renders <b>table</b> element with passed head and body rows.
@@ -130,7 +129,7 @@ export default defineComponent({
     renderHead(): VNode {
       const rowClasses = [
         ...this.commonRowClasses,
-        styles[config.rowClassName],
+        config.rowClass,
         this.headRowClass,
       ];
       const cellClasses = [...this.commonCellClasses, this.headCellClass];
@@ -159,7 +158,7 @@ export default defineComponent({
     renderBody(): VNode {
       const rowClasses = [
         ...this.commonRowClasses,
-        styles[config.rowClassName],
+        config.rowClass,
         this.bodyRowClass,
       ];
       const cellClasses = [...this.commonCellClasses, this.bodyCellClass];
@@ -189,7 +188,7 @@ export default defineComponent({
 
   render(): VNode {
     return (
-      <table class={styles[config.className]}>
+      <table class={config.class}>
         {this.loading && (
           <DLoader {...config.loaderOptions} {...this.loaderOptions} />
         )}

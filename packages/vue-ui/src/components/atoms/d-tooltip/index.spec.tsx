@@ -24,26 +24,26 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 describe("DTooltip", () => {
   const wrapper = shallowMount(DTooltip);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   // TODO: fix
-  fontSizeClassCase(wrapper, `.${config.contentClassName}`);
+  fontSizeClassCase(wrapper, `.${config.contentClass}`);
 
   it("Should render props.target", async () => {
     const target = "simple string target";
     await wrapper.setProps({ target });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     expect(targetEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(targetEl.text()).toBe(target);
   });
 
-  propStringCase(wrapper, `.${config.targetClassName}`, "target");
-  propVNodeCase(wrapper, `.${config.targetClassName}`, "target");
+  propStringCase(wrapper, `.${config.targetClass}`, "target");
+  propVNodeCase(wrapper, `.${config.targetClass}`, "target");
 
   it("Target element should have props.targetClass if passed", async () => {
     const targetClass = "someTargetClass";
     await wrapper.setProps({ targetClass });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     expect(targetEl.classes()).toContain(targetClass);
   });
 
@@ -54,14 +54,14 @@ describe("DTooltip", () => {
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       targetFont
     );
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     expect(targetEl.classes()).toContain(className);
   });
 
   it("Should render props.content", async () => {
     const content = "simple string content";
     await wrapper.setProps({ content });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
 
     expect(contentEl).toBeTruthy(); // TODO: empty wrapper is also truthy
     expect(contentEl.text()).toBe(content);
@@ -73,7 +73,7 @@ describe("DTooltip", () => {
   it("Target element should have props.contentClass if passed", async () => {
     const contentClass = "someTargetClass";
     await wrapper.setProps({ contentClass });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.classes()).toContain(contentClass);
   });
 
@@ -84,7 +84,7 @@ describe("DTooltip", () => {
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       contentFont
     );
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.classes()).toContain(className);
   });
 
@@ -114,7 +114,7 @@ describe("DTooltip", () => {
   it("Should render props.offset to the content offset style", async () => {
     const offset = [10, 12];
     await wrapper.setProps({ offset });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.attributes("style")).toBe(
       `margin: ${offset[0]}px ${offset[1]}px;`
     );
@@ -123,14 +123,14 @@ describe("DTooltip", () => {
   it("Shouldn't render the content offset style if props.offset if [0, 0] ", async () => {
     const offset = [0, 0];
     await wrapper.setProps({ offset });
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.attributes("style")).toBeFalsy();
   });
 
   it("Should render props.tabindex to the target attr", async () => {
     const tabindex = 11;
     await wrapper.setProps({ tabindex });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     expect(targetEl.attributes("tabindex")).toBe(String(tabindex));
   });
 
@@ -146,35 +146,35 @@ describe("DTooltip", () => {
 
   it("Should add isShown class to the container on mouse enter if props.trigger is 'hover'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.HOVER });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("mouseenter");
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should remove isShown class from the container on mouse leave if props.trigger is 'hover'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.HOVER });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("mouseleave");
     expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should add isShown class to the container on focusin if props.trigger is 'hover'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.HOVER });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("focusin");
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should remove isShown class from the container on focusout if props.trigger is 'hover'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.HOVER });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("focusout");
     expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should toggle isShown class on the container on mouse click if props.trigger is 'click'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.CLICK });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("click");
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
     await targetEl.trigger("click");
@@ -183,21 +183,21 @@ describe("DTooltip", () => {
 
   it("Should add isShown class to the container on Enter keyup if props.trigger is 'click'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.CLICK });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("keyup", { key: "Enter" });
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should add isShown class to the container on Space keyup if props.trigger is 'click'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.CLICK });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("keyup", { key: " " });
     expect(wrapper.classes()).toContain("isShown"); // TODO: avoid hardcode
   });
 
   it("Should remove isShown class from the container on Escape keyup if props.trigger is 'click'", async () => {
     await wrapper.setProps({ trigger: TRIGGER.CLICK });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("click");
     await targetEl.trigger("keyup", { key: "Escape" });
     expect(wrapper.classes()).not.toContain("isShown"); // TODO: avoid hardcode
@@ -207,7 +207,7 @@ describe("DTooltip", () => {
     const wrapper = shallowMount(DTooltip, {
       props: { trigger: TRIGGER.MANUAL },
     });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
 
     await targetEl.trigger("keyup", { key: "Enter" });
     expect(wrapper.emitted("change")?.[0]).toBeFalsy();
@@ -228,7 +228,7 @@ describe("DTooltip", () => {
     const wrapper = shallowMount(DTooltip, {
       props: { trigger: TRIGGER.CLICK, whenChange },
     });
-    const targetEl = wrapper.find(`.${config.targetClassName}`);
+    const targetEl = wrapper.find(`.${config.targetClass}`);
     await targetEl.trigger("click");
     expect(wrapper.emitted("change")?.[0]).toEqual([true]);
     expect(wrapper.emitted("update:show")?.[0]).toEqual([true]);
@@ -241,18 +241,18 @@ describe("DTooltip", () => {
 
   outlineClassCase(
     wrapper,
-    `.${config.targetClassName}`,
+    `.${config.targetClass}`,
     COLOR_SCHEME.SECONDARY,
     SIZE.TINY
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.contentClassName}`);
+  paddingEqualClassesCase(wrapper, `.${config.contentClass}`);
 
-  roundingClassCase(wrapper, `.${config.contentClassName}`);
+  roundingClassCase(wrapper, `.${config.contentClass}`);
 
-  sizeClassCase(wrapper, `.${config.contentClassName}`);
+  sizeClassCase(wrapper, `.${config.contentClass}`);
 
-  transitionClassCase(wrapper, `.${config.contentClassName}`);
+  transitionClassCase(wrapper, `.${config.contentClass}`);
 
   tagCase(wrapper);
 });

@@ -1,6 +1,8 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DLink",
-  className: "dLink",
+  class: styles["dLink"],
   routerLinkTag: "router-link",
   linkTag: "a",
 } as const;

@@ -120,7 +120,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, config.captionOptions); // TODO !!!!!, don't pas styles
+    return useCaption(props, slots, config.captionOptions);
   },
 
   emits: [
@@ -133,7 +133,7 @@ export default defineComponent({
   computed: {
     labelClasses(): (string | undefined)[] {
       return [
-        styles[config.labelClassName],
+        config.labelClass,
         this.disabled ? styles.__disabled : undefined, // TODO: config
         this.labelClass,
         generateClass.font(this.labelFont || this.font || this.size),
@@ -156,7 +156,7 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles[config.thumbClassName],
+            config.thumbClass,
             generateClass.font(this.font || this.size),
             generateClass.rounding(this.rounding),
             generateClass.size(this.size),
@@ -166,7 +166,7 @@ export default defineComponent({
           {this.$slots.thumb?.() || (
             <div
               class={[
-                styles[config.thumbInnerClassName],
+                config.thumbInnerClass,
                 generateClass.rounding(this.rounding),
                 generateClass.transition(this.transition),
               ]}
@@ -191,7 +191,7 @@ export default defineComponent({
 
     inputClasses(): (string | undefined)[] {
       return [
-        styles[config.inputClassName],
+        config.inputClass,
         this.inputClass,
         generateClass.border(this.colorScheme, this.size),
         generateClass.outline(this.colorScheme, this.size),
@@ -305,7 +305,7 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {/*TODO: move .wrapper to config ???*/}
         <div class={styles.wrapper}>
           {this.renderFalsyLabel}

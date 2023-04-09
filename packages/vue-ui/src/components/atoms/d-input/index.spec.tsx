@@ -37,7 +37,7 @@ import DCaption from "@/components/atoms/d-caption";
 describe("DInput", () => {
   const wrapper = mount(DInput, { props: { caption: "Not empty" } });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   minControlWidthCase(wrapper);
 
@@ -71,9 +71,9 @@ describe("DInput", () => {
   labelAbsenceCase(wrapper);
   labelClassCase(wrapper);
   labelFontCase(wrapper);
-  propStringCase(wrapper, `.${config.labelClassName}`, "label");
-  propVNodeCase(wrapper, `.${config.labelClassName}`, "label");
-  slotCase(DInput, `.${config.labelClassName}`, "label");
+  propStringCase(wrapper, `.${config.labelClass}`, "label");
+  propVNodeCase(wrapper, `.${config.labelClass}`, "label");
+  slotCase(DInput, `.${config.labelClass}`, "label");
 
   controlIdPresenceCase(wrapper);
 

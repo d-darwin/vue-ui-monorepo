@@ -79,7 +79,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, config.captionOptions);
+    return useCaption(props, slots, config.captionOptions);
   },
 
   computed: {
@@ -89,7 +89,7 @@ export default defineComponent({
           /*TODO: customizable tag*/
           <legend
             class={[
-              styles[config.labelClassName],
+              config.labelClass,
               this.labelClass,
               generateClass.font(this.labelFont || this.size),
             ]}
@@ -105,7 +105,7 @@ export default defineComponent({
     renderItemList(): VNode[] {
       const prepareProps = (checkbox: VNode) => {
         Object.assign(checkbox.props || {}, {
-          class: [styles[config.checkboxClassName], checkbox.props?.class],
+          class: [config.checkboxClass, checkbox.props?.class],
           disabled:
             typeof checkbox.props?.disabled === "undefined"
               ? this.disabled
@@ -131,7 +131,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {this.renderLabel}
         {this.renderItemList}
         {this.renderCaption}

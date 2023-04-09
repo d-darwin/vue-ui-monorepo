@@ -17,24 +17,24 @@ jest.mock("chalk", () => ({
 describe("DTabs", () => {
   const wrapper = mount(DTabs);
 
-  baseClassCase(wrapper, config.tabsClassName);
+  baseClassCase(wrapper, config.tabsClass);
 
   it("Should render config.tablistClassName to the tablist's class name", () => {
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     expect(tablist).toBeTruthy();
   });
 
   it("Should render props.tablistLabel to the tablist's aria-label attr", async () => {
     const tablistLabel = "Some aria label";
     await wrapper.setProps({ tablistLabel });
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     expect(tablist.attributes("aria-label")).toBe(tablistLabel);
   });
 
   it("Should props.tablistClass to the tablist's class name", async () => {
     const tablistClass = "some-tablist-class";
     await wrapper.setProps({ tablistClass });
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     expect(tablist.classes()).toContain(tablistClass);
   });
 
@@ -53,7 +53,7 @@ describe("DTabs", () => {
       },
     });
 
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     const tabs = tablist.findAllComponents(DTab);
     expect(tabs?.[0]?.element).toMatchSnapshot(); // TODO: find out other way to compare
     expect(tabs?.[1]?.element).toMatchSnapshot(); // TODO: find out other way to compare
@@ -74,7 +74,7 @@ describe("DTabs", () => {
       },
     });
 
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     const tabs = tablist.findAllComponents(DTab);
     expect(tabs?.[0]?.element).toMatchSnapshot(); // TODO: find out other way to compare
     expect(tabs?.[1]?.element).toMatchSnapshot(); // TODO: find out other way to compare
@@ -237,7 +237,7 @@ describe("DTabs", () => {
   it("Should render tablist as element passed in props.tablistTag", async () => {
     const tablistTag = "section";
     await wrapper.setProps({ tablistTag });
-    const tablist = wrapper.find(`.${config.tablistClassName}`);
+    const tablist = wrapper.find(`.${config.tablistClass}`);
     expect(tablist.element.tagName).toEqual(tablistTag.toLocaleUpperCase());
   });
 

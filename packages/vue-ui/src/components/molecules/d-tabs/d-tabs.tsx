@@ -7,7 +7,6 @@ import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import config from "./config";
-import styles from "./d-tabs.css?module";
 
 /**
  * TODO: description
@@ -181,11 +180,11 @@ export default defineComponent({
     const TablistTag = this.tablistTag;
 
     return (
-      <Tag class={styles[config.tabsClassName]}>
+      <Tag class={config.tabsClass}>
         <TablistTag
           role="tablist"
           aria-label={String(this.tablistLabel)}
-          class={[styles[config.tablistClassName], this.tablistClass]}
+          class={[config.tablistClass, this.tablistClass]}
           onKeydown={this.keydownHandler}
         >
           {this.renderTabs}

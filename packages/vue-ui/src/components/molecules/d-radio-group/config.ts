@@ -3,9 +3,9 @@ import styles from "./index.css?module";
 
 export default {
   name: "DRadioGroup",
-  className: "dRadioGroup",
-  labelClassName: "label",
-  radioClassName: "radio",
+  class: styles["dRadioGroup"],
+  labelClass: styles["label"],
+  radioClass: styles["radio"],
   captionOptions: {
     type: TYPE.DANGER,
     class: styles["caption"],

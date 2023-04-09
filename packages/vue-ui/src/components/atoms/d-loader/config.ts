@@ -3,16 +3,15 @@ import styles from "./index.css?module";
 
 export default {
   name: "DLoader",
-  className: "dLoader",
-  wrapperClassName: "wrapper",
-  backdropClassName: "",
+  class: styles["dLoader"],
+  wrapperClass: styles["wrapper"],
   backdropOptions: {
     key: "backdrop",
     class: styles["backdrop"],
     position: CssPosition.absolute,
   },
   key: "loader",
-  defaultAnimationDuration: "650ms",
-  defaultZIndex: 1001,
-  defaultContent: "☯",
+  animationDuration: "650ms",
+  zIndex: 1001,
+  content: "☯",
 } as const;

@@ -24,13 +24,13 @@ import config from "./config";
 describe("DLink", () => {
   const wrapper = shallowMount(DLink);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   propStringCase(wrapper, "a");
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 
-  slotCase(DLink, `.${config.className}`);
+  slotCase(DLink, `.${config.class}`);
 
   it("Renders font class name", async () => {
     const font = FONT.SMALL;
@@ -44,12 +44,12 @@ describe("DLink", () => {
 
   outlineClassCase(
     wrapper,
-    `.${config.className}`,
+    `.${config.class}`,
     COLOR_SCHEME.PRIMARY,
     FONT.SMALL
   );
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Renders as 'button' html tag by default", () => {
     expect(wrapper.element.tagName).toEqual("A");

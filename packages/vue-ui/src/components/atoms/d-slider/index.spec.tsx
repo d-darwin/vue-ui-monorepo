@@ -21,15 +21,18 @@ import {
   sizeClassCase,
   slotCase,
   tagCase,
-  transitionClassCase,
   offsetCase,
 } from "@/utils/test-case-factories";
 import config from "./config";
+import sleep from "@/utils/sleep";
+import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
+import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 
 describe("DSlider", () => {
   const wrapper = mount(DSlider);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   controlIdAbsenceCase(wrapper);
 
@@ -81,6 +84,7 @@ describe("DSlider", () => {
 
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     await wrapper.setProps({ caption: undefined });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
     const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
     await wrapper.setProps({ caption: "not empty" });
@@ -89,7 +93,10 @@ describe("DSlider", () => {
   it("Should render caption element with props.caption content if passed", async () => {
     const captionContent = "some caption";
     const caption = <div>{captionContent}</div>;
-    await wrapper.setProps({ caption });
+    const wrapper = mount(DSlider, {
+      props: { caption },
+    });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
     const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
@@ -100,10 +107,10 @@ describe("DSlider", () => {
 
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
-    await wrapper.setProps({
-      caption: "Caption string",
-      captionOffset,
+    const wrapper = mount(DSlider, {
+      props: { captionOffset, caption: "Not empty" },
     });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
     const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
@@ -128,13 +135,26 @@ describe("DSlider", () => {
 
   roundingClassCase(wrapper, `.${config.inputOptions.class}`);
 
-  sizeClassCase(wrapper, `.${config.className}`);
+  sizeClassCase(wrapper, `.${config.class}`);
 
   fontSizeClassCase(wrapper, `.${config.labelOptions.class}`);
 
   minControlWidthCase(wrapper);
 
-  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
+  it(`Should render props.transition to .caption transition class`, async () => {
+    const transition = TRANSITION.AVERAGE;
+    const wrapper = mount(DSlider, {
+      props: { transition, caption: "Not empty" },
+    });
+    await sleep(0); // Should wait next event loop step for asyncComponent to be imported
+    const className = prepareCssClassName(
+      codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
+      transition
+    );
+
+    const targetEl = wrapper.find(`.${config.captionOptions.class}`);
+    expect(targetEl.classes()).toContain(className);
+  });
 
   disabledAttrCase(wrapper, `.${config.inputOptions.class}`);
 

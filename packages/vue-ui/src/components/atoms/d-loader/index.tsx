@@ -18,7 +18,7 @@ export default defineComponent({
     /**
      * Plain string or VNode
      */
-    content: generateProp.content(config.defaultContent),
+    content: generateProp.content(config.content),
     /**
      * Defines appearance of the component
      */
@@ -44,11 +44,11 @@ export default defineComponent({
     /**
      * Defines animation duration
      */
-    animationDuration: generateProp.string(config.defaultAnimationDuration),
+    animationDuration: generateProp.string(config.animationDuration),
     /**
      * Defines z-index of the component
      */
-    zIndex: generateProp.number(config.defaultZIndex),
+    zIndex: generateProp.number(config.zIndex),
     /**
      * Adds DBackdrop to fill all available space
      */
@@ -88,7 +88,7 @@ export default defineComponent({
 
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
+        config.class,
         generateClass.colorScheme(this.colorScheme),
         generateClass.font(this.font),
         generateClass.rounding(this.rounding),
@@ -124,7 +124,7 @@ export default defineComponent({
 
   render(): VNode {
     return (
-      <div class={styles[config.wrapperClassName]}>
+      <div class={config.wrapperClass}>
         {this.fillAvailable && this.renderBackdrop}
         {this.renderLoader}
       </div>

@@ -1,7 +1,9 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DNotification",
-  className: "dNotification",
-  defaultTarget: "body",
+  class: styles["dNotification"], // TODO: add style existence check
+  target: "body",
   duration: 5,
   role: "alert",
 } as const;

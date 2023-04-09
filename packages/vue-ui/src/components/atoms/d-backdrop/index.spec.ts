@@ -10,7 +10,7 @@ import config from "./config";
 
 describe("DButton", () => {
   const wrapper = shallowMount(DBackdrop);
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render props.opacity to the component style as '--opacity: props.opacity'", async () => {
     const opacity = 0.33;

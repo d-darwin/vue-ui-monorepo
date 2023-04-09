@@ -76,7 +76,7 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
-        styles[config.className],
+        config.class,
         generateClass.border(this.colorScheme, this.size),
         generateClass.colorScheme(this.colorScheme),
         generateClass.font(this.size),

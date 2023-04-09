@@ -32,34 +32,34 @@ import config from "./config";
 describe("DButton", () => {
   const wrapper = shallowMount(DButton);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
-  propStringCase(wrapper, `.${config.className}`, "content");
+  propStringCase(wrapper, `.${config.class}`, "content");
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 
-  slotCase(DButton, `.${config.className}`);
+  slotCase(DButton, `.${config.class}`);
 
-  borderClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+  borderClassCase(wrapper, `.${config.class}`, COLOR_SCHEME.DANGER);
 
-  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.INVERSE);
+  colorSchemeClassCase(wrapper, `.${config.class}`, COLOR_SCHEME.INVERSE);
 
-  fontSizeClassCase(wrapper, `.${config.className}`);
+  fontSizeClassCase(wrapper, `.${config.class}`);
 
   outlineClassCase(
     wrapper,
-    `.${config.className}`,
+    `.${config.class}`,
     COLOR_SCHEME.SECONDARY,
     SIZE.SMALL
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.className}`);
+  paddingEqualClassesCase(wrapper, `.${config.class}`);
 
-  roundingClassCase(wrapper, `.${config.className}`);
+  roundingClassCase(wrapper, `.${config.class}`);
 
-  sizeClassCase(wrapper, `.${config.className}`);
+  sizeClassCase(wrapper, `.${config.class}`);
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   // TODO: utils/test-case-factories ?
   it("Renders as 'a' html tag if 'href' is passed", async () => {
@@ -79,11 +79,11 @@ describe("DButton", () => {
 
   preventDefaultCase(wrapper);
 
-  disabledClassCase(wrapper, `.${config.className}`);
+  disabledClassCase(wrapper, `.${config.class}`);
 
-  disabledAttrCase(wrapper, `.${config.className}`);
+  disabledAttrCase(wrapper, `.${config.class}`);
 
-  activeControlCase(wrapper, `.${config.className}`);
+  activeControlCase(wrapper, `.${config.class}`);
 
   // TODO: move to the factories
   it("Should render DLoader if props.loading is true", async () => {

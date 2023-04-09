@@ -134,7 +134,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, config.captionOptions);
+    return useCaption(props, slots, config.captionOptions);
   },
 
   emits: [
@@ -150,7 +150,7 @@ export default defineComponent({
         const bindings = {
           for: String(this.id),
           class: [
-            styles[config.labelClassName],
+            config.labelClass,
             this.labelClass,
             generateClass.font(this.labelFont || this.size),
           ],
@@ -166,7 +166,7 @@ export default defineComponent({
 
     inputClasses(): (string | undefined)[] {
       return [
-        styles[config.inputClassName],
+        config.inputClass,
         this.inputClass,
         generateClass.border(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
         generateClass.font(this.inputFont || this.size),
@@ -222,11 +222,11 @@ export default defineComponent({
 
       if (this.hasSlot) {
         return (
-          <div class={styles[config.inputContainerClassName]}>
+          <div class={config.inputContainerClass}>
             {this.$slots.before && (
               <div
                 class={[
-                  styles[config.beforeContainerClass],
+                  config.beforeContainerClass,
                   generateClass.size(this.size),
                 ]}
               >
@@ -237,7 +237,7 @@ export default defineComponent({
             {this.$slots.after && (
               <div
                 class={[
-                  styles[config.afterContainerClass],
+                  config.afterContainerClass,
                   generateClass.size(this.size),
                 ]}
               >
@@ -315,12 +315,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag
-        class={[
-          styles[config.className],
-          generateClass.minControlWidth(this.size),
-        ]}
-      >
+      <Tag class={[config.class, generateClass.minControlWidth(this.size)]}>
         {this.renderLabel}
         {this.renderInput}
         {this.renderCaption}

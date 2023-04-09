@@ -7,9 +7,9 @@ import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-sch
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
-import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
 import { TRIGGER } from "./constant";
@@ -197,7 +197,7 @@ export default defineComponent({
 
   computed: {
     containerClasses(): string[] {
-      const classes = [styles[config.className]];
+      const classes = [config.class];
       if (this.isShown) {
         classes.push(styles.isShown);
       }
@@ -227,7 +227,7 @@ export default defineComponent({
         tabindex: this.tabindex,
         "aria-describedby": this.tooltipId,
         class: [
-          styles[config.targetClassName],
+          config.targetClass,
           this.targetClass,
           generateClass.font(this.targetFont || this.size),
           generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
@@ -251,7 +251,7 @@ export default defineComponent({
         "aria-hidden": !this.isShown,
         role: "tooltip",
         class: [
-          styles[config.contentClassName],
+          config.contentClass,
           this.contentClass,
           generateClass.font(this.contentFont || this.size),
           ...generateClass.padding(this.padding, this.size),

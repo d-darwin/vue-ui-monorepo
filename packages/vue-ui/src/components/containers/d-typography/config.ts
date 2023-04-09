@@ -1,4 +1,6 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DTypography",
-  className: "dTypography",
+  class: styles["dTypography"],
 };

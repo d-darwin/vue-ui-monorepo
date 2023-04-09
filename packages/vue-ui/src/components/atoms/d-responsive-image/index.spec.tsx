@@ -29,7 +29,7 @@ describe("DResponsiveImage", () => {
     expect(wrapper.element.tagName).toEqual("IMG");
   });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render img's loading attr if props.loading is passed", async () => {
     const loading = LOADING.EAGER;
@@ -103,7 +103,7 @@ describe("DResponsiveImage", () => {
     expect(figcaptionEl.text()).toEqual(caption);
   });
 
-  slotCase(DResponsiveImage, `.${config.className}`, "caption", {
+  slotCase(DResponsiveImage, `.${config.class}`, "caption", {
     source: "some-image-source",
   });
 
@@ -125,7 +125,7 @@ describe("DResponsiveImage", () => {
     expect(figcaptionElClasses).toContain(captionClass);
   });
 
-  propVNodeCase(wrapper, `.${config.className}`, "caption");
+  propVNodeCase(wrapper, `.${config.class}`, "caption");
 
   it("Should render as DAspectRatio container if props.source, props.aspectRatio and props.caption are passed", async () => {
     const aspectRatio = "3/2";

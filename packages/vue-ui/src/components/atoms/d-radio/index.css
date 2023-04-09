@@ -61,16 +61,3 @@
   z-index: 1;
 }
 
-/*// TODO: move to the composition ???*/
-.caption {
-  --offset: 2px;
-  position: absolute;
-  top: calc(100% + var(--offset));
-}
-
-.captionTransitionEnterActive,
-.captionTransitionEnterActive {
-  transform: translate3d(0, -50%, 0) scale3d(1, 1, 0);
-  opacity: 0.65;
-}
-

@@ -25,7 +25,7 @@ import DCaption from "@/components/atoms/d-caption";
 describe("DRadioGroup", () => {
   const wrapper = mount(DRadioGroup, { props: { caption: "Not empty" } });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render passes props.items", async () => {
     const items = [
@@ -131,7 +131,7 @@ describe("DRadioGroup", () => {
     ];
     await wrapper.setProps({ items });
     const firstRadio = wrapper.findComponent(DRadio);
-    expect(firstRadio.classes()).toContain(config.radioClassName);
+    expect(firstRadio.classes()).toContain(config.radioClass);
     expect(firstRadio.classes()).toContain(firstRadioOwnClass);
   });
 

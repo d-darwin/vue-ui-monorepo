@@ -4,24 +4,24 @@ import styles from "./index.css?module";
 
 export default {
   name: "DProgress",
-  className: "dProgress",
-  defaultType: Type.linear, // TODO default
+  class: styles["dProgress"],
+  type: Type.linear,
   labelOptions: {
     class: styles["label"],
   },
   labelOffsetCSSPropName: "--offset", // TODO: share with css ...
-  defaultLabelOffset: "2px", // TODO: share with css ...  default
+  labelOffset: "2px", // TODO: share with css ...
   progressOptions: {
     role: "progressbar",
     class: styles["progress"],
     max: 100,
   },
-  linearClassName: "linear",
-  circularClassName: "circular",
+  linearClass: styles["linear"],
+  circularClass: styles["circular"],
   contentOptions: {
     class: styles["content"],
   },
-  loaderContainerClassName: "loaderContainer",
+  loaderContainerClass: styles["loaderContainer"],
   loaderOptions: {
     key: "loader",
     class: styles["loader"],
@@ -31,5 +31,5 @@ export default {
     class: styles["caption"],
   },
   captionOffsetCSSPropName: "--offset", // TODO: share with css ...
-  defaultCaptionOffset: "2px", // TODO: share with css ... default
+  captionOffset: "2px", // TODO: share with css ...
 } as const;

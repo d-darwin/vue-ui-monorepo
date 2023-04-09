@@ -3,10 +3,11 @@ import styles from "./index.css?module";
 
 export default {
   name: "DSlider",
-  className: "dSlider",
+  class: styles["dSlider"],
   labelOptions: {
     class: styles["label"],
   },
+  labelOffset: "2px",
   inputOptions: {
     role: "slider",
     type: "range",
@@ -22,6 +23,5 @@ export default {
     type: TYPE.DANGER,
     class: styles["caption"],
   },
-  defaultLabelOffset: "2px", // TODO: default
-  defaultCaptionOffset: "2px", // TODO: default
+  captionOffset: "2px",
 };

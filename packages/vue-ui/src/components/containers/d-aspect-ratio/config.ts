@@ -1,7 +1,9 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DAspectRatio",
-  className: "dAspectRatio",
-  innerClassName: "dAspectRatioInner",
+  class: styles["dAspectRatio"],
+  innerClass: styles["dAspectRatioInner"],
   separatorList: ["/", ":"],
-  defaultAspectRatio: "1",
+  aspectRatio: "1",
 } as const;

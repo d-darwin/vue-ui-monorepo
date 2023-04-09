@@ -35,11 +35,7 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      return [
-        styles[config.className],
-        styles[this.type],
-        generateClass.font(this.font),
-      ];
+      return [config.class, styles[this.type], generateClass.font(this.font)];
     },
   },
 

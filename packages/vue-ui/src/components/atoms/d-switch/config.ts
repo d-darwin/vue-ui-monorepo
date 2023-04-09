@@ -4,11 +4,11 @@ import styles from "./index.css?module";
 
 export default {
   name: "DSwitch",
-  className: "dSwitch",
-  inputClassName: "input",
-  labelClassName: "label",
-  thumbClassName: "thumb",
-  thumbInnerClassName: "thumbInner",
+  class: styles["dSwitch"],
+  inputClass: styles["input"],
+  labelClass: styles["label"],
+  thumbClass: styles["thumb"],
+  thumbInnerClass: styles["thumbInner"],
   captionOptions: {
     type: TYPE.DANGER,
     class: styles["caption"],

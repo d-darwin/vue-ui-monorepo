@@ -30,7 +30,7 @@ describe("DSwitch", () => {
     props: { caption: "Not empty" },
   });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render input element with checkbox type", () => {
     const inputEl = wrapper.find("input");
@@ -78,11 +78,11 @@ describe("DSwitch", () => {
         falsy: labelFalsy,
       },
     });
-    const labelFalsyEl = wrapper.find(`.${config.labelClassName}`);
+    const labelFalsyEl = wrapper.find(`.${config.labelClass}`);
     expect(labelFalsyEl.text()).toBe(labelFalsy);
   });
 
-  slotCase(DSwitch, `.${config.labelClassName}`, "labelFalsy");
+  slotCase(DSwitch, `.${config.labelClass}`, "labelFalsy");
 
   it("Shouldn render .label if props.labels.truthy is presented", async () => {
     const labelTruthy = "falsy label";
@@ -91,13 +91,13 @@ describe("DSwitch", () => {
         truthy: labelTruthy,
       },
     });
-    const labelTruthyEl = wrapper.find(`.${config.labelClassName}`);
+    const labelTruthyEl = wrapper.find(`.${config.labelClass}`);
     expect(labelTruthyEl.text()).toBe(labelTruthy);
   });
 
-  slotCase(DSwitch, `.${config.labelClassName}`, "labelTruthy");
+  slotCase(DSwitch, `.${config.labelClass}`, "labelTruthy");
 
-  labelFontCase(wrapper, `.${config.labelClassName}`);
+  labelFontCase(wrapper, `.${config.labelClass}`);
 
   it("Should render props.labels content as HTML", async () => {
     const labelFalsy = <b>Label falsy</b>;
@@ -110,11 +110,9 @@ describe("DSwitch", () => {
         truthy: labelTruthyHtml,
       },
     });
-    const labelFalsyEl = wrapper.find(`.${config.labelClassName}:nth-child(1)`);
+    const labelFalsyEl = wrapper.find(`.${config.labelClass}:nth-child(1)`);
     expect(labelFalsyEl.html()).toMatch(labelFalsyHtml);
-    const labelTruthyEl = wrapper.find(
-      `.${config.labelClassName}:nth-child(3)`
-    );
+    const labelTruthyEl = wrapper.find(`.${config.labelClass}:nth-child(3)`);
     expect(labelTruthyEl.html()).toMatch(labelTruthyHtml);
   });
 
@@ -137,13 +135,11 @@ describe("DSwitch", () => {
       font
     );
 
-    const labelFalsyEl = wrapper.find(`.${config.labelClassName}:nth-child(1)`);
+    const labelFalsyEl = wrapper.find(`.${config.labelClass}:nth-child(1)`);
     expect(labelFalsyEl.classes()).toContain(className);
-    const labelTruthyEl = wrapper.find(
-      `.${config.labelClassName}:nth-child(3)`
-    );
+    const labelTruthyEl = wrapper.find(`.${config.labelClass}:nth-child(3)`);
     expect(labelTruthyEl.classes()).toContain(className);
-    const thumbEl = wrapper.find(`.${config.thumbClassName}`);
+    const thumbEl = wrapper.find(`.${config.thumbClass}`);
     expect(thumbEl.classes()).toContain(className);
   });
 
@@ -153,21 +149,21 @@ describe("DSwitch", () => {
     COLOR_SCHEME.DANGER
   );
 
-  roundingClassCase(wrapper, `.${config.inputClassName}`);
+  roundingClassCase(wrapper, `.${config.inputClass}`);
 
   roundingClassCase(wrapper, `.${config.trackOptions.class}`);
 
-  roundingClassCase(wrapper, `.${config.thumbClassName}`);
+  roundingClassCase(wrapper, `.${config.thumbClass}`);
 
   sizeClassCase(wrapper, `.${config.trackOptions.class}`);
 
-  sizeClassCase(wrapper, `.${config.thumbClassName}`);
+  sizeClassCase(wrapper, `.${config.thumbClass}`);
 
   transitionClassCase(wrapper, `.${config.trackOptions.class}`);
 
-  transitionClassCase(wrapper, `.${config.thumbClassName}`);
+  transitionClassCase(wrapper, `.${config.thumbClass}`);
 
-  transitionClassCase(wrapper, `.${config.thumbInnerClassName}`);
+  transitionClassCase(wrapper, `.${config.thumbInnerClass}`);
 
   // TODO: combine all Caption cases in one factory or just test composition???
   it("Shouldn render props.size into props.font of the DCaption", async () => {
@@ -229,7 +225,7 @@ describe("DSwitch", () => {
 
   tagCase(wrapper);
 
-  slotCase(DSwitch, `.${config.thumbClassName}`, "thumb");
+  slotCase(DSwitch, `.${config.thumbClass}`, "thumb");
 
   it("Shouldn render disabled attr for input element if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });
@@ -260,7 +256,7 @@ describe("DSwitch", () => {
     const trackEl = wrapper.find(`.${config.trackOptions.class}`);
     expect(trackEl.classes()).toContain(styles.__disabled);
     expect(trackEl.classes()).toContain(colorSchemeStyles.__disabled);
-    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    const labelEl = wrapper.find(`.${config.labelClass}`);
     expect(labelEl.classes()).toContain(styles.__disabled);
     expect(labelEl.classes()).toContain(colorSchemeStyles.__disabled);
   });
@@ -270,7 +266,7 @@ describe("DSwitch", () => {
     const trackEl = wrapper.find(`.${config.trackOptions.class}`);
     expect(trackEl.classes()).not.toContain(styles.__disabled);
     expect(trackEl.classes()).not.toContain(colorSchemeStyles.__disabled);
-    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    const labelEl = wrapper.find(`.${config.labelClass}`);
     expect(labelEl.classes()).not.toContain(styles.__disabled);
     expect(labelEl.classes()).not.toContain(colorSchemeStyles.__disabled);
   });

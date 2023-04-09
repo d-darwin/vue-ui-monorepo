@@ -1,4 +1,4 @@
-import { defineComponent, Transition as Trans } from "vue";
+import { defineComponent } from "vue";
 import type {
   PropType,
   VNode,
@@ -8,14 +8,12 @@ import type {
 } from "vue";
 import { v4 as uuid } from "uuid";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
-import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * Renders custom <b>input</b> element with <i>type="range"</i> and <i>role="slider"</i>.<br />
@@ -61,7 +59,7 @@ export default defineComponent({
     /**
      Defines offset of .label
      */
-    labelOffset: generateProp.text(config.defaultLabelOffset),
+    labelOffset: generateProp.text(config.labelOffset),
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
@@ -73,7 +71,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.defaultCaptionOffset), // TODO: move to captionOptions
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Defines appearance of the component
      */
@@ -109,12 +107,16 @@ export default defineComponent({
     whenInput: Function as PropType<(value: string) => void | Promise<void>>,
   },
 
+  setup(props, { slots }) {
+    return useCaption(props, slots, config.captionOptions);
+  },
+
   emits: [EVENT_NAME.CHANGE, EVENT_NAME.INPUT, EVENT_NAME.UPDATE_VALUE],
 
   computed: {
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
+        config.class,
         generateClass.minControlWidth(this.size),
         generateClass.size(this.size),
       ];
@@ -182,32 +184,6 @@ export default defineComponent({
           onInput={this.inputHandler}
           {...this.inputOptions}
         />
-      );
-    },
-
-    captionClasses(): (string | undefined)[] {
-      return [generateClass.transition(this.transition)];
-    },
-
-    renderCaption(): VNode {
-      return (
-        <Trans
-          enterActiveClass={styles.captionTransitionEnterActive}
-          leaveActiveClass={styles.captionTransitionLeaveActive}
-          appear={true}
-        >
-          {(this.$slots.caption?.() || this.caption) && (
-            <DCaption
-              {...config.captionOptions}
-              font={this.size}
-              class={this.captionClasses}
-              style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}
-              {...this.captionOptions}
-            >
-              {this.$slots.caption?.() || this.caption}
-            </DCaption>
-          )}
-        </Trans>
       );
     },
   },

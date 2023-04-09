@@ -3,18 +3,18 @@ import styles from "./index.css?module";
 
 export default {
   name: "DRadio",
-  className: "dRadio",
-  inputClassName: "input",
-  labelClassName: "label",
-  labelInnerClassName: "labelInner",
+  class: styles["dRadio"],
+  inputClass: styles["input"],
+  labelClass: styles["label"],
+  labelInnerClass: styles["labelInner"],
   captionOptions: {
     type: CAPTION_TYPE.DANGER,
     class: styles["caption"],
   },
   captionOffset: "0.2em",
-  iconContainerClassName: "iconContainer",
-  iconContainerBackdropClassName: "iconContainerBackdrop",
-  iconClassName: "icon",
+  iconContainerClass: styles["iconContainer"],
+  iconContainerBackdropClass: styles["iconContainerBackdrop"],
+  iconClass: styles["icon"],
   inputRef: "inputRef",
   buttonOptions: {
     class: styles["button"],

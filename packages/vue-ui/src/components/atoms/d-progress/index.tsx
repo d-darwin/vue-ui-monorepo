@@ -6,18 +6,16 @@ import type {
   VNode,
 } from "vue";
 import { v4 as uuid } from "uuid";
-import { Transition as Trans } from "@vue/runtime-dom";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
-import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import { Type } from "./types";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * Renders custom progress bar, linear or circular.
@@ -38,7 +36,7 @@ export default defineComponent({
     /**
      Defines offset of .label
      */
-    labelOffset: generateProp.text(config.defaultLabelOffset),
+    labelOffset: generateProp.text(config.labelOffset),
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
@@ -52,7 +50,7 @@ export default defineComponent({
     /**
      * Defines type of the component: linear or circular
      */
-    type: generateProp.string<Type>(config.defaultType),
+    type: generateProp.string<Type>(config.type),
     /**
      * Pass any attribute to the progress element
      */
@@ -82,7 +80,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.defaultCaptionOffset), // TODO: move to captionOptions
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
@@ -107,6 +105,10 @@ export default defineComponent({
      * Defines container element type of the component
      */
     tag: generateProp.tag(TAG_NAME.DIV),
+  },
+
+  setup(props, { slots }) {
+    return useCaption(props, slots, config.captionOptions);
   },
 
   computed: {
@@ -142,9 +144,7 @@ export default defineComponent({
 
     progressClasses(): (string | undefined)[] {
       return [
-        this.type === Type.linear
-          ? styles[config.linearClassName]
-          : styles[config.circularClassName],
+        this.type === Type.linear ? config.linearClass : config.circularClass,
         generateClass.colorScheme(this.colorScheme),
         generateClass.rounding(this.rounding),
         this.type === Type.linear
@@ -190,7 +190,7 @@ export default defineComponent({
 
     loaderClasses(): (string | undefined)[] {
       return [
-        styles[config.loaderContainerClassName],
+        config.loaderContainerClass,
         generateClass.rounding(this.rounding),
       ];
     },
@@ -241,33 +241,9 @@ export default defineComponent({
       return null;
     },
 
-    renderCaption(): VNode {
-      return (
-        <Trans
-          enterActiveClass={styles.captionTransitionEnterActive}
-          leaveActiveClass={styles.captionTransitionLeaveActive}
-          appear={true}
-        >
-          {(this.$slots.caption || this.caption) && (
-            <DCaption
-              {...config.captionOptions}
-              font={this.size}
-              class={generateClass.transition(this.transition)}
-              style={`${config.captionOffsetCSSPropName}: ${prepareHtmlSize(
-                this.captionOffset
-              )}`}
-              {...this.captionOptions}
-            >
-              {this.$slots.caption?.() || this.caption}
-            </DCaption>
-          )}
-        </Trans>
-      );
-    },
-
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
+        config.class,
         generateClass.font(this.size),
         generateClass.size(this.size),
       ];

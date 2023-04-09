@@ -3,9 +3,9 @@ import styles from "./index.css?module";
 
 export default {
   name: "DCheckboxGroup",
-  className: "dCheckboxGroup",
-  labelClassName: "label",
-  checkboxClassName: "checkbox",
+  class: styles["dCheckboxGroup"],
+  labelClass: styles["label"],
+  checkboxClass: styles["checkbox"],
   captionOptions: {
     type: TYPE.DANGER,
     class: styles["caption"],

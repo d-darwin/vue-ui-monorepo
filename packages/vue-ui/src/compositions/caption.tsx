@@ -8,6 +8,7 @@ import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import styles from "./caption.css?module";
 
 interface Props {
   caption?: Text | VNode;
@@ -18,24 +19,18 @@ interface Props {
 }
 
 interface Slots {
-  caption?: () => Text | Node;
-}
-
-interface Styles {
-  [className: string]: string;
+  caption?: () => Text | VNode;
 }
 
 /**
  * Renders props.caption or $slots.caption()
  * @param props
  * @param slots
- * @param styles
  * @param captionDefaults
  */
 export default function useCaption(
   props: Props,
   slots: Slots,
-  styles: Styles,
   captionDefaults: DCaptionProps
 ): { renderCaption: Ref<VNode> } {
   /**
@@ -57,7 +52,7 @@ export default function useCaption(
           {...captionDefaults}
           font={props.size}
           style={`--offset: ${prepareHtmlSize(props.captionOffset)}`}
-          class={generateClass.transition(props.transition)}
+          class={[styles.caption, generateClass.transition(props.transition)]}
           {...props.captionOptions}
         >
           {captionContent}

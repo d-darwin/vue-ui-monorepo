@@ -69,23 +69,23 @@ export default defineComponent({
     /**
      * The component is mounted inside passed element.
      */
-    target: generateProp.teleportTarget(config.defaultTarget),
+    target: generateProp.teleportTarget(config.target),
     /**
      * Min width of the component.
      */
-    minWidth: generateProp.text(config.defaultMinWidth),
+    minWidth: generateProp.text(config.minWidth),
     /**
      * Max width of the component.
      */
-    maxWidth: generateProp.text(config.defaultMaxWidth),
+    maxWidth: generateProp.text(config.maxWidth),
     /**
      * Min height of the component.
      */
-    minHeight: generateProp.text(config.defaultMinHeight),
+    minHeight: generateProp.text(config.minHeight),
     /**
      * Max height of the component.
      */
-    maxHeight: generateProp.text(config.defaultMaxHeight),
+    maxHeight: generateProp.text(config.maxHeight),
     /**
      * Defines appearance of the component
      */
@@ -110,7 +110,7 @@ export default defineComponent({
     /**
      * Defines a11y role of the component
      */
-    role: generateProp.string(config.defaultRole),
+    role: generateProp.string(config.role),
     /**
      * Defines container element type of the component
      */
@@ -118,7 +118,7 @@ export default defineComponent({
     /**
      * Defines z-index of the component
      */
-    zIndex: generateProp.number(config.defaultZIndex),
+    zIndex: generateProp.number(config.zIndex),
     /**
      * Defines component id to be focused on show
      */
@@ -220,7 +220,7 @@ export default defineComponent({
       return this.title ? (
         <div
           class={[
-            styles[config.titleClassName],
+            config.titleClass,
             this.titleClass,
             generateClass.font(this.titleFont),
           ]}
@@ -252,7 +252,7 @@ export default defineComponent({
 
       // TODO: header, tag, ... (like content in other components)
       return (
-        <div class={styles[config.headerClassName]}>
+        <div class={config.headerClass}>
           {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
         </div>
       );
@@ -262,7 +262,7 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles[config.contentClassName],
+            config.contentClass,
             this.contentClass,
             generateClass.font(this.contentFont),
           ]}
@@ -279,7 +279,7 @@ export default defineComponent({
 
       // TODO: footer, tag, ... (like content in other components)
       return (
-        <div class={styles[config.footerClassName]}>
+        <div class={config.footerClass}>
           {this.$slots.footer?.() || [
             <DButton
               {...config.cancelButtonOptions}
@@ -305,7 +305,7 @@ export default defineComponent({
 
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
+        config.class,
         generateClass.colorScheme(this.colorScheme),
         ...generateClass.padding(this.padding, this.size),
         generateClass.rounding(this.rounding),

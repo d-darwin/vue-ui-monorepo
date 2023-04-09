@@ -62,7 +62,7 @@ export default defineComponent({
     /**
      * The component is mounted inside passed element.
      */
-    target: generateProp.teleportTarget(config.defaultTarget),
+    target: generateProp.teleportTarget(config.target),
     /**
      * The notification type: success, info, warning, error.
      */
@@ -131,10 +131,10 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       return [
-        this.notificationClass,
-        styles[config.className],
+        config.class,
         styles[this.position],
         styles[this.type],
+        this.notificationClass,
         generateClass.colorScheme(this.colorScheme),
         generateClass.font(this.font),
         ...generateClass.padding(this.padding, this.size),

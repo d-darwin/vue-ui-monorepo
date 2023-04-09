@@ -25,7 +25,7 @@ import DCaption from "@/components/atoms/d-caption";
 describe("DCheckboxGroup", () => {
   const wrapper = mount(DCheckboxGroup, { props: { caption: "Not empty" } });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render passes props.items", async () => {
     const items = [
@@ -114,7 +114,7 @@ describe("DCheckboxGroup", () => {
     ];
     await wrapper.setProps({ items });
     const firstCheckbox = wrapper.findComponent(DCheckbox);
-    expect(firstCheckbox.classes()).toContain(config.checkboxClassName);
+    expect(firstCheckbox.classes()).toContain(config.checkboxClass);
     expect(firstCheckbox.classes()).toContain(firstCheckboxOwnClass);
   });
 

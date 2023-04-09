@@ -6,7 +6,6 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
-import styles from "./d-tabpanel.css?module";
 
 export default defineComponent({
   name: config.tabpanelName,
@@ -49,7 +48,7 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       return [
-        styles[config.tabpanelClassName],
+        config.tabpanelClass,
         generateClass.font(this.font),
         generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM),
         ...generateClass.padding(this.padding, this.font),

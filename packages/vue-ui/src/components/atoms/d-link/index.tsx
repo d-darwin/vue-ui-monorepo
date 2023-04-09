@@ -50,7 +50,7 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
-        styles[config.className],
+        config.class,
         generateClass.font(this.font),
         generateClass.outline(COLOR_SCHEME.PRIMARY, this.font), // TODO: config.colorScheme
         generateClass.size(this.font),

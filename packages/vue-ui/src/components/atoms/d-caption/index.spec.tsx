@@ -19,18 +19,18 @@ describe("DCaption", () => {
     },
   });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render props.type to appropriate class name", async () => {
     await wrapper.setProps({ type: TYPE.DANGER });
     expect(wrapper.classes()).toContain(styles.danger);
   });
 
-  fontSizeClassCase(wrapper, `.${config.className}`);
+  fontSizeClassCase(wrapper, `.${config.class}`);
 
   tagCase(wrapper);
 
-  propStringCase(wrapper, `.${config.className}`);
+  propStringCase(wrapper, `.${config.class}`);
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 });

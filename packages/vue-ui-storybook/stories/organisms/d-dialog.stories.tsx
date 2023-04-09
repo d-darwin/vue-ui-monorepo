@@ -63,9 +63,9 @@ export default {
     contentClass: "someContentClass",
     contentFont: FONT.MEDIUM,
     minWidth: "25%",
-    maxWidth: "25%",
+    maxWidth: "50%",
     minHeight: "25%",
-    maxHeight: "25%",
+    maxHeight: "50%",
     target: "body",
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.EQUAL, // TODO: don't hardcode values

@@ -93,7 +93,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, config.captionOptions);
+    return useCaption(props, slots, config.captionOptions);
   },
 
   data() {
@@ -110,7 +110,7 @@ export default defineComponent({
           /*TODO: customizable tag*/
           <legend
             class={[
-              styles[config.labelClassName],
+              config.labelClass,
               this.labelClass,
               generateClass.font(this.labelFont || this.size),
             ]}
@@ -128,7 +128,7 @@ export default defineComponent({
         Object.assign(radio.props || {}, {
           checked: this.innerValue === radio.props?.value,
           name: radio.props?.name || this.name,
-          class: [styles[config.radioClassName], radio.props?.class],
+          class: [config.radioClass, radio.props?.class],
           disabled:
             typeof radio.props?.disabled === "undefined"
               ? this.disabled
@@ -168,7 +168,7 @@ export default defineComponent({
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {this.renderLabel}
         {this.renderItemList}
         {this.renderCaption}

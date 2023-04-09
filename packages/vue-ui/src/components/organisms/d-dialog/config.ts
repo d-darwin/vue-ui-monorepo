@@ -5,18 +5,18 @@ import styles from "./index.css?module";
 
 export default {
   name: "DDialog",
-  className: "dDialog",
-  headerClassName: "header",
-  titleClassName: "title",
-  contentClassName: "content",
-  footerClassName: "footer",
-  defaultTarget: "body", // TODO: rename -> no "default"
-  defaultRole: "dialog", // TODO: rename -> no "default"
-  defaultZIndex: 1001, // TODO: rename -> no "default"
-  defaultMinWidth: "25%", // TODO: rename -> no "default"
-  defaultMaxWidth: "25%", // TODO: rename -> no "default"
-  defaultMinHeight: "25%", // TODO: rename -> no "default"
-  defaultMaxHeight: "25%", // TODO: rename -> no "default"
+  class: styles["dDialog"],
+  headerClass: styles["header"],
+  titleClass: styles["title"],
+  contentClass: styles["content"],
+  footerClass: styles["footer"],
+  target: "body",
+  role: "dialog",
+  zIndex: 1001,
+  minWidth: "25%",
+  maxWidth: "50%",
+  minHeight: "25%",
+  maxHeight: "50%",
   closeButtonOptions: {
     content: "⛌",
     size: SIZE.SMALL,

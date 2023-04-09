@@ -26,7 +26,7 @@ jest.mock("chalk", () => ({
 describe("DTab", () => {
   const wrapper = mount(DTab);
 
-  baseClassCase(wrapper, config.tabClassName);
+  baseClassCase(wrapper, config.tabClass);
 
   it("Should render 'tab' role attr", () => {
     expect(wrapper.attributes("role")).toBe("tab");
@@ -58,24 +58,24 @@ describe("DTab", () => {
     expect(wrapper.classes()).not.toContain("active");
   });
 
-  propStringCase(wrapper, `.${config.tabClassName}`);
-  propVNodeCase(wrapper, `.${config.tabClassName}`);
-  slotCase(DTab, `.${config.tabClassName}`);
+  propStringCase(wrapper, `.${config.tabClass}`);
+  propVNodeCase(wrapper, `.${config.tabClass}`);
+  slotCase(DTab, `.${config.tabClass}`);
 
-  fontSizeClassCase(wrapper, `.${config.tabClassName}`);
+  fontSizeClassCase(wrapper, `.${config.tabClass}`);
 
   outlineClassCase(
     wrapper,
-    `.${config.tabClassName}`,
+    `.${config.tabClass}`,
     COLOR_SCHEME.PRIMARY,
     SIZE.MEDIUM
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.tabClassName}`);
+  paddingEqualClassesCase(wrapper, `.${config.tabClass}`);
 
-  sizeClassCase(wrapper, `.${config.tabClassName}`);
+  sizeClassCase(wrapper, `.${config.tabClass}`);
 
-  transitionClassCase(wrapper, `.${config.tabClassName}`);
+  transitionClassCase(wrapper, `.${config.tabClass}`);
 
   it("Should render disabled class if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });
