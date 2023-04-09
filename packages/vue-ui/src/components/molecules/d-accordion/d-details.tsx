@@ -1,11 +1,12 @@
-import { defineComponent, ref, onMounted, inject, watch } from "vue";
-import type { CSSProperties, Ref, VNode } from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { DAccordionProvided } from "./types";
 import { dDetailsProps as props } from "./props";
 import { getTransitionDuration } from "./utils";
+import { dDetailsSetup as setup } from "./setup";
 import config from "./config";
 import styles from "./d-details.css?module";
 
@@ -15,41 +16,9 @@ import styles from "./d-details.css?module";
 export default defineComponent({
   name: config.details.name,
 
-  /**
-   * @prop summary
-   * TODO: check if there is jsdoc -> storybook
-   * */
   props,
 
-  setup(props) {
-    const contentRef: Ref<HTMLElement | null> = ref(null);
-    const contentHeight = ref(0);
-    const isMounted = ref(false);
-    onMounted(async () => {
-      contentHeight.value = contentRef.value?.offsetHeight || 0;
-      isMounted.value = true;
-    });
-
-    const innerOpen = ref(props.open || false);
-    const isExpanded = ref(props.open || false);
-    watch(
-      () => props.open,
-      () => {
-        innerOpen.value = props.open;
-        isExpanded.value = props.open;
-      }
-    );
-
-    return {
-      [config.contentOptions.ref]: contentRef,
-      contentHeight,
-      isMounted,
-      [config.details.ref]: ref(null) as Ref<HTMLElement | null>,
-      innerOpen,
-      isExpanded,
-      injection: inject<DAccordionProvided>(config.provideInjectKey, {}),
-    };
-  },
+  setup,
 
   emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN],
 

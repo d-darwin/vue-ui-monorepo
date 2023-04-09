@@ -1,8 +1,8 @@
-import { defineComponent, ref, provide } from "vue";
-import type { VNode, Ref } from "vue";
-import type { DAccordionProvided } from "./types";
+import { defineComponent } from "vue";
+import type { VNode } from "vue";
 import { dAccordionProps as props } from "./props";
 import config from "./config";
+import { dAccordionSetup } from "./setup";
 
 /**
  * Renders an accordion using <b>DDetails</b> components.
@@ -13,18 +13,7 @@ export default defineComponent({
   props,
 
   setup(props) {
-    provide<Ref<DAccordionProvided>>(
-      config.provideInjectKey,
-      ref({
-        hideSummaryAfter: props.hideSummaryAfter,
-        disabled: props.disabled,
-        colorScheme: props.colorScheme,
-        padding: props.padding,
-        rounding: props.rounding,
-        size: props.size,
-        transition: props.transition,
-      })
-    );
+    dAccordionSetup(props);
   },
 
   render(): VNode {
