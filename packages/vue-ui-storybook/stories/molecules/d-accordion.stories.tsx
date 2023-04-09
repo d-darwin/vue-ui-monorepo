@@ -43,6 +43,7 @@ export default {
      * TODO: args
      */
     hideSummaryAfter: false,
+    disabled: false,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values

@@ -10,10 +10,17 @@
   border-radius: var(--border-radius);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  cursor: pointer;
   margin: -2px;
   height: calc(var(--size) + 4px);
   padding: var(--padding);
+}
+
+.summary:not(.summary) {
+  cursor: pointer;
+}
+
+.__disabled {
+  cursor: not-allowed;
 }
 
 .rotatedIcon {

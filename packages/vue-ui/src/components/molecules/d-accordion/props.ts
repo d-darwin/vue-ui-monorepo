@@ -3,10 +3,6 @@ import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import config from "./config";
 
-/**
- * @prop colorScheme
- * TODO: check if there is jsdoc -> storybook
- * */
 export const dAccordionProps = {
   /**
    * An array of DDetails
@@ -15,13 +11,18 @@ export const dAccordionProps = {
     type: Array as PropType<(typeof DDetails | undefined)[]>,
   },
 
-  // TODO: specific props: isSolo, someOpen
+  // TODO: specific props: isSolo, someOpen ???
   // TODO: openId\Value ???
+  //  https://vuetifyjs.com/en/components/expansion-panels/
 
   /**
    * Don't show content after the summary
    */
   hideSummaryAfter: Boolean,
+  /**
+   * Pass true to make the component disabled
+   */
+  disabled: Boolean,
   /**
    * Defines appearance of the component
    */
@@ -63,6 +64,10 @@ export const dDetailsProps = {
    * Don't show content after the summary
    */
   hideSummaryAfter: Boolean,
+  /**
+   * Pass true to make the component disabled
+   */
+  disabled: Boolean,
   /**
    * Plain string or VNode
    */

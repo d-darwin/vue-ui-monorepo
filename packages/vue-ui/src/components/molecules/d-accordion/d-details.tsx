@@ -60,6 +60,7 @@ export default defineComponent({
       return {
         hideSummaryAfter:
           this.injection?.hideSummaryAfter || this.hideSummaryAfter,
+        disabled: this.injection?.disabled || this.disabled,
         colorScheme: this.injection?.colorScheme || this.colorScheme,
         padding: this.injection?.padding || this.padding,
         rounding: this.injection?.rounding || this.rounding,
@@ -142,6 +143,10 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         config.details.class,
+        this.commonProps.disabled ? config.details.disabledClass : undefined,
+        this.commonProps.disabled
+          ? config.details.disabledColorSchemeClass
+          : undefined,
         generateClass.colorScheme(this.commonProps.colorScheme),
         generateClass.font(this.commonProps.size),
         ...generateClass.padding(
@@ -158,6 +163,9 @@ export default defineComponent({
   methods: {
     async clickHandler(event: MouseEvent): Promise<void> {
       event.preventDefault();
+      if (this.commonProps.disabled) {
+        return;
+      }
 
       if (this.innerOpen) {
         this.isExpanded = false;

@@ -7,6 +7,7 @@ import { DDetails, DAccordion } from "./index";
 
 export interface DAccordionProvided {
   hideSummaryAfter?: boolean;
+  disabled?: boolean;
   colorScheme?: ColorScheme;
   padding?: Padding;
   rounding?: Rounding;

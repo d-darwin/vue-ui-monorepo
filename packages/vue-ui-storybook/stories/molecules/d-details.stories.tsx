@@ -41,6 +41,7 @@ export default {
     summary: "Summary",
     summaryOptions: { class: "customSummaryClass" },
     hideSummaryAfter: false,
+    disabled: false,
     content: "Some content string",
     contentOptions: { class: "customContentClass" },
     open: false,

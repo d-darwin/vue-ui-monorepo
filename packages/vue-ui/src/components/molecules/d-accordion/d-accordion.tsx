@@ -5,15 +5,11 @@ import { dAccordionProps as props } from "./props";
 import config from "./config";
 
 /**
- * TODO: DAccordion
+ * Renders an accordion using <b>DDetails</b> components.
  */
 export default defineComponent({
   name: config.name,
 
-  /**
-   * @prop colorScheme
-   * TODO: check if there is jsdoc -> storybook
-   * */
   props,
 
   setup(props) {
@@ -21,6 +17,7 @@ export default defineComponent({
       config.provideInjectKey,
       ref({
         hideSummaryAfter: props.hideSummaryAfter,
+        disabled: props.disabled,
         colorScheme: props.colorScheme,
         padding: props.padding,
         rounding: props.rounding,
