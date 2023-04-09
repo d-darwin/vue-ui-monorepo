@@ -1,12 +1,5 @@
-import {
-  defineComponent,
-  Transition as Trans,
-  Teleport,
-  type VNode,
-  type PropType,
-  type CSSProperties,
-  type HTMLAttributes,
-} from "vue";
+import { defineComponent, Transition as Trans, Teleport } from "vue";
+import type { VNode, PropType, CSSProperties, HTMLAttributes } from "vue";
 import { v4 as uuid } from "uuid";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
@@ -14,7 +7,7 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import type { PositionStrict } from "@darwin-studio/vue-ui/src/types/position";
 import { POSITION_HORIZONTAL } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
@@ -24,7 +17,6 @@ import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { BACKDROP_DEFAULTS, CLOSE_BUTTON_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -80,7 +72,7 @@ export default defineComponent({
     /**
      * Defines content element type of the component
      */
-    contentTag: generateProp.tag(TAG_NAME_DEFAULTS.NAV),
+    contentTag: generateProp.tag(TAG_NAME.NAV),
     /**
      * Positions on the component.
      * Takes values: 'top', 'right', 'bottom', 'left'.
@@ -126,7 +118,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.ASIDE),
+    tag: generateProp.tag(TAG_NAME.ASIDE),
     /**
      * Defines z-index of the component
      */
@@ -143,12 +135,12 @@ export default defineComponent({
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
     closeButtonOptions: generateProp.options<DButtonProps>(
-      CLOSE_BUTTON_DEFAULTS
+      config.closeButtonOptions
     ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
+    backdropOptions: generateProp.options<DBackdropProps>(),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
@@ -217,7 +209,7 @@ export default defineComponent({
       // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
-          {...CLOSE_BUTTON_DEFAULTS}
+          {...config.closeButtonOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore: TODO: allow unknown props\attrs
           id={this.focusId} // TODO: remove if props.focusId ???

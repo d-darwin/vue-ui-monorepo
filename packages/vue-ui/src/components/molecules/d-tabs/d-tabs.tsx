@@ -1,6 +1,6 @@
 import { defineComponent, ref, type PropType, type VNode } from "vue";
 import { v4 as uuid } from "uuid";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
@@ -62,7 +62,7 @@ export default defineComponent({
     /**
      * Defines element type of the tablist component
      */
-    tablistTag: generateProp.tag(TAG_NAME_DEFAULTS.UL),
+    tablistTag: generateProp.tag(TAG_NAME.UL),
     /**
      * Defines should DTabs be activated on arrow navigation
      */

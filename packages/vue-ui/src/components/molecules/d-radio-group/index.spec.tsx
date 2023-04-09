@@ -53,7 +53,7 @@ describe("DRadioGroup", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       size
@@ -63,7 +63,7 @@ describe("DRadioGroup", () => {
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DRadioGroup);
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
   });
   it("Should render caption element with props.caption content if passed", async () => {
@@ -72,11 +72,11 @@ describe("DRadioGroup", () => {
     const wrapper = await mount(DRadioGroup, { props: { caption } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DRadioGroup, `.${config.captionClassName}`, "caption");
+  slotCase(DRadioGroup, `.${config.captionOptions.class}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -84,13 +84,13 @@ describe("DRadioGroup", () => {
       captionOffset,
     });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
   });
-  transitionClassCase(wrapper, `.${config.captionClassName}`);
-  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
+  it("Should merge props from props.captionOptions and config.captionOptions to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DRadioGroup, {
       props: {

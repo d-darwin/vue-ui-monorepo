@@ -40,48 +40,48 @@ describe("DSlider", () => {
   elementValueAttrCase(wrapper, 33);
 
   // TODO: attr case factory
-  it("Should render props.min to the input's min attr", async () => {
+  it("Should render props.inputOptions.min to the input's min attr", async () => {
     const min = 13;
-    await wrapper.setProps({ min });
+    await wrapper.setProps({ inputOptions: { min } });
 
-    const inputEl = wrapper.find(`.${config.inputClassName}`);
+    const inputEl = wrapper.find(`.${config.inputOptions.class}`);
     expect(inputEl.attributes().min).toBe(String(min));
   });
 
   it("Should render props.max to the input's max attr", async () => {
     const max = 66;
-    await wrapper.setProps({ max });
+    await wrapper.setProps({ inputOptions: { max } });
 
-    const inputEl = wrapper.find(`.${config.inputClassName}`);
+    const inputEl = wrapper.find(`.${config.inputOptions.class}`);
     expect(inputEl.attributes().max).toBe(String(max));
   });
 
   it("Should render props.step to the input's step attr", async () => {
     const step = 4;
-    await wrapper.setProps({ step });
+    await wrapper.setProps({ inputOptions: { step } });
 
-    const inputEl = wrapper.find(`.${config.inputClassName}`);
+    const inputEl = wrapper.find(`.${config.inputOptions.class}`);
     expect(inputEl.attributes().step).toBe(String(step));
   });
 
   labelAbsenceCase(wrapper);
-  propStringCase(wrapper, `.${config.labelClassName}`, "label");
-  propVNodeCase(wrapper, `.${config.labelClassName}`, "label");
-  slotCase(DSlider, `.${config.labelClassName}`, "label");
+  propStringCase(wrapper, `.${config.labelOptions.class}`, "label");
+  propVNodeCase(wrapper, `.${config.labelOptions.class}`, "label");
+  slotCase(DSlider, `.${config.labelOptions.class}`, "label");
 
   offsetCase(wrapper);
 
   colorSchemeClassCase(
     wrapper,
-    `.${config.trackClassName}`,
+    `.${config.trackOptions.class}`,
     COLOR_SCHEME.DANGER
   );
 
-  slotCase(DSlider, `.${config.trackClassName}`, "track");
+  slotCase(DSlider, `.${config.trackOptions.class}`, "track");
 
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     await wrapper.setProps({ caption: undefined });
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
     await wrapper.setProps({ caption: "not empty" });
   });
@@ -91,12 +91,12 @@ describe("DSlider", () => {
     const caption = <div>{captionContent}</div>;
     await wrapper.setProps({ caption });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
 
-  slotCase(DSlider, `.${config.captionClassName}`, "caption");
+  slotCase(DSlider, `.${config.captionOptions.class}`, "caption");
 
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
@@ -105,7 +105,7 @@ describe("DSlider", () => {
       captionOffset,
     });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
@@ -113,30 +113,30 @@ describe("DSlider", () => {
 
   colorSchemeClassCase(
     wrapper,
-    `.${config.inputClassName}`,
+    `.${config.inputOptions.class}`,
     COLOR_SCHEME.DANGER
   );
 
   outlineClassCase(
     wrapper,
-    `.${config.inputClassName}`,
+    `.${config.inputOptions.class}`,
     COLOR_SCHEME.DANGER,
     SIZE.SMALL
   );
 
-  roundingClassCase(wrapper, `.${config.trackClassName}`);
+  roundingClassCase(wrapper, `.${config.trackOptions.class}`);
 
-  roundingClassCase(wrapper, `.${config.inputClassName}`);
+  roundingClassCase(wrapper, `.${config.inputOptions.class}`);
 
   sizeClassCase(wrapper, `.${config.className}`);
 
-  fontSizeClassCase(wrapper, `.${config.labelClassName}`);
+  fontSizeClassCase(wrapper, `.${config.labelOptions.class}`);
 
   minControlWidthCase(wrapper);
 
-  transitionClassCase(wrapper, `.${config.captionClassName}`);
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
 
-  disabledAttrCase(wrapper, `.${config.inputClassName}`);
+  disabledAttrCase(wrapper, `.${config.inputOptions.class}`);
 
   tagCase(wrapper);
 
@@ -260,7 +260,7 @@ describe("DSlider", () => {
     expect(whenInput).toHaveBeenCalledTimes(0);
   });
 
-  it("Should merge props from props.track and TRACK_DEFAULTS to the track element attrs", async () => {
+  it("Should merge props from props.trackOptions and config.trackOptions to the track element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSlider);
     await wrapper.setProps({
@@ -269,11 +269,11 @@ describe("DSlider", () => {
       },
     });
 
-    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    const trackEl = wrapper.find(`.${config.trackOptions.class}`);
     expect(trackEl.classes()).toContain(externalClass);
   });
 
-  it("Should merge props from props.input and INPUT_DEFAULTS to the input element attrs", async () => {
+  it("Should merge props from props.inputOptions and config.inputOptions to the input element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSlider);
     await wrapper.setProps({
@@ -282,11 +282,11 @@ describe("DSlider", () => {
       },
     });
 
-    const inputEl = wrapper.find(`.${config.inputClassName}`);
+    const inputEl = wrapper.find(`.${config.inputOptions.class}`);
     expect(inputEl.classes()).toContain(externalClass);
   });
 
-  it("Should merge props from props.label and LABEL_DEFAULTS to the label element attrs", async () => {
+  it("Should merge props from props.labelOptions and config.labelOptions to the label element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSlider);
     await wrapper.setProps({
@@ -296,11 +296,11 @@ describe("DSlider", () => {
       },
     });
 
-    const labelEl = wrapper.find(`.${config.labelClassName}`);
+    const labelEl = wrapper.find(`.${config.labelOptions.class}`);
     expect(labelEl.classes()).toContain(externalClass);
   });
 
-  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+  it("Should merge props from props.captionOptions and config.captionOptions to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSlider, {
       props: {

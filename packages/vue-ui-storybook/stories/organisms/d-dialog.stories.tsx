@@ -7,7 +7,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "organisms/DDialog",
@@ -73,7 +73,7 @@ export default {
     size: SIZE.LARGE, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     role: "dialog",
-    tag: TAG_NAME_DEFAULTS.DIALOG,
+    tag: TAG_NAME.DIALOG,
     zIndex: 1001,
     hideHeader: false,
     hideFooter: false,

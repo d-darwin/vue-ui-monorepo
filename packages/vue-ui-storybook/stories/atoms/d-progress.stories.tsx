@@ -5,7 +5,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { Type } from "@darwin-studio/vue-ui/src/components/atoms/d-progress/types";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "atoms/DProgress",
@@ -46,7 +46,7 @@ export default {
     rounding: ROUNDING.MEDIUM,
     size: SIZE.MEDIUM,
     transition: TRANSITION.FAST,
-    tag: TAG_NAME_DEFAULTS.DIV,
+    tag: TAG_NAME.DIV,
   },
 };
 

@@ -1,4 +1,5 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
 import { v4 as uuid } from "uuid";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -11,7 +12,6 @@ import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { Values, Value } from "./types";
-import { ASPECT_RATIO_DEFAULTS, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -61,7 +61,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -100,7 +100,7 @@ export default defineComponent({
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
     aspectRatioOptions: generateProp.options<DAspectRatioProps>(
-      ASPECT_RATIO_DEFAULTS
+      config.trackOptions
     ),
 
     /**
@@ -120,7 +120,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
+    return useCaption(props, slots, styles, config.captionOptions); // TODO !!!!!, don't pas styles
   },
 
   emits: [
@@ -202,7 +202,7 @@ export default defineComponent({
     renderInput(): VNode {
       return (
         <DAspectRatio
-          {...ASPECT_RATIO_DEFAULTS}
+          {...config.trackOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
           // @ts-ignore TODO
           for={this.id}

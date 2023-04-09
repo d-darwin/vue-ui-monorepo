@@ -114,7 +114,7 @@ describe("DCheckbox", () => {
   // TODO: combine all Caption cases in one factory or just test composition???
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DCheckbox);
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
   });
   it("Should render caption element with props.caption content if passed", async () => {
@@ -122,11 +122,11 @@ describe("DCheckbox", () => {
     const caption = <div>{captionContent}</div>;
     const wrapper = await mount(DCheckbox, { props: { caption } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DCheckbox, `.${config.captionClassName}`, "caption");
+  slotCase(DCheckbox, `.${config.captionOptions.class}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     const wrapper = await mount(DCheckbox, {
@@ -134,15 +134,15 @@ describe("DCheckbox", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
   });
-  transitionClassCase(wrapper, `.${config.captionClassName}`, {
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`, {
     caption: "not empty",
   });
-  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+  it("Should merge props from props.captionOptions and config.CaptionOptions to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DCheckbox, {
       props: {
@@ -163,7 +163,7 @@ describe("DCheckbox", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       size

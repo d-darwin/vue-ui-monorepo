@@ -1,8 +1,9 @@
+import dAccordionStyles from "./d-accordion.css";
 import dDetailsStyles from "./d-details.css";
 
 export default {
   name: "DAccordion",
-  class: "dAccordion",
+  class: dAccordionStyles["dAccordion"],
   details: {
     ref: "detailsRef",
     name: "DDetails",

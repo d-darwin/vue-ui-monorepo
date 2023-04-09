@@ -1,11 +1,10 @@
-import {
-  defineComponent,
-  Transition as Trans,
-  type PropType,
-  type VNode,
-  type HTMLAttributes,
-  type InputHTMLAttributes,
-  type LabelHTMLAttributes,
+import { defineComponent, Transition as Trans } from "vue";
+import type {
+  PropType,
+  VNode,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
 } from "vue";
 import { v4 as uuid } from "uuid";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
@@ -15,12 +14,6 @@ import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import {
-  CAPTION_DEFAULTS,
-  INPUT_DEFAULTS,
-  LABEL_DEFAULTS,
-  TRACK_DEFAULTS,
-} from "./contants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -41,18 +34,6 @@ export default defineComponent({
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
     value: generateProp.number(),
-    /**
-     * Defines min attr of the input
-     */
-    min: generateProp.number(config.defaultMin),
-    /**
-     * Defines max attr of the input
-     */
-    max: generateProp.number(config.defaultMax),
-    /**
-     * Defines step attr of the input
-     */
-    step: generateProp.number(config.defaultStep),
     // TODO: dataset (not just step)
     // TODO: marks
     // TODO: mark labels
@@ -60,11 +41,13 @@ export default defineComponent({
     /**
      * Pass any track attrs you want
      */
-    trackOptions: generateProp.options<HTMLAttributes>(TRACK_DEFAULTS),
+    trackOptions: generateProp.options<HTMLAttributes>(config.trackOptions),
     /**
      * Pass any input attrs you want
      */
-    inputOptions: generateProp.options<InputHTMLAttributes>(INPUT_DEFAULTS),
+    inputOptions: generateProp.options<InputHTMLAttributes>(
+      config.inputOptions
+    ),
     /**
      * Defines content of the <b>label</b> element.
      */
@@ -72,7 +55,9 @@ export default defineComponent({
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelOptions: generateProp.options<LabelHTMLAttributes>(LABEL_DEFAULTS),
+    labelOptions: generateProp.options<LabelHTMLAttributes>(
+      config.labelOptions
+    ),
     /**
      Defines offset of .label
      */
@@ -84,7 +69,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize caption, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -146,7 +131,7 @@ export default defineComponent({
 
       return (
         <label
-          {...LABEL_DEFAULTS}
+          {...config.labelOptions}
           for={String(this.id)}
           class={this.labelClasses}
           style={`--offset: ${this.labelOffset}`}
@@ -167,7 +152,7 @@ export default defineComponent({
     renderTrack(): VNode {
       return (
         <div
-          {...TRACK_DEFAULTS}
+          {...config.trackOptions}
           class={this.trackClasses}
           {...this.trackOptions}
         >
@@ -188,13 +173,9 @@ export default defineComponent({
     renderInput(): VNode {
       return (
         <input
-          {...INPUT_DEFAULTS}
+          {...config.inputOptions}
           id={this.$slots.label?.() || this.label ? String(this.id) : undefined}
           value={this.value}
-          min={this.min}
-          max={this.max}
-          step={this.step}
-          role={config.defaultRole}
           disabled={this.disabled}
           class={this.inputClasses}
           onChange={this.changeHandler}
@@ -217,7 +198,7 @@ export default defineComponent({
         >
           {(this.$slots.caption?.() || this.caption) && (
             <DCaption
-              {...CAPTION_DEFAULTS}
+              {...config.captionOptions}
               font={this.size}
               class={this.captionClasses}
               style={`--offset: ${prepareHtmlSize(this.captionOffset)}`}

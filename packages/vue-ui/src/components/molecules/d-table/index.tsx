@@ -1,10 +1,10 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { LOADER_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -108,7 +108,7 @@ export default defineComponent({
     /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
-    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
+    loaderOptions: generateProp.options<DLoaderProps>(config.loaderOptions),
   },
 
   computed: {
@@ -191,7 +191,7 @@ export default defineComponent({
     return (
       <table class={styles[config.className]}>
         {this.loading && (
-          <DLoader {...LOADER_DEFAULTS} {...this.loaderOptions} />
+          <DLoader {...config.loaderOptions} {...this.loaderOptions} />
         )}
         {this.renderHead}
         {this.renderBody}

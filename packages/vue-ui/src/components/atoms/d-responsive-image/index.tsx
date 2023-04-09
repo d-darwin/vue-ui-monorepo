@@ -1,4 +1,5 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -13,12 +14,7 @@ import type {
   ObjectFit,
 } from "./types";
 import { prepareSource } from "./utils";
-import {
-  ASPECT_RATIO_DEFAULTS,
-  LOADING,
-  OBJECT_FIT,
-  SOURCE_TYPE,
-} from "./constants";
+import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -60,7 +56,7 @@ export default defineComponent({
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
     aspectRatioOptions: generateProp.options<DAspectRatioProps>(
-      ASPECT_RATIO_DEFAULTS
+      config.aspectRatioOptions
     ),
     /**
      * Renders to the <i>object-fit</i> attr of the <b>img</b> element
@@ -194,7 +190,7 @@ export default defineComponent({
       if (this.aspectRatio && !this.caption) {
         return (
           <DAspectRatio
-            {...ASPECT_RATIO_DEFAULTS}
+            {...config.aspectRatioOptions}
             aspectRatio={this.aspectRatio}
             {...this.aspectRatioOptions}
           >
@@ -216,9 +212,10 @@ export default defineComponent({
       /* has aspect ratio container with figcaption */
       return (
         <DAspectRatio
+          {...config.aspectRatioOptions}
           aspectRatio={this.aspectRatio}
           tag="figure"
-          class={styles[config.className]}
+          {...this.aspectRatioOptions}
         >
           {this.imgVNode}
           {this.renderCaption}

@@ -1,9 +1,8 @@
 import { defineComponent, ref, provide } from "vue";
 import type { VNode, Ref } from "vue";
-import { dAccordionProps as props } from "./props";
 import type { DAccordionProvided } from "./types";
+import { dAccordionProps as props } from "./props";
 import config from "./config";
-import styles from "./d-accordion.css?module";
 
 /**
  * TODO: DAccordion
@@ -36,7 +35,7 @@ export default defineComponent({
 
     return (
       /*TODO: transition-group, keys*/
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {this.$slots.default
           ? /** @slot An alternative way to add DDetail components */
             this.$slots.default?.()

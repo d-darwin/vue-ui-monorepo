@@ -1,7 +1,7 @@
 import { HTMLAttributes, PropType } from "vue";
 import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/d-details";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import config from "@/components/molecules/d-accordion/config";
+import config from "./config";
 
 /**
  * @prop colorScheme

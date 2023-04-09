@@ -33,7 +33,7 @@ describe("DDetails", () => {
     COLOR_SCHEME.INVERSE,
     SIZE.TINY
   );
-  it("Should merge props from props.summaryOptions and SUMMARY_DEFAULTS to the summary element attrs", async () => {
+  it("Should merge props from props.summaryOptions and config.summaryOptions to the summary element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DDetails, {
       props: {
@@ -69,7 +69,7 @@ describe("DDetails", () => {
   transitionClassCase(wrapper, `.${config.contentOptions.class}`, {
     content: "Not empty",
   });
-  it("Should merge props from props.contentOptions and CONTENT_DEFAULTS to the content element attrs", async () => {
+  it("Should merge props from props.contentOptions and config.contentOptions to the content element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DDetails, {
       props: {

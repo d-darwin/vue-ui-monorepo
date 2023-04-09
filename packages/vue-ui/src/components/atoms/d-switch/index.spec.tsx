@@ -149,21 +149,21 @@ describe("DSwitch", () => {
 
   colorSchemeClassCase(
     wrapper,
-    `.${config.trackClassName}`,
+    `.${config.trackOptions.class}`,
     COLOR_SCHEME.DANGER
   );
 
   roundingClassCase(wrapper, `.${config.inputClassName}`);
 
-  roundingClassCase(wrapper, `.${config.trackClassName}`);
+  roundingClassCase(wrapper, `.${config.trackOptions.class}`);
 
   roundingClassCase(wrapper, `.${config.thumbClassName}`);
 
-  sizeClassCase(wrapper, `.${config.trackClassName}`);
+  sizeClassCase(wrapper, `.${config.trackOptions.class}`);
 
   sizeClassCase(wrapper, `.${config.thumbClassName}`);
 
-  transitionClassCase(wrapper, `.${config.trackClassName}`);
+  transitionClassCase(wrapper, `.${config.trackOptions.class}`);
 
   transitionClassCase(wrapper, `.${config.thumbClassName}`);
 
@@ -175,7 +175,7 @@ describe("DSwitch", () => {
     await wrapper.setProps({ size, caption: "Not empty" });
 
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       size
@@ -185,7 +185,7 @@ describe("DSwitch", () => {
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DSwitch);
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
   });
   it("Should render caption element with props.caption content if passed", async () => {
@@ -194,11 +194,11 @@ describe("DSwitch", () => {
     const wrapper = await mount(DSwitch, { props: { caption } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DSwitch, `.${config.captionClassName}`, "caption");
+  slotCase(DSwitch, `.${config.captionOptions.class}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -206,12 +206,12 @@ describe("DSwitch", () => {
       captionOffset,
     });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
   });
-  transitionClassCase(wrapper, `.${config.captionClassName}`);
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
   it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DSwitch, {
@@ -257,7 +257,7 @@ describe("DSwitch", () => {
 
   it("Shouldn render .__disabled class for .track and .label elements if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });
-    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    const trackEl = wrapper.find(`.${config.trackOptions.class}`);
     expect(trackEl.classes()).toContain(styles.__disabled);
     expect(trackEl.classes()).toContain(colorSchemeStyles.__disabled);
     const labelEl = wrapper.find(`.${config.labelClassName}`);
@@ -267,7 +267,7 @@ describe("DSwitch", () => {
 
   it("Shouldn't render .__disabled class for .track and .label elements if props.disabled is false", async () => {
     await wrapper.setProps({ disabled: false });
-    const trackEl = wrapper.find(`.${config.trackClassName}`);
+    const trackEl = wrapper.find(`.${config.trackOptions.class}`);
     expect(trackEl.classes()).not.toContain(styles.__disabled);
     expect(trackEl.classes()).not.toContain(colorSchemeStyles.__disabled);
     const labelEl = wrapper.find(`.${config.labelClassName}`);

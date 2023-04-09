@@ -7,7 +7,6 @@ import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { BACKDROP_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -56,7 +55,9 @@ export default defineComponent({
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
+    backdropOptions: generateProp.options<DBackdropProps>(
+      config.backdropOptions
+    ),
   },
 
   computed: {
@@ -75,7 +76,7 @@ export default defineComponent({
       return (
         <Trans {...this.backdropTransitionBindings} appear>
           <DBackdrop
-            {...BACKDROP_DEFAULTS}
+            {...config.backdropOptions}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
             {...this.backdropOptions}

@@ -1,11 +1,5 @@
-import {
-  defineComponent,
-  Teleport,
-  type CSSProperties,
-  type PropType,
-  type VNode,
-  type DialogHTMLAttributes,
-} from "vue";
+import { defineComponent, Teleport } from "vue";
+import type { CSSProperties, PropType, VNode, DialogHTMLAttributes } from "vue";
 import { v4 as uuid } from "uuid";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
@@ -17,18 +11,12 @@ import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/component
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import {
-  BACKDROP_DEFAULTS,
-  CLOSE_BUTTON_DEFAULTS,
-  CANCEL_BUTTON_DEFAULTS,
-  ACCEPT_BUTTON_DEFAULTS,
-} from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -126,7 +114,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.DIALOG),
+    tag: generateProp.tag(TAG_NAME.DIALOG),
     /**
      * Defines z-index of the component
      */
@@ -147,24 +135,24 @@ export default defineComponent({
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
     closeButtonOptions: generateProp.options<DButtonProps>(
-      CLOSE_BUTTON_DEFAULTS
+      config.closeButtonOptions
     ),
     /**
      * Pass any DButton.props to customize default footer cancel button, f.e. { content: "Cancel" }
      */
     cancelButtonOptions: generateProp.options<DButtonProps>(
-      CANCEL_BUTTON_DEFAULTS
+      config.cancelButtonOptions
     ),
     /**
      * Pass any DButton.props to customize default footer accept button, f.e. { content: "Accept" }
      */
     acceptButtonOptions: generateProp.options<DButtonProps>(
-      ACCEPT_BUTTON_DEFAULTS
+      config.acceptButtonOptions
     ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
+    backdropOptions: generateProp.options<DBackdropProps>(),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
@@ -218,7 +206,6 @@ export default defineComponent({
         <Trans {...this.backdropTransitionBindings}>
           {this.isShown && (
             <DBackdrop
-              {...BACKDROP_DEFAULTS}
               colorScheme={this.colorScheme}
               class={this.backdropClass}
               whenClick={this.closeHandler}
@@ -247,7 +234,7 @@ export default defineComponent({
       // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
-          {...CLOSE_BUTTON_DEFAULTS}
+          {...config.closeButtonOptions}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
           id={this.focusId}
@@ -295,12 +282,12 @@ export default defineComponent({
         <div class={styles[config.footerClassName]}>
           {this.$slots.footer?.() || [
             <DButton
-              {...CANCEL_BUTTON_DEFAULTS}
+              {...config.cancelButtonOptions}
               whenClick={this.cancelHandler}
               {...this.cancelButtonOptions}
             />,
             <DButton
-              {...ACCEPT_BUTTON_DEFAULTS}
+              {...config.acceptButtonOptions}
               whenClick={this.acceptHandler}
               {...this.acceptButtonOptions}
             />,

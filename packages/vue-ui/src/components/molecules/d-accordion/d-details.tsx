@@ -3,11 +3,11 @@ import type { CSSProperties, Ref, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { dDetailsProps as props } from "./props";
-import config from "./config";
-import { getTransitionDuration } from "./utils";
-import styles from "./d-details.css?module";
 import type { DAccordionProvided } from "./types";
+import { dDetailsProps as props } from "./props";
+import { getTransitionDuration } from "./utils";
+import config from "./config";
+import styles from "./d-details.css?module";
 
 /**
  * Renders <b>details</b> element with <b>summary</b>.

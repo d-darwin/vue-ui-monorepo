@@ -201,7 +201,7 @@ describe("DRadio", () => {
     );
   });
   transitionClassCase(wrapper, `.${config.captionOptions.class}`);
-  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+  it("Should merge props from props.caption and config.captionOptions to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DRadio, {
       props: {

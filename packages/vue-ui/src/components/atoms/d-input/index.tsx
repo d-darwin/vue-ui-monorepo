@@ -10,7 +10,7 @@ import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import type { InputTypes } from "./types";
-import { INPUT_TYPE, CAPTION_DEFAULTS } from "./constants";
+import { INPUT_TYPE } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -99,7 +99,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -134,7 +134,7 @@ export default defineComponent({
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
+    return useCaption(props, slots, styles, config.captionOptions);
   },
 
   emits: [

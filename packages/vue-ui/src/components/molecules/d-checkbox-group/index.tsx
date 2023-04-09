@@ -1,12 +1,11 @@
 import { defineComponent, type PropType, type VNode } from "vue";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import { CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -44,7 +43,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -73,13 +72,13 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
+    tag: generateProp.tag(TAG_NAME.FIELDSET),
 
     // TODO: whenChange\WhenInput
   },
 
   setup(props, { slots }) {
-    return useCaption(props, slots, styles, CAPTION_DEFAULTS);
+    return useCaption(props, slots, styles, config.captionOptions);
   },
 
   computed: {

@@ -1,15 +1,27 @@
+import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/constant";
+import styles from "./index.css?module";
+
 export default {
   name: "DSlider",
   className: "dSlider",
-  labelClassName: "label",
-  inputClassName: "input",
-  trackClassName: "track",
-  captionClassName: "caption",
-  defaultMin: 0,
-  defaultMax: 100,
-  defaultStep: 1,
-  defaultRole: "slider",
-  defaultLabelOffset: "2px",
-  defaultCaptionOffset: "2px",
-  inputType: "range",
+  labelOptions: {
+    class: styles["label"],
+  },
+  inputOptions: {
+    role: "slider",
+    type: "range",
+    min: 0,
+    max: 100,
+    step: 1,
+    class: styles["input"],
+  },
+  trackOptions: {
+    class: styles["track"],
+  },
+  captionOptions: {
+    type: TYPE.DANGER,
+    class: styles["caption"],
+  },
+  defaultLabelOffset: "2px", // TODO: default
+  defaultCaptionOffset: "2px", // TODO: default
 };

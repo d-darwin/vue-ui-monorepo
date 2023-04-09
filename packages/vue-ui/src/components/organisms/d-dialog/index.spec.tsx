@@ -2,6 +2,7 @@ import { mount } from "@vue/test-utils";
 import DDialog from "@/components/organisms/d-dialog";
 import config from "@/components/organisms/d-dialog/config";
 import DBackdrop from "@/components/atoms/d-backdrop";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
@@ -15,7 +16,6 @@ import {
   slotCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
 describe("DDialog", () => {
   const content = "Plain string content";
@@ -287,7 +287,7 @@ describe("DDialog", () => {
       },
     });
 
-    const closeEl = wrapper.find(`.${config.closeButtonClassName}`);
+    const closeEl = wrapper.find(`.${config.closeButtonOptions.class}`);
     await closeEl.trigger("click");
 
     expect(wrapper.emitted("close")).toBeTruthy();
@@ -304,7 +304,7 @@ describe("DDialog", () => {
       },
     });
 
-    const closeEl = wrapper.find(`.${config.closeButtonClassName}`);
+    const closeEl = wrapper.find(`.${config.closeButtonOptions.class}`);
     await closeEl.trigger("click");
 
     expect(whenClose).toBeCalled();
@@ -359,7 +359,7 @@ describe("DDialog", () => {
       },
     });
 
-    const cancelEl = wrapper.find(`.${config.cancelButtonClassName}`);
+    const cancelEl = wrapper.find(`.${config.cancelButtonOptions.class}`);
     await cancelEl.trigger("click");
 
     expect(wrapper.emitted("cancel")).toBeTruthy();
@@ -376,7 +376,7 @@ describe("DDialog", () => {
       },
     });
 
-    const cancelEl = wrapper.find(`.${config.cancelButtonClassName}`);
+    const cancelEl = wrapper.find(`.${config.cancelButtonOptions.class}`);
     await cancelEl.trigger("click");
 
     expect(whenCancel).toBeCalled();
@@ -391,7 +391,7 @@ describe("DDialog", () => {
       },
     });
 
-    const acceptEl = wrapper.find(`.${config.acceptButtonClassName}`);
+    const acceptEl = wrapper.find(`.${config.acceptButtonOptions.class}`);
     await acceptEl.trigger("click");
 
     expect(wrapper.emitted("accept")).toBeTruthy();
@@ -408,7 +408,7 @@ describe("DDialog", () => {
       },
     });
 
-    const acceptEl = wrapper.find(`.${config.acceptButtonClassName}`);
+    const acceptEl = wrapper.find(`.${config.acceptButtonOptions.class}`);
     await acceptEl.trigger("click");
 
     expect(whenAccept).toBeCalled();

@@ -3,7 +3,7 @@ import type { HTMLAttributes, PropType, VNode } from "vue";
 import { v4 as uuid } from "uuid";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -52,7 +52,7 @@ export default defineComponent({
     /**
      * Defines element type of the container component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.LI),
+    tag: generateProp.tag(TAG_NAME.LI),
 
     /**
      * Alternative way to catch click event

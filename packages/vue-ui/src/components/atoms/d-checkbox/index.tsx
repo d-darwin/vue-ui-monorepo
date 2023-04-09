@@ -1,11 +1,5 @@
-import {
-  defineComponent,
-  ref,
-  Transition as Trans,
-  type VNode,
-  type PropType,
-  type InputHTMLAttributes,
-} from "vue";
+import { defineComponent, ref, Transition as Trans } from "vue";
+import type { VNode, PropType, InputHTMLAttributes } from "vue";
 import { v4 as uuid } from "uuid";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
@@ -17,7 +11,6 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
-import { DEFAULT_VALUE, CAPTION_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -41,7 +34,7 @@ export default defineComponent({
     /**
      * Defines value of the <b>input</b> element
      */
-    value: generateProp.text(DEFAULT_VALUE),
+    value: generateProp.text(config.value),
     /**
      * Defines appearance of the component
      */
@@ -88,7 +81,7 @@ export default defineComponent({
     /**
      * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines offset of DCaption
      */
@@ -129,7 +122,7 @@ export default defineComponent({
       props,
       slots,
       styles,
-      CAPTION_DEFAULTS
+      config.captionOptions
     );
 
     return { innerChecked, renderCaption };

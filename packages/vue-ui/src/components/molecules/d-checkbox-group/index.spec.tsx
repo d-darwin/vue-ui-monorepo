@@ -1,4 +1,4 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import DCheckboxGroup from "@/components/molecules/d-checkbox-group";
 import DCheckbox from "@/components/atoms/d-checkbox";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
@@ -53,7 +53,7 @@ describe("DCheckboxGroup", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     const className = prepareCssClassName(
       codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
       size
@@ -63,7 +63,7 @@ describe("DCheckboxGroup", () => {
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
     const wrapper = await mount(DCheckboxGroup);
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
   });
   it("Should render caption element with props.caption content if passed", async () => {
@@ -72,11 +72,11 @@ describe("DCheckboxGroup", () => {
     const wrapper = await mount(DCheckboxGroup, { props: { caption } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DCheckboxGroup, `.${config.captionClassName}`, "caption");
+  slotCase(DCheckboxGroup, `.${config.captionOptions.class}`, "caption");
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -84,13 +84,13 @@ describe("DCheckboxGroup", () => {
       captionOffset,
     });
 
-    const captionEl = wrapper.find(`.${config.captionClassName}`);
+    const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`
     );
   });
-  transitionClassCase(wrapper, `.${config.captionClassName}`);
-  it("Should merge props from props.caption and CAPTION_DEFAULTS to the caption element attrs", async () => {
+  transitionClassCase(wrapper, `.${config.captionOptions.class}`);
+  it("Should merge props from props.captionOptions and config.captionOptions to the caption element attrs", async () => {
     const externalClass = "some-external-class";
     const wrapper = mount(DCheckboxGroup, {
       props: {
