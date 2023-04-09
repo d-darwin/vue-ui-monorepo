@@ -1,13 +1,5 @@
-import {
-  defineComponent,
-  Teleport,
-  Transition as Trans,
-  ref,
-  type CSSProperties,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent, ref, Teleport, Transition as Trans } from "vue";
+import type { CSSProperties, HTMLAttributes, PropType, VNode } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";

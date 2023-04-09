@@ -1,4 +1,5 @@
-import { defineComponent, type CSSProperties, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, VNode } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???

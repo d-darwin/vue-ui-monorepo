@@ -3,6 +3,7 @@ import chalk from "chalk";
 // TODO: tests
 const PACKAGE_NAME = "DARWIN VUE UI"; // TODO: use package.json ???
 
+// TODO: enum ???
 export const LOG_TYPE = {
   INFO: "info",
   ERROR: "error",

@@ -1,4 +1,5 @@
-import { defineComponent, ref, type PropType, type VNode } from "vue";
+import { defineComponent, ref } from "vue";
+import type { PropType, VNode } from "vue";
 import { v4 as uuid } from "uuid";
 import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";

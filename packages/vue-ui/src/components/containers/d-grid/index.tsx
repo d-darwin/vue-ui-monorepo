@@ -1,10 +1,5 @@
-import {
-  defineComponent,
-  mergeProps,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent, mergeProps } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
 import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";

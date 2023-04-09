@@ -1,4 +1,5 @@
-import { defineComponent, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";

@@ -1,4 +1,5 @@
-import { defineComponent, type CSSProperties, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { parseWidthHeight } from "./utils";
 import config from "./config";
