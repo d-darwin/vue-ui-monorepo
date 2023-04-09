@@ -17,7 +17,7 @@ export default {
   contentOptions: {
     key: "detailsContent",
     ref: "detailsContentRef",
-    class: dDetailsStyles["detailsContent"],
+    class: dDetailsStyles["content"],
   },
   provideInjectKey: "commonProps",
 } as const;

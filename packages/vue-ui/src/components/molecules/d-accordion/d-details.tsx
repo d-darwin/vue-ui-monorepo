@@ -44,7 +44,7 @@ export default defineComponent({
       [config.contentOptions.ref]: contentRef,
       contentHeight,
       isMounted,
-      [config.contentOptions.ref]: ref(null) as Ref<HTMLElement | null>,
+      [config.details.ref]: ref(null) as Ref<HTMLElement | null>,
       innerOpen,
       isExpanded,
       injection: inject<DAccordionProvided>(config.provideInjectKey, {}),
