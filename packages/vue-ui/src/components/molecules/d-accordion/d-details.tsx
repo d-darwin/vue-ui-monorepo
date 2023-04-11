@@ -3,6 +3,7 @@ import type { CSSProperties, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DAccordionProvided } from "./types";
 import { dDetailsProps as props } from "./props";
 import { dDetailsSetup as setup } from "./setup";
@@ -18,6 +19,8 @@ export default defineComponent({
 
   props, // TODO: move to the config ???
 
+  // TODO: v-model: open -> value
+
   setup, // TODO: move to the config ???
 
   emits: [EVENT_NAME.TOGGLE, EVENT_NAME.UPDATE_OPEN], // TODO: move to the config ???
@@ -25,7 +28,13 @@ export default defineComponent({
   computed: {
     // TODO: computed(() => {
     //  return Object.values(state.value).some(status => status);
-    commonProps(): Required<DAccordionProvided> {
+    // TODO: typing
+    // TODO: naming
+    commonProps(): Required<Omit<DAccordionProvided, "whenChange">> & {
+      whenChange?: (id: Text, open: boolean) => void | Promise<void>;
+    } {
+      // TODO: reactivity ???
+      console.log("this.injection?.openId", this.injection?.openId);
       return {
         hideSummaryAfter:
           this.injection?.hideSummaryAfter || this.hideSummaryAfter,
@@ -35,6 +44,8 @@ export default defineComponent({
         rounding: this.injection?.rounding || this.rounding,
         size: this.injection?.size || this.size,
         transition: this.injection?.transition || this.transition,
+        openId: this.injection?.openId || 0, // TODO uuid ???
+        whenChange: this.injection?.whenChange,
       };
     },
 
@@ -157,8 +168,9 @@ export default defineComponent({
        * @event update:open
        * @type {open: boolean}
        */
-      this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen);
+      this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen); // TODO: update open
       this.whenToggle?.(event, this.innerOpen);
+      this.commonProps.whenChange?.(this.id, this.innerOpen);
     },
   },
 
@@ -178,6 +190,7 @@ export default defineComponent({
     return (
       <details
         ref={config.details.ref}
+        id={this.id ? String(this.id) : undefined}
         open={this.innerOpen}
         class={this.classes}
       >

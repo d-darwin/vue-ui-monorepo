@@ -1,8 +1,9 @@
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
-import { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
-import { Size } from "@darwin-studio/ui-codegen/dist/types/size";
-import { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import type { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
+import type { Rounding } from "@darwin-studio/ui-codegen/dist/types/rounding";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
+import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { DDetails, DAccordion } from "./index";
 
 export interface DAccordionProvided {
@@ -13,6 +14,8 @@ export interface DAccordionProvided {
   rounding?: Rounding;
   size?: Size;
   transition?: Transition;
+  openId?: Text;
+  whenChange?: (id: Text, open: boolean) => void | Promise<void>;
 }
 
 export type DDetailsProps = InstanceType<typeof DDetails>["$props"];

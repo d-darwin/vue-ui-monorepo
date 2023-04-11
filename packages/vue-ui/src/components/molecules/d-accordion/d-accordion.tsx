@@ -6,6 +6,7 @@ import config from "./config";
 
 /**
  * Renders an accordion using <b>DDetails</b> components.
+ * TODO: whenToggle will be occupied
  */
 export default defineComponent({
   name: config.name,

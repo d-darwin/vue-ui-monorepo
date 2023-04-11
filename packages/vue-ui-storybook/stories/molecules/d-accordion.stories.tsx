@@ -1,8 +1,10 @@
 import { Story } from "@storybook/vue3";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import {
   DAccordion,
   DDetails,
 } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
+import dAccordionConfig from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/config";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
@@ -42,6 +44,7 @@ export default {
     /**
      * TODO: args
      */
+    openId: "",
     hideSummaryAfter: false,
     disabled: false,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
@@ -58,16 +61,42 @@ const Template: Story = (args) => ({
   setup() {
     return { args };
   },
+  data() {
+    return {
+      innerOpenId: args.openId, // TODO: reactivity
+    };
+  },
   computed: {
+    idList() {
+      return [11, 12, 33];
+    },
     content() {
       return [
-        <DDetails summary="Summary 1" content="Some content 1" />,
-        <DDetails summary="Summary 2" content="Some content 2" />,
-        <DDetails summary="Summary 3" content="Some content 3" />,
+        <DDetails
+          id={this.idList[0]}
+          summary="Summary 1"
+          content="Some content 1"
+        />,
+        <DDetails
+          id={this.idList[1]}
+          summary="Summary 2"
+          content="Some content 2"
+        />,
+        <DDetails
+          id={this.idList[2]}
+          summary="Summary 3"
+          content="Some content 3"
+        />,
       ];
     },
   },
-  template: `<DAccordion v-bind="args" :content="content" />`,
+  methods: {
+    changeHandler(id: Text, open: boolean) {
+      console.log(id, open);
+      this.innerOpenId = open ? id : ""; // TODO: if not isSolo ???
+    },
+  },
+  template: `<DAccordion v-bind="args" :content="content" :openId="innerOpenId" :whenChange="changeHandler" />`,
 });
 export const Default = Template.bind({});
 
@@ -85,3 +114,6 @@ const TemplateSlot: Story = (args) => ({
   `,
 });
 export const DefaultSlot = TemplateSlot.bind({});
+
+// TODO: redefine config story !!!
+dAccordionConfig.summaryIcon = "⛛";

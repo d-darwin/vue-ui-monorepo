@@ -1,4 +1,5 @@
-import { HTMLAttributes, PropType } from "vue";
+import type { HTMLAttributes, PropType } from "vue";
+import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/d-details";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import config from "./config";
@@ -12,9 +13,16 @@ export const dAccordionProps = {
   },
 
   // TODO: specific props: isSolo, someOpen ???
+  /**
+   * TODO
+   */
+  isSolo: Boolean,
   // TODO: openId\Value ???
   //  https://vuetifyjs.com/en/components/expansion-panels/
-
+  /**
+   * TODO
+   */
+  openId: generateProp.text(),
   /**
    * Don't show content after the summary
    */
@@ -48,10 +56,19 @@ export const dAccordionProps = {
    */
   tag: generateProp.tag(),
 
-  // TODO: whenChange ???
+  /**
+   * Alternative way to catch toggle event with current open attr in the payload
+   */
+  whenChange: Function as PropType<
+    (id: Text, open?: boolean) => void | Promise<void>
+  >,
 };
 
 export const dDetailsProps = {
+  /**
+   * Defines id of the component. Used to control open\close state via DAccordion
+   */
+  id: generateProp.text(),
   /**
    * Plain string or VNode
    */

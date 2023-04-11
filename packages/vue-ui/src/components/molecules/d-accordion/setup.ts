@@ -1,8 +1,9 @@
 import { inject, onMounted, provide, ref, Ref, watch } from "vue";
-import { DAccordionProvided } from "./types";
+import type { DAccordionProvided } from "./types";
 import config from "./config";
 
 export function dAccordionSetup(props: DAccordionProvided) {
+  // TODO: reactivity ???
   provide<Ref<DAccordionProvided>>(
     config.provideInjectKey,
     ref({
@@ -13,6 +14,8 @@ export function dAccordionSetup(props: DAccordionProvided) {
       rounding: props.rounding,
       size: props.size,
       transition: props.transition,
+      openId: props.openId,
+      whenChange: props.whenChange,
     })
   );
 }
@@ -43,6 +46,7 @@ export function dDetailsSetup(props: { open?: boolean }) {
     [config.details.ref]: ref(null) as Ref<HTMLElement | null>,
     innerOpen,
     isExpanded,
+    // TODO: reactivity ???
     injection: inject<DAccordionProvided>(config.provideInjectKey, {}),
   };
 }

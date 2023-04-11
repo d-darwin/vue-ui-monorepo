@@ -23,4 +23,4 @@ export default {
     class: dDetailsStyles["content"],
   },
   provideInjectKey: "commonProps",
-} as const;
+};
