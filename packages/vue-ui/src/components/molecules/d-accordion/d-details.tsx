@@ -30,11 +30,12 @@ export default defineComponent({
     //  return Object.values(state.value).some(status => status);
     // TODO: typing
     // TODO: naming
-    commonProps(): Required<Omit<DAccordionProvided, "whenChange">> & {
+    commonProps(): Required<
+      Omit<DAccordionProvided, "whenChange" | "openIds">
+    > & {
+      openIds?: Text[];
       whenChange?: (id: Text, open: boolean) => void | Promise<void>;
     } {
-      // TODO: reactivity ???
-      console.log("this.injection?.openId", this.injection?.openId);
       return {
         hideSummaryAfter:
           this.injection?.hideSummaryAfter || this.hideSummaryAfter,
@@ -44,7 +45,7 @@ export default defineComponent({
         rounding: this.injection?.rounding || this.rounding,
         size: this.injection?.size || this.size,
         transition: this.injection?.transition || this.transition,
-        openId: this.injection?.openId || 0, // TODO uuid ???
+        openIds: this.injection?.openIds, // TODO: reactivity
         whenChange: this.injection?.whenChange,
       };
     },
@@ -68,7 +69,7 @@ export default defineComponent({
         <summary
           {...config.summaryOptions}
           class={this.summaryClasses}
-          onClick={this.clickHandler}
+          onClick={this.toggle}
           {...this.summaryOptions}
         >
           {this.$slots.summary?.() || this.summary}
@@ -140,9 +141,21 @@ export default defineComponent({
     },
   },
 
+  watch: {
+    // TODO
+    "injection.openIds": {
+      handler() {
+        if (this.injection?.openIds?.includes(this.id) && !this.innerOpen) {
+          this.toggle();
+        }
+      },
+      immediate: true,
+    },
+  },
+
   methods: {
-    async clickHandler(event: MouseEvent): Promise<void> {
-      event.preventDefault();
+    async toggle(event?: MouseEvent): Promise<void> {
+      event?.preventDefault();
       if (this.commonProps.disabled) {
         return;
       }
@@ -169,7 +182,6 @@ export default defineComponent({
        * @type {open: boolean}
        */
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen); // TODO: update open
-      this.whenToggle?.(event, this.innerOpen);
       this.commonProps.whenChange?.(this.id, this.innerOpen);
     },
   },

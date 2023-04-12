@@ -38,13 +38,20 @@ export default {
       control: { type: "select" },
       options: Object.values(TRANSITION),
     },
-    // TODO 1
+    // TODO 2
+    onChange: {
+      action: "change",
+    },
+    // TODO 3
+    "onUpdate:???": {
+      action: "update:???",
+    },
   },
   args: {
     /**
      * TODO: args
      */
-    openId: "",
+    openIds: [33],
     hideSummaryAfter: false,
     disabled: false,
     colorScheme: COLOR_SCHEME.PRIMARY, // TODO: don't hardcode values
@@ -52,7 +59,10 @@ export default {
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    // TODO 2
+    // TODO 1
+    whenChange: (id: Text, open: boolean) => {
+      console.log("change", id, open);
+    },
   },
 };
 
@@ -63,7 +73,7 @@ const Template: Story = (args) => ({
   },
   data() {
     return {
-      innerOpenId: args.openId, // TODO: reactivity
+      innerOpenIds: args.openIds || [],
     };
   },
   computed: {
@@ -92,11 +102,18 @@ const Template: Story = (args) => ({
   },
   methods: {
     changeHandler(id: Text, open: boolean) {
-      console.log(id, open);
-      this.innerOpenId = open ? id : ""; // TODO: if not isSolo ???
+      // TODO: if not isSolo ???
+      if (open && !this.innerOpenIds?.includes(id)) {
+        this.innerOpenIds = [...this.innerOpenIds, id];
+      } else {
+        this.innerOpenIds = this.innerOpenIds.filter(
+          (innerId: Text) => innerId != id
+        );
+      }
+      args.whenChange?.(id, open);
     },
   },
-  template: `<DAccordion v-bind="args" :content="content" :openId="innerOpenId" :whenChange="changeHandler" />`,
+  template: `<DAccordion v-bind="args" :content="content" :openIds="innerOpenIds" :whenChange="changeHandler" />`,
 });
 export const Default = Template.bind({});
 

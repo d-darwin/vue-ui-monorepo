@@ -74,6 +74,11 @@ const generateProp = {
     default: defaultValue,
   }),
 
+  array: <T>(defaultValue?: T[]) => ({
+    type: Array as PropType<T[]>,
+    default: defaultValue,
+  }),
+
   text: (defaultValue?: Text | (() => Text), required?: boolean) => ({
     type: [String, Number] as PropType<Text>,
     default: defaultValue,

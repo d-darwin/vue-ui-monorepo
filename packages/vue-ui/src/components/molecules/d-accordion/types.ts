@@ -14,7 +14,7 @@ export interface DAccordionProvided {
   rounding?: Rounding;
   size?: Size;
   transition?: Transition;
-  openId?: Text;
+  openIds?: Text[];
   whenChange?: (id: Text, open: boolean) => void | Promise<void>;
 }
 

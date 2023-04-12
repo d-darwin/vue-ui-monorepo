@@ -8,9 +8,7 @@ export const dAccordionProps = {
   /**
    * An array of DDetails
    */
-  content: {
-    type: Array as PropType<(typeof DDetails | undefined)[]>,
-  },
+  content: generateProp.array<typeof DDetails | undefined>(),
 
   // TODO: specific props: isSolo, someOpen ???
   /**
@@ -22,7 +20,7 @@ export const dAccordionProps = {
   /**
    * TODO
    */
-  openId: generateProp.text(),
+  openIds: generateProp.array<Text>(),
   /**
    * Don't show content after the summary
    */
@@ -122,6 +120,6 @@ export const dDetailsProps = {
    * Alternative way to catch toggle event with current open attr in the payload
    */
   whenToggle: Function as PropType<
-    (event: Event, open?: boolean) => void | Promise<void>
+    (event?: MouseEvent, open?: boolean) => void | Promise<void>
   >,
 };
