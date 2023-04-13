@@ -45,7 +45,7 @@ export default defineComponent({
         rounding: this.injection?.rounding || this.rounding,
         size: this.injection?.size || this.size,
         transition: this.injection?.transition || this.transition,
-        openIds: this.injection?.openIds, // TODO: reactivity
+        openIds: this.injection?.openIds,
         whenChange: this.injection?.whenChange,
       };
     },
@@ -154,6 +154,11 @@ export default defineComponent({
   },
 
   methods: {
+    // todo
+    /*    whenChange(id: Text, open: boolean): void {
+      t
+    },*/
+
     async toggle(event?: MouseEvent): Promise<void> {
       event?.preventDefault();
       if (this.commonProps.disabled) {
@@ -183,6 +188,7 @@ export default defineComponent({
        */
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen); // TODO: update open
       this.commonProps.whenChange?.(this.id, this.innerOpen);
+      this.whenChange?.(this.id, this.innerOpen);
     },
   },
 

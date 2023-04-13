@@ -12,7 +12,7 @@ export function dAccordionSetup(
 ) {
   const whenChange = (id: Text, open: boolean) => {
     options.emit(EVENT_NAME.CHANGE, id, open);
-    // TODO: emit(EVENT_NAME.UPDATE_OPEN) ???
+    // TODO: emit(EVENT_NAME.UPDATE_OPEN), open which one ???
     props.whenChange?.(id, open);
   };
 
@@ -38,7 +38,7 @@ export function dDetailsSetup(props: { id?: Text; open?: boolean }) {
   const contentHeight = ref(0);
   const isMounted = ref(false);
   onMounted(async () => {
-    contentHeight.value = contentRef.value?.offsetHeight || 0;
+    contentHeight.value = Math.floor(contentRef.value?.offsetHeight || 0);
     isMounted.value = true;
   });
 

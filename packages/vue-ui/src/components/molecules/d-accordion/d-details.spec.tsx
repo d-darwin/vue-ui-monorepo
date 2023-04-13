@@ -133,25 +133,22 @@ describe("DDetails", () => {
     expect(wrapper.emitted("update:open")?.[1]).toStrictEqual([false]);
   });
 
-  it("Should call passed props.whenToggle on the summary click", async () => {
-    const whenToggle = jest.fn();
-    const wrapper = shallowMount(DDetails, {
-      props: { whenToggle, open: false },
+  it("Should call passed props.whenChange on the summary click", async () => {
+    const whenChange = jest.fn();
+    const id = "some-id";
+    const wrapper = mount(DDetails, {
+      props: { whenChange, open: false, id },
     });
     const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
-    expect(whenToggle).toHaveBeenCalledWith(
-      expect.objectContaining({ isTrusted: false }),
-      true
-    );
+    await sleep(0);
+    console.log(wrapper.html());
+    expect(whenChange).toHaveBeenCalledWith(id, true);
 
-    await whenToggle.mockReset();
+    await whenChange.mockReset();
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
-    expect(whenToggle).toHaveBeenCalledWith(
-      expect.objectContaining({ isTrusted: false }),
-      false
-    );
+    expect(whenChange).toHaveBeenCalledWith(id, false);
   });
 });

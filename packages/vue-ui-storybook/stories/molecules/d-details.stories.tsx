@@ -5,6 +5,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { DDetails } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
+import { Text } from "@darwin-studio/vue-ui/src/types/text";
 
 export default {
   title: "molecules/DAccordion/DDetails",
@@ -38,6 +39,7 @@ export default {
     },
   },
   args: {
+    id: "why-not",
     summary: "Summary",
     summaryOptions: { class: "customSummaryClass" },
     hideSummaryAfter: false,
@@ -50,8 +52,8 @@ export default {
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.MEDIUM, // TODO: don't hardcode values
     transition: TRANSITION.SLOW, // TODO: don't hardcode values
-    whenToggle: (event: MouseEvent, open: boolean) => {
-      console.log("toggle", event, open);
+    whenChange: (id: Text, open: boolean) => {
+      console.log("change", id, open);
     },
   },
 };

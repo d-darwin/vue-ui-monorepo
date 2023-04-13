@@ -58,7 +58,7 @@ export const dAccordionProps = {
    * Alternative way to catch toggle event with current open attr in the payload
    */
   whenChange: Function as PropType<
-    (id: Text, open?: boolean) => void | Promise<void>
+    (id: Text, open: boolean) => void | Promise<void>
   >,
 };
 
@@ -119,7 +119,7 @@ export const dDetailsProps = {
   /**
    * Alternative way to catch toggle event with current open attr in the payload
    */
-  whenToggle: Function as PropType<
-    (event?: MouseEvent, open?: boolean) => void | Promise<void>
+  whenChange: Function as PropType<
+    (id: Text, open: boolean) => void | Promise<void>
   >,
 };

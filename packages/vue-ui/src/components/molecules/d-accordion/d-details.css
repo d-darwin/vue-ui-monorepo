@@ -13,13 +13,10 @@
   margin: -2px;
   height: calc(var(--size) + 4px);
   padding: var(--padding);
-}
-
-.summary:not(.__disabled) {
   cursor: pointer;
 }
 
-.__disabled {
+.__disabled .summary {
   cursor: not-allowed;
 }
 
