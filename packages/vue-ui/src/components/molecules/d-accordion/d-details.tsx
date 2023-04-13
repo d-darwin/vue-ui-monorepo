@@ -3,8 +3,7 @@ import type { CSSProperties, VNode } from "vue";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import type { DAccordionProvided } from "./types";
+import type { CommonProps } from "./types";
 import { dDetailsProps as props } from "./props";
 import { dDetailsSetup as setup } from "./setup";
 import { getTransitionDuration } from "./utils";
@@ -29,23 +28,16 @@ export default defineComponent({
     //  return Object.values(state.value).some(status => status);
     // TODO: typing
     // TODO: naming
-    commonProps(): Required<
-      Omit<DAccordionProvided, "whenChange" | "openIds">
-    > & {
-      openIds?: Text[];
-      whenChange?: (id: Text, open: boolean) => void | Promise<void>;
-    } {
+    commonProps(): CommonProps {
       return {
         hideSummaryAfter:
-          this.injection?.hideSummaryAfter || this.hideSummaryAfter,
-        disabled: this.injection?.disabled || this.disabled,
-        colorScheme: this.injection?.colorScheme || this.colorScheme,
-        padding: this.injection?.padding || this.padding,
-        rounding: this.injection?.rounding || this.rounding,
-        size: this.injection?.size || this.size,
-        transition: this.injection?.transition || this.transition,
-        openIds: this.injection?.openIds,
-        whenChange: this.injection?.whenChange,
+          this.injection.hideSummaryAfter || this.hideSummaryAfter,
+        disabled: this.injection.disabled || this.disabled,
+        colorScheme: this.injection.colorScheme || this.colorScheme,
+        padding: this.injection.padding || this.padding,
+        rounding: this.injection.rounding || this.rounding,
+        size: this.injection.size || this.size,
+        transition: this.injection.transition || this.transition,
       };
     },
 
@@ -111,6 +103,7 @@ export default defineComponent({
       return {};
     },
 
+    // TODO: rounding.full -> the bottom of the content is out of the container
     renderContent(): VNode {
       return (
         <div
@@ -145,11 +138,11 @@ export default defineComponent({
   },
 
   watch: {
-    // TODO
+    // TODO: naming
     "injection.openIds": {
       handler() {
         // TODO: test case
-        if (this.injection?.openIds?.includes(this.id) && !this.innerOpen) {
+        if (this.injection.openIds?.includes(this.id) && !this.innerOpen) {
           this.toggle();
         }
       },
@@ -192,7 +185,7 @@ export default defineComponent({
        * @type {open: boolean}
        */
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen); // TODO: update open
-      this.commonProps.whenChange?.(this.id, this.innerOpen);
+      this.injection.whenChange?.(this.id, this.innerOpen);
       this.whenChange?.(this.id, this.innerOpen);
     },
   },

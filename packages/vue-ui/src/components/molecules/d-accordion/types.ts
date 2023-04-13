@@ -17,6 +17,9 @@ export interface DAccordionProvided {
   openIds?: Text[];
   whenChange?: (id: Text, open: boolean) => void | Promise<void>;
 }
+export type CommonProps = Required<
+  Omit<DAccordionProvided, "whenChange" | "openIds">
+>;
 
 export type DDetailsProps = InstanceType<typeof DDetails>["$props"];
 export type DAccordionProps = InstanceType<typeof DAccordion>["$props"];
