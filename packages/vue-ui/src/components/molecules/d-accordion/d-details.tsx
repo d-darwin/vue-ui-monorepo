@@ -138,11 +138,14 @@ export default defineComponent({
   },
 
   watch: {
-    // TODO: naming
+    // TODO: config
     "injection.openIds": {
       handler() {
         // TODO: test case
-        if (this.injection.openIds?.includes(this.id) && !this.innerOpen) {
+        const shouldBeOpened = this.injection.openIds?.includes(this.id);
+        if (shouldBeOpened && !this.innerOpen) {
+          this.toggle();
+        } else if (!shouldBeOpened && this.innerOpen) {
           this.toggle();
         }
       },

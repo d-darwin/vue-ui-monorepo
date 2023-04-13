@@ -10,6 +10,7 @@ import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
+import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 
 export default {
   title: "molecules/DAccordion",
@@ -68,6 +69,21 @@ export default {
 
 const Template: Story = (args) => ({
   components: { DAccordion, DDetails },
+  computed: {
+    content() {
+      return [
+        <DDetails summary="Summary 1" content="Some content 1" />,
+        <DDetails summary="Summary 2" content="Some content 2" />,
+        <DDetails summary="Summary 3" content="Some content 3" />,
+      ];
+    },
+  },
+  template: `<DAccordion v-bind="args" :content="content" :openIds="innerOpenIds" :whenChange="changeHandler" />`,
+});
+export const Default = Template.bind({});
+
+const TemplateSolo: Story = (args) => ({
+  components: { DAccordion, DDetails },
   setup() {
     return { args };
   },
@@ -77,34 +93,18 @@ const Template: Story = (args) => ({
     };
   },
   computed: {
-    idList() {
-      return [11, 12, 33];
-    },
     content() {
       return [
-        <DDetails
-          id={this.idList[0]}
-          summary="Summary 1"
-          content="Some content 1"
-        />,
-        <DDetails
-          id={this.idList[1]}
-          summary="Summary 2"
-          content="Some content 2"
-        />,
-        <DDetails
-          id={this.idList[2]}
-          summary="Summary 3"
-          content="Some content 3"
-        />,
+        <DDetails id={11} summary="Summary 1" content="Some content 1" />,
+        <DDetails id={12} summary="Summary 2" content="Some content 2" />,
+        <DDetails id={13} summary="Summary 3" content="Some content 3" />,
       ];
     },
   },
   methods: {
     changeHandler(id: Text, open: boolean) {
-      // TODO: if not isSolo ???
-      if (open && !this.innerOpenIds?.includes(id)) {
-        this.innerOpenIds = [...this.innerOpenIds, id];
+      if (open) {
+        this.innerOpenIds = [id];
       } else {
         this.innerOpenIds = this.innerOpenIds.filter(
           (innerId: Text) => innerId != id
@@ -115,7 +115,46 @@ const Template: Story = (args) => ({
   },
   template: `<DAccordion v-bind="args" :content="content" :openIds="innerOpenIds" :whenChange="changeHandler" />`,
 });
-export const Default = Template.bind({});
+export const Solo = TemplateSolo.bind({});
+
+const TemplateAutoClose: Story = (args) => ({
+  components: { DAccordion, DDetails },
+  setup() {
+    return { args };
+  },
+  data() {
+    return {
+      innerOpenIds: args.openIds || [],
+    };
+  },
+  computed: {
+    content() {
+      return [
+        <DDetails id={11} summary="Summary 1" content="Some content 1" />,
+        <DDetails id={22} summary="Summary 2" content="Some content 2" />,
+        <DDetails id={33} summary="Summary 3" content="Some content 3" />,
+      ];
+    },
+  },
+  methods: {
+    async changeHandler(id: Text, open: boolean) {
+      if (open) {
+        this.innerOpenIds.push(id);
+        await sleep(3000);
+        this.innerOpenIds = this.innerOpenIds.filter(
+          (innerId: Text) => innerId != id
+        );
+      } else {
+        this.innerOpenIds = this.innerOpenIds.filter(
+          (innerId: Text) => innerId != id
+        );
+      }
+      args.whenChange?.(id, open);
+    },
+  },
+  template: `<DAccordion v-bind="args" :content="content" :openIds="innerOpenIds" :whenChange="changeHandler" />`,
+});
+export const AutoClose = TemplateAutoClose.bind({});
 
 const TemplateSlot: Story = (args) => ({
   components: { DAccordion, DDetails },
@@ -133,4 +172,4 @@ const TemplateSlot: Story = (args) => ({
 export const DefaultSlot = TemplateSlot.bind({});
 
 // TODO: redefine config story !!!
-dAccordionConfig.summaryIcon = "⛛";
+dAccordionConfig.summaryAfterContent = "⛛";
