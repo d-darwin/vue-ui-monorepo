@@ -50,14 +50,14 @@ describe("DDetails", () => {
 
   it("Shouldn't render default dropdown mark if props.hideSummaryAfter is true", async () => {
     await wrapper.setProps({ hideSummaryAfter: true });
-    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClass}`);
+    const afterSummaryEl = wrapper.find(`.${config.summaryAfterOptions.class}`);
     expect(afterSummaryEl.exists()).toBeFalsy();
     await wrapper.setProps({ hideSummaryAfter: false });
   });
 
   it("Should render default dropdown mark if props.hideSummaryAfter is falsy", async () => {
     await wrapper.setProps({ hideSummaryAfter: false });
-    const afterSummaryEl = wrapper.find(`.${config.summaryAfterClass}`);
+    const afterSummaryEl = wrapper.find(`.${config.summaryAfterOptions.class}`);
     expect(afterSummaryEl.exists()).toBeTruthy();
     await wrapper.setProps({ hideSummaryAfter: true });
   });
@@ -142,8 +142,6 @@ describe("DDetails", () => {
     const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
-    await sleep(0);
-    console.log(wrapper.html());
     expect(whenChange).toHaveBeenCalledWith(id, true);
 
     await whenChange.mockReset();

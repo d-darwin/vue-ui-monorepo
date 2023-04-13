@@ -10,13 +10,14 @@ export function dAccordionSetup(
   props: DAccordionProvided,
   options: { emit: (name: EventName, id: Text, open: boolean) => void }
 ) {
+  // TODO: test case
   const whenChange = (id: Text, open: boolean) => {
     options.emit(EVENT_NAME.CHANGE, id, open);
     // TODO: emit(EVENT_NAME.UPDATE_OPEN), open which one ???
     props.whenChange?.(id, open);
   };
 
-  // TODO: reactivity ???
+  // TODO: test case
   provide<ComputedRef<DAccordionProvided>>(
     config.provideInjectKey,
     computed(() => ({

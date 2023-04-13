@@ -4,23 +4,31 @@ import dDetailsStyles from "./d-details.css?module";
 
 export default {
   name: "DAccordion",
-  class: dAccordionStyles["dAccordion"],
+  class: dAccordionStyles.dAccordion,
+  provideInjectKey: "commonProps",
+
   details: {
     ref: "detailsRef",
     name: "DDetails",
     class: dDetailsStyles.dDetails,
-    disabledClass: dDetailsStyles.__disabled, // TODO: use or remove
+    disabledClass: dDetailsStyles.__disabled,
     disabledColorSchemeClass: colorSchemeStyles.__disabled,
   },
+
   summaryOptions: {
     class: dDetailsStyles.summary,
   },
-  summaryIcon: "⛛",
-  summaryAfterClass: dDetailsStyles.summaryAfter,
+  summaryOpenClass: dDetailsStyles.flatBottom,
+
+  summaryAfterOptions: {
+    class: dDetailsStyles.summaryAfter,
+  },
+  summaryAfterOpenClass: dDetailsStyles.rotatedIcon,
+  summaryAfterContent: "⛛",
+
   contentOptions: {
     key: "detailsContent",
     ref: "detailsContentRef",
     class: dDetailsStyles.content,
   },
-  provideInjectKey: "commonProps",
 };

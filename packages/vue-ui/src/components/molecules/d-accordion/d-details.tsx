@@ -9,7 +9,6 @@ import { dDetailsProps as props } from "./props";
 import { dDetailsSetup as setup } from "./setup";
 import { getTransitionDuration } from "./utils";
 import config from "./config";
-import styles from "./d-details.css?module";
 
 /**
  * Renders <b>details</b> element with <b>summary</b>.
@@ -61,6 +60,8 @@ export default defineComponent({
           this.commonProps.colorScheme,
           this.commonProps.size
         ),
+        generateClass.transition(this.commonProps.transition),
+        this.innerOpen && this.isExpanded ? config.summaryOpenClass : undefined,
       ];
     },
 
@@ -82,12 +83,14 @@ export default defineComponent({
       return (
         <span
           class={[
-            config.summaryAfterClass,
-            this.innerOpen && this.isExpanded ? styles.rotatedIcon : undefined,
+            config.summaryAfterOptions.class,
+            this.innerOpen && this.isExpanded
+              ? config.summaryAfterOpenClass
+              : undefined,
             generateClass.transition(this.commonProps.transition),
           ]}
         >
-          {this.$slots.summaryAfter?.() || config.summaryIcon}
+          {this.$slots.summaryAfter?.() || config.summaryAfterContent}
         </span>
       );
     },
@@ -145,6 +148,7 @@ export default defineComponent({
     // TODO
     "injection.openIds": {
       handler() {
+        // TODO: test case
         if (this.injection?.openIds?.includes(this.id) && !this.innerOpen) {
           this.toggle();
         }
@@ -161,6 +165,7 @@ export default defineComponent({
 
     async toggle(event?: MouseEvent): Promise<void> {
       event?.preventDefault();
+      // TODO: test case
       if (this.commonProps.disabled) {
         return;
       }
