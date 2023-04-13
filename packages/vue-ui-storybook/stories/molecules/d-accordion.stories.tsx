@@ -69,6 +69,9 @@ export default {
 
 const Template: Story = (args) => ({
   components: { DAccordion, DDetails },
+  setup() {
+    return { args };
+  },
   computed: {
     content() {
       return [
@@ -78,7 +81,7 @@ const Template: Story = (args) => ({
       ];
     },
   },
-  template: `<DAccordion v-bind="args" :content="content" :openIds="innerOpenIds" :whenChange="changeHandler" />`,
+  template: `<DAccordion v-bind="args" :content="content"/>`,
 });
 export const Default = Template.bind({});
 

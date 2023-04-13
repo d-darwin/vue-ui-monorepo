@@ -138,9 +138,25 @@ export default defineComponent({
   },
 
   watch: {
+    open: {
+      handler() {
+        console.log("open", this.open);
+        // TODO: test case
+        if (this.open && !this.innerOpen) {
+          this.toggle();
+        } else if (!this.open && this.innerOpen) {
+          this.toggle();
+        }
+      },
+      immediate: true,
+    },
     // TODO: config
     "injection.openIds": {
       handler() {
+        if (typeof this.injection.openIds === "undefined") {
+          return;
+        }
+        console.log("injection.openIds", this.openIds);
         // TODO: test case
         const shouldBeOpened = this.injection.openIds?.includes(this.id);
         if (shouldBeOpened && !this.innerOpen) {

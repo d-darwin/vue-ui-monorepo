@@ -43,23 +43,13 @@ export function dDetailsSetup(props: { id?: Text; open?: boolean }) {
     isMounted.value = true;
   });
 
-  const innerOpen = ref(Boolean(props.open));
-  const isExpanded = ref(Boolean(props.open));
-  watch(
-    () => props.open,
-    () => {
-      innerOpen.value = Boolean(props.open);
-      isExpanded.value = Boolean(props.open);
-    }
-  );
-
   return {
     [config.contentOptions.ref]: contentRef,
     contentHeight,
     isMounted,
     [config.details.ref]: ref(null) as Ref<HTMLElement | null>,
-    innerOpen,
-    isExpanded,
+    innerOpen: ref(Boolean(props.open)),
+    isExpanded: ref(Boolean(props.open)),
     injection: inject<DAccordionProvided>(config.provideInjectKey, {}),
   };
 }

@@ -6,6 +6,8 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { DDetails } from "@darwin-studio/vue-ui/src/components/molecules/d-accordion";
 import { Text } from "@darwin-studio/vue-ui/src/types/text";
+import dAccordionConfig from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/config";
+import sleep from "@darwin-studio/vue-ui/src/utils/sleep";
 
 export default {
   title: "molecules/DAccordion/DDetails",
@@ -67,6 +69,32 @@ const Template: Story = (args) => ({
 });
 export const Default = Template.bind({});
 
+const AutoCloseTemplate: Story = (args) => ({
+  components: { DDetails },
+  setup() {
+    return { args };
+  },
+  data() {
+    return {
+      innerOpen: args.open,
+    };
+  },
+  methods: {
+    async changeHandler(id: Text, open: boolean) {
+      console.log("changeHandler", id, open);
+      if (open) {
+        this.innerOpen = true;
+        await sleep(3000);
+        this.innerOpen = false;
+      } else {
+        this.innerOpen = false;
+      }
+    },
+  },
+  template: `<DDetails v-bind="args" :open="innerOpen" :whenChange="changeHandler"/>`,
+});
+export const AutoClose = AutoCloseTemplate.bind({});
+
 const DefaultSlotTemplate: Story = (args) => ({
   components: { DDetails },
   setup() {
@@ -105,3 +133,6 @@ const SummaryAfterSlotTemplate: Story = (args) => ({
   `,
 });
 export const SummaryAfterSlot = SummaryAfterSlotTemplate.bind({});
+
+// TODO: redefine config story !!!
+dAccordionConfig.summaryAfterContent = "⛛";
