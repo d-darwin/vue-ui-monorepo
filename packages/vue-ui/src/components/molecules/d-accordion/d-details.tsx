@@ -140,8 +140,6 @@ export default defineComponent({
   watch: {
     open: {
       handler() {
-        if (typeof this.open === "undefined") return;
-        // TODO: test case
         if (this.open !== this.innerOpen) {
           this.toggle();
         }
@@ -153,7 +151,6 @@ export default defineComponent({
         if (typeof this.injection.openIds === "undefined") {
           return;
         }
-        // TODO: test case
         const open = this.injection.openIds?.includes(this.id);
         if (open !== this.innerOpen) {
           this.toggle();

@@ -171,12 +171,30 @@ describe("DDetails", () => {
     expect(whenChange).toHaveBeenCalledTimes(0);
   });
 
-  it("Should call methods.toggle if injection.openIds changed", async () => {
+  it("Should call methods.toggle if injection.openIds changed and the data.innerOpen doesn't satisfy", async () => {
+    const id = 11;
+    const onToggle = jest.fn();
+    const whenChange = jest.fn();
     const wrapper = mount(DAccordion, {
       props: {
-        // content: [],
-        content: [<DDetails id={11} />],
+        content: [
+          <DDetails id={id} onToggle={onToggle} whenChange={whenChange} />,
+        ],
       },
     });
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
+    await summaryEl.trigger("click");
+    const detailsComp = wrapper.findComponent(DDetails);
+    await sleep(detailsComp.vm.transitionDuration);
+    expect(detailsComp.vm.innerOpen).toBeTruthy();
+    // TODO expect(onToggle).toHaveBeenCalledTimes(1);
+    expect(whenChange).toHaveBeenCalledWith(id, true);
+
+    await wrapper.setProps({ openIds: [] });
+    await summaryEl.trigger("click");
+    await sleep(detailsComp.vm.transitionDuration);
+    expect(detailsComp.vm.innerOpen).toBeFalsy();
+    // TODO expect(onToggle).toHaveBeenCalledTimes(2);
+    expect(whenChange).toHaveBeenCalledWith(id, false);
   });
 });
