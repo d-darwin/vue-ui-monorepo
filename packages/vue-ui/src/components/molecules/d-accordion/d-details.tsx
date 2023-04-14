@@ -148,8 +148,7 @@ export default defineComponent({
       },
       immediate: true,
     },
-    // TODO: const\config ?
-    "injection.openIds": {
+    [config.openIdsInjectionPath]: {
       handler() {
         if (typeof this.injection.openIds === "undefined") {
           return;
@@ -165,11 +164,6 @@ export default defineComponent({
   },
 
   methods: {
-    // todo
-    /*    whenChange(id: Text, open: boolean): void {
-      t
-    },*/
-
     async toggle(event?: MouseEvent): Promise<void> {
       event?.preventDefault();
       // TODO: test case

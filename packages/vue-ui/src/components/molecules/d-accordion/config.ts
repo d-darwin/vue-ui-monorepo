@@ -5,7 +5,8 @@ import dDetailsStyles from "./d-details.css?module";
 export default {
   name: "DAccordion",
   class: dAccordionStyles.dAccordion,
-  provideInjectKey: "commonProps",
+  provideInjectKey: "accordionProvided",
+  openIdsInjectionPath: "injection.openIds",
 
   details: {
     ref: "detailsRef",
