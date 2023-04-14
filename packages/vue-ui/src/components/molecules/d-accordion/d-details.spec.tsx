@@ -133,6 +133,15 @@ describe("DDetails", () => {
     expect(wrapper.emitted("update:open")?.[1]).toStrictEqual([false]);
   });
 
+  it("Shouldn't emit onToggle event on the summary click if props.disable", async () => {
+    const wrapper = shallowMount(DDetails, { props: { disabled: true } });
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
+    await summaryEl.trigger("click");
+    await sleep(wrapper.vm.transitionDuration);
+    expect(wrapper.emitted("toggle")?.[0]).toBeFalsy();
+    expect(wrapper.emitted("update:open")?.[0]).toBeFalsy();
+  });
+
   it("Should call passed props.whenChange on the summary click", async () => {
     const whenChange = jest.fn();
     const id = "some-id";
@@ -148,5 +157,16 @@ describe("DDetails", () => {
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
     expect(whenChange).toHaveBeenCalledWith(id, false);
+  });
+
+  it("Shouldn't call passed props.whenChange on the summary click if props.disabled", async () => {
+    const whenChange = jest.fn();
+    const wrapper = mount(DDetails, {
+      props: { whenChange, disabled: true },
+    });
+    const summaryEl = wrapper.find(`.${config.summaryOptions.class}`);
+    await summaryEl.trigger("click");
+    await sleep(wrapper.vm.transitionDuration);
+    expect(whenChange).toHaveBeenCalledTimes(0);
   });
 });
