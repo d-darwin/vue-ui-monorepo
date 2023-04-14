@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import type { VNode } from "vue";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { dAccordionProps as props } from "./props";
 import { dAccordionSetup as setup } from "./setup";
 import config from "./config";
@@ -14,6 +15,8 @@ export default defineComponent({
   props,
 
   setup,
+
+  emits: [EVENT_NAME.CHANGE], // TODO: move to the config ???
 
   render(): VNode {
     const Tag = this.tag;

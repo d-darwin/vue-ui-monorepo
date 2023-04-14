@@ -1,14 +1,15 @@
-import { inject, onMounted, provide, ref, watch, computed } from "vue";
+import { inject, onMounted, provide, ref, computed } from "vue";
 import { Ref, ComputedRef } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import type { DAccordionProvided } from "./types";
 import config from "./config";
-import EventName from "@/types/event-name";
 
 export function dAccordionSetup(
   props: DAccordionProvided,
-  options: { emit: (name: EventName, id: Text, open: boolean) => void }
+  options: {
+    emit: (name: typeof EVENT_NAME.CHANGE, id: Text, open: boolean) => void;
+  }
 ) {
   // TODO: test case
   const whenChange = (id: Text, open: boolean) => {

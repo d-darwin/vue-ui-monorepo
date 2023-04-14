@@ -1,6 +1,5 @@
-import type { HTMLAttributes, PropType } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
-import DDetails from "@darwin-studio/vue-ui/src/components/molecules/d-accordion/d-details";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import config from "./config";
 
@@ -8,7 +7,7 @@ export const dAccordionProps = {
   /**
    * An array of DDetails
    */
-  content: generateProp.array<typeof DDetails | undefined>(),
+  content: generateProp.array<VNode | undefined>(), // TODO: more accurate type
 
   // TODO: specific props: isSolo, someOpen ???
   /**

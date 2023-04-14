@@ -15,6 +15,7 @@ import {
   transitionClassCase,
 } from "@/utils/test-case-factories";
 import DDetails from "./d-details";
+import DAccordion from "./d-accordion";
 import config from "./config";
 import sleep from "@/utils/sleep";
 
@@ -168,5 +169,14 @@ describe("DDetails", () => {
     await summaryEl.trigger("click");
     await sleep(wrapper.vm.transitionDuration);
     expect(whenChange).toHaveBeenCalledTimes(0);
+  });
+
+  it("Should call methods.toggle if injection.openIds changed", async () => {
+    const wrapper = mount(DAccordion, {
+      props: {
+        // content: [],
+        content: [<DDetails id={11} />],
+      },
+    });
   });
 });
