@@ -13,7 +13,7 @@ export function dAccordionSetup(
   // TODO: test case
   const whenChange = (id: Text, open: boolean) => {
     options.emit(EVENT_NAME.CHANGE, id, open);
-    // TODO: emit(EVENT_NAME.UPDATE_OPEN), open which one ???
+    // TODO: emit(EVENT_NAME.(UPDATE_OPEN_IDS || VALUE)), open which one ???
     props.whenChange?.(id, open);
   };
 

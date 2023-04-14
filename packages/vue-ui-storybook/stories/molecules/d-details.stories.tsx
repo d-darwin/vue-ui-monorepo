@@ -74,14 +74,16 @@ const AutoCloseTemplate: Story = (args) => ({
   setup() {
     return { args };
   },
+  mounted() {
+    this.innerOpen = true;
+  },
   data() {
     return {
-      innerOpen: args.open,
+      innerOpen: false,
     };
   },
   methods: {
     async changeHandler(id: Text, open: boolean) {
-      console.log("changeHandler", id, open);
       if (open) {
         this.innerOpen = true;
         await sleep(3000);

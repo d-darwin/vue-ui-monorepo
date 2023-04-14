@@ -17,7 +17,7 @@ export default defineComponent({
 
   props, // TODO: move to the config ???
 
-  // TODO: v-model: open -> value
+  // TODO: v-model: open | value ???
 
   setup, // TODO: move to the config ???
 
@@ -140,28 +140,23 @@ export default defineComponent({
   watch: {
     open: {
       handler() {
-        console.log("open", this.open);
+        if (typeof this.open === "undefined") return;
         // TODO: test case
-        if (this.open && !this.innerOpen) {
-          this.toggle();
-        } else if (!this.open && this.innerOpen) {
+        if (this.open !== this.innerOpen) {
           this.toggle();
         }
       },
       immediate: true,
     },
-    // TODO: config
+    // TODO: const\config ?
     "injection.openIds": {
       handler() {
         if (typeof this.injection.openIds === "undefined") {
           return;
         }
-        console.log("injection.openIds", this.openIds);
         // TODO: test case
-        const shouldBeOpened = this.injection.openIds?.includes(this.id);
-        if (shouldBeOpened && !this.innerOpen) {
-          this.toggle();
-        } else if (!shouldBeOpened && this.innerOpen) {
+        const open = this.injection.openIds?.includes(this.id);
+        if (open !== this.innerOpen) {
           this.toggle();
         }
       },
