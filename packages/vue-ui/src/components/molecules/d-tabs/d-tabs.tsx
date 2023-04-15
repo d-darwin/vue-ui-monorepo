@@ -75,6 +75,7 @@ export default defineComponent({
     const tabsLength = props.tabs?.length || slotTabs?.length;
     const tabpanelsLength = props.tabpanels?.length || slotTabpanels?.length;
     if (tabpanelsLength && tabpanelsLength !== tabsLength) {
+      // TODO: test case
       log("Number of tabs and tabpanels are different", LOG_TYPE.WARN);
     }
 

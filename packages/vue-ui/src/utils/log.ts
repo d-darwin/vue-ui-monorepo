@@ -15,9 +15,11 @@ type LogType = (typeof LOG_TYPE)[keyof typeof LOG_TYPE];
 // TODO: descr
 export default function (message: string, type: LogType = LOG_TYPE.INFO): void {
   if (process?.env?.NODE_ENV !== "development") {
+    // TODO: test case
     return;
   }
 
+  // TODO: test cases
   switch (type) {
     case LOG_TYPE.INFO:
       console.info(chalk.greenBright(`✔ [${PACKAGE_NAME}]: ${message}`));

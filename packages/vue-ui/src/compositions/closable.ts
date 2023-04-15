@@ -66,9 +66,11 @@ export default function useClosable(
 
   onBeforeUnmount(() => {
     // ensure that body scrolling isn't blocked
+    // TODO: test case
     setBodyOverflow(false);
 
     if (typeof window !== "undefined" && keyupHandler) {
+      // TODO: test case
       window.removeEventListener(EVENT_NAME.KEYUP, keyupHandler);
     }
   });

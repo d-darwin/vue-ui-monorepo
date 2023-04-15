@@ -19,6 +19,7 @@ import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
 const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
   const classPrefix = codegenConfig.TOKENS[tokenName]?.CSS_CLASS_PREFIX;
   if (!classPrefix || !tokenVariant) {
+    // TODO: test case
     return;
   }
 
@@ -32,9 +33,11 @@ const generateCssClass = (tokenName: TokenName, tokenVariant: string) => {
   );
 
   if (!className) {
+    // TODO: test case
     return;
   }
 
+  // TODO: test cases
   switch (tokenName) {
     case TOKEN_NAME.BORDER:
       return borderStyles[className];

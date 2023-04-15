@@ -56,6 +56,7 @@ export default function useWindowSize(ms: number = DEFAULT_THROTTLE_DURATION) {
 
   onUnmounted(() => {
     if (typeof window !== "undefined" && throttledOnResize) {
+      // TODO: test case
       window.removeEventListener(EVENT_NAME.RESIZE, throttledOnResize);
     }
   });
