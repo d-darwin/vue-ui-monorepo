@@ -12,7 +12,16 @@ import styles from "./d-tab.css?module";
 export default defineComponent({
   name: config.tabName,
 
+  // TODO: move to props.ts ???
   props: {
+    /**
+     * Defines <i>id</i> attr of the component
+     */
+    id: generateProp.text(() => uuid()),
+    /**
+     * Defines <i>id</i> attr of the corresponding DTabpanel component
+     */
+    tabpanelId: generateProp.text(() => uuid()), // TODO: try not to use
     /**
      * Plain string or VNode
      */
@@ -21,14 +30,7 @@ export default defineComponent({
      * Pass if the component is active
      */
     active: Boolean,
-    /**
-     * Defines <i>id</i> attr of the component
-     */
-    id: generateProp.text(() => uuid()),
-    /**
-     * Defines <i>id</i> attr of the corresponding DTabpanel component
-     */
-    tabpanelId: generateProp.text(() => uuid()),
+    // TODO: commonProps via provide/inject
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -44,6 +46,7 @@ export default defineComponent({
     /**
      * Defines transition type of the component
      */
+
     transition: generateProp.transition(),
     /*TODO: It is recommended to use a <button> element with the role tab for their built-in functional and accessible features instead,
        as opposed to needing to add them yourself. For controlling tab key functionality for elements with the role tab,
@@ -68,8 +71,15 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       const classes = [
         config.tabClass,
+        // TODO
+        //  ...generateClasses({
+        //    font: this.size,
+        //    outline: {colorScheme: this.colorScheme, size: this.size},
+        //    ------------- or -------------
+        //    padding: [this.padding, this.size]
+        //  })
         generateClass.font(this.size),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config.colorScheme
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config.colorScheme * props.colorScheme
         ...generateClass.padding(this.padding, this.size),
         generateClass.size(this.size),
         generateClass.transition(this.transition),
@@ -89,7 +99,7 @@ export default defineComponent({
       return {
         id: String(this.id),
         tabindex: this.active ? 0 : -1,
-        role: "tab",
+        role: "tab", // TODO: config
         ["aria-selected"]: this.active || undefined,
         ["aria-controls"]: String(this.tabpanelId),
         class: this.classes,
@@ -114,8 +124,8 @@ export default defineComponent({
 
   render(): VNode {
     const Tag = this.tag;
-    /** @slot Use instead of props.content to fully customize content */
     return (
+      /** @slot Use instead of props.content to fully customize content */
       <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
     );
   },

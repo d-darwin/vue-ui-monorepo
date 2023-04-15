@@ -1,11 +1,13 @@
-import styles from "./d-tab.css?module";
+import dTabsStyles from "./d-tabs.css?module";
+import dTabStyles from "./d-tab.css?module";
+import dTabpanelStyles from "./d-tabpanel.css?module";
 
 export default {
   tabsName: "DTabs",
   tabpanelName: "DTabpanel",
   tabName: "DTab",
-  tabsClass: styles["dTabs"],
-  tablistClass: styles["dTablist"],
-  tabClass: styles["dTab"],
-  tabpanelClass: styles["dTabpanel"],
+  tabsClass: dTabsStyles.dTabs,
+  tablistClass: dTabsStyles.dTablist,
+  tabClass: dTabStyles.dTab,
+  tabpanelClass: dTabpanelStyles.dTabpanel,
 };
