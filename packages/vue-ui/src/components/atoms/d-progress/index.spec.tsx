@@ -112,8 +112,6 @@ describe("DProgress", () => {
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
-    console.log(wrapper.html());
-
     const targetEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(targetEl.attributes("style")).toContain(
       `--offset: ${captionOffset}`

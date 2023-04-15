@@ -17,7 +17,6 @@ import config from "./config";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 
-// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),

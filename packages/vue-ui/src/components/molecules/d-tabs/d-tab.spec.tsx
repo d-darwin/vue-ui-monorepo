@@ -16,7 +16,6 @@ import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { DTab } from "./index";
 import config from "./config";
 
-// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),
