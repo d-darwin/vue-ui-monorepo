@@ -55,7 +55,7 @@ export default defineComponent({
     /**
      * Defines element type of the container component
      */
-    tag: generateProp.tag(TAG_NAME.LI),
+    tag: generateProp.tag(TAG_NAME.LI), // TODO: config
 
     /**
      * Alternative way to catch click event
@@ -79,7 +79,7 @@ export default defineComponent({
         //    padding: [this.padding, this.size]
         //  })
         generateClass.font(this.size),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config.colorScheme * props.colorScheme
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config or props
         ...generateClass.padding(this.padding, this.size),
         generateClass.size(this.size),
         generateClass.transition(this.transition),

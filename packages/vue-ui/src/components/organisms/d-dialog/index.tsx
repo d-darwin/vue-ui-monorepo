@@ -48,7 +48,7 @@ export default defineComponent({
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
     // TODO: options
-    titleFont: generateProp.font(FONT.HUGE),
+    titleFont: generateProp.font(FONT.HUGE), // TODO: config
     // TODO: header
     // TODO: footer
     /**
@@ -93,16 +93,16 @@ export default defineComponent({
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: generateProp.padding(PADDING.EQUAL),
+    padding: generateProp.padding(PADDING.EQUAL), // TODO: config
     /**
      * Defines corner rounding of the component
      */
-    rounding: generateProp.rounding(ROUNDING.LARGE),
+    rounding: generateProp.rounding(ROUNDING.LARGE), // TODO: config
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.LARGE),
+    size: generateProp.size(SIZE.LARGE), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -114,7 +114,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME.DIALOG),
+    tag: generateProp.tag(TAG_NAME.DIALOG), // TODO: config
     /**
      * Defines z-index of the component
      */

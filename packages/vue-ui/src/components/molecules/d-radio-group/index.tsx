@@ -10,7 +10,6 @@ import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * Renders group of the DRadio components with label and error
@@ -62,7 +61,7 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions.style ???
     /**
      * Pass true to disable <b>input</b> element.
      */
@@ -70,7 +69,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */
@@ -79,7 +78,7 @@ export default defineComponent({
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -87,7 +86,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME.FIELDSET),
+    tag: generateProp.tag(TAG_NAME.FIELDSET), // TODO: config
 
     // TODO: whenChange\WhenInput
   },

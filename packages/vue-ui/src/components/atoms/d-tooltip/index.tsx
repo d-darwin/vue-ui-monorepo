@@ -230,7 +230,7 @@ export default defineComponent({
           config.targetClass,
           this.targetClass,
           generateClass.font(this.targetFont || this.size),
-          generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
+          generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config or props
         ],
         onMouseenter: () => this.hoverHandler(true),
         onMouseleave: () => this.hoverHandler(false),

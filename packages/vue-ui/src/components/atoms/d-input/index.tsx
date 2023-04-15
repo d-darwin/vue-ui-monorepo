@@ -168,9 +168,9 @@ export default defineComponent({
       return [
         config.inputClass,
         this.inputClass,
-        generateClass.border(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
+        generateClass.border(COLOR_SCHEME.SECONDARY, this.size), // TODO: config or props
         generateClass.font(this.inputFont || this.size),
-        generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config.colorScheme
+        generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config or props
         ...generateClass.padding(this.padding, this.size),
         generateClass.rounding(this.rounding),
         generateClass.size(this.size),

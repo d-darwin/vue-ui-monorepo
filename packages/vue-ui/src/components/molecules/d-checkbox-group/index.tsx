@@ -56,7 +56,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */
@@ -65,7 +65,7 @@ export default defineComponent({
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -73,7 +73,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME.FIELDSET),
+    tag: generateProp.tag(TAG_NAME.FIELDSET), // TODO: config
 
     // TODO: whenChange\WhenInput
   },

@@ -38,7 +38,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */

@@ -43,7 +43,7 @@ export default defineComponent({
     /**
      * Defines appearance of the components.
      */
-    type: generateProp.string<Type>(TYPE.BASE),
+    type: generateProp.string<Type>(TYPE.BASE), // TODO: config
     /**
      * You can pass own class name to the <b>input</b> element.
      */
@@ -57,20 +57,20 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: generateProp.padding(PADDING.EQUAL),
+    padding: generateProp.padding(PADDING.EQUAL), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: generateProp.rounding(ROUNDING.FULL),
+    rounding: generateProp.rounding(ROUNDING.FULL), // TODO: config
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */

@@ -77,11 +77,11 @@ export default defineComponent({
     /**
      * Defines corner rounding of the icon container element
      */
-    rounding: generateProp.rounding(ROUNDING.FULL),
+    rounding: generateProp.rounding(ROUNDING.FULL), // TODO: config
     /**
      * Defines size of the component
      */
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */

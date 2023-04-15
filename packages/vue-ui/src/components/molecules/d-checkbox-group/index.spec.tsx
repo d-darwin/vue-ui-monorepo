@@ -132,7 +132,7 @@ describe("DCheckboxGroup", () => {
   });
 
   it("Should pass props.colorScheme to the descendants", async () => {
-    const firstCheckboxColorScheme = COLOR_SCHEME.PRIMARY;
+    const firstCheckboxColorScheme = COLOR_SCHEME.PRIMARY; // TODO: config or props
     const colorScheme = COLOR_SCHEME.DANGER;
     const items = [
       <DCheckbox label={"checkbox 1"} colorScheme={firstCheckboxColorScheme} />,

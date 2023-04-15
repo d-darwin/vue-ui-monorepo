@@ -48,7 +48,7 @@ export default defineComponent({
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
     // TODO: options
-    titleFont: generateProp.font(FONT.HUGE),
+    titleFont: generateProp.font(FONT.HUGE), // TODO: config
     // TODO: header
     // TODO: footer
     /**
@@ -72,12 +72,12 @@ export default defineComponent({
     /**
      * Defines content element type of the component
      */
-    contentTag: generateProp.tag(TAG_NAME.NAV),
+    contentTag: generateProp.tag(TAG_NAME.NAV), // TODO: config
     /**
      * Positions on the component.
      * Takes values: 'top', 'right', 'bottom', 'left'.
      */
-    position: generateProp.string<PositionStrict>(POSITION_HORIZONTAL.RIGHT),
+    position: generateProp.string<PositionStrict>(POSITION_HORIZONTAL.RIGHT), // TODO: config
     /**
      * Defines width of the component if props.position is "right" or "left"
      */
@@ -101,12 +101,12 @@ export default defineComponent({
     /**
      * Defines corner rounding of the component
      */
-    rounding: generateProp.rounding(ROUNDING.LARGE),
+    rounding: generateProp.rounding(ROUNDING.LARGE), // TODO: config
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.LARGE),
+    size: generateProp.size(SIZE.LARGE), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -118,7 +118,7 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME.ASIDE),
+    tag: generateProp.tag(TAG_NAME.ASIDE), // TODO: config
     /**
      * Defines z-index of the component
      */

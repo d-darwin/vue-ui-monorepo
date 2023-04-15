@@ -62,7 +62,7 @@ export default defineComponent({
     /**
      * Defines element type of the tablist component
      */
-    tablistTag: generateProp.tag(TAG_NAME.UL),
+    tablistTag: generateProp.tag(TAG_NAME.UL), // TODO: config
     /**
      * Defines should DTabs be activated on arrow navigation
      */

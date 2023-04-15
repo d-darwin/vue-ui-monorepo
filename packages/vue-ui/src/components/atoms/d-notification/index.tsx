@@ -30,7 +30,7 @@ export default defineComponent({
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
     // TODO: placement ???
-    position: generateProp.string<Position>(POSITION.TOP_RIGHT),
+    position: generateProp.string<Position>(POSITION.TOP_RIGHT), // TODO: config
     /**
      * Min width of the component.
      */
@@ -66,7 +66,7 @@ export default defineComponent({
     /**
      * The notification type: success, info, warning, error.
      */
-    type: generateProp.string<Type>(TYPE.INFO),
+    type: generateProp.string<Type>(TYPE.INFO), // TODO: config
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -82,7 +82,7 @@ export default defineComponent({
     /**
      * Defines corner rounding of the component
      */
-    rounding: generateProp.rounding(ROUNDING.SMALL),
+    rounding: generateProp.rounding(ROUNDING.SMALL), // TODO: config
     /**
      * Defines size of the component
      */

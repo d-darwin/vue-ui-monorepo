@@ -50,7 +50,7 @@ export default defineComponent({
       return [
         config.tabpanelClass,
         generateClass.font(this.font),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM),
+        generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM), // TODO: config or props
         ...generateClass.padding(this.padding, this.font),
         generateClass.transition(this.transition),
       ];

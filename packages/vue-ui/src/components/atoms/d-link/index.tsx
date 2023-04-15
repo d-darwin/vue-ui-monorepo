@@ -52,7 +52,7 @@ export default defineComponent({
       const classes = [
         config.class,
         generateClass.font(this.font),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, this.font), // TODO: config.colorScheme
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.font), // TODO: config or props
         generateClass.size(this.font),
         generateClass.transition(this.transition),
       ];
