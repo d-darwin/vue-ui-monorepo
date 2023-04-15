@@ -327,6 +327,7 @@ export default defineComponent({
     },
 
     buttonClickHandler(): void {
+      console.log("buttonClickHandler");
       // TODO: test case
       const inputEl = this.inputRef;
       if (inputEl) {

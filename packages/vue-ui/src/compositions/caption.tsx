@@ -37,17 +37,14 @@ export default function useCaption(
    * @slot $slots.caption
    * Use instead of props.caption to fully customize caption content
    * */
-  // TODO
-  //  [Vue warn]: Slot "caption" invoked outside of the render function: this will not track dependencies used in the slot.
-  //  Invoke the slot function inside the render function instead.
-  const captionContent = slots.caption?.() || props.caption;
   const renderCaption = ref(
     <Trans
       enterActiveClass={styles.captionTransitionEnterActive}
       leaveActiveClass={styles.captionTransitionLeaveActive}
       appear={true}
     >
-      {captionContent && (
+      {/*TODO: reactivity ???*/}
+      {(slots.caption?.() || props.caption) && (
         <DCaption
           {...captionDefaults}
           font={props.size}
@@ -55,7 +52,7 @@ export default function useCaption(
           class={[styles.caption, generateClass.transition(props.transition)]}
           {...props.captionOptions}
         >
-          {captionContent}
+          {slots.caption?.() || props.caption}
         </DCaption>
       )}
     </Trans>

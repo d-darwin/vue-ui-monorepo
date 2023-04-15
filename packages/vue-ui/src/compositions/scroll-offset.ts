@@ -37,7 +37,7 @@ export default function useScrollOffset(ms: number) {
 
   onUnmounted(() => {
     if (typeof window !== "undefined" && throttledOnScroll) {
-      // prevent memory leaks
+      // TODO: test case
       window.removeEventListener(EVENT_NAME.SCROLL, throttledOnScroll);
     }
   });

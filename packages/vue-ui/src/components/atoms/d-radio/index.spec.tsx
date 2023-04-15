@@ -99,6 +99,18 @@ describe("DRadio", () => {
     const button = wrapper.findComponent(DButton);
     await button.trigger("click");
 
+    expect(wrapper.emitted("change")?.[0]).toHaveBeenCalledWith(0);
+    expect(wrapper.emitted("update:checked")?.[0]).toHaveBeenCalledWith(0);
+    expect(wrapper.emitted("update:value")?.[0]).toHaveBeenCalledWith(0);
+  });
+
+  it("Shouldn't trigger input events on DButton click if props.disabled", async () => {
+    const wrapper = shallowMount(DRadio, {
+      props: { type: TYPE.BUTTON, name, value, disabled: true },
+    });
+    const button = wrapper.findComponent(DButton);
+    await button.trigger("click");
+
     expect(wrapper.emitted("change")?.[0]).toBeFalsy();
     expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
     expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
@@ -160,7 +172,7 @@ describe("DRadio", () => {
   it("Shouldn render props.size into props.font of the DCaption", async () => {
     const size = SIZE.HUGE;
     const wrapper = await mount(DRadio, {
-      props: { size, caption: "Not empty" },
+      props: { size, caption: "Not empty", value },
     });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
@@ -172,7 +184,7 @@ describe("DRadio", () => {
     expect(captionEl.classes()).toContain(className);
   });
   it("Shouldn't render caption element if props.caption isn't passed", async () => {
-    const wrapper = await mount(DRadio);
+    const wrapper = await mount(DRadio, { props: { value } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
     const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeFalsy();
@@ -180,14 +192,14 @@ describe("DRadio", () => {
   it("Should render caption element with props.caption content if passed", async () => {
     const captionContent = "some caption";
     const caption = <div>{captionContent}</div>;
-    const wrapper = await mount(DRadio, { props: { caption } });
+    const wrapper = await mount(DRadio, { props: { caption, value } });
     await sleep(0); // Should wait next event loop step for asyncComponent to be imported
 
     const captionEl = wrapper.find(`.${config.captionOptions.class}`);
     expect(captionEl.exists()).toBeTruthy();
     expect(captionEl.text()).toBe(captionContent);
   });
-  slotCase(DRadio, `.${config.captionOptions.class}`, "caption");
+  slotCase(DRadio, `.${config.captionOptions.class}`, "caption", { value });
   it("Should render props.captionOffset to the caption style as '--offset: props.captionOffset'", async () => {
     const captionOffset = 33;
     await wrapper.setProps({
@@ -209,6 +221,7 @@ describe("DRadio", () => {
         captionOptions: {
           class: externalClass,
         },
+        value,
       },
     });
 
