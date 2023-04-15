@@ -48,25 +48,11 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       return [
-        config.tabpanelClass,
         generateClass.font(this.font),
         generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM), // TODO: config or props
         ...generateClass.padding(this.padding, this.font),
         generateClass.transition(this.transition),
       ];
-    },
-
-    bindings(): HTMLAttributes {
-      return {
-        id: String(this.id),
-        tabindex: 0,
-        role: "tabpanel",
-        ["aria-labelledby"]: String(this.tabId),
-        ["aria-expanded"]: this.active || undefined,
-        ["aria-hidden"]: !this.active || undefined,
-        hidden: !this.active || undefined,
-        class: this.classes,
-      };
     },
   },
 
@@ -74,7 +60,17 @@ export default defineComponent({
     const Tag = this.tag;
     /** @slot Use instead of props.content to fully customize content */
     return (
-      <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+      <Tag
+        {...config.tabpanelOptions}
+        id={String(this.id)}
+        aria-labelledby={String(this.tabId)}
+        aria-expanded={this.active || undefined}
+        aria-hidden={!this.active || undefined}
+        hidden={!this.active || undefined}
+        class={this.classes}
+      >
+        {this.$slots.default?.() || this.content}
+      </Tag>
     );
   },
 });

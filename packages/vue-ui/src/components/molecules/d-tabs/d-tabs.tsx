@@ -141,6 +141,7 @@ export default defineComponent({
   },
 
   methods: {
+    // TODO: doesnt work with slots
     async keydownHandler(event: KeyboardEvent): Promise<void> {
       // TODO: dont calc if not in array
       const tabs = (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];

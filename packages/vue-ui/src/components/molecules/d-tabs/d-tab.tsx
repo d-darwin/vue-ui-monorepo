@@ -1,9 +1,6 @@
 import { defineComponent } from "vue";
-import type { HTMLAttributes, PropType, VNode } from "vue";
-import { v4 as uuid } from "uuid";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import type { PropType, VNode } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -17,11 +14,11 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(() => uuid()),
+    id: generateProp.text(),
     /**
      * Defines <i>id</i> attr of the corresponding DTabpanel component
      */
-    tabpanelId: generateProp.text(() => uuid()), // TODO: try not to use
+    tabpanelId: generateProp.text(), // TODO: try not to use
     /**
      * Plain string or VNode
      */
@@ -55,7 +52,7 @@ export default defineComponent({
     /**
      * Defines element type of the container component
      */
-    tag: generateProp.tag(TAG_NAME.LI), // TODO: config
+    tag: generateProp.tag(config.tabTag),
 
     /**
      * Alternative way to catch click event
@@ -69,8 +66,7 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      const classes = [
-        config.tabClass,
+      return [
         // TODO
         //  ...generateClasses({
         //    font: this.size,
@@ -79,32 +75,13 @@ export default defineComponent({
         //    padding: [this.padding, this.size]
         //  })
         generateClass.font(this.size),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, this.size), // TODO: config or props
+        generateClass.outline(config.colorScheme, this.size), // TODO: props
         ...generateClass.padding(this.padding, this.size),
         generateClass.size(this.size),
         generateClass.transition(this.transition),
+        this.active ? styles.active : undefined, // TODO: config,
+        this.disabled ? styles.disabled : undefined, // TODO: config, colorScheme disabled
       ];
-
-      if (this.active) {
-        classes.push(styles.active);
-      }
-      if (this.disabled) {
-        classes.push(styles.disabled);
-      }
-
-      return classes;
-    },
-
-    bindings(): HTMLAttributes {
-      return {
-        id: String(this.id),
-        tabindex: this.active ? 0 : -1,
-        role: "tab", // TODO: config
-        ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: String(this.tabpanelId),
-        class: this.classes,
-        onClick: this.clickHandler,
-      };
     },
   },
 
@@ -126,7 +103,17 @@ export default defineComponent({
     const Tag = this.tag;
     return (
       /** @slot Use instead of props.content to fully customize content */
-      <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+      <Tag
+        {...config.tabOptions}
+        id={String(this.id)}
+        tabindex={this.active ? 0 : -1}
+        aria-selected={this.active || undefined}
+        aria-controls={String(this.tabpanelId)}
+        class={this.classes}
+        onClick={this.clickHandler}
+      >
+        {this.$slots.default?.() || this.content}
+      </Tag>
     );
   },
 });
