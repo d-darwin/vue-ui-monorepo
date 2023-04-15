@@ -14,7 +14,7 @@ export default {
   title: "molecules/DTabs",
   component: DTabs,
   argTypes: {
-    tabsSize: {
+    size: {
       control: { type: "select" },
       options: Object.values(SIZE),
     },
@@ -32,7 +32,7 @@ export default {
     },
   },
   args: {
-    tabsSize: SIZE.MEDIUM, // TODO: don't hardcode values
+    size: SIZE.MEDIUM, // TODO: don't hardcode values
     tabpanelsFont: FONT.MEDIUM,
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
   },

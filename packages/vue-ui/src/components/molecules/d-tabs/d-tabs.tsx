@@ -1,11 +1,10 @@
 import { defineComponent, ref } from "vue";
-import type { PropType, VNode } from "vue";
+import type { HTMLAttributes, VNode } from "vue";
 import { v4 as uuid } from "uuid";
-import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
-import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import config from "./config";
 
 /**
@@ -16,41 +15,38 @@ export default defineComponent({
 
   props: {
     /**
-     * Aria label of the tablist
+     * Pass any attribute to the tablist element
      */
-    tablistLabel: generateProp.content(),
+    tablistOptions: generateProp.options<HTMLAttributes>(config.tablistOptions),
     /**
-     * You can pass own class name to the tablist container element.
+     * Defines element type of the tablist component
      */
-    tablistClass: String,
+    tablistTag: generateProp.tag(config.tablistTag), // TODO ???
+    // TODO: tabTag
+    // TODO: tabpanelTag
+
     /**
      * Array of the DTab components, alternatively you can use slots.tabs
      */
-    tabs: {
-      type: Array as PropType<VNode[]>, // TODO: more accurate type, what about array of DCheckbox props?
-    },
-    /**
-     * Defines size of the tabs
-     */
-    tabsSize: generateProp.size(),
+    tabs: generateProp.array<VNode>(), // TODO: more accurate type, what about array of DCheckbox props?,
     /**
      Array of the DTabpanel components, alternatively you can use slots.tabpanels
      */
-    tabpanels: {
-      type: Array as PropType<VNode[]>, // TODO: more accurate type
-    },
-    /**
-     * Defines font size of the tabpanels
-     */
-    tabpanelsFont: generateProp.font(),
+    tabpanels: generateProp.array<VNode>(), // TODO: more accurate type
     /**
      * Pass true to disable <b>DTab</b> element.
      */
+
+    // TODO: dTabsProvided
     disabled: Boolean,
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: generateProp.padding(),
+    /**
+     * Defines size of the component
+     */
+    size: generateProp.size(),
     /**
      * Defines transition type of the component
      */
@@ -60,13 +56,9 @@ export default defineComponent({
      */
     tag: generateProp.tag(),
     /**
-     * Defines element type of the tablist component
-     */
-    tablistTag: generateProp.tag(TAG_NAME.UL), // TODO: config
-    /**
      * Defines should DTabs be activated on arrow navigation
      */
-    activateOnKeys: Boolean,
+    activateOnArrows: Boolean,
   },
 
   setup(props, { slots }) {
@@ -75,7 +67,7 @@ export default defineComponent({
     const tabsLength = props.tabs?.length || slotTabs?.length;
     const tabpanelsLength = props.tabpanels?.length || slotTabpanels?.length;
     if (tabpanelsLength && tabpanelsLength !== tabsLength) {
-      // TODO: test case
+      // TODO: test case or remove
       log("Number of tabs and tabpanels are different", LOG_TYPE.WARN);
     }
 
@@ -95,6 +87,20 @@ export default defineComponent({
   },
 
   computed: {
+    renderTablist(): VNode {
+      const TablistTag = this.tablistTag;
+
+      return (
+        <TablistTag
+          {...config.tablistOptions}
+          onKeydown={this.keydownHandler}
+          {...this.tablistOptions}
+        >
+          {this.renderTabs}
+        </TablistTag>
+      );
+    },
+
     renderTabs(): VNode[] {
       const prepareProps = (tab: VNode, index: number) => {
         Object.assign(tab.props || {}, {
@@ -105,7 +111,7 @@ export default defineComponent({
               ? this.disabled
               : tab.props?.disabled,
           padding: tab.props?.padding || this.padding,
-          size: tab.props?.size || this.tabsSize,
+          size: tab.props?.size || this.size,
           transition: tab.props?.transition || this.transition,
         });
         tab.key = tab.key || tab.props?.id;
@@ -124,7 +130,7 @@ export default defineComponent({
         Object.assign(tabpanel.props || {}, {
           id: this.ids?.[index]?.tabpanelId,
           tabId: this.ids?.[index]?.tabId,
-          font: tabpanel.props?.font || this.tabpanelsFont,
+          size: tabpanel.props?.font || this.size,
           padding: tabpanel.props?.padding || this.padding,
           transition: tabpanel.props?.transition || this.transition,
         });
@@ -179,19 +185,10 @@ export default defineComponent({
    * */
   render(): VNode {
     const Tag = this.tag;
-    const TablistTag = this.tablistTag;
-
     return (
       <Tag class={config.tabsClass}>
-        <TablistTag
-          role="tablist"
-          aria-label={String(this.tablistLabel)}
-          class={[config.tablistClass, this.tablistClass]}
-          onKeydown={this.keydownHandler}
-        >
-          {this.renderTabs}
-        </TablistTag>
-
+        {/*TODO: transition*/}
+        {this.renderTablist}
         {/*TODO: transition*/}
         {this.renderTabpanels}
       </Tag>

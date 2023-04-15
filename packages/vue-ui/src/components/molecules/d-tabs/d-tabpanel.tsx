@@ -1,8 +1,5 @@
 import { defineComponent } from "vue";
-import type { HTMLAttributes, VNode } from "vue";
-import { v4 as uuid } from "uuid";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import type { VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -22,35 +19,38 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(() => uuid()),
+    id: generateProp.text(),
     /**
      * Defines <i>id</i> attr of the corresponding DTab component
      */
-    tabId: generateProp.text(() => uuid()),
-    /**
-     * Defines font size of the component
-     */
-    font: generateProp.font(),
+    tabId: generateProp.text(), // TODO: try not to use
+
+    // TODO: dTabsProvided
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
     padding: generateProp.padding(),
     /**
+     * Defines size of the component
+     */
+    size: generateProp.size(),
+    /**
      * Defines transition type of the component
      */
     transition: generateProp.transition(),
+
     /**
      * Defines element type of the container component
      */
-    tag: generateProp.tag(),
+    tag: generateProp.tag(config.tabpanelTag),
   },
 
   computed: {
     classes(): (string | undefined)[] {
       return [
-        generateClass.font(this.font),
-        generateClass.outline(COLOR_SCHEME.PRIMARY, SIZE.MEDIUM), // TODO: config or props
-        ...generateClass.padding(this.padding, this.font),
+        generateClass.font(this.size),
+        generateClass.outline(config.colorScheme, this.size), // TODO: props
+        ...generateClass.padding(this.padding, this.size),
         generateClass.transition(this.transition),
       ];
     },

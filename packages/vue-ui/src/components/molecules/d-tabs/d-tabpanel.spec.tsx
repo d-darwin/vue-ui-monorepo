@@ -26,7 +26,7 @@ jest.mock("chalk", () => ({
 describe("DTabpanel", () => {
   const wrapper = mount(DTabpanel);
 
-  baseClassCase(wrapper, config.tabpanelClass);
+  baseClassCase(wrapper, config.tabpanelOptions.class);
 
   it("Should render 'tabpanel' role attr", () => {
     expect(wrapper.attributes("role")).toBe("tabpanel");
@@ -62,9 +62,9 @@ describe("DTabpanel", () => {
     expect(wrapper.attributes("hidden")).toBe("");
   });
 
-  propStringCase(wrapper, `.${config.tabpanelClass}`);
-  propVNodeCase(wrapper, `.${config.tabpanelClass}`);
-  slotCase(DTabpanel, `.${config.tabpanelClass}`);
+  propStringCase(wrapper, `.${config.tabpanelOptions.class}`);
+  propVNodeCase(wrapper, `.${config.tabpanelOptions.class}`);
+  slotCase(DTabpanel, `.${config.tabpanelOptions.class}`);
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -74,14 +74,14 @@ describe("DTabpanel", () => {
 
   outlineClassCase(
     wrapper,
-    `.${config.tabpanelClass}`,
+    `.${config.tabpanelOptions.class}`,
     COLOR_SCHEME.PRIMARY,
     SIZE.MEDIUM
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.tabpanelClass}`);
+  paddingEqualClassesCase(wrapper, `.${config.tabpanelOptions.class}`);
 
-  transitionClassCase(wrapper, `.${config.tabpanelClass}`);
+  transitionClassCase(wrapper, `.${config.tabpanelOptions.class}`);
 
   tagCase(wrapper);
 });

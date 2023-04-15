@@ -18,22 +18,22 @@ describe("DTabs", () => {
 
   baseClassCase(wrapper, config.tabsClass);
 
-  it("Should render config.tablistClassName to the tablist's class name", () => {
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+  it("Should render config.tablistOptions.className to the tablist class name", () => {
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     expect(tablist).toBeTruthy();
   });
 
-  it("Should render props.tablistLabel to the tablist's aria-label attr", async () => {
+  it("Should render props.tablistLabel to the tablist aria-label attr", async () => {
     const tablistLabel = "Some aria label";
     await wrapper.setProps({ tablistLabel });
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     expect(tablist.attributes("aria-label")).toBe(tablistLabel);
   });
 
-  it("Should props.tablistClass to the tablist's class name", async () => {
+  it("Should props.tablistOptions.class to the tablist class name", async () => {
     const tablistClass = "some-tablist-class";
     await wrapper.setProps({ tablistClass });
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     expect(tablist.classes()).toContain(tablistClass);
   });
 
@@ -52,7 +52,7 @@ describe("DTabs", () => {
       },
     });
 
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     const tabs = tablist.findAllComponents(DTab);
     expect(tabs?.[0]?.element).toMatchSnapshot(); // TODO: find out other way to compare
     expect(tabs?.[1]?.element).toMatchSnapshot(); // TODO: find out other way to compare
@@ -73,7 +73,7 @@ describe("DTabs", () => {
       },
     });
 
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     const tabs = tablist.findAllComponents(DTab);
     expect(tabs?.[0]?.element).toMatchSnapshot(); // TODO: find out other way to compare
     expect(tabs?.[1]?.element).toMatchSnapshot(); // TODO: find out other way to compare
@@ -234,7 +234,7 @@ describe("DTabs", () => {
   it("Should render tablist as element passed in props.tablistTag", async () => {
     const tablistTag = "section";
     await wrapper.setProps({ tablistTag });
-    const tablist = wrapper.find(`.${config.tablistClass}`);
+    const tablist = wrapper.find(`.${config.tablistOptions.class}`);
     expect(tablist.element.tagName).toEqual(tablistTag.toLocaleUpperCase());
   });
 
