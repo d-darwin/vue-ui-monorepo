@@ -147,7 +147,8 @@ export default defineComponent({
       }
     );
 
-    return { innerChecked, inputRef, renderCaption };
+    // TODO: ref name to the config
+    return { innerChecked, [config.inputRef]: inputRef, renderCaption };
   },
 
   emits: [
@@ -162,18 +163,21 @@ export default defineComponent({
       return (
         <input
           ref={config.inputRef}
-          type="radio"
+          type="radio" // TODO: config
           id={this.label ? String(this.id) : undefined}
           name={String(this.name)}
           checked={this.innerChecked}
           value={this.value}
           disabled={this.disabled}
           tabindex={this.type === TYPE.BASE ? 1 : -1}
-          {...this.inputAttrs}
+          {...this.inputAttrs} // TODO: inputOptions
+          autofocus={
+            this.type === TYPE.BASE ? this.inputAttrs?.autofocus : false
+          }
           class={[
             config.inputClass,
             this.inputClass,
-            generateClass.outline(this.colorScheme, this.size),
+            generateClass.outline(this.colorScheme, this.size), // TODO: props.type = "button"
             generateClass.size(this.size),
           ]}
           onChange={this.changeHandler}
@@ -250,6 +254,9 @@ export default defineComponent({
           {...config.buttonOptions}
           content={this.label}
           active={this.innerChecked} // TODO: checked and disabled state should have different appearance
+          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+          // @ts-ignore TODO
+          autofocus={this.inputAttrs?.autofocus}
           disabled={this.disabled} // TODO: checked and disabled state should have different appearance
           colorScheme={this.colorScheme}
           padding={this.padding}
@@ -286,14 +293,13 @@ export default defineComponent({
   methods: {
     changeHandler(event: Event): void {
       const checked = (event.target as HTMLInputElement).checked;
-      const value = (event.target as HTMLInputElement).value;
 
       /**
        * Emits on click with checked and value payload
        * @event change
        * @type {checked: Boolean, value: Text | undefined}
        */
-      this.$emit(EVENT_NAME.CHANGE, checked, checked ? value : undefined);
+      this.$emit(EVENT_NAME.CHANGE, checked, checked ? this.value : undefined);
       /**
        * Emits on click with checked payload
        * @event update:checked
@@ -305,34 +311,28 @@ export default defineComponent({
        * @event update:value
        * @type {value: Text | undefined}
        */
-      this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? value : undefined);
-      this.whenChange?.(checked, checked ? value : undefined);
+      this.$emit(EVENT_NAME.UPDATE_VALUE, checked ? this.value : undefined);
+      this.whenChange?.(checked, checked ? this.value : undefined);
 
       this.innerChecked = checked;
     },
 
     inputHandler(event: Event): void {
       const checked = (event.target as HTMLInputElement).checked;
-      const value = (event.target as HTMLInputElement).value;
 
       /**
        * Emits on input with checked payload
        * @event input
        * @type {value: Text | undefined}
        */
-      this.$emit(EVENT_NAME.INPUT, checked ? value : undefined);
-      this.whenInput?.(checked ? value : undefined);
+      this.$emit(EVENT_NAME.INPUT, checked ? this.value : undefined);
+      this.whenInput?.(checked ? this.value : undefined);
 
       this.innerChecked = checked;
     },
 
     buttonClickHandler(): void {
-      console.log("buttonClickHandler");
-      // TODO: test case
-      const inputEl = this.inputRef;
-      if (inputEl) {
-        inputEl.click();
-      }
+      (this[config.inputRef] as HTMLInputElement)?.click?.(); // TODO: avoid casting
     },
   },
 

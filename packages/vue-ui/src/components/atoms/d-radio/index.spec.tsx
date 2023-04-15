@@ -92,28 +92,30 @@ describe("DRadio", () => {
     expect(button.attributes().content).toBe(label);
   });
 
-  it("Should trigger input events on DButton click", async () => {
-    const wrapper = shallowMount(DRadio, {
-      props: { type: TYPE.BUTTON, name, value },
+  it("Should change input state on DButton click", async () => {
+    const checked = false;
+    const wrapper = mount(DRadio, {
+      props: { type: TYPE.BUTTON, name, checked, value },
     });
-    const button = wrapper.findComponent(DButton);
-    await button.trigger("click");
+    await sleep(0); // async component should be imported
+    const buttonComponent = wrapper.findComponent(DButton);
+    await buttonComponent.trigger("click");
 
-    expect(wrapper.emitted("change")?.[0]).toHaveBeenCalledWith(0);
-    expect(wrapper.emitted("update:checked")?.[0]).toHaveBeenCalledWith(0);
-    expect(wrapper.emitted("update:value")?.[0]).toHaveBeenCalledWith(0);
+    const inputEl = wrapper.find("input");
+    expect(inputEl.element.checked).toBeTruthy();
   });
 
-  it("Shouldn't trigger input events on DButton click if props.disabled", async () => {
-    const wrapper = shallowMount(DRadio, {
-      props: { type: TYPE.BUTTON, name, value, disabled: true },
+  it("Shouldn't change input state on DButton click if props.disabled", async () => {
+    const checked = false;
+    const wrapper = mount(DRadio, {
+      props: { type: TYPE.BUTTON, name, checked, value, disabled: true },
     });
-    const button = wrapper.findComponent(DButton);
-    await button.trigger("click");
+    await sleep(0); // async component should be imported
+    const buttonComponent = wrapper.findComponent(DButton);
+    await buttonComponent.trigger("click");
 
-    expect(wrapper.emitted("change")?.[0]).toBeFalsy();
-    expect(wrapper.emitted("update:checked")?.[0]).toBeFalsy();
-    expect(wrapper.emitted("update:value")?.[0]).toBeFalsy();
+    const inputEl = wrapper.find("input");
+    expect(inputEl.element.checked).toBeFalsy();
   });
 
   labelClassCase(wrapper);
@@ -381,8 +383,5 @@ describe("DRadio", () => {
     await wrapper.setProps({ checked: !checked });
     expect(wrapper.props().checked).toBe(!checked);
   });
-
-  // TODO: 488-490
-
   // TODO: props. ...Options cases
 });

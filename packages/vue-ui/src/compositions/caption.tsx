@@ -43,7 +43,6 @@ export default function useCaption(
       leaveActiveClass={styles.captionTransitionLeaveActive}
       appear={true}
     >
-      {/*TODO: reactivity ???*/}
       {(slots.caption?.() || props.caption) && (
         <DCaption
           {...captionDefaults}
