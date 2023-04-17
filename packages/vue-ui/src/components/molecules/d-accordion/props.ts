@@ -8,16 +8,8 @@ export const dAccordionProps = {
    * An array of DDetails
    */
   content: generateProp.array<VNode | undefined>(), // TODO: more accurate type
-
-  // TODO: specific props: isSolo, someOpen ???
   /**
-   * TODO
-   */
-  isSolo: Boolean,
-  // TODO: openId\Value ???
-  //  https://vuetifyjs.com/en/components/expansion-panels/
-  /**
-   * TODO
+   * Ids of opened DDetails components
    */
   openIds: generateProp.array<Text>(),
   /**

@@ -1,10 +1,10 @@
-import { defineComponent, ref } from "vue";
-import type { HTMLAttributes, VNode } from "vue";
-import { v4 as uuid } from "uuid";
-import log, { LOG_TYPE } from "@darwin-studio/vue-ui/src/utils/log";
-import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
+import { computed, defineComponent, provide } from "vue";
+import type { HTMLAttributes, VNode, PropType, ComputedRef } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
+import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import { DTabsProvided } from "./types";
 import config from "./config";
 
 /**
@@ -15,6 +15,23 @@ export default defineComponent({
 
   props: {
     /**
+     * Array of the DTab components, alternatively you can use slots.tabs
+     */
+    tabs: generateProp.array<VNode>(), // TODO: more accurate type, what about array of DCheckbox props?,
+    // TODO: tabTag
+    /**
+     * TODO
+     */
+    activeId: generateProp.text(),
+    /**
+     Array of the DTabpanel components, alternatively you can use slots.tabpanels
+     */
+    tabpanels: generateProp.array<VNode>(), // TODO: more accurate type
+    // TODO: tabpanelTag
+    /**
+     * Pass true to disable <b>DTab</b> element.
+     */
+    /**
      * Pass any attribute to the tablist element
      */
     tablistOptions: generateProp.options<HTMLAttributes>(config.tablistOptions),
@@ -22,20 +39,6 @@ export default defineComponent({
      * Defines element type of the tablist component
      */
     tablistTag: generateProp.tag(config.tablistTag), // TODO ???
-    // TODO: tabTag
-    // TODO: tabpanelTag
-
-    /**
-     * Array of the DTab components, alternatively you can use slots.tabs
-     */
-    tabs: generateProp.array<VNode>(), // TODO: more accurate type, what about array of DCheckbox props?,
-    /**
-     Array of the DTabpanel components, alternatively you can use slots.tabpanels
-     */
-    tabpanels: generateProp.array<VNode>(), // TODO: more accurate type
-    /**
-     * Pass true to disable <b>DTab</b> element.
-     */
 
     // TODO: dTabsProvided
     disabled: Boolean,
@@ -51,39 +54,42 @@ export default defineComponent({
      * Defines transition type of the component
      */
     transition: generateProp.transition(),
-    /**
-     * Defines element type of the container component
-     */
-    tag: generateProp.tag(),
+
     /**
      * Defines should DTabs be activated on arrow navigation
      */
     activateOnArrows: Boolean,
+    /**
+     * Defines element type of the container component
+     */
+    tag: generateProp.tag(),
+
+    /**
+     * Alternative way to catch change event with current active tab id in the payload
+     */
+    whenChange: Function as PropType<(activeId: Text) => void | Promise<void>>,
   },
 
-  setup(props, { slots }) {
-    const slotTabs = slots.tabs?.();
-    const slotTabpanels = slots.tabpanels?.();
-    const tabsLength = props.tabs?.length || slotTabs?.length;
-    const tabpanelsLength = props.tabpanels?.length || slotTabpanels?.length;
-    if (tabpanelsLength && tabpanelsLength !== tabsLength) {
-      // TODO: test case or remove
-      log("Number of tabs and tabpanels are different", LOG_TYPE.WARN);
-    }
+  setup(props, { emit }) {
+    const whenChange = (activeId: Text) => {
+      emit(EVENT_NAME.CHANGE, activeId);
+      props.whenChange?.(activeId);
+    };
 
-    const ids: { tabId: Text; tabpanelId: Text }[] = [];
-    // TODO: reactivity doesnt work - fix it !!!
-    (props.tabs || slotTabs)?.forEach((tab, index) => {
-      ids.push({
-        tabId: tab.props?.id || uuid(),
-        tabpanelId:
-          props.tabpanels?.[index]?.props?.id ||
-          slotTabpanels?.[index]?.props?.id ||
-          uuid(),
-      });
-    });
-
-    return { ids: ref(ids) };
+    // TODO: test case
+    provide<ComputedRef<DTabsProvided>>(
+      config.provideInjectKey,
+      computed(() => ({
+        disabled: props.disabled,
+        // TODO colorScheme: props.colorScheme,
+        padding: props.padding,
+        // TODO rounding: props.rounding,
+        size: props.size,
+        transition: props.transition,
+        activeId: props.activeId,
+        whenChange,
+      }))
+    );
   },
 
   computed: {
@@ -96,53 +102,9 @@ export default defineComponent({
           onKeydown={this.keydownHandler}
           {...this.tablistOptions}
         >
-          {this.renderTabs}
+          {this.$slots.tabs?.() || this.tabs}
         </TablistTag>
       );
-    },
-
-    renderTabs(): VNode[] {
-      const prepareProps = (tab: VNode, index: number) => {
-        Object.assign(tab.props || {}, {
-          id: this.ids?.[index]?.tabId,
-          tabpanelId: this.ids?.[index]?.tabpanelId,
-          disabled:
-            typeof tab.props?.disabled === "undefined"
-              ? this.disabled
-              : tab.props?.disabled,
-          padding: tab.props?.padding || this.padding,
-          size: tab.props?.size || this.size,
-          transition: tab.props?.transition || this.transition,
-        });
-        tab.key = tab.key || tab.props?.id;
-        return tab;
-      };
-
-      if (this.tabs?.length) {
-        return this.tabs.map(prepareProps);
-      }
-
-      return this.$slots.tabs?.().map(prepareProps) || [];
-    },
-
-    renderTabpanels(): VNode[] {
-      const prepareProps = (tabpanel: VNode, index: number) => {
-        Object.assign(tabpanel.props || {}, {
-          id: this.ids?.[index]?.tabpanelId,
-          tabId: this.ids?.[index]?.tabId,
-          size: tabpanel.props?.font || this.size,
-          padding: tabpanel.props?.padding || this.padding,
-          transition: tabpanel.props?.transition || this.transition,
-        });
-        tabpanel.key = tabpanel.key || tabpanel.props?.id;
-        return tabpanel;
-      };
-
-      if (this.tabpanels?.length) {
-        return this.tabpanels.map(prepareProps);
-      }
-
-      return this.$slots.tabpanels?.().map(prepareProps) || [];
     },
   },
 
@@ -187,10 +149,9 @@ export default defineComponent({
     const Tag = this.tag;
     return (
       <Tag class={config.tabsClass}>
-        {/*TODO: transition*/}
         {this.renderTablist}
         {/*TODO: transition*/}
-        {this.renderTabpanels}
+        {this.$slots.tabpanels?.() || this.tabpanels}
       </Tag>
     );
   },

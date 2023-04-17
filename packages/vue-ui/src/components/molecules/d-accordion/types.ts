@@ -21,5 +21,5 @@ export type CommonProps = Required<
   Omit<DAccordionProvided, "whenChange" | "openIds">
 >;
 
-export type DDetailsProps = InstanceType<typeof DDetails>["$props"];
-export type DAccordionProps = InstanceType<typeof DAccordion>["$props"];
+export type DDetailsProps = InstanceType<typeof DDetails>["$props"]; // TODO: try not to use component imports
+export type DAccordionProps = InstanceType<typeof DAccordion>["$props"]; // TODO: try not to use component imports

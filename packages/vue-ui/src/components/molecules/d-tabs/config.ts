@@ -8,6 +8,7 @@ import dTabpanelStyles from "./d-tabpanel.css?module";
 export default {
   tabsName: "DTabs",
   tabsClass: dTabsStyles.dTabs,
+  provideInjectKey: "tabsProvided",
   colorScheme: COLOR_SCHEME.PRIMARY,
   size: SIZE.MEDIUM,
 
