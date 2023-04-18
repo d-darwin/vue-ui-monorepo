@@ -9,6 +9,7 @@ export default {
   tabsName: "DTabs",
   tabsClass: dTabsStyles.dTabs,
   provideInjectKey: "tabsProvided",
+  injectedActiveIdPath: "injection.activeId",
   colorScheme: COLOR_SCHEME.PRIMARY,
   size: SIZE.MEDIUM,
 

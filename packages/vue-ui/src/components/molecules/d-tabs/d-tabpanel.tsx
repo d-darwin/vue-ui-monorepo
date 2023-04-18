@@ -1,5 +1,9 @@
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import type { VNode } from "vue";
+import type {
+  CommonProps,
+  DTabsProvided,
+} from "@darwin-studio/vue-ui/src/components/molecules/d-tabs/types";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
@@ -45,13 +49,32 @@ export default defineComponent({
     tag: generateProp.tag(config.tabpanelTag),
   },
 
+  setup() {
+    return {
+      injection: inject<DTabsProvided>(config.provideInjectKey, {}),
+    };
+  },
+
   computed: {
+    commonProps(): CommonProps {
+      return {
+        disabled: this.injection.disabled || false,
+        padding: this.injection.padding || this.padding,
+        // TODO rounding: this.injection.rounding || this.rounding,
+        size: this.injection.size || this.size,
+        transition: this.injection.transition || this.transition,
+      };
+    },
+
     classes(): (string | undefined)[] {
       return [
-        generateClass.font(this.size),
-        generateClass.outline(config.colorScheme, this.size), // TODO: props
-        ...generateClass.padding(this.padding, this.size),
-        generateClass.transition(this.transition),
+        generateClass.font(this.commonProps.size),
+        generateClass.outline(config.colorScheme, this.commonProps.size), // TODO: props
+        ...generateClass.padding(
+          this.commonProps.padding,
+          this.commonProps.size
+        ),
+        generateClass.transition(this.commonProps.transition),
       ];
     },
   },
@@ -62,11 +85,12 @@ export default defineComponent({
     return (
       <Tag
         {...config.tabpanelOptions}
-        id={String(this.id)}
-        aria-labelledby={String(this.tabId)}
-        aria-expanded={this.active || undefined}
-        aria-hidden={!this.active || undefined}
-        hidden={!this.active || undefined}
+        // TODO: key !!!
+        id={this.id ? String(this.id) : undefined}
+        aria-labelledby={this.tabId ? String(this.tabId) : undefined}
+        aria-expanded={this.active || undefined} // TODO: watch on injection.activeId???
+        aria-hidden={!this.active || undefined} // TODO: watch on injection.activeId???
+        hidden={!this.active || undefined} // TODO: watch on injection.activeId???
         class={this.classes}
       >
         {this.$slots.default?.() || this.content}

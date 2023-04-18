@@ -47,34 +47,28 @@ const Template: Story = (args) => ({
   computed: {
     tabs() {
       return [
-        <DTab
-          id="111"
-          tabpanel-id="222"
-          content="Tab 1"
-          active={this.activeTab === "tab_1"}
-          whenClick={() => {
-            this.activeTab = "tab_1";
-          }}
-        />,
-        <DTab
-          content="Tab 2"
-          active={this.activeTab === "tab_2"}
-          whenClick={() => {
-            this.activeTab = "tab_2";
-          }}
-        />,
+        <DTab id="111" content="Tab 1" />,
+        <DTab id="222" content="Tab 2" />,
       ];
     },
     tabpanels() {
-      return [
-        <DTabpanel id="222" tab-id="111" active={this.activeTab === "tab_1"}>
-          Panel 1
-        </DTabpanel>,
-        <DTabpanel active={this.activeTab === "tab_2"}>Panel 2</DTabpanel>,
-      ];
+      return [<DTabpanel>Panel 1</DTabpanel>, <DTabpanel>Panel 2</DTabpanel>];
     },
   },
-  template: `<DTabs v-bind="args" :tabs="tabs" :tabpanels="tabpanels" />`,
+  methods: {
+    changeHandler(activeId: string) {
+      console.log(activeId);
+      this.activeTab = activeId;
+    },
+  },
+  template: `
+    <DTabs
+      v-bind="args"
+      :tabs="tabs"
+      :tabpanels="tabpanels"
+      :activeId="activeTab"
+      :whenChange="changeHandler"
+    />`,
 });
 export const Default = Template.bind({});
 

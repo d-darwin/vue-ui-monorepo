@@ -190,8 +190,8 @@ export default defineComponent({
        * @type {open: boolean}
        */
       this.$emit(EVENT_NAME.UPDATE_OPEN, this.innerOpen); // TODO: update open
-      this.injection.whenChange?.(this.id, this.innerOpen);
       this.whenChange?.(this.id, this.innerOpen);
+      this.injection.whenChange?.(this.id, this.innerOpen);
     },
   },
 

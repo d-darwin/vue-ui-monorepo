@@ -72,8 +72,15 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const whenChange = (activeId: Text) => {
-      emit(EVENT_NAME.CHANGE, activeId);
-      props.whenChange?.(activeId);
+      if (!props.disabled) {
+        /**
+         * Emits on click with active tab id payload
+         * @event click
+         * @type {activeId: Text}
+         */
+        emit(EVENT_NAME.CHANGE, activeId);
+        props.whenChange?.(activeId);
+      }
     };
 
     // TODO: test case
@@ -112,26 +119,28 @@ export default defineComponent({
     // TODO: doesnt work with slots
     async keydownHandler(event: KeyboardEvent): Promise<void> {
       // TODO: dont calc if not in array
-      const tabs = (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
-      const tabId = (event.target as HTMLElement).getAttribute("id");
-      const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
+      // const tabs = (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
+      // const tabId = (event.target as HTMLElement).getAttribute("id");
+      // const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
+
+      // TODO get current active tab index;
 
       if (event.key === EVENT_KEY.ArrowLeft) {
         event.preventDefault();
-        const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
+        // const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
         // TODO: find out more elegant way
-        tabs?.[prevIndex]?.el?.focus?.();
+        // tabs?.[prevIndex]?.el?.focus?.();
       }
       if (event.key === EVENT_KEY.ArrowRight) {
         event.preventDefault();
-        const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
+        // const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
         // TODO: find out more elegant way
-        tabs?.[nextIndex]?.el?.focus?.();
+        // tabs?.[nextIndex]?.el?.focus?.();
       }
       if (event.key === EVENT_KEY.Enter) {
-        event.preventDefault();
+        // event.preventDefault();
         // TODO: find out more elegant way
-        tabs?.[tabIndex]?.props?.whenClick?.();
+        // tabs?.[tabIndex]?.props?.whenClick?.();
       }
     },
   },
