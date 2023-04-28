@@ -1,6 +1,6 @@
 {
   "name": "@darwin-studio/vue-ui",
-  "version": "0.33.14",
+  "version": "0.33.15",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",

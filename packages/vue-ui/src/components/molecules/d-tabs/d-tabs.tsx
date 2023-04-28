@@ -105,20 +105,22 @@ export default defineComponent({
   },
 
   methods: {
-    // TODO: check with slots
     async keydownHandler(event: KeyboardEvent): Promise<void> {
-      const tabs = this.$slots.tabs?.() || this.tabs; // TODO (this.$refs[config.tablistRef] as HTMLElement)?.children ???
+      const tabs = this.$slots.tabs?.() || this.tabs;
       // there is no sense to navigate in one tab
       if (!tabs || tabs.length < 2) {
         return;
       }
 
-      const currentTabId = (event.target as HTMLElement).getAttribute("id"); // TODO: avoid casting
+      let currentTabId = (event.target as HTMLElement).getAttribute("id"); // TODO: avoid casting
       const currentTabIndex = tabs.findIndex(
         (tab) => String(tab?.props?.id) === String(currentTabId)
       );
       if (currentTabIndex === -1) {
         return;
+      } else {
+        // get actual id with type
+        currentTabId = tabs[currentTabIndex]?.props?.id;
       }
 
       if (event.key === EVENT_KEY.ArrowLeft) {
@@ -171,6 +173,7 @@ export default defineComponent({
           {this.$slots.tabs?.() || this.tabs}
         </TablistTag>
         {/*TODO: transition*/}
+        {/*TODO: keep-alive*/}
         {this.$slots.tabpanels?.() || this.tabpanels}
       </Tag>
     );
