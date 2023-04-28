@@ -18,6 +18,7 @@ export default {
     class: dTabsStyles.dTablist,
   },
   tablistTag: TAG_NAME.UL,
+  tablistRef: "tablist",
 
   tabName: "DTab",
   tabOptions: {

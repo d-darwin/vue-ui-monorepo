@@ -1,4 +1,4 @@
-import { computed, defineComponent, provide } from "vue";
+import { computed, defineComponent, provide, ref, Ref } from "vue";
 import type { HTMLAttributes, VNode, PropType, ComputedRef } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
@@ -97,50 +97,52 @@ export default defineComponent({
         whenChange,
       }))
     );
-  },
 
-  computed: {
-    renderTablist(): VNode {
-      const TablistTag = this.tablistTag;
-
-      return (
-        <TablistTag
-          {...config.tablistOptions}
-          onKeydown={this.keydownHandler}
-          {...this.tablistOptions}
-        >
-          {this.$slots.tabs?.() || this.tabs}
-        </TablistTag>
-      );
-    },
+    const tablistRef: Ref<HTMLElement | null> = ref(null);
+    return {
+      [config.tablistRef]: tablistRef,
+    };
   },
 
   methods: {
-    // TODO: doesnt work with slots
+    // TODO: check with slots
     async keydownHandler(event: KeyboardEvent): Promise<void> {
-      // TODO: dont calc if not in array
-      // const tabs = (this.tabs?.length ? this.tabs : this.$slots.tabs?.()) || [];
-      // const tabId = (event.target as HTMLElement).getAttribute("id");
-      // const tabIndex = tabs.findIndex((tab) => tab?.props?.id === tabId);
+      const tabs = this.$slots.tabs?.() || this.tabs; // TODO (this.$refs[config.tablistRef] as HTMLElement)?.children ???
+      // there is no sense to navigate in one tab
+      if (!tabs || tabs.length < 2) {
+        return;
+      }
 
-      // TODO get current active tab index;
+      const currentTabId = (event.target as HTMLElement).getAttribute("id"); // TODO: avoid casting
+      const currentTabIndex = tabs.findIndex(
+        (tab) => String(tab?.props?.id) === String(currentTabId)
+      );
+      if (currentTabIndex === -1) {
+        return;
+      }
 
       if (event.key === EVENT_KEY.ArrowLeft) {
-        event.preventDefault();
-        // const prevIndex = tabIndex === 0 ? tabs?.length - 1 : tabIndex - 1;
-        // TODO: find out more elegant way
-        // tabs?.[prevIndex]?.el?.focus?.();
+        // TODO ??? event.preventDefault();
+        const prevIndex =
+          currentTabIndex === 0 ? tabs?.length - 1 : currentTabIndex - 1;
+        const tabElements = (this.$refs[config.tablistRef] as HTMLElement) // TODO: avoid casting
+          ?.children;
+        (tabElements?.[prevIndex] as HTMLElement)?.focus?.(); // TODO: avoid casting
       }
+
       if (event.key === EVENT_KEY.ArrowRight) {
-        event.preventDefault();
-        // const nextIndex = tabIndex === tabs?.length - 1 ? 0 : tabIndex + 1;
-        // TODO: find out more elegant way
-        // tabs?.[nextIndex]?.el?.focus?.();
+        // TODO ??? event.preventDefault();
+        const nextIndex =
+          currentTabIndex === tabs?.length - 1 ? 0 : currentTabIndex + 1;
+        const tabElements = (this.$refs[config.tablistRef] as HTMLElement) // TODO: avoid casting
+          ?.children;
+        (tabElements?.[nextIndex] as HTMLElement)?.focus?.(); // TODO: avoid casting
       }
+
       if (event.key === EVENT_KEY.Enter) {
-        // event.preventDefault();
-        // TODO: find out more elegant way
-        // tabs?.[tabIndex]?.props?.whenClick?.();
+        if (currentTabId) {
+          this.whenChange?.(currentTabId);
+        }
       }
     },
   },
@@ -156,9 +158,18 @@ export default defineComponent({
    * */
   render(): VNode {
     const Tag = this.tag;
+    const TablistTag = this.tablistTag;
+
     return (
       <Tag class={config.tabsClass}>
-        {this.renderTablist}
+        <TablistTag
+          {...config.tablistOptions}
+          ref={config.tablistRef}
+          onKeydown={this.keydownHandler}
+          {...this.tablistOptions}
+        >
+          {this.$slots.tabs?.() || this.tabs}
+        </TablistTag>
         {/*TODO: transition*/}
         {this.$slots.tabpanels?.() || this.tabpanels}
       </Tag>

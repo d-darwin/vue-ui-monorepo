@@ -7,6 +7,9 @@ import type { CommonProps, DTabsProvided } from "./types";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
+/**
+ * TODO
+ */
 export default defineComponent({
   name: config.tabName,
 
@@ -15,7 +18,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the component
      */
-    id: generateProp.text(),
+    id: generateProp.text(undefined, true),
     /**
      * Defines <i>id</i> attr of the corresponding DTabpanel component
      */
@@ -28,7 +31,6 @@ export default defineComponent({
      * Pass if the component is active
      */
     active: Boolean,
-    // TODO: commonProps via provide/inject
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -158,10 +160,11 @@ export default defineComponent({
       /** @slot Use instead of props.content to fully customize content */
       <Tag
         {...config.tabOptions}
-        id={this.id ? String(this.id) : undefined}
+        key={this.id}
+        id={String(this.id)}
         tabindex={this.innerActive ? 0 : -1}
-        aria-selected={this.innerActive || undefined} // TODO: remove, we already have the right role
-        aria-controls={this.tabpanelId ? String(this.tabpanelId) : undefined} // TODO: remove, we already have the right role
+        aria-selected={this.innerActive || undefined}
+        aria-controls={this.tabpanelId ? String(this.tabpanelId) : undefined}
         class={this.classes}
         onClick={this.activateHandler}
       >

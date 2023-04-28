@@ -1,4 +1,4 @@
-import { defineComponent, inject } from "vue";
+import { defineComponent, inject, ref } from "vue";
 import type { VNode } from "vue";
 import type {
   CommonProps,
@@ -8,6 +8,9 @@ import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 
+/**
+ * TODO
+ */
 export default defineComponent({
   name: config.tabpanelName,
 
@@ -27,9 +30,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the corresponding DTab component
      */
-    tabId: generateProp.text(), // TODO: try not to use
-
-    // TODO: dTabsProvided
+    tabId: generateProp.text(undefined, true),
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
@@ -42,17 +43,41 @@ export default defineComponent({
      * Defines transition type of the component
      */
     transition: generateProp.transition(),
-
     /**
      * Defines element type of the container component
      */
     tag: generateProp.tag(config.tabpanelTag),
   },
 
-  setup() {
+  setup(props) {
     return {
+      innerActive: ref(props.active),
       injection: inject<DTabsProvided>(config.provideInjectKey, {}),
     };
+  },
+
+  watch: {
+    active: {
+      handler(active) {
+        if (active !== this.innerActive) {
+          this.innerActive = active;
+        }
+      },
+      immediate: true,
+    },
+    [config.injectedActiveIdPath]: {
+      handler(activeId) {
+        if (typeof activeId === "undefined") {
+          return;
+        }
+
+        const active = activeId === this.tabId;
+        if (active !== this.innerActive) {
+          this.innerActive = active;
+        }
+      },
+      immediate: true,
+    },
   },
 
   computed: {
@@ -69,7 +94,7 @@ export default defineComponent({
     classes(): (string | undefined)[] {
       return [
         generateClass.font(this.commonProps.size),
-        generateClass.outline(config.colorScheme, this.commonProps.size), // TODO: props
+        generateClass.outline(config.colorScheme, this.commonProps.size), // TODO: props.colorScheme
         ...generateClass.padding(
           this.commonProps.padding,
           this.commonProps.size
@@ -85,12 +110,12 @@ export default defineComponent({
     return (
       <Tag
         {...config.tabpanelOptions}
-        // TODO: key !!!
+        key={this.id || `tabpanel-${this.tabId}`}
         id={this.id ? String(this.id) : undefined}
-        aria-labelledby={this.tabId ? String(this.tabId) : undefined}
-        aria-expanded={this.active || undefined} // TODO: watch on injection.activeId???
-        aria-hidden={!this.active || undefined} // TODO: watch on injection.activeId???
-        hidden={!this.active || undefined} // TODO: watch on injection.activeId???
+        aria-labelledby={String(this.tabId)}
+        aria-expanded={this.innerActive || undefined}
+        aria-hidden={!this.innerActive || undefined}
+        hidden={!this.innerActive || undefined}
         class={this.classes}
       >
         {this.$slots.default?.() || this.content}
