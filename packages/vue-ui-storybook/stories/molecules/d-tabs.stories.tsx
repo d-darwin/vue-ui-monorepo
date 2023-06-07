@@ -33,7 +33,7 @@ export default {
   },
   args: {
     size: SIZE.MEDIUM, // TODO: don't hardcode values
-    tabpanelsFont: FONT.MEDIUM,
+    tabpanelsFont: FONT.MEDIUM, // TODO: don't hardcode values
     padding: PADDING.DEFAULT, // TODO: don't hardcode values
   },
 };

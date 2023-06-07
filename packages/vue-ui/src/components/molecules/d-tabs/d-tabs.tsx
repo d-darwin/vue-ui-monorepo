@@ -79,6 +79,7 @@ export default defineComponent({
          * @type {activeId: Text}
          */
         emit(EVENT_NAME.CHANGE, activeId);
+        // TODO: test case
         props.whenChange?.(activeId);
       }
     };
@@ -108,6 +109,7 @@ export default defineComponent({
     async keydownHandler(event: KeyboardEvent): Promise<void> {
       const tabs = this.$slots.tabs?.() || this.tabs;
       // there is no sense to navigate in one tab
+      // TODO: test case
       if (!tabs || tabs.length < 2) {
         return;
       }
@@ -116,6 +118,7 @@ export default defineComponent({
       const currentTabIndex = tabs.findIndex(
         (tab) => String(tab?.props?.id) === String(currentTabId)
       );
+      // TODO: test case
       if (currentTabIndex === -1) {
         return;
       } else {
@@ -141,6 +144,7 @@ export default defineComponent({
         (tabElements?.[nextIndex] as HTMLElement)?.focus?.(); // TODO: avoid casting
       }
 
+      // TODO: test case
       if (event.key === EVENT_KEY.Enter) {
         if (currentTabId) {
           this.whenChange?.(currentTabId);

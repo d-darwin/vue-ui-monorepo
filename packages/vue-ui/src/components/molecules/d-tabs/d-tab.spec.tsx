@@ -23,7 +23,7 @@ jest.mock("chalk", () => ({
 }));
 
 describe("DTab", () => {
-  const wrapper = mount(DTab);
+  const wrapper = mount(DTab, { props: { id: "not-empty" } });
 
   baseClassCase(wrapper, config.tabOptions.class);
 
@@ -89,27 +89,33 @@ describe("DTab", () => {
   tagCase(wrapper);
 
   it("Shouldn't emit click event if props.disabled is true", async () => {
-    await wrapper.setProps({ disabled: true });
+    const wrapper = mount(DTab, { props: { id: "not-empty", disabled: true } });
     await wrapper.trigger("click");
     expect(wrapper.emitted("click")).toBeFalsy();
   });
 
   it("Should emit click event if props.disabled is false", async () => {
-    await wrapper.setProps({ disabled: false });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: false },
+    });
     await wrapper.trigger("click");
     expect(wrapper.emitted("click")).toBeTruthy();
   });
 
   it("Shouldn't call props.whenClick if props.disabled is true", async () => {
     const whenClick = jest.fn();
-    await wrapper.setProps({ disabled: true, whenClick });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: true, whenClick },
+    });
     await wrapper.trigger("click");
     expect(whenClick).toHaveBeenCalledTimes(0);
   });
 
   it("Should call props.whenClick if props.disabled is false", async () => {
     const whenClick = jest.fn();
-    await wrapper.setProps({ disabled: false, whenClick });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: false, whenClick },
+    });
     await wrapper.trigger("click");
     expect(whenClick).toHaveBeenCalledTimes(1);
   });

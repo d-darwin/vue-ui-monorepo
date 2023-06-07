@@ -24,7 +24,7 @@ jest.mock("chalk", () => ({
 }));
 
 describe("DTabpanel", () => {
-  const wrapper = mount(DTabpanel);
+  const wrapper = mount(DTabpanel, { props: { tabId: "not-empty" } });
 
   baseClassCase(wrapper, config.tabpanelOptions.class);
 

@@ -70,7 +70,7 @@ export default defineComponent({
         if (typeof activeId === "undefined") {
           return;
         }
-
+        // TODO: test case
         const active = activeId === this.tabId;
         if (active !== this.innerActive) {
           this.innerActive = active;

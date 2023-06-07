@@ -91,6 +91,7 @@ export default defineComponent({
           return;
         }
 
+        // TODO: test case
         if (activeId === this.id && !this.innerActive) {
           this.activateHandler();
         } else if (activeId !== this.id && this.innerActive) {
