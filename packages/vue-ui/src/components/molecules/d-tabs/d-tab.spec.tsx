@@ -59,7 +59,7 @@ describe("DTab", () => {
 
   propStringCase(wrapper, `.${config.tabOptions.class}`);
   propVNodeCase(wrapper, `.${config.tabOptions.class}`);
-  slotCase(DTab, `.${config.tabOptions.class}`);
+  slotCase(DTab, `.${config.tabOptions.class}`, "default", { id: "not empty" });
 
   fontSizeClassCase(wrapper, `.${config.tabOptions.class}`);
 

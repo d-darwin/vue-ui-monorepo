@@ -109,7 +109,6 @@ export default defineComponent({
     async keydownHandler(event: KeyboardEvent): Promise<void> {
       const tabs = this.$slots.tabs?.() || this.tabs;
       // there is no sense to navigate in one tab
-      // TODO: test case
       if (!tabs || tabs.length < 2) {
         return;
       }
@@ -118,13 +117,8 @@ export default defineComponent({
       const currentTabIndex = tabs.findIndex(
         (tab) => String(tab?.props?.id) === String(currentTabId)
       );
-      // TODO: test case
-      if (currentTabIndex === -1) {
-        return;
-      } else {
-        // get actual id with type
-        currentTabId = tabs[currentTabIndex]?.props?.id;
-      }
+      // get actual id with type
+      currentTabId = tabs[currentTabIndex]?.props?.id;
 
       if (event.key === EVENT_KEY.ArrowLeft) {
         // TODO ??? event.preventDefault();

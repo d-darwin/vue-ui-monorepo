@@ -64,7 +64,9 @@ describe("DTabpanel", () => {
 
   propStringCase(wrapper, `.${config.tabpanelOptions.class}`);
   propVNodeCase(wrapper, `.${config.tabpanelOptions.class}`);
-  slotCase(DTabpanel, `.${config.tabpanelOptions.class}`);
+  slotCase(DTabpanel, `.${config.tabpanelOptions.class}`, "default", {
+    tabId: "not empty",
+  });
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
