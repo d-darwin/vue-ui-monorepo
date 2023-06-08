@@ -8,7 +8,7 @@ import { DTabsProvided } from "./types";
 import config from "./config";
 
 /**
- * TODO: description
+ * The component is intended to be container of the DTabs and DTabpanel. It organizes their interaction
  */
 export default defineComponent({
   name: config.tabsName,
@@ -18,16 +18,14 @@ export default defineComponent({
      * Array of the DTab components, alternatively you can use slots.tabs
      */
     tabs: generateProp.array<VNode>(), // TODO: more accurate type, what about array of DCheckbox props?,
-    // TODO: tabTag
     /**
-     * TODO
+     * Id of the active DTab
      */
     activeId: generateProp.text(),
     /**
      Array of the DTabpanel components, alternatively you can use slots.tabpanels
      */
     tabpanels: generateProp.array<VNode>(), // TODO: more accurate type
-    // TODO: tabpanelTag
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -38,9 +36,10 @@ export default defineComponent({
     /**
      * Defines element type of the tablist component
      */
-    tablistTag: generateProp.tag(config.tablistTag), // TODO ???
-
-    // TODO: dTabsProvided
+    tablistTag: generateProp.tag(config.tablistTag),
+    /**
+     * Defines is the component disabled
+     */
     disabled: Boolean,
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon

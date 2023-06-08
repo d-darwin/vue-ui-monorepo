@@ -9,7 +9,7 @@ import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 
 /**
- * TODO
+ * The component is intended to be a Tabpanel child of the DTabs component.
  */
 export default defineComponent({
   name: config.tabpanelName,

@@ -8,7 +8,7 @@ import config from "./config";
 import styles from "./d-tab.css?module";
 
 /**
- * TODO
+ * The component is intended to be a Tab child of the DTabs component.
  */
 export default defineComponent({
   name: config.tabName,
@@ -90,7 +90,6 @@ export default defineComponent({
         if (typeof activeId === "undefined") {
           return;
         }
-
         // TODO: test case
         if (activeId === this.id && !this.innerActive) {
           this.activateHandler();
