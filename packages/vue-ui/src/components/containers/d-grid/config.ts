@@ -1,7 +1,9 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DGrid",
-  className: "dGrid",
-  childClassName: "child",
-  defaultColSpan: 1,
-  defaultRowGap: "var(--grid-column-gap)",
+  class: styles["dGrid"],
+  childClass: styles["child"],
+  colSpan: 1,
+  rowGap: "var(--grid-column-gap)",
 };

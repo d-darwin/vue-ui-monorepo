@@ -1,8 +1,7 @@
-import { watch, nextTick, onBeforeUnmount, onMounted } from "vue";
+import { watch, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useSetBodyOverflow from "./set-body-overflow";
-import useControlId from "./control-id";
 
 // TODO: tests
 
@@ -11,7 +10,7 @@ import useControlId from "./control-id";
  *
  * @param props
  * @param emit
- * @returns {{focusControlId: string}}
+ * @returns {{focusId: string}}
  */
 export default function useClosable(
   props: {
@@ -22,10 +21,7 @@ export default function useClosable(
   },
   emit: (eventName: "close") => void
 ) {
-  const { controlId: focusControlId } = useControlId({
-    ...props,
-    id: props.focusId,
-  });
+  const closeFocusId = ref(props.focusId);
   const { setBodyOverflow } = useSetBodyOverflow();
   let activeElement: Element | HTMLElement | null = null;
   let keyupHandler: ((event: KeyboardEvent) => void) | null = null;
@@ -56,7 +52,7 @@ export default function useClosable(
         }
         activeElement = document.activeElement;
         await nextTick(() => {
-          document.getElementById(focusControlId.value)?.focus?.();
+          document.getElementById(String(closeFocusId.value))?.focus?.();
         });
       } else {
         if (props.isModal) {
@@ -70,12 +66,14 @@ export default function useClosable(
 
   onBeforeUnmount(() => {
     // ensure that body scrolling isn't blocked
+    // TODO: test case
     setBodyOverflow(false);
 
     if (typeof window !== "undefined" && keyupHandler) {
+      // TODO: test case
       window.removeEventListener(EVENT_NAME.KEYUP, keyupHandler);
     }
   });
 
-  return { focusControlId };
+  return { closeFocusId };
 }

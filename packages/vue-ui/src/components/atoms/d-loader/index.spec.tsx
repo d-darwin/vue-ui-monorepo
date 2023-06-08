@@ -17,23 +17,23 @@ describe("DLoader", () => {
   const wrapper = shallowMount(DLoader);
 
   it("Should render .dLoader element", async () => {
-    const loaderEl = wrapper.find(`.${config.className}`);
+    const loaderEl = wrapper.find(`.${config.class}`);
     expect(loaderEl.exists()).toBeTruthy();
   });
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 
-  slotCase(DLoader, `.${config.className}`);
+  slotCase(DLoader, `.${config.class}`);
 
-  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+  colorSchemeClassCase(wrapper, `.${config.class}`, COLOR_SCHEME.DANGER);
 
-  fontClassCase(wrapper, `.${config.className}`);
+  fontClassCase(wrapper, `.${config.class}`);
 
-  roundingClassCase(wrapper, `.${config.className}`);
+  roundingClassCase(wrapper, `.${config.class}`);
 
-  sizeClassCase(wrapper, `.${config.className}`);
+  sizeClassCase(wrapper, `.${config.class}`);
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Should render props.animationDuration to the .dLoader style as '--animation-duration: props.animationDuration'", async () => {
     const animationDuration = "333ms";
@@ -41,7 +41,7 @@ describe("DLoader", () => {
       animationDuration,
     });
 
-    const loaderEl = wrapper.find(`.${config.className}`);
+    const loaderEl = wrapper.find(`.${config.class}`);
     expect(loaderEl.attributes("style")).toContain(
       `--animation-duration: ${animationDuration}`
     );
@@ -53,7 +53,7 @@ describe("DLoader", () => {
       zIndex,
     });
 
-    const loaderEl = wrapper.find(`.${config.className}`);
+    const loaderEl = wrapper.find(`.${config.class}`);
     expect(loaderEl.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 

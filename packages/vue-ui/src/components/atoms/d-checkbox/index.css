@@ -1,5 +1,6 @@
 .dCheckbox {
   width: fit-content;
+  position: relative;
 }
 
 .input,
@@ -56,9 +57,9 @@
   opacity: 0;
 }
 
-.error {
-  /*TODO: avoid hardcode*/
-  margin-top: 4px;
-  /*TODO: avoid hardcode*/
-  color: var(--color-danger-background);
+.caption {
+  --offset: 2px;
+  position: absolute;
+  top: calc(100% + var(--offset));
 }
+

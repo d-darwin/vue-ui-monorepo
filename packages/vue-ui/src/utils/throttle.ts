@@ -32,8 +32,10 @@ export default function throttle(func: () => void, ms: number): () => void {
     isThrottled = true;
 
     setTimeout(() => {
+      // TODO: test case
       isThrottled = false;
       if (savedArgs) {
+        // TODO: test case
         wrapper.apply(savedThis, savedArgs);
         savedArgs = savedThis = null;
       }

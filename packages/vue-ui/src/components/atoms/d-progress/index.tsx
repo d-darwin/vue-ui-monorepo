@@ -1,30 +1,20 @@
-import {
-  defineComponent,
+import { defineComponent } from "vue";
+import type {
   HTMLAttributes,
   LabelHTMLAttributes,
   ProgressHTMLAttributes,
-  type VNode,
+  VNode,
 } from "vue";
-import { Transition as Trans } from "@vue/runtime-dom";
 import { v4 as uuid } from "uuid";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
-import { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
-import { DCaptionAsync as DCaption } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/async";
-import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import { Type } from "./types";
-import {
-  CONTENT_DEFAULTS, // TODO: config???
-  LABEL_DEFAULTS, // TODO: config???
-  PROGRESS_DEFAULTS, // TODO: config???
-  LOADER_DEFAULTS, // TODO: config???
-  CAPTION_DEFAULTS, // TODO: config???
-} from "./constants";
-import styles from "./index.css?module";
 import config from "./config";
 
 /**
@@ -38,7 +28,7 @@ export default defineComponent({
      * Defines <i>id</i> attr of the <b>progress</b> element.<br>
      * If you don't want to specify it, it will be generated automatically.
      */
-    id: generateProp.text(() => uuid()), // TODO: use instead of useControlId ???
+    id: generateProp.text(() => uuid()),
     /**
      * Defines content of the <b>label</b> element.
      */
@@ -46,11 +36,13 @@ export default defineComponent({
     /**
      Defines offset of .label
      */
-    labelOffset: generateProp.text(config.defaultLabelOffset),
+    labelOffset: generateProp.text(config.labelOffset),
     /**
      * Pass any attrs to customize label, f.e. { class: "someClass" }
      */
-    labelOptions: generateProp.options<LabelHTMLAttributes>(LABEL_DEFAULTS),
+    labelOptions: generateProp.options<LabelHTMLAttributes>(
+      config.labelOptions
+    ),
     /**
      * Defines initial <i>value</i> attr of the <b>input</b> element
      */
@@ -58,12 +50,13 @@ export default defineComponent({
     /**
      * Defines type of the component: linear or circular
      */
-    type: generateProp.string<Type>(config.defaultType),
+    type: generateProp.string<Type>(config.type),
     /**
      * Pass any attribute to the progress element
      */
-    progressOptions:
-      generateProp.options<ProgressHTMLAttributes>(PROGRESS_DEFAULTS),
+    progressOptions: generateProp.options<ProgressHTMLAttributes>(
+      config.progressOptions
+    ),
     /**
      * Plain string or VNode
      */
@@ -71,7 +64,7 @@ export default defineComponent({
     /**
      * Pass any attribute to the content element
      */
-    contentOptions: generateProp.options<HTMLAttributes>(CONTENT_DEFAULTS),
+    contentOptions: generateProp.options<HTMLAttributes>(config.contentOptions),
     /**
      * Plain string or VNode
      */
@@ -79,7 +72,7 @@ export default defineComponent({
     /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
-    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
+    loaderOptions: generateProp.options<DLoaderProps>(config.loaderOptions),
     /**
      * If not empty renders DCaption below the <b>input</b> element.
      */
@@ -87,11 +80,11 @@ export default defineComponent({
     /**
      * Defines offset of DCaption
      */
-    captionOffset: generateProp.text(config.defaultCaptionOffset),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Pass any DBackdrop.props to customize caption, f.e. { type: "error" }
      */
-    captionOptions: generateProp.options<DCaptionProps>(CAPTION_DEFAULTS),
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
      * Defines appearance of the component
      */
@@ -111,7 +104,11 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.DIV),
+    tag: generateProp.tag(TAG_NAME.DIV),
+  },
+
+  setup(props, { slots }) {
+    return useCaption(props, slots, config.captionOptions);
   },
 
   computed: {
@@ -130,7 +127,7 @@ export default defineComponent({
       if (this.$slots.label || this.label) {
         return (
           <label
-            {...LABEL_DEFAULTS}
+            {...config.labelOptions}
             for={String(this.id)}
             style={`${config.labelOffsetCSSPropName}: ${prepareHtmlSize(
               this.labelOffset
@@ -147,25 +144,21 @@ export default defineComponent({
 
     progressClasses(): (string | undefined)[] {
       return [
-        styles[config.progressClassName],
+        this.type === Type.linear ? config.linearClass : config.circularClass,
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.rounding(this.rounding),
         this.type === Type.linear
-          ? styles[config.linearClassName]
-          : styles[config.circularClassName],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        this.type === Type.linear
-          ? getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size)
+          ? generateClass.minControlWidth(this.size)
           : undefined,
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.transition(this.transition),
       ];
     },
 
     renderLinear(): VNode {
-      const Tag = TAG_NAME_DEFAULTS.PROGRESS;
+      const Tag = TAG_NAME.PROGRESS;
       return (
         <Tag
-          /*TODO: should we let redefine only ids?*/
-          {...PROGRESS_DEFAULTS}
+          {...config.progressOptions}
           key="linear"
           id={this.label ? String(this.id) : undefined}
           value={!this.indeterminate ? this.value : undefined}
@@ -183,7 +176,7 @@ export default defineComponent({
     renderCircular(): VNode {
       return (
         <div
-          {...PROGRESS_DEFAULTS}
+          {...config.progressOptions}
           key="circular"
           id={String(this.id)}
           class={this.progressClasses}
@@ -197,8 +190,8 @@ export default defineComponent({
 
     loaderClasses(): (string | undefined)[] {
       return [
-        styles[config.loaderContainerClassName],
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        config.loaderContainerClass,
+        generateClass.rounding(this.rounding),
       ];
     },
 
@@ -207,7 +200,7 @@ export default defineComponent({
         <div class={this.loaderClasses}>
           {this.$slots.loader?.() || this.loader || (
             <DLoader
-              {...LOADER_DEFAULTS}
+              {...config.loaderOptions}
               colorScheme={this.colorScheme}
               font={this.size}
               size={this.size}
@@ -221,9 +214,9 @@ export default defineComponent({
 
     contentClasses(): (string | undefined)[] {
       return [
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
+        generateClass.colorScheme(this.colorScheme),
         this.type === Type.circular
-          ? getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding)
+          ? generateClass.rounding(this.rounding)
           : undefined,
       ];
     },
@@ -232,7 +225,7 @@ export default defineComponent({
       if (!this.indeterminate && (this.$slots.default || this.content)) {
         return (
           <div
-            {...CONTENT_DEFAULTS}
+            {...config.contentOptions}
             class={this.contentClasses}
             {...this.contentOptions}
           >
@@ -248,35 +241,11 @@ export default defineComponent({
       return null;
     },
 
-    renderCaption(): VNode {
-      return (
-        <Trans
-          enterActiveClass={styles.captionTransitionEnterActive}
-          leaveActiveClass={styles.captionTransitionLeaveActive}
-          appear={true}
-        >
-          {(this.$slots.caption || this.caption) && (
-            <DCaption
-              {...CAPTION_DEFAULTS}
-              font={this.size}
-              class={getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition)}
-              style={`${config.captionOffsetCSSPropName}: ${prepareHtmlSize(
-                this.captionOffset
-              )}`}
-              {...this.captionOptions}
-            >
-              {this.$slots.caption?.() || this.caption}
-            </DCaption>
-          )}
-        </Trans>
-      );
-    },
-
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+        config.class,
+        generateClass.font(this.size),
+        generateClass.size(this.size),
       ];
     },
   },

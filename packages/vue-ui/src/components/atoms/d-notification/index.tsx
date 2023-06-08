@@ -1,13 +1,5 @@
-import {
-  defineComponent,
-  Teleport,
-  Transition as Trans,
-  ref,
-  type CSSProperties,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent, ref, Teleport, Transition as Trans } from "vue";
+import type { CSSProperties, HTMLAttributes, PropType, VNode } from "vue";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
@@ -15,8 +7,7 @@ import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Type } from "./types";
 import { TYPE } from "./constants";
 import config from "./config";
@@ -39,7 +30,7 @@ export default defineComponent({
      * Takes values: 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left', 'top-left'.
      */
     // TODO: placement ???
-    position: generateProp.string<Position>(POSITION.TOP_RIGHT),
+    position: generateProp.string<Position>(POSITION.TOP_RIGHT), // TODO: config
     /**
      * Min width of the component.
      */
@@ -71,11 +62,11 @@ export default defineComponent({
     /**
      * The component is mounted inside passed element.
      */
-    target: generateProp.teleportTarget(config.defaultTarget),
+    target: generateProp.teleportTarget(config.target),
     /**
      * The notification type: success, info, warning, error.
      */
-    type: generateProp.string<Type>(TYPE.INFO),
+    type: generateProp.string<Type>(TYPE.INFO), // TODO: config
     /**
      * Defines font size of the component. By default, depends on props.size
      */
@@ -91,7 +82,7 @@ export default defineComponent({
     /**
      * Defines corner rounding of the component
      */
-    rounding: generateProp.rounding(ROUNDING.SMALL),
+    rounding: generateProp.rounding(ROUNDING.SMALL), // TODO: config
     /**
      * Defines size of the component
      */
@@ -140,17 +131,16 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       return [
-        this.notificationClass,
-        styles[config.className],
+        config.class,
         styles[this.position],
         styles[this.type],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        this.notificationClass,
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.font),
+        ...generateClass.padding(this.padding, this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -235,9 +225,7 @@ export default defineComponent({
         <Trans {...this.transitionBindings}>
           {this.shown && (
             <Tag {...this.bindings}>
-              {this.isContentShown
-                ? this.$slots.default?.() || this.content
-                : ""}
+              {this.isContentShown && (this.$slots.default?.() || this.content)}
             </Tag>
           )}
         </Trans>

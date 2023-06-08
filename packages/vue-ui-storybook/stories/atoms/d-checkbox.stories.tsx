@@ -14,10 +14,6 @@ export default {
       control: { type: "select" },
       options: [undefined, ...Object.values(FONT)],
     },
-    errorFont: {
-      control: { type: "select" },
-      options: [undefined, ...Object.values(FONT)],
-    },
     colorScheme: {
       control: { type: "select" },
       options: Object.values(COLOR_SCHEME),
@@ -61,9 +57,8 @@ export default {
     rounding: ROUNDING.MEDIUM, // TODO: don't hardcode values
     size: SIZE.TINY, // TODO: don't hardcode values
     transition: TRANSITION.FAST, // TODO: don't hardcode values
-    error: "Some error string",
-    errorFont: undefined,
-    errorClass: "someCustomErrorClass",
+    caption: "Some caption",
+    captionOffset: "0.2em",
     iconContainerClass: "someIconContainerClass",
     tag: "div", // TODO: const
     whenChange: (checked: boolean, value: Text) => {
@@ -110,15 +105,15 @@ const SlotLabelTemplate: Story = (args) => ({
 });
 export const SlotLabel = SlotLabelTemplate.bind({});
 
-const SlotErrorTemplate: Story = (args) => ({
+const SlotCaptionTemplate: Story = (args) => ({
   components: { DCheckbox },
   setup() {
     return { args };
   },
   template: `
     <DCheckbox v-bind="args">
-      <template v-slot:error><b>Error slot</b></template>
+      <template v-slot:caption><b>Caption slot</b></template>
     </DCheckbox>
   `,
 });
-export const SlotError = SlotErrorTemplate.bind({});
+export const SlotCaption = SlotCaptionTemplate.bind({});

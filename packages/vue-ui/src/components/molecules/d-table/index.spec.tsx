@@ -46,7 +46,7 @@ const bodyRows = [
 describe("DTable", () => {
   const wrapper = shallowMount(DTable);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   it("Should render props.headClass to the thead element class", async () => {
     const headClass = "some-head-class";

@@ -1,7 +1,3 @@
-import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
-import config from "./config";
-import styles from "./index.css?module";
-
 // TODO: naming
 export const SOURCE_TYPE = {
   ARRAY: "array",
@@ -22,7 +18,3 @@ export const OBJECT_FIT = {
   NONE: "none",
   SCALE_DOWN: "scale-down",
 } as const;
-
-export const ASPECT_RATIO_DEFAULTS: DAspectRatioProps = {
-  class: styles[config.className],
-};

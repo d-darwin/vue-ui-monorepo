@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   border: none;
+  position: relative;
 }
 
 .label {
@@ -11,11 +12,4 @@
 .checkbox {
   /*TODO: avoid hardcode*/
   margin-top: 4px;
-}
-
-.error {
-  /*TODO: avoid hardcode*/
-  margin-top: 4px;
-  /*TODO: avoid hardcode*/
-  color: var(--color-danger-background);
 }

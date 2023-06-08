@@ -1,26 +1,18 @@
-import {
-  defineComponent,
-  ref,
-  onMounted,
-  nextTick,
-  watch,
-  type PropType,
-  type VNode,
-  type Ref,
-} from "vue";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import { defineComponent, ref, onMounted, nextTick, watch } from "vue";
+import type { PropType, VNode, Ref } from "vue";
+import { v4 as uuid } from "uuid";
 import useScrollOffset from "@darwin-studio/vue-ui/src/compositions/scroll-offset";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import { POSITION } from "@darwin-studio/vue-ui/src/constants/position";
 import { EVENT_KEY } from "@darwin-studio/vue-ui/src/constants/event-key";
-import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import type { Position } from "@darwin-studio/vue-ui/src/types/position";
 import type { Trigger } from "./types";
 import { getAdjustedPosition, parsePosition } from "./utils";
-import { TRIGGER, BASE_COLOR_SCHEME } from "./constant";
+import { TRIGGER } from "./constant";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -125,7 +117,7 @@ export default defineComponent({
     const isShown = ref(false);
 
     // we will be watching on this to adjust tooltip position
-    const { controlId: tooltipId } = useControlId();
+    const tooltipId = uuid();
     const { scrollOffsetX, scrollOffsetY } = useScrollOffset(
       config.throttleDuration
     );
@@ -196,8 +188,8 @@ export default defineComponent({
     return {
       tooltipId,
       isShown,
-      containerRef,
-      contentRef,
+      [config.containerRef]: containerRef,
+      [config.contentRef]: contentRef,
       horizontalPosition,
       verticalPosition,
     };
@@ -205,7 +197,7 @@ export default defineComponent({
 
   computed: {
     containerClasses(): string[] {
-      const classes = [styles[config.className]];
+      const classes = [config.class];
       if (this.isShown) {
         classes.push(styles.isShown);
       }
@@ -218,6 +210,7 @@ export default defineComponent({
       if (this.verticalPosition) {
         classes.push(styles[this.verticalPosition]);
       }
+
       return classes;
     },
 
@@ -234,13 +227,10 @@ export default defineComponent({
         tabindex: this.tabindex,
         "aria-describedby": this.tooltipId,
         class: [
-          styles[config.targetClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.targetFont || this.size),
-          getCommonCssClass(
-            TOKEN_NAME.OUTLINE,
-            `${BASE_COLOR_SCHEME}-${this.size}`
-          ),
+          config.targetClass,
           this.targetClass,
+          generateClass.font(this.targetFont || this.size),
+          generateClass.outline(COLOR_SCHEME.SECONDARY, this.size), // TODO: config or props
         ],
         onMouseenter: () => this.hoverHandler(true),
         onMouseleave: () => this.hoverHandler(false),
@@ -254,20 +244,20 @@ export default defineComponent({
     },
 
     renderContent(): VNode {
+      // TODO: move to getters
       const bindings = {
         ref: config.contentRef,
         id: this.tooltipId,
         "aria-hidden": !this.isShown,
         role: "tooltip",
         class: [
-          styles[config.contentClassName],
-          getCommonCssClass(TOKEN_NAME.FONT, this.contentFont || this.size),
-          getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-          getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-          getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-          getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+          config.contentClass,
           this.contentClass,
+          generateClass.font(this.contentFont || this.size),
+          ...generateClass.padding(this.padding, this.size),
+          generateClass.rounding(this.rounding),
+          generateClass.size(this.size),
+          generateClass.transition(this.transition),
         ],
         style: this.contentOffsetStyles,
       };

@@ -6,4 +6,3 @@ export const INPUT_TYPE = {
   EMAIL: "email",
   PASSWORD: "password",
 } as const;
-export const BASE_COLOR_SCHEME = "secondary"; // TODO: don't use hardcoded values

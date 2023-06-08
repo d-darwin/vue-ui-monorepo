@@ -1,0 +1,40 @@
+.dDetails {
+  border: calc(var(--size)/16) solid var(--background-color);
+  padding: 0;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--border-radius);
+  margin: -2px;
+  height: calc(var(--size) + 4px);
+  padding: var(--padding);
+  cursor: pointer;
+}
+
+.__disabled .summary {
+  cursor: not-allowed;
+}
+
+.flatBottom {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rotatedIcon {
+  scale: -1;
+}
+
+.content {
+  overflow: hidden;
+  background: white; /*TODO*/
+  color: var(--color-text); /*TODO*/
+  border-radius: var(--border-radius);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: var(--padding);
+  padding-top: 0;
+  padding-bottom: 0;
+}

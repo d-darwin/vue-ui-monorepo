@@ -30,7 +30,7 @@ describe("DDrawer", () => {
 
   it("Shouldn't render anything if props.isShown is falsy", async () => {
     await wrapper.setProps({ isShown: false });
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.exists()).toBeFalsy();
   });
 
@@ -40,13 +40,13 @@ describe("DDrawer", () => {
     const backdrop = wrapper.findComponent(DBackdrop);
     expect(backdrop.exists()).toBeTruthy();
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.exists()).toBeTruthy();
 
-    const headerEl = wrapper.find(`.${config.headerClassName}`);
+    const headerEl = wrapper.find(`.${config.headerClass}`);
     expect(headerEl.exists()).toBeTruthy();
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.text()).toBe(content);
   });
 
@@ -61,7 +61,7 @@ describe("DDrawer", () => {
     const title = "Some title";
     await wrapper.setProps({ isShown: true, title });
 
-    const titleEl = wrapper.find(`.${config.titleClassName}`);
+    const titleEl = wrapper.find(`.${config.titleClass}`);
     expect(titleEl.text()).toBe(title);
   });
 
@@ -70,7 +70,7 @@ describe("DDrawer", () => {
     const titleClass = "someTitleClass";
     await wrapper.setProps({ isShown: true, title, titleClass });
 
-    const titleEl = wrapper.find(`.${config.titleClassName}`);
+    const titleEl = wrapper.find(`.${config.titleClass}`);
     expect(titleEl.classes()).toContain(titleClass);
   });
 
@@ -84,7 +84,7 @@ describe("DDrawer", () => {
       titleFont
     );
 
-    const titleEl = wrapper.find(`.${config.titleClassName}`);
+    const titleEl = wrapper.find(`.${config.titleClass}`);
     expect(titleEl.classes()).toContain(className);
   });
 
@@ -92,7 +92,7 @@ describe("DDrawer", () => {
     const content = <b>Some html content</b>;
     await wrapper.setProps({ isShown: true, content });
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.html()).toMatchSnapshot();
   });
 
@@ -100,7 +100,7 @@ describe("DDrawer", () => {
     const contentClass = "someContentClass";
     await wrapper.setProps({ isShown: true, contentClass });
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.classes()).toContain(contentClass);
   });
 
@@ -113,7 +113,7 @@ describe("DDrawer", () => {
       contentFont
     );
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.classes()).toContain(className);
   });
 
@@ -121,7 +121,7 @@ describe("DDrawer", () => {
     const contentRole = "composite";
     await wrapper.setProps({ isShown: true, contentRole });
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.attributes().role).toBe(contentRole);
   });
 
@@ -129,7 +129,7 @@ describe("DDrawer", () => {
     const contentTag = "section";
     await wrapper.setProps({ isShown: true, contentTag });
 
-    const contentEl = wrapper.find(`.${config.contentClassName}`);
+    const contentEl = wrapper.find(`.${config.contentClass}`);
     expect(contentEl.element.tagName).toEqual(contentTag.toLocaleUpperCase());
   });
 
@@ -137,7 +137,7 @@ describe("DDrawer", () => {
     const position = POSITION.BOTTOM;
     await wrapper.setProps({ isShown: true, position });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.classes()).toContain("bottom");
   });
 
@@ -145,7 +145,7 @@ describe("DDrawer", () => {
     const width = "45vw";
     await wrapper.setProps({ isShown: true, width });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.attributes("style")).toContain(`--width: ${width}`);
   });
 
@@ -153,19 +153,19 @@ describe("DDrawer", () => {
     const height = "45vw";
     await wrapper.setProps({ isShown: true, height });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.attributes("style")).toContain(`--height: ${height}`);
   });
 
-  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+  colorSchemeClassCase(wrapper, `.${config.class}`, COLOR_SCHEME.DANGER);
 
-  paddingEqualClassesCase(wrapper, `.${config.className}`);
+  paddingEqualClassesCase(wrapper, `.${config.class}`);
 
-  roundingClassCase(wrapper, `.${config.className}`);
+  roundingClassCase(wrapper, `.${config.class}`);
 
-  sizeClassCase(wrapper, `.${config.className}`);
+  sizeClassCase(wrapper, `.${config.class}`);
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Should append the container to the props.target", async () => {
     const target = document.createElement("div");
@@ -212,7 +212,7 @@ describe("DDrawer", () => {
     const role = "composite";
     await wrapper.setProps({ isShown: true, role });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.attributes().role).toBe(role);
   });
 
@@ -220,7 +220,7 @@ describe("DDrawer", () => {
     const tag = "article";
     await wrapper.setProps({ isShown: true, tag });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
 
@@ -230,14 +230,14 @@ describe("DDrawer", () => {
       zIndex,
     });
 
-    const drawerEl = wrapper.find(`.${config.className}`);
+    const drawerEl = wrapper.find(`.${config.class}`);
     expect(drawerEl.attributes("style")).toContain(`--z-index: ${zIndex}`);
   });
 
   it("Shouldn't render header if props.hideHeader is true", async () => {
     await wrapper.setProps({ hideHeader: true });
 
-    const headerEl = wrapper.find(`.${config.headerClassName}`);
+    const headerEl = wrapper.find(`.${config.headerClass}`);
     expect(headerEl.exists()).toBeFalsy();
   });
 
@@ -348,17 +348,17 @@ describe("DDrawer", () => {
     expect(whenClose).toBeCalled();
   });
 
-  slotCase(DDrawer, `.${config.className}`, "default", {
+  slotCase(DDrawer, `.${config.class}`, "default", {
     isShown: true,
     enableInline: true,
   });
 
-  slotCase(DDrawer, `.${config.headerClassName}`, "header", {
+  slotCase(DDrawer, `.${config.headerClass}`, "header", {
     isShown: true,
     enableInline: true,
   });
 
-  slotCase(DDrawer, `.${config.footerClassName}`, "footer", {
+  slotCase(DDrawer, `.${config.footerClass}`, "footer", {
     isShown: true,
     enableInline: true,
   });
@@ -368,7 +368,7 @@ describe("DDrawer", () => {
       props: { isShown: true, enableInline: true },
     });
 
-    const footerEl = wrapper.find(`.${config.footerClassName}`);
+    const footerEl = wrapper.find(`.${config.footerClass}`);
     expect(footerEl.exists()).toBeFalsy();
   });
 

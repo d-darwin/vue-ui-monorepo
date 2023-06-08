@@ -12,7 +12,7 @@ import {
   sizeClassCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { sleep } from "@/utils/sleep";
+import sleep from "@/utils/sleep";
 import { POSITION } from "@/constants/position";
 import config from "./config";
 
@@ -31,14 +31,14 @@ describe("DNotification", () => {
     await wrapper.vm.$nextTick();
   });
 
-  it(`Renders ${config.className} class name`, async () => {
-    const notificationEl = wrapper.find(`.${config.className}`);
-    expect(notificationEl?.classes()).toContain(config.className);
+  it(`Renders ${config.class} class name`, async () => {
+    const notificationEl = wrapper.find(`.${config.class}`);
+    expect(notificationEl?.classes()).toContain(config.class);
   });
 
-  propStringCase(wrapper, `.${config.className}`);
+  propStringCase(wrapper, `.${config.class}`);
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 
   it("Renders $slots.default", async () => {
     const slotContent = `<div>Some <b>slot</b> content</div>`;
@@ -53,21 +53,21 @@ describe("DNotification", () => {
 
     await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.html()).toMatch(slotContent);
   });
 
   it("Should render the position class depend on props.position", async () => {
     const position = POSITION.BOTTOM_LEFT;
     await wrapper.setProps({ position });
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.classes()).toContain(position);
   });
 
   it("Should add min-width style if props.minWidth is set", async () => {
     const minWidth = 120;
     await wrapper.setProps({ minWidth });
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.attributes()?.style).toContain(
       "min-width: " + minWidth + "px"
     );
@@ -76,7 +76,7 @@ describe("DNotification", () => {
   it("Should add max-width style if props.maxWidth is set", async () => {
     const maxWidth = "33%";
     await wrapper.setProps({ maxWidth });
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.attributes()?.style).toContain(
       "max-width: " + maxWidth
     );
@@ -85,7 +85,7 @@ describe("DNotification", () => {
   it("Should add min-height style if props.minHeight is set", async () => {
     const minHeight = 240;
     await wrapper.setProps({ minHeight });
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.attributes()?.style).toContain(
       "min-height: " + minHeight + "px"
     );
@@ -94,7 +94,7 @@ describe("DNotification", () => {
   it("Should add max-height style if props.maxHeight is set", async () => {
     const maxHeight = "10vh";
     await wrapper.setProps({ maxHeight });
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.attributes()?.style).toContain(
       "max-height: " + maxHeight
     );
@@ -109,19 +109,19 @@ describe("DNotification", () => {
     });
 
     await wrapper.vm.$nextTick();
-    let notificationEl = wrapper.find(`.${config.className}`);
+    let notificationEl = wrapper.find(`.${config.class}`);
     await notificationEl.trigger("click");
 
-    notificationEl = wrapper.find(`.${config.className}`);
+    notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeFalsy();
   });
 
   it("Should not close manually on click if props.closable is false", async () => {
     await wrapper.setProps({ closable: false });
-    let notificationEl = wrapper.find(`.${config.className}`);
+    let notificationEl = wrapper.find(`.${config.class}`);
     await notificationEl.trigger("click");
 
-    notificationEl = wrapper.find(`.${config.className}`);
+    notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeTruthy();
   });
 
@@ -161,7 +161,7 @@ describe("DNotification", () => {
     const notificationClass = "some-custom-class";
     await wrapper.setProps({ notificationClass });
 
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.classes()).toContain(notificationClass);
   });
 
@@ -185,25 +185,25 @@ describe("DNotification", () => {
     const type = TYPE.WARNING;
     await wrapper.setProps({ type });
 
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.classes()).toContain(type);
   });
 
-  colorSchemeClassCase(wrapper, `.${config.className}`, COLOR_SCHEME.DANGER);
+  colorSchemeClassCase(wrapper, `.${config.class}`, COLOR_SCHEME.DANGER);
 
-  paddingEqualClassesCase(wrapper, `.${config.className}`);
+  paddingEqualClassesCase(wrapper, `.${config.class}`);
 
-  roundingClassCase(wrapper, `.${config.className}`);
+  roundingClassCase(wrapper, `.${config.class}`);
 
-  sizeClassCase(wrapper, `.${config.className}`);
+  sizeClassCase(wrapper, `.${config.class}`);
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Should render as element passed in props.tag", async () => {
     const tag = "section";
     await wrapper.setProps({ tag });
 
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.element.tagName).toEqual(tag.toLocaleUpperCase());
   });
 
@@ -217,7 +217,7 @@ describe("DNotification", () => {
     });
 
     await wrapper.vm.$nextTick();
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     await notificationEl.trigger("click");
     expect(wrapper.emitted("close")).toBeTruthy();
   });
@@ -234,7 +234,7 @@ describe("DNotification", () => {
     });
 
     await wrapper.vm.$nextTick();
-    const notificationEl = wrapper.find(`.${config.className}`);
+    const notificationEl = wrapper.find(`.${config.class}`);
     await notificationEl.trigger("click");
     expect(whenClose).toBeCalled();
   });
@@ -247,11 +247,11 @@ describe("DNotification", () => {
         duration: 0, // Do not hide automatically
       },
     });
-    let notificationEl = wrapper.find(`.${config.className}`);
+    let notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeFalsy();
 
     await wrapper.vm.$nextTick();
-    notificationEl = wrapper.find(`.${config.className}`);
+    notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeTruthy();
   });
 
@@ -265,11 +265,11 @@ describe("DNotification", () => {
         default: content,
       },
     });
-    let notificationEl = wrapper.find(`.${config.className}`);
+    let notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeFalsy();
 
     await wrapper.vm.$nextTick();
-    notificationEl = wrapper.find(`.${config.className}`);
+    notificationEl = wrapper.find(`.${config.class}`);
     expect(notificationEl.exists()).toBeTruthy();
   });
 

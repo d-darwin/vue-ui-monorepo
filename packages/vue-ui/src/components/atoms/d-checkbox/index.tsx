@@ -1,23 +1,16 @@
-import {
-  defineComponent,
-  ref,
-  Transition as Trans,
-  type VNode,
-  type PropType,
-  type InputHTMLAttributes,
-} from "vue";
+import { defineComponent, ref, Transition as Trans } from "vue";
+import type { VNode, PropType, InputHTMLAttributes } from "vue";
+import { v4 as uuid } from "uuid";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
-import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import type { Text } from "@darwin-studio/vue-ui/src/types/text";
+import { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import { BASE_COLOR_SCHEME, DEFAULT_VALUE } from "./constants";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -30,17 +23,22 @@ export default defineComponent({
 
   props: {
     /**
+     * Defines <i>id</i> attr of the <b>input</b> element.<br>
+     * If you don't want to specify it, it will be generated automatically.
+     */
+    id: generateProp.text(() => uuid()),
+    /**
      * Defines is the component is checked by default
      */
     checked: Boolean,
     /**
      * Defines value of the <b>input</b> element
      */
-    value: generateProp.text(DEFAULT_VALUE),
+    value: generateProp.text(config.value),
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(BASE_COLOR_SCHEME),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */
@@ -54,11 +52,6 @@ export default defineComponent({
      * Defines transition type of the component
      */
     transition: generateProp.transition(),
-    /**
-     * Defines <i>id</i> attr of the <b>input</b> element.<br>
-     * If you don't want to specify it, it will be generated automatically.
-     */
-    id: generateProp.text(),
     /**
      * You can pass own class name to the <b>input</b> element.
      */
@@ -82,20 +75,17 @@ export default defineComponent({
     // TODO: move to labelOptions:
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: move to errorOptions:
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: move to errorOptions:
-    errorFont: generateProp.font(),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * You can pass own class name to the icon container element.
      */
@@ -126,11 +116,11 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    const innerChecked = ref(props.checked); // TODO: what for ???
-    const { controlId } = useControlId(props);
+  setup(props, { slots }) {
+    const innerChecked = ref(props.checked); // TODO: what for, remove ???
+    const { renderCaption } = useCaption(props, slots, config.captionOptions);
 
-    return { innerChecked, controlId };
+    return { innerChecked, renderCaption };
   },
 
   emits: [
@@ -142,31 +132,14 @@ export default defineComponent({
 
   computed: {
     renderIcon(): VNode[] {
-      const roundingClassName = prepareCssClassName(
-        codegenConfig.TOKENS.ROUNDING.CSS_CLASS_PREFIX,
-        this.rounding
-      );
-      const sizeClassName = prepareCssClassName(
-        codegenConfig.TOKENS.SIZE.CSS_CLASS_PREFIX,
-        this.size
-      );
-      const transitionClassName = prepareCssClassName(
-        codegenConfig.TOKENS.TRANSITION.CSS_CLASS_PREFIX,
-        this.transition
-      );
-
       const iconContainerClasses = [
-        styles[config.iconContainerClassName],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${BASE_COLOR_SCHEME}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.PADDING, PADDING.EQUAL),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${PADDING.EQUAL}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        config.iconContainerClass,
+        generateClass.border(this.colorScheme, this.size),
+        generateClass.colorScheme(this.colorScheme),
+        ...generateClass.padding(PADDING.EQUAL, this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
@@ -181,8 +154,8 @@ export default defineComponent({
       return [
         <div
           class={[
-            styles[config.iconContainerBackdropClassName],
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            config.iconContainerBackdropClass,
+            generateClass.size(this.size),
           ]}
         />,
         <div class={iconContainerClasses}>
@@ -193,8 +166,8 @@ export default defineComponent({
             {!this.$slots?.icon && this.innerChecked && (
               <div
                 class={[
-                  styles[config.iconClassName],
-                  getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                  config.iconClass,
+                  generateClass.transition(this.transition),
                 ]}
               >
                 {config.checkMark}
@@ -211,18 +184,15 @@ export default defineComponent({
       return (
         <input
           type={config.inputType}
-          id={this.label || this.id ? this.controlId : undefined}
+          id={this.label ? String(this.id) : undefined}
           checked={this.checked}
           value={this.value}
           disabled={this.disabled}
           {...this.inputAttrs}
           class={[
-            styles[config.inputClassName],
-            getCommonCssClass(
-              TOKEN_NAME.OUTLINE,
-              `${BASE_COLOR_SCHEME}-${this.size}`
-            ),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
+            config.inputClass,
+            generateClass.outline(this.colorScheme, this.size),
+            generateClass.size(this.size),
             this.inputClass,
           ]}
           onChange={this.changeHandler}
@@ -234,7 +204,7 @@ export default defineComponent({
     renderLabelContent(): VNode | null {
       if (this.$slots.label?.() || this.label) {
         return (
-          <div class={styles[config.labelInnerClassName]}>
+          <div class={config.labelInnerClass}>
             {this.$slots.label?.() || this.label}
           </div>
         );
@@ -245,40 +215,21 @@ export default defineComponent({
 
     renderLabel(): VNode {
       const labelClasses = [
-        styles[config.labelClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
+        config.labelClass,
         this.labelClass,
+        generateClass.font(this.labelFont || this.size),
       ];
       if (this.disabled) {
         labelClasses.push(styles.__disabled);
       }
 
       return (
-        <label for={this.controlId} class={labelClasses}>
+        <label for={String(this.id)} class={labelClasses}>
           {this.renderInput}
           {this.renderIcon}
           {this.renderLabelContent}
         </label>
       );
-    },
-
-    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
-              this.errorClass,
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
-        );
-      }
-
-      return null;
     },
   },
 
@@ -340,22 +291,16 @@ export default defineComponent({
    * Use instead of props.label to fully customize label content
    * */
   /**
-   * @slot $slots.error
-   * Use instead of props.error to fully customize error content
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
    * */
   // TODO: input slot ???
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag
-        class={[
-          styles[config.className],
-          getCommonCssClass(TOKEN_NAME.MIN_CONTROL_WIDTH, this.size),
-        ]}
-      >
+      <Tag class={[config.class, generateClass.minControlWidth(this.size)]}>
         {this.renderLabel}
-        {/*TODO: add transition | use DCaption?*/}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

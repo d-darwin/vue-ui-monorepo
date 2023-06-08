@@ -1,4 +1,5 @@
-import { defineComponent, type CSSProperties, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, VNode } from "vue";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
@@ -6,9 +7,7 @@ import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transit
 import type { DBackdropProps } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/types";
 import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/async";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import { BACKDROP_DEFAULTS } from "./constants";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -19,7 +18,7 @@ export default defineComponent({
     /**
      * Plain string or VNode
      */
-    content: generateProp.content(config.defaultContent),
+    content: generateProp.content(config.content),
     /**
      * Defines appearance of the component
      */
@@ -45,11 +44,11 @@ export default defineComponent({
     /**
      * Defines animation duration
      */
-    animationDuration: generateProp.string(config.defaultAnimationDuration),
+    animationDuration: generateProp.string(config.animationDuration),
     /**
      * Defines z-index of the component
      */
-    zIndex: generateProp.number(config.defaultZIndex),
+    zIndex: generateProp.number(config.zIndex),
     /**
      * Adds DBackdrop to fill all available space
      */
@@ -57,7 +56,9 @@ export default defineComponent({
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
+    backdropOptions: generateProp.options<DBackdropProps>(
+      config.backdropOptions
+    ),
   },
 
   computed: {
@@ -69,14 +70,14 @@ export default defineComponent({
     },
 
     backdropTransitionClass(): string | undefined {
-      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
+      return generateClass.transition(this.transition);
     },
 
     renderBackdrop(): VNode | null {
       return (
         <Trans {...this.backdropTransitionBindings} appear>
           <DBackdrop
-            {...BACKDROP_DEFAULTS}
+            {...config.backdropOptions}
             colorScheme={this.colorScheme}
             class={this.backdropTransitionClass}
             {...this.backdropOptions}
@@ -87,12 +88,12 @@ export default defineComponent({
 
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        config.class,
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.font),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
@@ -123,7 +124,7 @@ export default defineComponent({
 
   render(): VNode {
     return (
-      <div class={styles[config.wrapperClassName]}>
+      <div class={config.wrapperClass}>
         {this.fillAvailable && this.renderBackdrop}
         {this.renderLoader}
       </div>

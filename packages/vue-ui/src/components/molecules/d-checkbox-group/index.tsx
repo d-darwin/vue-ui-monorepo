@@ -1,10 +1,12 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -36,19 +38,17 @@ export default defineComponent({
     // TODO: labelOptions
     labelFont: generateProp.font(),
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: errorOptions
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: errorOptions
-    errorFont: generateProp.font(undefined, true),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Pass true to disable <b>input</b> element.
      */
@@ -56,7 +56,7 @@ export default defineComponent({
     /**
      * Defines appearance of the component
      */
-    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY),
+    colorScheme: generateProp.colorScheme(COLOR_SCHEME.SECONDARY), // TODO: config
     /**
      * Defines corner rounding of the icon container element
      */
@@ -65,7 +65,7 @@ export default defineComponent({
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -73,9 +73,13 @@ export default defineComponent({
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.FIELDSET),
+    tag: generateProp.tag(TAG_NAME.FIELDSET), // TODO: config
 
     // TODO: whenChange\WhenInput
+  },
+
+  setup(props, { slots }) {
+    return useCaption(props, slots, config.captionOptions);
   },
 
   computed: {
@@ -85,9 +89,9 @@ export default defineComponent({
           /*TODO: customizable tag*/
           <legend
             class={[
-              styles[config.labelClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.labelFont || this.size),
+              config.labelClass,
               this.labelClass,
+              generateClass.font(this.labelFont || this.size),
             ]}
           >
             {this.$slots.label?.() || this.label}
@@ -101,7 +105,7 @@ export default defineComponent({
     renderItemList(): VNode[] {
       const prepareProps = (checkbox: VNode) => {
         Object.assign(checkbox.props || {}, {
-          class: [styles[config.checkboxClassName], checkbox.props?.class],
+          class: [config.checkboxClass, checkbox.props?.class],
           disabled:
             typeof checkbox.props?.disabled === "undefined"
               ? this.disabled
@@ -121,35 +125,16 @@ export default defineComponent({
 
       return this.$slots.default?.().map(prepareProps) || [];
     },
-
-    // TODO: control-notification component: error (danger?) | warning  | notice(info?)| success
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        return (
-          <div
-            class={[
-              styles[config.errorClassName],
-              getCommonCssClass(TOKEN_NAME.FONT, this.errorFont || this.size),
-              this.errorClass,
-            ]}
-          >
-            {this.$slots.error?.() || this.error}
-          </div>
-        );
-      }
-
-      return null;
-    },
   },
 
   // TODO: slots descr
   render(): VNode {
     const Tag = this.tag;
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {this.renderLabel}
         {this.renderItemList}
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

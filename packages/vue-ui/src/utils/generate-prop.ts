@@ -7,7 +7,7 @@ import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import type { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import type { Transition } from "@darwin-studio/ui-codegen/dist/types/transition";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
 import { Padding } from "@darwin-studio/ui-codegen/dist/types/padding";
@@ -56,7 +56,7 @@ const generateProp = {
   ) => string<Transition>(defaultValue),
 
   tag: (
-    defaultValue: TagName = TAG_NAME_DEFAULTS.DIV // TODO: avoid hardcode figma values
+    defaultValue: TagName = TAG_NAME.DIV // TODO: avoid hardcode figma values
   ) => ({
     type: String as PropType<TagName>,
     default: defaultValue,
@@ -71,6 +71,11 @@ const generateProp = {
 
   boolean: (defaultValue: boolean) => ({
     type: Boolean,
+    default: defaultValue,
+  }),
+
+  array: <T>(defaultValue?: T[]) => ({
+    type: Array as PropType<T[]>,
     default: defaultValue,
   }),
 

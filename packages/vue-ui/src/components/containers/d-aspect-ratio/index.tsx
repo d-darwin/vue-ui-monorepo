@@ -1,8 +1,8 @@
-import { defineComponent, type CSSProperties, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { CSSProperties, VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import { parseWidthHeight } from "./utils";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * The component uses padding-bottom / zero-height hack to simulate aspect-ratio CSS property if it is not supported.
@@ -14,7 +14,7 @@ export default defineComponent({
     /**
      * Aspect ratio of the picture. Expected format: 2 || '0.5' || 'width/height' || 'width:height'.
      */
-    aspectRatio: generateProp.text(config.defaultAspectRatio),
+    aspectRatio: generateProp.text(config.aspectRatio),
     /**
      * Plain string or VNode
      */
@@ -78,7 +78,7 @@ export default defineComponent({
     renderNative(): VNode {
       const Tag = this.tag;
       const wrapperBindings = {
-        class: styles[config.className],
+        class: config.class,
         style: this.wrapperStyle,
       };
 
@@ -92,12 +92,12 @@ export default defineComponent({
     renderHack(): VNode {
       const Tag = this.tag;
       const innerBindings = {
-        class: styles[config.innerClassName],
+        class: config.innerClass,
         style: this.innerStyle,
       };
 
       return (
-        <Tag class={styles[config.className]}>
+        <Tag class={config.class}>
           <div {...innerBindings}>
             {this.$slots.default?.() || this.content}
           </div>

@@ -1,7 +1,7 @@
 import { TagName } from "@darwin-studio/vue-ui/src/types/tag-name";
 
 // TODO: naming
-export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
+export const TAG_NAME: Partial<Record<Uppercase<TagName>, TagName>> & {
   DIV: "div";
   SPAN: "span";
   P: "p";
@@ -13,6 +13,7 @@ export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
   DIALOG: "dialog";
   LABEL: "label";
   PROGRESS: "progress";
+  DETAILS: "details";
 } = {
   DIV: "div",
   SPAN: "span",
@@ -25,4 +26,5 @@ export const TAG_NAME_DEFAULTS: Partial<Record<Uppercase<TagName>, TagName>> & {
   DIALOG: "dialog",
   LABEL: "label",
   PROGRESS: "progress",
+  DETAILS: "details",
 } as const;

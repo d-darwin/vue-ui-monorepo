@@ -1,16 +1,17 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
+import { v4 as uuid } from "uuid";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding"; // TODO: shorter path, default export ???
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size"; // TODO: shorter path, default export ???
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import useControlId from "@darwin-studio/vue-ui/src/compositions/control-id";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
+import type { DCaptionProps } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/types"; // TODO: move to /d-caption/async ??
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import useCaption from "@darwin-studio/vue-ui/src/compositions/caption";
 import type { Values, Value } from "./types";
-import { ASPECT_RATIO_DEFAULTS } from "./constants";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -24,7 +25,7 @@ export default defineComponent({
     /**
      * Defines <i>id</i> attr of the <b>input</b> element
      */
-    id: generateProp.text(),
+    id: generateProp.text(() => uuid()),
     /**
      * Defines if the component at the truthy state by default
      */
@@ -48,42 +49,39 @@ export default defineComponent({
      * You can pass own class name to the <b>label</b> element.
      */
     // TODO: labelOptions
-    labelClass: String,
+    labelClass: String, // TODO: labelOptions:
     /**
      * Defines font size of the <b>label</b> element. By default depends on props.size
      */
-    labelFont: generateProp.font(),
+    labelFont: generateProp.font(), // TODO: labelOptions:
     /**
-     * If not empty renders as an error string below the <b>input</b> element.
+     * If not empty renders DCaption below the <b>input</b> element.
      */
-    // TODO: use DCaption
-    error: generateProp.content(),
+    caption: generateProp.content(),
     /**
-     * You can pass own class name to the <b>error</b> element.
+     * Pass any DCaption.props to customize it, f.e. { type: "error" }
      */
-    // TODO: errorOptions
-    errorClass: String,
+    captionOptions: generateProp.options<DCaptionProps>(config.captionOptions),
     /**
-     * Defines font size of the <b>error</b> element. By default depends on props.size
+     * Defines offset of DCaption
      */
-    // TODO: errorOptions
-    errorFont: generateProp.font(undefined, true),
-    /**
-     * Defines common font size of the component
-     */
-    font: generateProp.font(),
+    captionOffset: generateProp.text(config.captionOffset), // TODO: move to captionOptions
     /**
      * Defines appearance of the component
      */
     colorScheme: generateProp.colorScheme(),
     /**
+     * Defines common font size of the component
+     */
+    font: generateProp.font(), // TODO: merge with size ???
+    /**
      * Defines corner rounding of the icon container element
      */
-    rounding: generateProp.rounding(ROUNDING.FULL),
+    rounding: generateProp.rounding(ROUNDING.FULL), // TODO: config
     /**
      * Defines size of the component
      */
-    size: generateProp.size(SIZE.TINY),
+    size: generateProp.size(SIZE.TINY), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -93,6 +91,7 @@ export default defineComponent({
      */
     disabled: Boolean,
     // TODO: readonly state ???
+    // TODO: indeterminate state ???
     /**
      * Defines container element type of the component
      */
@@ -101,7 +100,7 @@ export default defineComponent({
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
     aspectRatioOptions: generateProp.options<DAspectRatioProps>(
-      ASPECT_RATIO_DEFAULTS
+      config.trackOptions
     ),
 
     /**
@@ -120,8 +119,8 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    return useControlId(props);
+  setup(props, { slots }) {
+    return useCaption(props, slots, config.captionOptions);
   },
 
   emits: [
@@ -134,20 +133,17 @@ export default defineComponent({
   computed: {
     labelClasses(): (string | undefined)[] {
       return [
-        styles[config.labelClassName],
-        getCommonCssClass(
-          TOKEN_NAME.FONT,
-          this.labelFont || this.font || this.size
-        ),
-        this.labelClass,
+        config.labelClass,
         this.disabled ? styles.__disabled : undefined, // TODO: config
+        this.labelClass,
+        generateClass.font(this.labelFont || this.font || this.size),
       ];
     },
     // TODO: add label generator ???
     renderFalsyLabel(): VNode | null {
       if (this.labels?.falsy || this.$slots.labelFalsy) {
         return (
-          <label for={this.controlId} class={this.labelClasses}>
+          <label for={String(this.id) || undefined} class={this.labelClasses}>
             {this.$slots.labelFalsy?.() || this.labels?.falsy}
           </label>
         );
@@ -160,19 +156,19 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles[config.thumbClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.font || this.size),
-            getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-            getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-            getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+            config.thumbClass,
+            generateClass.font(this.font || this.size),
+            generateClass.rounding(this.rounding),
+            generateClass.size(this.size),
+            generateClass.transition(this.transition),
           ]}
         >
           {this.$slots.thumb?.() || (
             <div
               class={[
-                styles[config.thumbInnerClassName],
-                getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-                getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+                config.thumbInnerClass,
+                generateClass.rounding(this.rounding),
+                generateClass.transition(this.transition),
               ]}
             />
           )}
@@ -182,60 +178,47 @@ export default defineComponent({
 
     inputContainerClasses(): (string | undefined)[] {
       return [
-        styles[config.trackClassName],
         this.disabled ? styles.__disabled : undefined,
         this.disabled ? colorSchemeStyles.__disabled : undefined,
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        generateClass.border(this.colorScheme, this.size),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.outline(this.colorScheme, this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 
     inputClasses(): (string | undefined)[] {
       return [
-        styles[config.inputClassName],
+        config.inputClass,
         this.inputClass,
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
+        generateClass.border(this.colorScheme, this.size),
+        generateClass.outline(this.colorScheme, this.size),
+        generateClass.rounding(this.rounding),
       ];
     },
 
     renderInput(): VNode {
       return (
         <DAspectRatio
-          {...ASPECT_RATIO_DEFAULTS}
+          {...config.trackOptions}
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          /* @ts-ignore TODO */
-          for={this.controlId}
+          // @ts-ignore TODO
+          for={this.id}
           class={this.inputContainerClasses}
           {...this.aspectRatioOptions}
         >
           <input
-            id={this.controlId}
+            id={String(this.id) || undefined}
             value={this.values?.truthy} // TODO: is it right ???
             checked={this.checked || undefined}
             aria-checked={this.checked || undefined}
             disabled={this.disabled || undefined}
             aria-disabled={this.disabled || undefined}
             class={this.inputClasses}
-            type="checkbox" // TODO: config
-            role="switch" // TODO: config
+            type="checkbox" // TODO: _DEFAULTS
+            role="switch" // TODO: _DEFAULTS
             onChange={this.changeHandler}
             onInput={this.inputHandler}
           />
@@ -248,29 +231,10 @@ export default defineComponent({
     renderTruthyLabel(): VNode | null {
       if (this.labels?.truthy || this.$slots.labelTruthy) {
         return (
-          <label for={this.controlId} class={this.labelClasses}>
+          <label for={String(this.id) || undefined} class={this.labelClasses}>
             {this.$slots.labelTruthy?.() || this.labels?.truthy}
           </label>
         );
-      }
-
-      return null;
-    },
-
-    // TODO: control-notification: error (danger?) | warning  | notice(info?)| success
-    // TODO: how to avoid layout shift
-    renderError(): VNode | null {
-      if (this.error || this.$slots.error) {
-        const classes = [
-          styles[config.errorClassName],
-          getCommonCssClass(
-            TOKEN_NAME.FONT,
-            this.errorFont || this.font || this.size
-          ),
-          this.errorClass,
-        ];
-
-        return <div class={classes}>{this.$slots.error?.() || this.error}</div>;
       }
 
       return null;
@@ -317,20 +281,9 @@ export default defineComponent({
        * @type {value: Text | undefined}
        */
       this.$emit(EVENT_NAME.INPUT, value);
-      /**
-       * Emits on click with value payload
-       * @event update:value
-       * @type {value: Text | undefined}
-       */
-      this.$emit(EVENT_NAME.UPDATE_VALUE, value);
       this.whenInput?.(value);
     },
   },
-
-  /**
-   * @slot $slots.error
-   * Use instead of props.error to fully customize error content
-   * */
   /**
    * @slot $slots.labelFalsy
    * Use instead of props.labels.falsy to fully customize falsy label content
@@ -338,6 +291,10 @@ export default defineComponent({
   /**
    * @slot $slots.labelTruthy
    * Use instead of props.labels.truthy to fully customize truthy label content
+   * */
+  /**
+   * @slot $slots.caption
+   * Use instead of props.caption to fully customize caption content
    * */
   /**
    * @slot $slots.thumb
@@ -348,14 +305,14 @@ export default defineComponent({
     const Tag = this.tag;
 
     return (
-      <Tag class={styles[config.className]}>
+      <Tag class={config.class}>
         {/*TODO: move .wrapper to config ???*/}
         <div class={styles.wrapper}>
           {this.renderFalsyLabel}
           {this.renderInput}
           {this.renderTruthyLabel}
         </div>
-        {this.renderError}
+        {this.renderCaption}
       </Tag>
     );
   },

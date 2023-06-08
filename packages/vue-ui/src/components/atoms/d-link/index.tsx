@@ -1,13 +1,9 @@
-import {
-  defineComponent,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -18,7 +14,7 @@ import styles from "./index.css?module";
 export default defineComponent({
   name: config.name,
 
-  // TODO: add props factory ???
+  // TODO: move the ./props
   props: {
     /**
      * Plain string or VNode
@@ -51,19 +47,18 @@ export default defineComponent({
 
   emits: [EVENT_NAME.CLICK],
 
-  // TODO: move to setup() ???
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-        getCommonCssClass(TOKEN_NAME.OUTLINE, config.outlineTokenVariantName),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.font),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        config.class,
+        generateClass.font(this.font),
+        generateClass.outline(COLOR_SCHEME.PRIMARY, this.font), // TODO: config or props
+        generateClass.size(this.font),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
-        classes.push(styles["__disabled"]);
+        classes.push(styles["__disabled"]); // TODO: hardcode
       }
 
       return classes;
@@ -88,9 +83,7 @@ export default defineComponent({
 
   methods: {
     clickHandler(event: MouseEvent): void | Promise<void> {
-      if (this.preventDefault) {
-        event.preventDefault();
-      }
+      this.preventDefault && event.preventDefault();
 
       if (!this.disabled) {
         /**

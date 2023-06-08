@@ -6,9 +6,9 @@ import {
 } from "@darwin-studio/vue-ui/src/components/atoms/d-responsive-image/constants";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import styles from "./d-responsive-image.css";
-import rocketImg from "./assets/rocket.jpg";
-import spaceXStarship from "./assets/1-SpaceX-Starship.webp";
-import hawcMissile from "./assets/hawc-missile-619.jpg";
+import firstImg from "./assets/aaron-burden-5AiWn2U10cw-unsplash.jpg";
+import secondImg from "./assets/arthur-hinton-d5b-HSL2TiU-unsplash.jpg";
+import thirdImg from "./assets/greg-rosenke-zF8NPzk8ZPM-unsplash.jpg";
 
 export default {
   title: "atoms/DResponsiveImage",
@@ -30,7 +30,7 @@ export default {
     onError: { action: "error" },
   },
   args: {
-    source: rocketImg, // TODO: different types -> different stories
+    source: firstImg, // TODO: different types -> different stories
     aspectRatio: "3:2",
     objectFit: OBJECT_FIT.COVER, // TODO: flexible default value
     caption: "Some caption",
@@ -74,7 +74,7 @@ WithImageType.args = {
   source: [
     {
       type: "image/webp",
-      src: spaceXStarship,
+      src: secondImg,
     },
   ],
 };
@@ -85,11 +85,11 @@ WithPixelDensity.args = {
     srcset: [
       {
         density: "1x",
-        src: hawcMissile, // TODO: local source
+        src: thirdImg,
       },
       {
         density: "2x",
-        src: hawcMissile, // TODO: use other image
+        src: thirdImg, // TODO: use other image
       },
     ],
   },
@@ -100,20 +100,20 @@ WithMediaQuery.args = {
   source: [
     {
       min_width: 640,
-      src: hawcMissile,
+      src: thirdImg,
     },
     {
       max_width: 320,
-      src: hawcMissile, // TODO: use other image
+      src: thirdImg, // TODO: use other image
     },
     {
       min_width: 320,
       max_width: 640,
-      src: hawcMissile, // TODO: use other image
+      src: thirdImg, // TODO: use other image
     },
     {
       media: "(min-width: 640px) and (max-width: 1240px)",
-      src: hawcMissile, // TODO: use other image
+      src: thirdImg, // TODO: use other image
     },
   ],
 };

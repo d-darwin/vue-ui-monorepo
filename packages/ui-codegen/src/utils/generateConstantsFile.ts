@@ -38,6 +38,7 @@ export default async function (
           designTokens[tokenVariantName]?.value
         ));
       })
+
       constantStringList.push("} as const;");
     }
 

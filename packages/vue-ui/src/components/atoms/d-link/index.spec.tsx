@@ -3,7 +3,6 @@ import DLink from "@/components/atoms/d-link";
 // TODO: get @darwin-studio/ui-codegen paths from config.json
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font"; // TODO: shorter path, default export ???
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import {
@@ -25,13 +24,13 @@ import config from "./config";
 describe("DLink", () => {
   const wrapper = shallowMount(DLink);
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
   propStringCase(wrapper, "a");
 
-  propVNodeCase(wrapper, `.${config.className}`);
+  propVNodeCase(wrapper, `.${config.class}`);
 
-  slotCase(DLink, `.${config.className}`);
+  slotCase(DLink, `.${config.class}`);
 
   it("Renders font class name", async () => {
     const font = FONT.SMALL;
@@ -45,12 +44,12 @@ describe("DLink", () => {
 
   outlineClassCase(
     wrapper,
-    `.${config.className}`,
+    `.${config.class}`,
     COLOR_SCHEME.PRIMARY,
-    SIZE.MEDIUM
+    FONT.SMALL
   );
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Renders as 'button' html tag by default", () => {
     expect(wrapper.element.tagName).toEqual("A");

@@ -1,9 +1,8 @@
-import { defineComponent, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * The component is intended to render big text content. Use font styles from @darwin-studio/ui-codegen/dist/styles/font.css instead to render short interface copyright texts.
@@ -28,10 +27,7 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      return [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-      ];
+      return [config.class, generateClass.font(this.font)];
     },
   },
 

@@ -1,4 +1,6 @@
+import styles from "./index.css?module";
+
 export default {
   name: "DCaption",
-  className: "dCaption",
+  class: styles["dCaption"],
 } as const;

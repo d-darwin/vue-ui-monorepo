@@ -1,11 +1,22 @@
+import { TYPE } from "@darwin-studio/vue-ui/src/components/atoms/d-caption/constant";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import styles from "./index.css?module";
+
 export default {
   name: "DSwitch",
-  className: "dSwitch",
-  inputClassName: "input",
-  labelClassName: "label",
-  trackClassName: "track",
-  thumbClassName: "thumb",
-  thumbInnerClassName: "thumbInner",
-  errorClassName: "error",
-  trackAspectRatio: 2.4,
+  class: styles["dSwitch"],
+  inputClass: styles["input"],
+  labelClass: styles["label"],
+  thumbClass: styles["thumb"],
+  thumbInnerClass: styles["thumbInner"],
+  captionOptions: {
+    type: TYPE.DANGER,
+    class: styles["caption"],
+  },
+  captionOffset: "0.2em",
+  trackOptions: {
+    aspectRatio: 2.4,
+    tag: TAG_NAME.LABEL,
+    class: styles["track"],
+  },
 };

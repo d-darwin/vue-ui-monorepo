@@ -1,17 +1,10 @@
-import {
-  defineComponent,
-  mergeProps,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent, mergeProps } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
 import type { Breakpoints } from "@darwin-studio/ui-codegen/dist/types/breakpoints";
 import useWindowSize from "@darwin-studio/vue-ui/src/compositions/window-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
-import styles from "./index.css?module";
 
 /**
  * The container provides you with an easy way to arrange child nodes in a grid template.
@@ -59,7 +52,7 @@ export default defineComponent({
 
   computed: {
     preparedColSpan(): number {
-      let colSpan = config.defaultColSpan;
+      let colSpan = config.colSpan;
       if (
         typeof this.colSpan === "object" &&
         this.size &&
@@ -74,7 +67,7 @@ export default defineComponent({
     },
 
     preparedRowGap(): string {
-      let rowGap = config.defaultRowGap;
+      let rowGap = config.rowGap;
       if (
         typeof this.rowGap === "object" &&
         this.size &&
@@ -90,10 +83,7 @@ export default defineComponent({
 
     bindings(): HTMLAttributes {
       return {
-        class: [
-          styles[config.className],
-          getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-        ],
+        class: [config.class, generateClass.transition(this.transition)],
         style: {
           "--grid-col-span": this.preparedColSpan, // TODO: config
           "--grid-row-gap": this.preparedRowGap, // TODO: config
@@ -106,7 +96,7 @@ export default defineComponent({
         // TODO: find out another way ...
         return this.$slots.default()?.map((child) => {
           child.props = mergeProps(child.props || {}, {
-            class: styles[config.childClassName],
+            class: config.childClass,
           });
           return child;
         });
@@ -117,7 +107,7 @@ export default defineComponent({
         return this.content.map((child) => {
           if (typeof child !== "string") {
             child.props = mergeProps(child.props || {}, {
-              class: styles[config.childClassName],
+              class: config.childClass,
             });
             return child;
           }

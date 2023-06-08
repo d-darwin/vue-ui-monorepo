@@ -15,13 +15,13 @@ describe("DTypography", () => {
   window.CSS.supports = () => false;
   const wrapperWithoutCSSSupport = shallowMount(DAspectRatio);
 
-  baseClassCase(wrapperWithFullCSSSupport, config.className);
+  baseClassCase(wrapperWithFullCSSSupport, config.class);
 
-  propStringCase(wrapperWithoutCSSSupport, `.${config.className}`);
-  propStringCase(wrapperWithFullCSSSupport, `.${config.className}`);
-  propVNodeCase(wrapperWithoutCSSSupport, `.${config.className}`);
-  propVNodeCase(wrapperWithFullCSSSupport, `.${config.className}`);
-  slotCase(DAspectRatio, `.${config.className}`);
+  propStringCase(wrapperWithoutCSSSupport, `.${config.class}`);
+  propStringCase(wrapperWithFullCSSSupport, `.${config.class}`);
+  propVNodeCase(wrapperWithoutCSSSupport, `.${config.class}`);
+  propVNodeCase(wrapperWithFullCSSSupport, `.${config.class}`);
+  slotCase(DAspectRatio, `.${config.class}`);
 
   it("Formatted aspect-ratio of 0.33 is '0.33'", async () => {
     await wrapperWithFullCSSSupport.setProps({ aspectRatio: 0.33 });
@@ -96,9 +96,7 @@ describe("DTypography", () => {
   });
 
   it("Renders additional inner div if aspect-ratio is NOT supported", () => {
-    const innerElement = wrapperWithoutCSSSupport.find(
-      `.${config.innerClassName}`
-    );
+    const innerElement = wrapperWithoutCSSSupport.find(`.${config.innerClass}`);
     expect(innerElement.exists()).toBeTruthy();
   });
 

@@ -3,6 +3,7 @@
 exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 1`] = `
 <div
   aria-expanded="true"
+  aria-labelledby="111"
   class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   role="tabpanel"
   tabindex="0"
@@ -14,6 +15,7 @@ exports[`DTabs Should render props.tabpanels as content of the list of tabpanels
 exports[`DTabs Should render props.tabpanels as content of the list of tabpanels 2`] = `
 <div
   aria-hidden="true"
+  aria-labelledby="222"
   class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   hidden=""
   role="tabpanel"
@@ -51,7 +53,9 @@ exports[`DTabs Should render props.tabs as content of the tablist 2`] = `
 exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 1`] = `
 <div
   aria-expanded="true"
+  aria-labelledby="111"
   class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
+  id="111-1"
   role="tabpanel"
   tabindex="0"
 >
@@ -62,8 +66,10 @@ exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels
 exports[`DTabs Should render slots.tabpanels as content of the list of tabpanels 2`] = `
 <div
   aria-hidden="true"
+  aria-labelledby="222"
   class="dTabpanel fontMedium outlinePrimaryMedium paddingDefault paddingDefaultMedium transitionFast"
   hidden=""
+  id="222-2"
   role="tabpanel"
   tabindex="0"
 >

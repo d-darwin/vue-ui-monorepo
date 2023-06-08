@@ -1,21 +1,28 @@
-import {
-  defineComponent,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
-import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import { defineComponent, inject, ref } from "vue";
+import type { PropType, VNode } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
+import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
+import type { CommonProps, DTabsProvided } from "./types";
 import config from "./config";
 import styles from "./d-tab.css?module";
 
+/**
+ * The component is intended to be a Tab child of the DTabs component.
+ */
 export default defineComponent({
   name: config.tabName,
 
+  // TODO: move to props.ts ???
   props: {
+    /**
+     * Defines <i>id</i> attr of the component
+     */
+    id: generateProp.text(undefined, true),
+    /**
+     * Defines <i>id</i> attr of the corresponding DTabpanel component
+     */
+    tabpanelId: generateProp.text(),
     /**
      * Plain string or VNode
      */
@@ -24,14 +31,6 @@ export default defineComponent({
      * Pass if the component is active
      */
     active: Boolean,
-    /**
-     * Defines <i>id</i> attr of the component
-     */
-    id: generateProp.text(), // TODO use .(() => uuid4()) ???
-    /**
-     * Defines <i>id</i> attr of the corresponding DTabpanel component
-     */
-    tabpanelId: generateProp.text(),
     /**
      * Pass true to disable <b>DTab</b> element.
      */
@@ -49,13 +48,12 @@ export default defineComponent({
      */
     transition: generateProp.transition(),
     /*TODO: It is recommended to use a <button> element with the role tab for their built-in functional and accessible features instead,
-       as opposed to needing to add them yourself. For controlling tab key functionality for elements with the role tab,
-       it is recommended to set all non-active elements to tabindex="-1", and to set the active element to tabindex="0".
+       as opposed to needing to add them yourself.
     */
     /**
      * Defines element type of the container component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.LI),
+    tag: generateProp.tag(config.tabTag),
 
     /**
      * Alternative way to catch click event
@@ -67,65 +65,111 @@ export default defineComponent({
 
   emits: [EVENT_NAME.CLICK],
 
+  setup(props) {
+    return {
+      innerActive: ref(props.active),
+      injection: inject<DTabsProvided>(config.provideInjectKey, {}),
+    };
+  },
+
+  watch: {
+    active: {
+      handler(active) {
+        if (active !== this.innerActive) {
+          if (active) {
+            this.activateHandler();
+          } else {
+            this.innerActive = false;
+          }
+        }
+      },
+      immediate: true,
+    },
+    [config.injectedActiveIdPath]: {
+      handler(activeId) {
+        if (typeof activeId === "undefined") {
+          return;
+        }
+        // TODO: test case
+        if (activeId === this.id && !this.innerActive) {
+          this.activateHandler();
+        } else if (activeId !== this.id && this.innerActive) {
+          this.innerActive = false;
+        }
+      },
+      immediate: true,
+    },
+  },
+
   computed: {
-    classes(): (string | undefined)[] {
-      const classes = [
-        styles[config.tabClassName],
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${config.baseColorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
-      ];
-
-      if (this.active) {
-        classes.push(styles.active);
-      }
-      if (this.disabled) {
-        classes.push(styles.disabled);
-      }
-
-      return classes;
+    commonProps(): CommonProps {
+      return {
+        disabled: this.injection.disabled || this.disabled,
+        padding: this.injection.padding || this.padding,
+        // TODO rounding: this.injection.rounding || this.rounding,
+        size: this.injection.size || this.size,
+        transition: this.injection.transition || this.transition,
+      };
     },
 
-    bindings(): HTMLAttributes {
-      return {
-        id: this.id ? String(this.id) : undefined,
-        tabindex: this.active ? 0 : -1,
-        role: "tab",
-        ["aria-selected"]: this.active || undefined,
-        ["aria-controls"]: this.tabpanelId
-          ? String(this.tabpanelId)
-          : undefined,
-        class: this.classes,
-        onClick: this.clickHandler,
-      };
+    classes(): (string | undefined)[] {
+      return [
+        // TODO ???: single generate fabric for all the classes
+        //  ...generateClasses({
+        //    font: this.size,
+        //    outline: {colorScheme: this.colorScheme, size: this.size},
+        //    ------------- or -------------
+        //    padding: [this.padding, this.size]
+        //  })
+        generateClass.font(this.commonProps.size),
+        generateClass.outline(config.colorScheme, this.commonProps.size), // TODO: props
+        ...generateClass.padding(
+          this.commonProps.padding,
+          this.commonProps.size
+        ),
+        generateClass.size(this.commonProps.size),
+        generateClass.transition(this.commonProps.transition),
+        this.commonProps.disabled ? styles.disabled : undefined, // TODO: config, colorScheme disabled
+        this.innerActive ? styles.active : undefined, // TODO: config: to not to import styles here,
+      ];
     },
   },
 
   methods: {
-    clickHandler(event: MouseEvent): void | Promise<void> {
-      if (!this.disabled) {
-        /**
-         * Emits on click with MouseEvent payload
-         * @event click
-         * @type {event: MouseEvent}
-         */
-        this.$emit(EVENT_NAME.CLICK, event);
-        this.whenClick?.(event);
+    activateHandler(event?: MouseEvent): void | Promise<void> {
+      if (this.commonProps.disabled || this.innerActive) {
+        return;
       }
+
+      this.innerActive = true;
+
+      /**
+       * Emits on click with MouseEvent payload
+       * @event click
+       * @type {event: MouseEvent}
+       */
+      this.$emit(EVENT_NAME.CLICK, event); // TODO ???: pass props.id and props.active
+      this.whenClick?.(event); // TODO ???: pass props.id and props.active
+      this.injection.whenChange?.(this.id);
     },
   },
 
   render(): VNode {
     const Tag = this.tag;
-    /** @slot Use instead of props.content to fully customize content */
     return (
-      <Tag {...this.bindings}>{this.$slots.default?.() || this.content}</Tag>
+      /** @slot Use instead of props.content to fully customize content */
+      <Tag
+        {...config.tabOptions}
+        key={this.id}
+        id={String(this.id)}
+        tabindex={this.innerActive ? 0 : -1}
+        aria-selected={this.innerActive || undefined}
+        aria-controls={this.tabpanelId ? String(this.tabpanelId) : undefined}
+        class={this.classes}
+        onClick={this.activateHandler}
+      >
+        {this.$slots.default?.() || this.content}
+      </Tag>
     );
   },
 });

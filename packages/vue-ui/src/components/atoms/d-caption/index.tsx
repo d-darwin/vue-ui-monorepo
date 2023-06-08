@@ -1,7 +1,7 @@
-import { defineComponent, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { VNode } from "vue";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Type } from "./types";
 import { TYPE } from "./constant";
 import config from "./config";
@@ -35,11 +35,7 @@ export default defineComponent({
 
   computed: {
     classes(): (string | undefined)[] {
-      return [
-        styles[config.className],
-        styles[this.type],
-        getCommonCssClass(TOKEN_NAME.FONT, this.font),
-      ];
+      return [config.class, styles[this.type], generateClass.font(this.font)];
     },
   },
 

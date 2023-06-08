@@ -1,10 +1,10 @@
-import { defineComponent, type PropType, type VNode } from "vue";
+import { defineComponent } from "vue";
+import type { PropType, VNode } from "vue";
 import type { DAspectRatioProps } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/types";
 import { DAspectRatioAsync as DAspectRatio } from "@darwin-studio/vue-ui/src/components/containers/d-aspect-ratio/async";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type {
   PictureSource,
   Source,
@@ -14,14 +14,8 @@ import type {
   ObjectFit,
 } from "./types";
 import { prepareSource } from "./utils";
-import {
-  ASPECT_RATIO_DEFAULTS,
-  LOADING,
-  OBJECT_FIT,
-  SOURCE_TYPE,
-} from "./constants";
+import { LOADING, OBJECT_FIT, SOURCE_TYPE } from "./constants";
 import config from "./config";
-import styles from "./index.css?module";
 
 // TODO: separate figure component with caption, loader and no-image placeholder ???
 // TODO: is it a molecule, not an atom ???
@@ -60,9 +54,7 @@ export default defineComponent({
     /**
      * Pass any DAspectRatio.props to customize aspect ratio container, f.e. { class: "someClass" }
      */
-    aspectRatioOptions: generateProp.options<DAspectRatioProps>(
-      ASPECT_RATIO_DEFAULTS
-    ),
+    aspectRatioOptions: generateProp.options<DAspectRatioProps>(),
     /**
      * Renders to the <i>object-fit</i> attr of the <b>img</b> element
      */
@@ -151,8 +143,8 @@ export default defineComponent({
       const srcset = this.preparedSourceList[0].srcset;
       const classes =
         this.hasContainer || this.sourceType === SOURCE_TYPE.ARRAY
-          ? [styles[config.innerImageClassName], this.imageClass]
-          : [styles[config.className], this.imageClass];
+          ? [config.innerImageClass, this.imageClass]
+          : [config.class, this.imageClass];
 
       return (
         <img
@@ -171,10 +163,7 @@ export default defineComponent({
     renderCaption(): VNode {
       return (
         <figcaption
-          class={[
-            this.captionClass,
-            getCommonCssClass(TOKEN_NAME.FONT, this.captionFont),
-          ]}
+          class={[this.captionClass, generateClass.font(this.captionFont)]}
         >
           {this.$slots.caption?.() || this.caption}
         </figcaption>
@@ -198,7 +187,7 @@ export default defineComponent({
       if (this.aspectRatio && !this.caption) {
         return (
           <DAspectRatio
-            {...ASPECT_RATIO_DEFAULTS}
+            class={config.class}
             aspectRatio={this.aspectRatio}
             {...this.aspectRatioOptions}
           >
@@ -210,7 +199,7 @@ export default defineComponent({
       /* has figure container with figcaption */
       if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
-          <figure class={styles[config.className]}>
+          <figure class={config.class}>
             {this.imgVNode}
             {this.renderCaption}
           </figure>
@@ -220,9 +209,10 @@ export default defineComponent({
       /* has aspect ratio container with figcaption */
       return (
         <DAspectRatio
+          class={config.class}
           aspectRatio={this.aspectRatio}
           tag="figure"
-          class={styles[config.className]}
+          {...this.aspectRatioOptions}
         >
           {this.imgVNode}
           {this.renderCaption}
@@ -243,7 +233,7 @@ export default defineComponent({
       ));
 
       const pictureVNode = (
-        <picture class={styles[config.className]}>
+        <picture class={config.class}>
           {sourceVNodeList}
           {this.imgVNode}
         </picture>
@@ -260,7 +250,7 @@ export default defineComponent({
           <DAspectRatio
             aspectRatio={this.aspectRatio}
             tag="picture"
-            class={styles[config.className]}
+            class={config.class}
           >
             {sourceVNodeList}
             {this.imgVNode}
@@ -271,7 +261,7 @@ export default defineComponent({
       /* has figure container with figcaption */
       if (!this.aspectRatio && (this.caption || this.$slots.caption)) {
         return (
-          <figure class={styles[config.className]}>
+          <figure class={config.class}>
             {pictureVNode}
             {this.renderCaption}
           </figure>
@@ -283,7 +273,7 @@ export default defineComponent({
         <DAspectRatio
           aspectRatio={this.aspectRatio}
           tag="figure"
-          class={styles[config.className]}
+          class={config.class}
         >
           {pictureVNode}
           {this.renderCaption}

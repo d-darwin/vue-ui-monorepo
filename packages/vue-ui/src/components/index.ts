@@ -1,4 +1,4 @@
-import { App, Plugin } from "vue";
+import type { App, Plugin } from "vue";
 
 /** atoms **/
 import DBackdrop from "./atoms/d-backdrop";
@@ -9,6 +9,7 @@ import DInput from "./atoms/d-input";
 import DLink from "./atoms/d-link";
 import DLoader from "./atoms/d-loader";
 import DNotification from "./atoms/d-notification";
+import DProgress from "./atoms/d-progress";
 import DRadio from "./atoms/d-radio";
 import DResponsiveImage from "./atoms/d-responsive-image";
 import DSlider from "./atoms/d-slider";
@@ -19,6 +20,7 @@ import DAspectRatio from "./containers/d-aspect-ratio";
 import DGrid from "./containers/d-grid";
 import DTypography from "./containers/d-typography";
 /** molecules **/
+import { DAccordion, DDetails } from "./molecules/d-accordion";
 import DCheckboxGroup from "./molecules/d-checkbox-group";
 import DRadioGroup from "./molecules/d-radio-group";
 import DTable from "./molecules/d-table";
@@ -31,14 +33,15 @@ import DDrawer from "./organisms/d-drawer";
 // TODO: add async versions???
 export default {
   install(Vue: App) {
-    Vue.component(DButton.name, DButton);
     Vue.component(DBackdrop.name, DBackdrop);
+    Vue.component(DButton.name, DButton);
     Vue.component(DCaption.name, DCaption);
     Vue.component(DCheckbox.name, DCheckbox);
     Vue.component(DInput.name, DInput);
     Vue.component(DLink.name, DLink);
     Vue.component(DLoader.name, DLoader);
     Vue.component(DNotification.name, DNotification);
+    Vue.component(DProgress.name, DProgress);
     Vue.component(DRadio.name, DRadio);
     Vue.component(DResponsiveImage.name, DResponsiveImage);
     Vue.component(DSlider.name, DSlider);
@@ -47,6 +50,8 @@ export default {
     Vue.component(DAspectRatio.name, DAspectRatio);
     Vue.component(DGrid.name, DGrid);
     Vue.component(DTypography.name, DTypography);
+    Vue.component(DAccordion.name, DAccordion);
+    Vue.component(DDetails.name, DDetails);
     Vue.component(DCheckboxGroup.name, DCheckboxGroup);
     Vue.component(DRadioGroup.name, DRadioGroup);
     Vue.component(DTable.name, DTable);
@@ -67,6 +72,7 @@ export {
   DLink,
   DLoader,
   DNotification,
+  DProgress,
   DRadio,
   DResponsiveImage,
   DSlider,
@@ -75,6 +81,8 @@ export {
   DAspectRatio,
   DGrid,
   DTypography,
+  DAccordion,
+  DDetails,
   DCheckboxGroup,
   DRadioGroup,
   DTable,

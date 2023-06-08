@@ -11,12 +11,11 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
-import { DTab } from "./index";
-import config from "./config";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
+import { DTab } from "./index";
+import config from "./config";
 
-// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),
@@ -24,9 +23,9 @@ jest.mock("chalk", () => ({
 }));
 
 describe("DTab", () => {
-  const wrapper = mount(DTab);
+  const wrapper = mount(DTab, { props: { id: "not-empty" } });
 
-  baseClassCase(wrapper, config.tabClassName);
+  baseClassCase(wrapper, config.tabOptions.class);
 
   it("Should render 'tab' role attr", () => {
     expect(wrapper.attributes("role")).toBe("tab");
@@ -58,24 +57,24 @@ describe("DTab", () => {
     expect(wrapper.classes()).not.toContain("active");
   });
 
-  propStringCase(wrapper, `.${config.tabClassName}`);
-  propVNodeCase(wrapper, `.${config.tabClassName}`);
-  slotCase(DTab, `.${config.tabClassName}`);
+  propStringCase(wrapper, `.${config.tabOptions.class}`);
+  propVNodeCase(wrapper, `.${config.tabOptions.class}`);
+  slotCase(DTab, `.${config.tabOptions.class}`, "default", { id: "not empty" });
 
-  fontSizeClassCase(wrapper, `.${config.tabClassName}`);
+  fontSizeClassCase(wrapper, `.${config.tabOptions.class}`);
 
   outlineClassCase(
     wrapper,
-    `.${config.tabClassName}`,
+    `.${config.tabOptions.class}`,
     COLOR_SCHEME.PRIMARY,
     SIZE.MEDIUM
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.tabClassName}`);
+  paddingEqualClassesCase(wrapper, `.${config.tabOptions.class}`);
 
-  sizeClassCase(wrapper, `.${config.tabClassName}`);
+  sizeClassCase(wrapper, `.${config.tabOptions.class}`);
 
-  transitionClassCase(wrapper, `.${config.tabClassName}`);
+  transitionClassCase(wrapper, `.${config.tabOptions.class}`);
 
   it("Should render disabled class if props.disabled is true", async () => {
     await wrapper.setProps({ disabled: true });
@@ -90,27 +89,33 @@ describe("DTab", () => {
   tagCase(wrapper);
 
   it("Shouldn't emit click event if props.disabled is true", async () => {
-    await wrapper.setProps({ disabled: true });
+    const wrapper = mount(DTab, { props: { id: "not-empty", disabled: true } });
     await wrapper.trigger("click");
     expect(wrapper.emitted("click")).toBeFalsy();
   });
 
   it("Should emit click event if props.disabled is false", async () => {
-    await wrapper.setProps({ disabled: false });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: false },
+    });
     await wrapper.trigger("click");
     expect(wrapper.emitted("click")).toBeTruthy();
   });
 
   it("Shouldn't call props.whenClick if props.disabled is true", async () => {
     const whenClick = jest.fn();
-    await wrapper.setProps({ disabled: true, whenClick });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: true, whenClick },
+    });
     await wrapper.trigger("click");
     expect(whenClick).toHaveBeenCalledTimes(0);
   });
 
   it("Should call props.whenClick if props.disabled is false", async () => {
     const whenClick = jest.fn();
-    await wrapper.setProps({ disabled: false, whenClick });
+    const wrapper = mount(DTab, {
+      props: { id: "not-empty", disabled: false, whenClick },
+    });
     await wrapper.trigger("click");
     expect(whenClick).toHaveBeenCalledTimes(1);
   });

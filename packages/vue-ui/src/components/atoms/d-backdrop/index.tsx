@@ -1,14 +1,10 @@
-import {
-  defineComponent,
-  type HTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { HTMLAttributes, PropType, VNode } from "vue";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
 import type { CssPosition } from "./types";
 import config from "./config";
-import styles from "./index.css?module";
+
 /**
  * The component renders simple backdrop, intended to be used with Drawers, Modals, etc.
  */
@@ -23,15 +19,15 @@ export default defineComponent({
     /**
      * Defines opacity of the component
      */
-    opacity: generateProp.number(config.defaultOpacity),
+    opacity: generateProp.number(config.opacity),
     /**
      * Defines z-index attr of the component
      */
-    zIndex: generateProp.number(config.defaultZIndex),
+    zIndex: generateProp.number(config.zIndex),
     /**
      * Defines position attr of the component
      */
-    position: generateProp.string<CssPosition>(config.defaultPosition),
+    position: generateProp.string<CssPosition>(config.position),
     /**
      * Defines container element type of the component
      */
@@ -50,7 +46,7 @@ export default defineComponent({
   computed: {
     bindings(): HTMLAttributes {
       return {
-        class: styles[config.className],
+        class: config.class,
         style: {
           "--background-color": `var(--color-${this.colorScheme}-background)`,
           "--opacity": this.opacity,

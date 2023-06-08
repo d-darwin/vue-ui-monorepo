@@ -9,15 +9,14 @@ import {
   tagCase,
   transitionClassCase,
 } from "@/utils/test-case-factories";
+import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
+import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
+import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { DTabpanel } from "./index";
 import config from "./config";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
-import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
-import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
-import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 
-// TODO: move to the config
 jest.mock("chalk", () => ({
   greenBright: jest.fn(),
   red: jest.fn(),
@@ -25,9 +24,9 @@ jest.mock("chalk", () => ({
 }));
 
 describe("DTabpanel", () => {
-  const wrapper = mount(DTabpanel);
+  const wrapper = mount(DTabpanel, { props: { tabId: "not-empty" } });
 
-  baseClassCase(wrapper, config.tabpanelClassName);
+  baseClassCase(wrapper, config.tabpanelOptions.class);
 
   it("Should render 'tabpanel' role attr", () => {
     expect(wrapper.attributes("role")).toBe("tabpanel");
@@ -63,9 +62,11 @@ describe("DTabpanel", () => {
     expect(wrapper.attributes("hidden")).toBe("");
   });
 
-  propStringCase(wrapper, `.${config.tabpanelClassName}`);
-  propVNodeCase(wrapper, `.${config.tabpanelClassName}`);
-  slotCase(DTabpanel, `.${config.tabpanelClassName}`);
+  propStringCase(wrapper, `.${config.tabpanelOptions.class}`);
+  propVNodeCase(wrapper, `.${config.tabpanelOptions.class}`);
+  slotCase(DTabpanel, `.${config.tabpanelOptions.class}`, "default", {
+    tabId: "not empty",
+  });
 
   const fontClassName = prepareCssClassName(
     codegenConfig.TOKENS.FONT.CSS_CLASS_PREFIX,
@@ -75,14 +76,14 @@ describe("DTabpanel", () => {
 
   outlineClassCase(
     wrapper,
-    `.${config.tabpanelClassName}`,
+    `.${config.tabpanelOptions.class}`,
     COLOR_SCHEME.PRIMARY,
     SIZE.MEDIUM
   );
 
-  paddingEqualClassesCase(wrapper, `.${config.tabpanelClassName}`);
+  paddingEqualClassesCase(wrapper, `.${config.tabpanelOptions.class}`);
 
-  transitionClassCase(wrapper, `.${config.tabpanelClassName}`);
+  transitionClassCase(wrapper, `.${config.tabpanelOptions.class}`);
 
   tagCase(wrapper);
 });

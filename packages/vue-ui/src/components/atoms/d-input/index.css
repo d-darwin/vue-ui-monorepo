@@ -1,6 +1,7 @@
 .dInput {
   width: fit-content; /*TODO: do we really need this*/
   /* TODO: min-width: var(--control-min-width);*/
+  position: relative;
 }
 
 .label {
@@ -60,11 +61,4 @@
 .input::-ms-input-placeholder {
   /* Microsoft Edge */
   /*TODO: color: var(--color-text-aux);*/
-}
-
-.error {
-  /*TODO: avoid hardcode*/
-  margin-top: 2px;
-  /*TODO: avoid hardcode*/
-  color: var(--color-danger-background);
 }

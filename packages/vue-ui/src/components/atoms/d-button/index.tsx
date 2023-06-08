@@ -1,17 +1,11 @@
-import {
-  defineComponent,
-  type ButtonHTMLAttributes,
-  type PropType,
-  type VNode,
-} from "vue";
+import { defineComponent } from "vue";
+import type { ButtonHTMLAttributes, PropType, VNode } from "vue";
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import { DLoaderAsync as DLoader } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/async";
 import type { DLoaderProps } from "@darwin-studio/vue-ui/src/components/atoms/d-loader/types";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import { LOADER_DEFAULTS } from "./constants";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import type { Tag } from "./types";
 import config from "./config";
 import styles from "./index.css?module";
@@ -63,7 +57,7 @@ export default defineComponent({
     /**
      * Pass any DLoader.props to customize it, f.e. { class: "someClass" }
      */
-    loaderOptions: generateProp.options<DLoaderProps>(LOADER_DEFAULTS),
+    loaderOptions: generateProp.options<DLoaderProps>(config.loaderOptions),
     /**
      * Pass true to make the button active // TODO: test, story
      */
@@ -82,22 +76,15 @@ export default defineComponent({
   computed: {
     classes(): (string | undefined)[] {
       const classes = [
-        styles[config.className],
-        getCommonCssClass(
-          TOKEN_NAME.BORDER,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.FONT, this.size),
-        getCommonCssClass(
-          TOKEN_NAME.OUTLINE,
-          `${this.colorScheme}-${this.size}`
-        ),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        config.class,
+        generateClass.border(this.colorScheme, this.size),
+        generateClass.colorScheme(this.colorScheme),
+        generateClass.font(this.size),
+        generateClass.outline(this.colorScheme, this.size),
+        ...generateClass.padding(this.padding, this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
 
       if (this.disabled) {
@@ -164,7 +151,7 @@ export default defineComponent({
         {this.$slots.default?.() || this.content}
         {this.loading && (
           <DLoader
-            {...LOADER_DEFAULTS}
+            {...config.loaderOptions}
             colorScheme={this.colorScheme}
             size={this.size}
             font={this.size}

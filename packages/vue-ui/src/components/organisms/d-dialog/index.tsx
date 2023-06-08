@@ -1,11 +1,6 @@
-import {
-  defineComponent,
-  Teleport,
-  type CSSProperties,
-  type PropType,
-  type VNode,
-  type DialogHTMLAttributes,
-} from "vue";
+import { defineComponent, Teleport } from "vue";
+import type { CSSProperties, PropType, VNode, DialogHTMLAttributes } from "vue";
+import { v4 as uuid } from "uuid";
 import { Transition as Trans } from "@vue/runtime-dom";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
@@ -16,19 +11,12 @@ import { DBackdropAsync as DBackdrop } from "@darwin-studio/vue-ui/src/component
 import type { DButtonProps } from "@darwin-studio/vue-ui/src/components/atoms/d-button/types";
 import { DButtonAsync as DButton } from "@darwin-studio/vue-ui/src/components/atoms/d-button/async";
 import type { TransitionBindings } from "@darwin-studio/vue-ui/src/types/transition-bindings";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 import { EVENT_NAME } from "@darwin-studio/vue-ui/src/constants/event-name";
 import useClosable from "@darwin-studio/vue-ui/src/compositions/closable";
 import prepareHtmlSize from "@darwin-studio/vue-ui/src/utils/prepare-html-size";
 import generateProp from "@darwin-studio/vue-ui/src/utils/generate-prop";
-import getCommonCssClass from "@darwin-studio/vue-ui/src/utils/get-common-css-class";
-import { TOKEN_NAME } from "@darwin-studio/vue-ui/src/constants/token-name";
-import {
-  BACKDROP_DEFAULTS,
-  CLOSE_BUTTON_DEFAULTS,
-  CANCEL_BUTTON_DEFAULTS,
-  ACCEPT_BUTTON_DEFAULTS,
-} from "./constants";
+import generateClass from "@darwin-studio/vue-ui/src/utils/generate-class";
 import config from "./config";
 import styles from "./index.css?module";
 
@@ -60,7 +48,7 @@ export default defineComponent({
      * Defines font size of the <b>title</b> element. By default depends on props.size
      */
     // TODO: options
-    titleFont: generateProp.font(FONT.HUGE),
+    titleFont: generateProp.font(FONT.HUGE), // TODO: config
     // TODO: header
     // TODO: footer
     /**
@@ -81,23 +69,23 @@ export default defineComponent({
     /**
      * The component is mounted inside passed element.
      */
-    target: generateProp.teleportTarget(config.defaultTarget),
+    target: generateProp.teleportTarget(config.target),
     /**
      * Min width of the component.
      */
-    minWidth: generateProp.text(config.defaultMinWidth),
+    minWidth: generateProp.text(config.minWidth),
     /**
      * Max width of the component.
      */
-    maxWidth: generateProp.text(config.defaultMaxWidth),
+    maxWidth: generateProp.text(config.maxWidth),
     /**
      * Min height of the component.
      */
-    minHeight: generateProp.text(config.defaultMinHeight),
+    minHeight: generateProp.text(config.minHeight),
     /**
      * Max height of the component.
      */
-    maxHeight: generateProp.text(config.defaultMaxHeight),
+    maxHeight: generateProp.text(config.maxHeight),
     /**
      * Defines appearance of the component
      */
@@ -105,16 +93,16 @@ export default defineComponent({
     /**
      * Defines padding type of the component, use 'equal' if the component contains only an icon
      */
-    padding: generateProp.padding(PADDING.EQUAL),
+    padding: generateProp.padding(PADDING.EQUAL), // TODO: config
     /**
      * Defines corner rounding of the component
      */
-    rounding: generateProp.rounding(ROUNDING.LARGE),
+    rounding: generateProp.rounding(ROUNDING.LARGE), // TODO: config
     /**
      * Defines size of the component
      */
     // TODO: fontSize and size separately ???
-    size: generateProp.size(SIZE.LARGE),
+    size: generateProp.size(SIZE.LARGE), // TODO: config
     /**
      * Defines transition type of the component
      */
@@ -122,19 +110,19 @@ export default defineComponent({
     /**
      * Defines a11y role of the component
      */
-    role: generateProp.string(config.defaultRole),
+    role: generateProp.string(config.role),
     /**
      * Defines container element type of the component
      */
-    tag: generateProp.tag(TAG_NAME_DEFAULTS.DIALOG),
+    tag: generateProp.tag(TAG_NAME.DIALOG), // TODO: config
     /**
      * Defines z-index of the component
      */
-    zIndex: generateProp.number(config.defaultZIndex),
+    zIndex: generateProp.number(config.zIndex),
     /**
      * Defines component id to be focused on show
      */
-    focusId: generateProp.text(),
+    focusId: generateProp.text(() => uuid()),
     /**
      * Hides header if you don't need it
      */
@@ -147,24 +135,24 @@ export default defineComponent({
      * Pass any DButton.props to customize default close button, f.e. { colorScheme: "danger" }
      */
     closeButtonOptions: generateProp.options<DButtonProps>(
-      CLOSE_BUTTON_DEFAULTS
+      config.closeButtonOptions
     ),
     /**
      * Pass any DButton.props to customize default footer cancel button, f.e. { content: "Cancel" }
      */
     cancelButtonOptions: generateProp.options<DButtonProps>(
-      CANCEL_BUTTON_DEFAULTS
+      config.cancelButtonOptions
     ),
     /**
      * Pass any DButton.props to customize default footer accept button, f.e. { content: "Accept" }
      */
     acceptButtonOptions: generateProp.options<DButtonProps>(
-      ACCEPT_BUTTON_DEFAULTS
+      config.acceptButtonOptions
     ),
     /**
      * Pass any DBackdrop.props to customize backdrop, f.e. { colorScheme: "alternative" }
      */
-    backdropOptions: generateProp.options<DBackdropProps>(BACKDROP_DEFAULTS),
+    backdropOptions: generateProp.options<DBackdropProps>(),
     /**
      * Pass props.disable to the <teleport />, so the component will not be moved to the props.target.
      */
@@ -193,8 +181,8 @@ export default defineComponent({
   emits: [EVENT_NAME.CLOSE, EVENT_NAME.CANCEL, EVENT_NAME.ACCEPT],
 
   setup(props, { emit }) {
-    const { focusControlId } = useClosable(props, emit);
-    return { focusControlId };
+    const { closeFocusId } = useClosable(props, emit);
+    return { closeFocusId };
   },
 
   computed: {
@@ -206,7 +194,7 @@ export default defineComponent({
     },
 
     backdropClass(): string | undefined {
-      return getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition);
+      return generateClass.transition(this.transition);
     },
 
     renderBackdrop(): VNode | null {
@@ -218,7 +206,6 @@ export default defineComponent({
         <Trans {...this.backdropTransitionBindings}>
           {this.isShown && (
             <DBackdrop
-              {...BACKDROP_DEFAULTS}
               colorScheme={this.colorScheme}
               class={this.backdropClass}
               whenClick={this.closeHandler}
@@ -233,9 +220,9 @@ export default defineComponent({
       return this.title ? (
         <div
           class={[
-            styles[config.titleClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.titleFont),
+            config.titleClass,
             this.titleClass,
+            generateClass.font(this.titleFont),
           ]}
         >
           {this.title}
@@ -247,10 +234,10 @@ export default defineComponent({
       // TODO: slot, tag, ... (like content in other components)
       return (
         <DButton
-          {...CLOSE_BUTTON_DEFAULTS}
+          {...config.closeButtonOptions}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TODO
-          id={this.focusControlId}
+          id={this.focusId}
           colorScheme={this.colorScheme}
           whenClick={this.closeHandler}
           {...this.closeButtonOptions}
@@ -265,7 +252,7 @@ export default defineComponent({
 
       // TODO: header, tag, ... (like content in other components)
       return (
-        <div class={styles[config.headerClassName]}>
+        <div class={config.headerClass}>
           {this.$slots.header?.() || [this.renderTitle, this.renderCloseButton]}
         </div>
       );
@@ -275,9 +262,9 @@ export default defineComponent({
       return (
         <div
           class={[
-            styles[config.contentClassName],
-            getCommonCssClass(TOKEN_NAME.FONT, this.contentFont),
+            config.contentClass,
             this.contentClass,
+            generateClass.font(this.contentFont),
           ]}
         >
           {this.$slots.default?.() || this.content}
@@ -292,15 +279,15 @@ export default defineComponent({
 
       // TODO: footer, tag, ... (like content in other components)
       return (
-        <div class={styles[config.footerClassName]}>
+        <div class={config.footerClass}>
           {this.$slots.footer?.() || [
             <DButton
-              {...CANCEL_BUTTON_DEFAULTS}
+              {...config.cancelButtonOptions}
               whenClick={this.cancelHandler}
               {...this.cancelButtonOptions}
             />,
             <DButton
-              {...ACCEPT_BUTTON_DEFAULTS}
+              {...config.acceptButtonOptions}
               whenClick={this.acceptHandler}
               {...this.acceptButtonOptions}
             />,
@@ -318,13 +305,12 @@ export default defineComponent({
 
     classes(): (string | undefined)[] {
       return [
-        styles[config.className],
-        getCommonCssClass(TOKEN_NAME.COLOR_SCHEME, this.colorScheme),
-        getCommonCssClass(TOKEN_NAME.PADDING, this.padding),
-        getCommonCssClass(TOKEN_NAME.PADDING, `${this.padding}-${this.size}`),
-        getCommonCssClass(TOKEN_NAME.ROUNDING, this.rounding),
-        getCommonCssClass(TOKEN_NAME.SIZE, this.size),
-        getCommonCssClass(TOKEN_NAME.TRANSITION, this.transition),
+        config.class,
+        generateClass.colorScheme(this.colorScheme),
+        ...generateClass.padding(this.padding, this.size),
+        generateClass.rounding(this.rounding),
+        generateClass.size(this.size),
+        generateClass.transition(this.transition),
       ];
     },
 

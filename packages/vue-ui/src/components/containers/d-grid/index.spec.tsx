@@ -29,9 +29,9 @@ describe("DGrid", () => {
     },
   });
 
-  baseClassCase(wrapper, config.className);
+  baseClassCase(wrapper, config.class);
 
-  transitionClassCase(wrapper, `.${config.className}`);
+  transitionClassCase(wrapper, `.${config.class}`);
 
   it("Should render style='--grid-col-span: <number>' if props.colSpan is <number>", async () => {
     const colSpan = 4;
@@ -95,12 +95,12 @@ describe("DGrid", () => {
     expect(wrapper.attributes("style")).toContain(`--grid-row-gap: ${rowGap}`);
   });
 
-  it("Should add config.childClassName to the child elements if default slot passed", () => {
+  it("Should add config.childClass to the child elements if default slot passed", () => {
     const child = wrapper.find(`.${itemClassName}`);
-    expect(child.classes()).toContain(styles[config.childClassName]);
+    expect(child.classes()).toContain(styles[config.childClass]);
   });
 
-  it("Should add config.childClassName to the child elements if props.content is VNode[]", async () => {
+  it("Should add config.childClass to the child elements if props.content is VNode[]", async () => {
     const wrapper = await mount(DGrid, {
       props: {
         content: vNodes,
@@ -108,7 +108,7 @@ describe("DGrid", () => {
     });
 
     const child = wrapper.find(`.${itemClassName}`);
-    expect(child.classes()).toContain(styles[config.childClassName]);
+    expect(child.classes()).toContain(styles[config.childClass]);
   });
 
   it("Should render prop.content as string[]", async () => {

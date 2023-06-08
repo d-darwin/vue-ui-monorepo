@@ -11,7 +11,7 @@ import {
   POSITION_HORIZONTAL,
   POSITION_VERTICAL,
 } from "@darwin-studio/vue-ui/src/constants/position";
-import { TAG_NAME_DEFAULTS } from "@darwin-studio/vue-ui/src/constants/tag-name";
+import { TAG_NAME } from "@darwin-studio/vue-ui/src/constants/tag-name";
 
 export default {
   title: "organisms/DDrawer",
@@ -77,8 +77,8 @@ export default {
     transition: TRANSITION.FAST, // TODO: don't hardcode values
     role: "complementary",
     contentRole: "navigation",
-    tag: TAG_NAME_DEFAULTS.ASIDE,
-    contentTag: TAG_NAME_DEFAULTS.NAV,
+    tag: TAG_NAME.ASIDE,
+    contentTag: TAG_NAME.NAV,
     zIndex: 1001,
     hideHeader: false,
     backdropOptions: {

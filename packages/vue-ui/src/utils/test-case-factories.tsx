@@ -1,14 +1,16 @@
-import { DOMWrapper, shallowMount, VueWrapper, mount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
+import type { DOMWrapper, VueWrapper } from "@vue/test-utils";
 import { defineComponent } from "vue";
 import { FONT } from "@darwin-studio/ui-codegen/dist/constants/font";
 import { PADDING } from "@darwin-studio/ui-codegen/dist/constants/padding";
 import { ROUNDING } from "@darwin-studio/ui-codegen/dist/constants/rounding";
 import { SIZE } from "@darwin-studio/ui-codegen/dist/constants/size";
 import { TRANSITION } from "@darwin-studio/ui-codegen/dist/constants/transition";
-import { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
-import { Size } from "@darwin-studio/ui-codegen/dist/types/size";
+import type { ColorScheme } from "@darwin-studio/ui-codegen/dist/types/color-scheme";
+import type { Size } from "@darwin-studio/ui-codegen/dist/types/size";
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
+import { Font } from "@darwin-studio/ui-codegen/dist/types/font";
 
 export function propStringCase(
   wrapper: VueWrapper,
@@ -125,10 +127,10 @@ export function minControlWidthCase(
 
 export function defaultCheckMarkCase(
   wrapper: VueWrapper,
-  config: Record<string, string | number>
+  config: Record<string, unknown>
 ) {
   return it(`Should render default icon with ${config.checkMark}`, async () => {
-    const iconEl = wrapper.find(`.${config.iconClassName}`);
+    const iconEl = wrapper.find(`.${config.iconClass}`);
     expect(iconEl.exists()).toBeTruthy();
     expect(iconEl.text()).toBe(config.checkMark);
   });
@@ -179,7 +181,7 @@ export function labelFontCase(wrapper: VueWrapper, labelSelector = "label") {
 
 export function iconSlotCase(
   component: ReturnType<typeof defineComponent>,
-  config: Record<string, string | number>,
+  iconSelector: string,
   props?: Record<string, unknown>
 ) {
   return it("Should render icon slot instead of default icon", () => {
@@ -194,7 +196,7 @@ export function iconSlotCase(
         icon: slotIcon,
       },
     });
-    const iconContainerEl = wrapper.find(`.${config.iconContainerClassName}`);
+    const iconContainerEl = wrapper.find(iconSelector);
     expect(iconContainerEl.exists()).toBeTruthy();
     const slotIconEl = wrapper.find(`.${slotIconClass}`);
     expect(slotIconEl.html()).toMatch(slotIcon);
@@ -317,7 +319,7 @@ export function outlineClassCase(
   wrapper: VueWrapper,
   targetSelector: string,
   colorScheme: ColorScheme,
-  size: Size
+  size: Size | Font
 ) {
   return it(`${targetSelector} should contain color scheme and size dependent outline class name`, async () => {
     const className = prepareCssClassName(
