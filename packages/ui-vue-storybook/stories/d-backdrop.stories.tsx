@@ -1,12 +1,11 @@
-import { Story } from "@storybook/vue3";
+import type { Meta, StoryObj } from '@storybook/vue3';
 import DBackdrop from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop";
 import config from "@darwin-studio/vue-ui/src/components/atoms/d-backdrop/config";
 import { COLOR_SCHEME } from "@darwin-studio/ui-codegen/dist/constants/color-scheme";
 
-export default {
+const meta: Meta<typeof DBackdrop> = {
   title: "atoms/DBackdrop",
   component: DBackdrop,
-  tags: ['autodocs'],
   argTypes: {
     colorScheme: {
       control: { type: "select" },
@@ -16,6 +15,12 @@ export default {
       action: "click",
     },
   },
+};
+
+export default meta;
+type Story = StoryObj<typeof DBackdrop>;
+
+export const Primary: Story = {
   args: {
     opacity: config.opacity,
     zIndex: config.zIndex,
@@ -26,12 +31,3 @@ export default {
     },
   },
 };
-
-const Template: Story = (args) => ({
-  components: { DBackdrop },
-  setup() {
-    return { args };
-  },
-  template: `<DBackdrop v-bind="args" />`,
-});
-export const Default = Template.bind({});
