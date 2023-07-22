@@ -1,0 +1,47 @@
+{
+  "name": "@darwin-studio/ui-vue-storybook",
+  "version": "1.0.0",
+  "description": "DARWIN Design System",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
+  "engines": {
+    "node": ">=16.10.0 <=18.16.0",
+    "npm": ">=8.10.0 <9.0.0"
+  },
+  "types": "@darwin-studio/vue-ui/src/typings.d.ts",
+  "dependencies": {
+    "@darwin-studio/vue-ui": "^0.34.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@babel/core": "7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@storybook/addon-essentials": "7.1.0",
+    "@storybook/addon-interactions": "7.1.0",
+    "@storybook/addon-links": "7.1.0",
+    "@storybook/addon-mdx-gfm": "7.1.0",
+    "@storybook/blocks": "7.1.0",
+    "@storybook/testing-library": "0.2.0",
+    "@storybook/vue3": "7.1.0",
+    "@storybook/vue3-vite": "7.1.0",
+    "@vitejs/plugin-vue-jsx": "3.0.1",
+    "@vue/babel-plugin-jsx": "1.1.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "storybook": "7.1.0",
+    "tsx": "3.12.7",
+    "typescript": "4.9.5",
+    "vite": "4.4.6",
+    "vite-plugin-load-css-module": "^0.1.4",
+    "vue": "^3.3.4"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  }
+}

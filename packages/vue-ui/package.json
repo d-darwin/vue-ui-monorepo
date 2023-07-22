@@ -15,10 +15,10 @@
     "@darwin-studio/ui-codegen": "^0.34.0",
     "@darwin-studio/ui-dictionary": "^0.34.0",
     "uuid": "^8.3.2",
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   },
   "peerDependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
