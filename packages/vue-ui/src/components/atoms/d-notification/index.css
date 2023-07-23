@@ -1,4 +1,4 @@
-@import '~@darwin-studio/ui-dictionary/build/variables.css';
+@import '@darwin-studio/ui-dictionary/build/variables.css';
 
 .dNotification {
   --offset: 20px; /*TODO: make it configurable via css custom props*/

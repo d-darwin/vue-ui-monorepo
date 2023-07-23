@@ -1,7 +1,7 @@
 {
   "PACKAGE_NAME": "@darwin-studio/ui-codegen",
   "DESIGN_TOKENS_SOURCE": "@darwin-studio/ui-dictionary",
-  "CSS_VARIABLES_SOURCE": "~@darwin-studio/ui-dictionary/build/variables.css",
+  "CSS_VARIABLES_SOURCE": "@darwin-studio/ui-dictionary/build/variables.css",
   "OUT_DIR": "dist",
   "CONSTANT_FILE_EXT": ".ts",
   "TYPE_FILE_EXT": ".ts",

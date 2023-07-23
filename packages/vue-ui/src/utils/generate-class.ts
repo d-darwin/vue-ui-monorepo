@@ -1,6 +1,6 @@
 import prepareCssClassName from "@darwin-studio/ui-codegen/src/utils/prepareCssClassName";
 import codegenConfig from "@darwin-studio/ui-codegen/config.json";
-import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css"; // TODO: shorter path, default export ??? TODO: make it module ???
+import borderStyles from "@darwin-studio/ui-codegen/dist/styles/border.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import colorSchemeStyles from "@darwin-studio/ui-codegen/dist/styles/color-scheme.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import fontStyles from "@darwin-studio/ui-codegen/dist/styles/font.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???
 import gridStyles from "@darwin-studio/ui-codegen/dist/styles/grid.css?module"; // TODO: shorter path, default export ??? TODO: make it module ???

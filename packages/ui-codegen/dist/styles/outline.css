@@ -1,4 +1,4 @@
-@import '~@darwin-studio/ui-dictionary/build/variables.css';
+@import '@darwin-studio/ui-dictionary/build/variables.css';
 
 .outlineDangerHuge:focus-visible {
   outline: var(--outline-danger-huge) var(--color-danger-outline);

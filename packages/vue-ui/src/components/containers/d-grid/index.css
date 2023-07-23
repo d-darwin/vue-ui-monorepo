@@ -1,4 +1,4 @@
-@import "~@darwin-studio/ui-codegen/dist/styles/grid.css";
+@import "@darwin-studio/ui-codegen/dist/styles/grid.css";
 
 .dGrid {
   display: grid;

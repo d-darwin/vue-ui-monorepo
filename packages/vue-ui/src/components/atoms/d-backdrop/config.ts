@@ -1,8 +1,6 @@
 import { CssPosition } from "./types";
 import styles from "./index.css?module";
 
-console.log(styles.dBackdrop);
-
 export default {
   name: "DBackdrop",
   class: styles.dBackdrop,
